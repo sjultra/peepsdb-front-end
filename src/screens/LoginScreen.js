@@ -6,6 +6,7 @@ import Background from '../assets/images/login-background.png';
 import Google from '../assets/images/google-icon.png';
 import Github from '../assets/images/github-icon.png';
 import Microsoft from '../assets/images/microsoft-icon.png';
+import { backendURL, githubClientID } from '../utils/setEnv';
 
 const Wrapper = styled.div`
   display: grid;
@@ -113,8 +114,12 @@ const LoginScreen = () => {
     return <Redirect to='/' />;
   }
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl = backendURL;
 
+
+  console.log('envs',
+  backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL
+  )
 
 
   return (
@@ -129,8 +134,7 @@ const LoginScreen = () => {
           <p>Log in with Google</p>
         </Socials>
         <Socials
-         onClick={(e)=>console.log('event data',e.currentTarget.href)}
-         href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(process.env.REACT_APP_GITHUB_CALLBACK_URL)}?path=/&scope=user:email`}>
+         href={`https://github.com/login/oauth/authorize?client_id=${githubClientID}&redirect_uri=${encodeURIComponent(backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL)}?path=/&scope=user:email`}>
           <img src={Github} alt='' />
           <p>Log in with Github</p>
         </Socials>
