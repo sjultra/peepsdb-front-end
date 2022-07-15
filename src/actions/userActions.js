@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import setAuthToken from '../utils/setAuthToken';
 import {
@@ -8,6 +7,7 @@ import {
   LOAD_USER_SUCCESS,
   RESET_STATE,
 } from '../constants/userConstants';
+import Axios from '../utils/axios';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -20,11 +20,7 @@ export const loadUser = () => async (dispatch) => {
   });
 
   try {
-    const res = await axios.get('/auth',{
-      headers:{
-        Authorization: localStorage.token
-      }
-    });
+    const res = await Axios.get('/auth');
 
     const { email, name, role,username } = res.data;
 
