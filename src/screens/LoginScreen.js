@@ -122,6 +122,8 @@ const LoginScreen = () => {
   )
 
 
+  console.log('testing azure website url')
+
   return (
     <Wrapper>
       <ItemLeft>
