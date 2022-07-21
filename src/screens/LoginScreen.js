@@ -118,7 +118,8 @@ const LoginScreen = () => {
 
 
   console.log('envs',
-  backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL
+  backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL,
+  process.env
   )
 
 
