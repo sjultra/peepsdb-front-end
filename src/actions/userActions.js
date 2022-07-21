@@ -20,7 +20,9 @@ export const loadUser = () => async (dispatch) => {
   });
 
   try {
+    console.log('axios instance',Axios)
     const res = await Axios.get('/auth');
+
 
     const { email, name, role,username } = res.data;
 

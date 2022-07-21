@@ -123,7 +123,7 @@ const LoginScreen = () => {
   )
 
 
-  console.log('testing azure website url')
+  console.log('testing azure website url','new_test')
 
   return (
     <Wrapper>
