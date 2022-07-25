@@ -1,13 +1,14 @@
 import axios from "axios";
 
-const token = sessionStorage.getItem("peepsdb-auth-token");
 
 
-const baseUrl = process.env[process.env['NODE_ENV']==='development'?'REACT_APP_BACKEND_TEST_URL':'REACT_APP_BACKEND_URL'] 
+const useAxios = ()=>{
+    const token = sessionStorage.getItem("peepsdb-auth-token");
 
 
-0
-const Axios = token
+    const baseUrl = process.env[process.env['NODE_ENV']==='development'?'REACT_APP_BACKEND_TEST_URL':'REACT_APP_BACKEND_URL'] 
+
+    const Axios = token
   ? axios.create({
       baseURL: baseUrl,
       headers: {
@@ -22,4 +23,9 @@ const Axios = token
       },
     });
 
-export default Axios;
+    return Axios
+
+}
+
+
+export default useAxios;
