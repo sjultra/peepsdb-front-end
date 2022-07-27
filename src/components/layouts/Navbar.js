@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import UserDropdown from './UserDropdown';
+import { AppContext } from '../../contextStore';
 
 const Wrapper = styled.div`
   height: 8rem;
@@ -27,17 +27,15 @@ const Wrapper = styled.div`
 
 const Navbar = () => {
   // Selectors
-  const user = useSelector((state) => state.userInfo.user);
-  const isAuthenticated = useSelector(
-    (state) => state.userLogin.isAuthenticated
-  );
+  const [{auth}] = useContext(AppContext)
+  const {isAuthenticated} = auth || {};
 
   return (
     <Wrapper>
       <h1>
         <Link to='/'>PeepsDB</Link>
       </h1>
-      {isAuthenticated && user && <UserDropdown user={user} />}
+      {isAuthenticated && auth && <UserDropdown user={auth} />}
     </Wrapper>
   );
 };

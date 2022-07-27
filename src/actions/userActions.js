@@ -53,19 +53,17 @@ export const loadUser = (cookie) => async (dispatch) => {
 // Login User
 export const loginUser = () => (dispatch) => {
   try {
-    const cookieJwt = Cookies.get('x-auth-cookie');
+    const jwt = localStorage.getItem("peepsdb-auth-token");
+    console.log('jwt token',jwt)
 
- 
-    localStorage.setItem("peepsdb-auth-token",cookieJwt);
-
-    if (cookieJwt) {
+    if (jwt) {
 
       dispatch({
         type: USER_LOGIN_SUCCESS,
-        payload: cookieJwt,
+        payload: jwt,
       });
 
-      dispatch(loadUser(cookieJwt));
+      dispatch(loadUser());
 
     }
 

@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { AppContext } from '../../contextStore';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   // Selectors
-  const isAuthenticated = useSelector(
-    (state) => state.userLogin.isAuthenticated
-  );
+  const [{auth}] = useContext(AppContext);
 
-  return (
+  const isAuthenticated = auth?.token ?true:false;
+
+  return (  
     <Route
       {...rest}
       render={(props) =>

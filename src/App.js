@@ -1,7 +1,6 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import Navbar from './components/layouts/Navbar';
 import Alert from './components/layouts/Alert';
 import NotFoundScreen from './screens/NotFoundScreen';
@@ -15,15 +14,12 @@ import MeetingScheduleScreen from './screens/MeetingScheduleScreen';
 import UsersScreen from './screens/UsersScreen';
 import UserScreen from './screens/UserScreen';
 import UserEditScreen from './screens/UserEditScreen';
-import { loginUser } from './actions/userActions';
 import PrivateRoute from './components/routing/PrivateRoute';
+import useLogin from './hooks/useLogin';
 
-// https://dev.azure.com/sjultra/VzxyTools/_git/peepsdb-fe
 const App = () => {
-  const dispatch = useDispatch();
 
-  dispatch(loginUser());
-
+  useLogin();
 
   return (
     <Router>

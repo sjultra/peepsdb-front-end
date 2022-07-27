@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Background from '../assets/images/login-background.png';
 import Google from '../assets/images/google-icon.png';
 import Github from '../assets/images/github-icon.png';
 import Microsoft from '../assets/images/microsoft-icon.png';
 import { backendURL, githubClientID } from '../utils/setEnv';
+import { AppContext } from '../contextStore';
 
 const Wrapper = styled.div`
   display: grid;
@@ -105,24 +105,21 @@ const Socials = styled.a`
 
 const LoginScreen = () => {
   // Selector
-  const isAuthenticated = useSelector(
-    (state) => state.userLogin.isAuthenticated
-  );
+
+  const [{auth}] = useContext(AppContext);
+
+
+  useEffect(()=>console.log('user auth',auth),[auth])
 
   // Redirect if logged in
-  if (isAuthenticated) {
+  if (auth?.token) {
     return <Redirect to='/' />;
   }
 
   const backendUrl = backendURL;
 
 
-  console.log('envs',
-    backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL,
-  )
-
-
-  console.log('testing aws pipeline')
+  console.log('envs',backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL,)
 
 
   return (
