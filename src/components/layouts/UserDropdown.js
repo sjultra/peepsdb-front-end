@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
-import { logoutUser } from '../../actions/userActions';
 import { Link } from 'react-router-dom';
+import useAuthActions from '../../hooks/useAuthActions';
 
 const Wrapper = styled.div`
   display: flex;
@@ -79,13 +78,13 @@ const Margin = styled.div`
 `;
 
 const UserDropdown = ({ user }) => {
-  const dispatch = useDispatch();
 
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const { username,firstName:firstname,lastName:lastname ,email, role } = user;
 
-  // Capitalized name
+
+  const {logout} = useAuthActions()
 
   const onToggleDropdown = () => {
     setOpenDropdown(!openDropdown);
@@ -100,8 +99,6 @@ const UserDropdown = ({ user }) => {
   };
 
   const displayName =  username? username: (firstname && lastname)? <> {firstname} {lastname} </>: 'user'
-
-  console.log('user name', user)
 
   return (
     <Wrapper>
@@ -138,7 +135,7 @@ const UserDropdown = ({ user }) => {
               </Link>
             )}
 
-            <SignOut onClick={() => dispatch(logoutUser())}>Sign Out</SignOut>
+            <SignOut onClick={logout}>Sign Out</SignOut>
           </DropDown>
         </DropDownWrapper>
       )}
