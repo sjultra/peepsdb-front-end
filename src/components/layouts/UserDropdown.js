@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import useAuthActions from '../../hooks/useAuthActions';
+import useAuthActions from '../../hooks/useAuth';
 
 const Wrapper = styled.div`
   display: flex;

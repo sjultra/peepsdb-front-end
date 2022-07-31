@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../actions/alertActions';
 import { Wrapper, PrimaryHeading, FormControl, BtnNext } from './FormResources';
-
+import {Box, Flex} from '@chakra-ui/react'
 const BtnWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -75,28 +75,41 @@ const FormUserDetails = ({
       <Required>
         required<span> * </span>
       </Required>
-      <FormControl>
-        <label htmlFor='firstname'>
-          Firstname <span>*</span>
-        </label>
-        <input
-          type='text'
-          name='firstname'
-          value={firstname}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
-      <FormControl>
-        <label htmlFor='lastname'>
-          Lastname <span>*</span>
-        </label>
-        <input
-          type='text'
-          name='lastname'
-          value={lastname}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
+
+      <Flex direction={{base:'column',lg:'row'}}  justify={{lg:'space-between'}} >
+
+
+        <Box flex={1}>
+
+          <FormControl>
+            <label htmlFor='firstname'>
+              Firstname <span>*</span>
+            </label>
+            <input
+              type='text'
+              name='firstname'
+              value={firstname}
+              onChange={(e) => onChange(e)}
+            />
+          </FormControl>
+        </Box>
+
+        <Box flex={1}>
+          <FormControl>
+            <label htmlFor='lastname'>
+              Lastname <span>*</span>
+            </label>
+            <input
+              type='text'
+              name='lastname'
+              value={lastname}
+              onChange={(e) => onChange(e)}
+            />
+          </FormControl>
+        </Box>
+
+      </Flex>
+     
       <FormControl>
         <label htmlFor='alias'>Alias</label>
         <input

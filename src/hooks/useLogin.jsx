@@ -1,11 +1,10 @@
-import { useContext, useEffect, useRef } from 'react';
-import { AppContext } from '../contextStore';
+import {  useEffect, useRef } from 'react';
 import Axios from '../utils/axios';
+import useAuthActions from './useAuth';
 
 const useLogin = ()=>{
 
-
-    const [{auth},setAppState] = useContext(AppContext);
+    const {setAuth,auth} = useAuthActions()
     
     const hrefSplit = window.location.href.split('?token=');
 
@@ -15,13 +14,14 @@ const useLogin = ()=>{
 
     
     const tokenRef = useRef({
-        type:browserToken?'':query?'sign':'',
-        token:browserToken || query
+        type:query?'sign':'',
+        token: query || browserToken
     })
 
-    console.log('browserToken',auth,JSON.parse(localStorage.getItem('peepsdb-auth')))
+    console.log('browserToken',auth)
 
-    const setAppStateRef = useRef(setAppState)
+    const setAuthRef = useRef(setAuth);
+
 
     useEffect(()=>{
 
@@ -39,21 +39,14 @@ const useLogin = ()=>{
 
                     const {status,data} = req;
 
-                    console.log('user status',status)
-                    if(status===200){
+                    console.log('user data',data)
 
-                        setAppStateRef.current(prev=>{
-                            console.log('app state is being reset')
-                            return({
-                                ...prev,
-                                auth:{
-                                    ...data,
-                                    token:tokenRef.current.token,
-                                    isAuthenticated:true,
-                                }
-                        
-                            })
-                        });
+                    if(status===200){
+                        setAuthRef.current({
+                            ...data,
+                            token:tokenRef.current.token,
+                            isAuthenticated:true,                        
+                        })
 
                         data.token && localStorage.setItem('peepsdb-auth',JSON.stringify(data));
     
@@ -62,7 +55,7 @@ const useLogin = ()=>{
 
                 }
                 catch(err){
-                    console.log('err at login',err?.response)
+                    console.log('err at login',err?.response,err)
                 }
             }
             

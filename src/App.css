@@ -22,7 +22,7 @@ html {
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
   font-size: 1.6rem;
   line-height: 1.7;
   background-color: var(--white-color);
@@ -46,7 +46,7 @@ button {
 }
 
 input, select {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
 }
 
 .padding-x {

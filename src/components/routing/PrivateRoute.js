@@ -1,12 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { AppContext } from '../../contextStore';
+import useAuthActions from '../../hooks/useAuth';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   // Selectors
-  const [{auth}] = useContext(AppContext);
+  const {auth}= useAuthActions();
+
+
 
   const isAuthenticated = auth?.token ?true:false;
+
+
 
   return (  
     <Route

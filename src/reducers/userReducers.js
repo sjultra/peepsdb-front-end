@@ -26,6 +26,7 @@ export const userLoginReducer = (state = userLoginInitialState, action) => {
       };
 
     case USER_LOGIN_FAILURE:
+
     case RESET_STATE:
       localStorage.removeItem('peepdb-auth-token');
       return {
@@ -68,3 +69,4 @@ export const loadUserReducer = (state = loadUserInitialState, action) => {
       return state;
   }
 };
+

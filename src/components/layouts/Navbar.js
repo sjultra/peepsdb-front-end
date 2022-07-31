@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserDropdown from './UserDropdown';
-import { AppContext } from '../../contextStore';
+import useAuthActions from '../../hooks/useAuth';
 
 const Wrapper = styled.div`
   height: 8rem;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 
 const Navbar = () => {
   // Selectors
-  const [{auth}] = useContext(AppContext)
+  const {auth} = useAuthActions()
   const {isAuthenticated} = auth || {};
 
   return (

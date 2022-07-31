@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, {  } from 'react';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import Background from '../assets/images/login-background.png';
@@ -6,7 +6,7 @@ import Google from '../assets/images/google-icon.png';
 import Github from '../assets/images/github-icon.png';
 import Microsoft from '../assets/images/microsoft-icon.png';
 import { backendURL, githubClientID } from '../utils/setEnv';
-import { AppContext } from '../contextStore';
+import useAuthActions from '../hooks/useAuth';
 
 const Wrapper = styled.div`
   display: grid;
@@ -106,10 +106,9 @@ const Socials = styled.a`
 const LoginScreen = () => {
   // Selector
 
-  const [{auth}] = useContext(AppContext);
+  const {auth} = useAuthActions();
 
 
-  useEffect(()=>console.log('user auth',auth),[auth])
 
   // Redirect if logged in
   if (auth?.token) {

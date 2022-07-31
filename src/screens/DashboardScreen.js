@@ -1,14 +1,42 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import Spinner from '../components/layouts/Spinner';
 import GuestsDashboard from '../components/dashboard/GuestsDashboard';
 import MembersDashboard from '../components/dashboard/MembersDashboard';
-import { AppContext } from '../contextStore';
+import useAuthActions from '../hooks/useAuth';
+import useWidget from '../hooks/useWidget'
+import Axios from '../utils/axios'
 
 const DashboardScreen = () => {
   // Selectors
-  const [{auth,loading}] = useContext(AppContext);
+  const {auth,setProfile} = useAuthActions();
 
-  // const userInfo = useSelector((state) => state.userInfo);
+  const {loading} = useWidget()
+
+
+  useEffect(()=>{
+    (
+      async()=>{
+
+        try{
+          let req = await Axios.get('/profiles/me');
+
+          console.log('fetch my profile',req);
+
+          req.status===200 && setProfile(req.data,'profile')
+
+
+        }
+        catch(err){
+          console.error('err at fectching my profile',err)
+        }
+        finally{
+
+        }
+    })()
+
+  },[setProfile])
+
+
   console.log('auth at dashboard Screen',auth)
 
   if(loading){

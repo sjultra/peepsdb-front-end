@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/layouts/Navbar';
-import Alert from './components/layouts/Alert';
+// import Alert from './components/layouts/Alert';
 import NotFoundScreen from './screens/NotFoundScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -25,7 +25,7 @@ const App = () => {
     <Router>
       <Navbar />
       <div className='padding-x page-bottom-margin'>
-        <Alert />
+        {/* <Alert /> */}
         <Switch>
           <Route path='/login' component={LoginScreen} />
           <PrivateRoute exact path='/' component={DashboardScreen} />
