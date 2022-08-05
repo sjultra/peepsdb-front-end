@@ -35,7 +35,7 @@ const FormUserDetails = ({
     googleGmailId,
     appleEmailId,
     phone,
-  } = formData;
+  } = formData || {};
 
 
   console.log('formdata',formData)
