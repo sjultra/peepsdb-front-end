@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+let auth = localStorage.getItem('peepsdb-auth');
 
 const initialState = {
     auth: {
-        isAuthenticated:false
-
+        isAuthenticated: auth?true:false
     },
-    profile:{
-
-    }
+    profile:undefined
 }
 
 const authSlice = createSlice({

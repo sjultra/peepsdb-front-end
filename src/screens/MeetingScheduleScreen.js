@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
 import { BiSearch } from 'react-icons/bi';
 import MeetingScheduleContent from '../components/meeting/MeetingScheduleContent';
 import Spinner from '../components/layouts/Spinner';
-import { getAllProfiles } from '../actions/profileActions';
 import Message from '../components/layouts/Message';
 import {
   PrimaryHeading,
@@ -12,6 +10,8 @@ import {
   TitleFilter,
   Filter,
 } from './ScreenResources';
+import useMeetings from '../hooks/useMeetings';
+import useWidget from '../hooks/useWidget';
 
 const TableHead = styled.div`
   background: #f8f7ff;
@@ -37,20 +37,17 @@ const TableHead = styled.div`
 `;
 
 const MeetingScheduleScreen = () => {
-  const dispatch = useDispatch();
+
+  const {profiles} = useMeetings();
+
+  const {loading} = useWidget()
 
   // Selectors
-  const profiles = useSelector((state) => state.allProfiles.profiles);
-  const loading = useSelector((state) => state.allProfiles.loading);
-  const error = useSelector((state) => state.allProfiles.error);
+  const error = false;
 
-  useEffect(() => {
-    if (!profiles) {
-      dispatch(getAllProfiles());
-    }
-  }, [profiles, dispatch]);
 
   const [filterText, setFilterText] = useState('');
+
 
   return (
     <div>

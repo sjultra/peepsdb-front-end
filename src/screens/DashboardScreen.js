@@ -1,43 +1,24 @@
-import React, { useEffect } from 'react';
+import React, {  useEffect, useRef } from 'react';
 import Spinner from '../components/layouts/Spinner';
 import GuestsDashboard from '../components/dashboard/GuestsDashboard';
 import MembersDashboard from '../components/dashboard/MembersDashboard';
 import useAuthActions from '../hooks/useAuth';
 import useWidget from '../hooks/useWidget'
-import Axios from '../utils/axios'
 
 const DashboardScreen = () => {
   // Selectors
-  const {auth,setProfile} = useAuthActions();
+  const {auth,fetchMyProfile} = useAuthActions();
 
   const {loading} = useWidget()
 
+  const fetchProfile = useRef(fetchMyProfile)
 
   useEffect(()=>{
-    (
-      async()=>{
-
-        try{
-          let req = await Axios.get('/profiles/me');
-
-          console.log('fetch my profile',req);
-
-          req.status===200 && setProfile(req.data,'profile')
+    fetchProfile.current()
+  },[])
 
 
-        }
-        catch(err){
-          console.error('err at fectching my profile',err)
-        }
-        finally{
-
-        }
-    })()
-
-  },[setProfile])
-
-
-  console.log('auth at dashboard Screen',auth)
+  console.log('auth dashboad',auth)
 
   if(loading){
     return <Spinner />;
@@ -45,11 +26,11 @@ const DashboardScreen = () => {
   else if (auth?.token && auth?.role === 'Guest') {
     return <GuestsDashboard />;
   } 
-  else if (auth?.token && !auth.role === 'Guest') {
+  else if (auth?.token && auth.role !== 'Guest') {
     return <MembersDashboard />;
   } 
   else{
-    return <></>
+    return <>Nothing</>
   }
 };
 

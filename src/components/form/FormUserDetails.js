@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { setAlert } from '../../actions/alertActions';
 import { Wrapper, PrimaryHeading, FormControl, BtnNext } from './FormResources';
-import {Box, Flex} from '@chakra-ui/react'
+import {Box, Flex, useToast} from '@chakra-ui/react'
+
+
 const BtnWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -24,11 +24,12 @@ const FormUserDetails = ({
   loading,
   profile,
 }) => {
-  const dispatch = useDispatch();
+
+  const toast = useToast();
 
   const {
-    firstname,
-    lastname,
+    firstName:firstname,
+    lastName:lastname,
     alias,
     skypeId,
     googleGmailId,
@@ -36,26 +37,53 @@ const FormUserDetails = ({
     phone,
   } = formData;
 
+
+  console.log('formdata',formData)
+
   const validateEmail = (email) => {
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+    return re.test(email);
   };
 
   const proceed = (e) => {
     e.preventDefault();
-    if (
-      firstname.trim() === '' ||
-      lastname.trim() === '' ||
-      googleGmailId.trim() === '' ||
-      phone === ''
-    ) {
-      dispatch(setAlert('Please fill required fields', 'error'));
-    } else if (!validateEmail(googleGmailId)) {
-      dispatch(setAlert('Invalid email', 'error'));
-    } else if (!googleGmailId.endsWith('@gmail.com')) {
-      dispatch(setAlert('Gmail address please', 'error'));
-    } else {
+
+    
+    const payload = {
+      firstname,
+      lastname,
+      alias,
+      skypeId,
+      googleGmailId,
+      appleEmailId,
+      phone,
+    }
+    console.log('formdata',payload)
+
+    let error ='';
+    if(!Object.values(payload).every(value=>value)){
+      error='All fields are reqired'
+    }
+    else if (!validateEmail(googleGmailId)) {
+      error= ('Invalid email')
+    } 
+    else if (!googleGmailId.endsWith('@gmail.com')) {
+      error=('Gmail address please');
+    } 
+
+    console.log('error',error)
+    if (error){
+      console.log('toast notif',error,)
+      toast({
+        title:'Error',
+        description:error,
+        status:'error',
+        position:'top'
+      })
+    }
+
+    else {
       nextStep();
     }
   };
@@ -76,7 +104,7 @@ const FormUserDetails = ({
         required<span> * </span>
       </Required>
 
-      <Flex direction={{base:'column',lg:'row'}}  justify={{lg:'space-between'}} >
+      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
 
 
         <Box flex={1}>
@@ -109,45 +137,63 @@ const FormUserDetails = ({
         </Box>
 
       </Flex>
-     
-      <FormControl>
-        <label htmlFor='alias'>Alias</label>
-        <input
-          type='text'
-          name='alias'
-          value={alias}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
-      <FormControl>
-        <label htmlFor='skypeId'>SkypeId</label>
-        <input
-          type='text'
-          name='skypeId'
-          value={skypeId}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
-      <FormControl>
-        <label htmlFor='googleGmailId'>
-          Google Gmail Id <span>*</span>
-        </label>
-        <input
-          type='email'
-          name='googleGmailId'
-          value={googleGmailId}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
-      <FormControl>
-        <label htmlFor='appleEmailId'>Apple Email Id</label>
-        <input
-          type='email'
-          name='appleEmailId'
-          value={appleEmailId}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
+      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+
+        <Box flex={1}>
+          <FormControl>
+            <label htmlFor='alias'>Alias</label>
+            <input
+              type='text'
+              name='alias'
+              value={alias}
+              onChange={(e) => onChange(e)}
+            />
+          </FormControl>
+        </Box>
+
+        <Box flex={1}>    
+          <FormControl>
+            <label htmlFor='skypeId'>SkypeId</label>
+            <input
+              type='text'
+              name='skypeId'
+              value={skypeId}
+              onChange={(e) => onChange(e)}
+            />
+          </FormControl>
+        </Box>
+
+      </Flex>
+
+      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+        <Box flex={1}>
+          <FormControl>
+            <label htmlFor='googleGmailId'>
+              Google Gmail Id <span>*</span>
+            </label>
+            <input
+              type='email'
+              name='googleGmailId'
+              value={googleGmailId}
+              onChange={(e) => onChange(e)}
+            />
+          </FormControl>
+        </Box>
+
+        <Box flex={1}>
+          <FormControl>
+            <label htmlFor='appleEmailId'>Apple Email Id</label>
+            <input
+              type='email'
+              name='appleEmailId'
+              value={appleEmailId}
+              onChange={(e) => onChange(e)}
+            />
+          </FormControl>
+        </Box>
+
+      </Flex>
+      
       <FormControl>
         <label htmlFor='phone'>
           Phone <span>*</span>

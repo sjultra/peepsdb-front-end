@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { FiSearch } from 'react-icons/fi';
@@ -52,20 +52,25 @@ const JiraLabels = () => {
   const issues = useSelector((state) => state.allIssues.issues);
   const total = useSelector((state) => state.allIssues.total);
 
+
+  
+
+  const labelRef = useRef(labels);
   // Get all Jira Labels
-  useEffect(() => {
-    if (!labels) {
-      dispatch(getJiraLabels());
-    }
-  }, [labels, dispatch]);
+  
+  const issuesRef = useRef(issues);
 
   useEffect(() => {
-    if (!issues.length) {
-      dispatch(getAllIssues(0));
-    } else if (issues.length && issues.length < total) {
-      dispatch(getAllIssues(issues.length));
+    if (!labelRef.current) {
+      dispatch(getJiraLabels());
     }
-  }, [dispatch, issues, total]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!issuesRef.current.length ) {
+      dispatch(getAllIssues(0));
+    } 
+  }, [dispatch, total]);
 
   useEffect(() => {
     dispatch(clearLabelIssues());

@@ -19,8 +19,11 @@ const GuestsDashboard = () => {
   //   }
   // }, [dispatch, profile]);
 
+  console.log('profile at guest dashboard',profile)
+
+
   if (!loading){
-    if (profile.isOnboarded) {
+    if (profile?.isOnboarded) {
       return <Registered />;
     } 
     else {

@@ -2,10 +2,25 @@ import {configureStore,combineReducers} from '@reduxjs/toolkit'
 import { isRejectedWithValue } from "@reduxjs/toolkit";
 import auth from './reducers/auth';
 import widget from './reducers/widget';
+import meeting from './reducers/meeting';
+import { getAdoProjectsReducer, getAllIssuesReducer, getAllWorkItemsDetailsReducer, getAllWorkItemsIdReducer, getJiraLabelsReducer, getLabelIssuesReducer, getProjectWorkItemsReducer, setAdoFilterReducer, setJiraFilterReducer, toggleReducer } from '../reducers';
+
+
 const rootReducer = combineReducers({
     auth:auth,
     onboarding:auth,
-    widget
+    widget,
+    meeting,
+    allWorkItemsId: getAllWorkItemsIdReducer,
+    allWorkItemsDetails: getAllWorkItemsDetailsReducer,
+    projectWorkItems: getProjectWorkItemsReducer,
+    jiraLabels: getJiraLabelsReducer,
+    allIssues: getAllIssuesReducer,
+    labelIssues: getLabelIssuesReducer,
+    adoFilter: setAdoFilterReducer,
+    jiraFilter: setJiraFilterReducer,
+    adoProjects: getAdoProjectsReducer,
+    toggle: toggleReducer,
     
 });
   

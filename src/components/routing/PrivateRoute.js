@@ -8,7 +8,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 
 
-  const isAuthenticated = auth?.token ?true:false;
+  const isAuthenticated = auth?.isAuthenticated ?true:false;
 
 
 

@@ -1,6 +1,6 @@
 import {
   USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAILURE,
+  // USER_LOGIN_FAILURE,
   RESET_STATE,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
@@ -25,7 +25,6 @@ export const userLoginReducer = (state = userLoginInitialState, action) => {
         isAuthenticated: true,
       };
 
-    case USER_LOGIN_FAILURE:
 
     case RESET_STATE:
       localStorage.removeItem('peepdb-auth-token');

@@ -1,7 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import Spinner from '../layouts/Spinner';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Spinner from "../layouts/Spinner";
+import Paginate from "../../widgets/Paginate";
 
 const Wrapper = styled.div`
   display: grid;
@@ -97,35 +98,48 @@ const IssuesCount = styled.div`
   }
 `;
 
-const JiraLabelContent = ({ labels, search, loading, issues, total }) => {
-  if (!loading && labels) {
+const JiraLabelContent = ({
+  labels: labelsArr,
+  search,
+  loading,
+  issues,
+  total,
+}) => {
+  if (!loading && labelsArr) {
     return (
-      <Wrapper>
-        {labels &&
-          labels
-            .filter((label) =>
-              label.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((label, index) => {
-              return (
-                <Link to={`/jira_issues/${label}`} key={index}>
-                  <Issue>
-                    <ProjectName>{label}</ProjectName>
-                    <IssuesCount>
-                      <div>
-                        {issues && issues.length === total
-                          ? issues.filter((issue) =>
-                              issue.labels.includes(label)
-                            ).length
-                          : '-'}
-                      </div>
-                      <div>Issues</div>
-                    </IssuesCount>
-                  </Issue>
-                </Link>
-              );
-            })}
-      </Wrapper>
+      <Paginate
+        payload={labelsArr}
+        range={8}
+        render={(labels) => (
+          <Wrapper>
+            {
+              labels
+              ?.filter((label) =>
+                label.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((label, index) => {
+                return (
+                  <Link to={`/jira_issues/${label}`} key={index}>
+                    <Issue>
+                      <ProjectName>{label}</ProjectName>
+                      <IssuesCount>
+                        <div>
+                          {issues && issues.length === total
+                            ? issues.filter((issue) =>
+                                issue.labels.includes(label)
+                              ).length
+                            : "-"}
+                        </div>
+                        <div>Issues</div>
+                      </IssuesCount>
+                    </Issue>
+                  </Link>
+                );
+              })
+            }
+          </Wrapper>
+        )}
+      />
     );
   } else {
     return <Spinner />;

@@ -1,5 +1,6 @@
 import {  useEffect, useRef } from 'react';
 import Axios from '../utils/axios';
+import { capitalizeString } from '../utils/helpers';
 import useAuthActions from './useAuth';
 
 const useLogin = ()=>{
@@ -37,15 +38,21 @@ const useLogin = ()=>{
                         }
                     });
 
-                    const {status,data} = req;
+                    const {status,data:dataPayload} = req;
 
-                    console.log('user data',data)
+                    
+                    let data = {
+                        ...dataPayload,
+                        firstName:capitalizeString(dataPayload?.firstName || ''),
+                        lastName:capitalizeString(dataPayload?.lastName || '')
+                    }
 
-                    if(status===200){
+
+                    if(status===200 || status===201){
                         setAuthRef.current({
                             ...data,
                             token:tokenRef.current.token,
-                            isAuthenticated:true,                        
+                            isAuthenticated:true,                       
                         })
 
                         data.token && localStorage.setItem('peepsdb-auth',JSON.stringify(data));
@@ -56,6 +63,11 @@ const useLogin = ()=>{
                 }
                 catch(err){
                     console.log('err at login',err?.response,err)
+                    setAuthRef.current({
+                        isAuthenticated:false,                        
+                    })
+
+
                 }
             }
             

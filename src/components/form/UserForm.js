@@ -6,8 +6,8 @@ import Confirm from './Confirm';
 
 const UserForm = ({ profile, loading }) => {
   const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     alias: '',
     skypeId: '',
     googleGmailId: '',
@@ -28,63 +28,7 @@ const UserForm = ({ profile, loading }) => {
   });
 
   useEffect(() => {
-    setFormData({
-      firstname:
-        loading || !profile || !profile.firstname ? '' : profile.firstname,
-      lastname:
-        loading || !profile || !profile.lastname ? '' : profile.lastname,
-      alias: loading || !profile || !profile.alias ? '' : profile.alias,
-      skypeId: loading || !profile || !profile.skypeId ? '' : profile.skypeId,
-      googleGmailId:
-        loading || !profile || !profile.googleGmailId
-          ? ''
-          : profile.googleGmailId,
-      appleEmailId:
-        loading || !profile || !profile.appleEmailId
-          ? ''
-          : profile.appleEmailId,
-      phone: loading || !profile || !profile.phone ? '' : profile.phone,
-      timeZoneUrl:
-        loading || !profile || !profile.timeZoneUrl ? '' : profile.timeZoneUrl,
-      daysPerWeek:
-        loading || !profile || !profile.daysPerWeek ? '' : profile.daysPerWeek,
-      hoursPerDay:
-        loading || !profile || !profile.hoursPerDay ? '' : profile.hoursPerDay,
-      localCurrencyUrl:
-        loading || !profile || !profile.localCurrencyUrl
-          ? ''
-          : profile.localCurrencyUrl,
-      femSlackProfileUrl:
-        loading || !profile || !profile.femSlackProfileUrl
-          ? ''
-          : profile.femSlackProfileUrl,
-      startDate:
-        loading || !profile || !profile.startDate ? '' : profile.startDate,
-      paymentProfileUrl:
-        loading || !profile || !profile.paymentProfileUrl
-          ? ''
-          : profile.paymentProfileUrl,
-      twitterProfileUrl:
-        loading || !profile || !profile.twitterProfileUrl
-          ? ''
-          : profile.twitterProfileUrl,
-      facebookProfileUrl:
-        loading || !profile || !profile.facebookProfileUrl
-          ? ''
-          : profile.facebookProfileUrl,
-      githubProfileUrl:
-        loading || !profile || !profile.githubProfileUrl
-          ? ''
-          : profile.githubProfileUrl,
-      linkedinProfileUrl:
-        loading || !profile || !profile.linkedinProfileUrl
-          ? ''
-          : profile.linkedinProfileUrl,
-      calendlyProfileUrl:
-        loading || !profile || !profile.calendlyProfileUrl
-          ? ''
-          : profile.calendlyProfileUrl,
-    });
+    setFormData(profile);
 
     // eslint-disable-next-line
   }, []);
@@ -96,7 +40,7 @@ const UserForm = ({ profile, loading }) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
+  });
 
   // Proceed to next step
   const nextStep = () => {
@@ -118,7 +62,9 @@ const UserForm = ({ profile, loading }) => {
         loading={loading}
       />
     );
-  } else if (step === 2) {
+  } 
+  
+  else if (step === 2) {
     return (
       <FormWorkDetails
         prevStep={prevStep}
@@ -129,7 +75,9 @@ const UserForm = ({ profile, loading }) => {
         loading={loading}
       />
     );
-  } else if (step === 3) {
+  } 
+
+  else if (step === 3) {
     return (
       <FormSocialDetails
         prevStep={prevStep}
@@ -140,7 +88,9 @@ const UserForm = ({ profile, loading }) => {
         loading={loading}
       />
     );
-  } else if (step === 4) {
+  } 
+
+  else if (step === 4) {
     return (
       <Confirm prevStep={prevStep} nextStep={nextStep} formData={formData} />
     );
