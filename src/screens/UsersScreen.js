@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { BiSearch } from 'react-icons/bi';
 import UsersContent from '../components/users/UsersContent';
-import { getAllProfiles } from '../actions/profileActions';
-import Message from '../components/layouts/Message';
 import Spinner from '../components/layouts/Spinner';
 import {
   PrimaryHeading,
@@ -13,6 +10,9 @@ import {
   TitleFilter,
   Filter,
 } from './ScreenResources';
+import useTeams from '../hooks/useTeams';
+import useWidget from '../hooks/useWidget';
+import useAuth from '../hooks/useAuth';
 
 const TableHead = styled.ul`
   background: #f8f7ff;
@@ -38,19 +38,21 @@ const TableHead = styled.ul`
 `;
 
 const UsersScreen = () => {
-  const dispatch = useDispatch();
 
   // Selectors
-  const profiles = useSelector((state) => state.allProfiles.profiles);
-  const error = useSelector((state) => state.allProfiles.error);
-  const loading = useSelector((state) => state.allProfiles.loading);
-  const user = useSelector((state) => state.userInfo.user);
+
+  const {profiles,fetchAllProfiles} = useTeams()
+  const {loading} = useWidget();
+  const {profile:user} = useAuth();
+
+  const fetchProfilesRef = useRef(fetchAllProfiles)
 
   useEffect(() => {
-    if (!profiles) {
-      dispatch(getAllProfiles());
+    if (!profiles?.length) {
+      fetchProfilesRef.current()
     }
-  }, [dispatch, profiles]);
+    console.log('profiles',profiles)
+  }, [profiles]);
 
   const [filterText, setFilterText] = useState('');
 
@@ -64,7 +66,7 @@ const UsersScreen = () => {
       <TitleFilter>
         <PrimaryHeading className='text-primary'>Users </PrimaryHeading>
 
-        {!error && (
+        {(
           <Filter>
             <BiSearch />
             <input
@@ -78,9 +80,9 @@ const UsersScreen = () => {
       </TitleFilter>
 
       {loading && <Spinner />}
-      {error && error.msg && <Message msg={error.msg} variant='error' />}
+      {/* {error && error.msg && <Message msg={error.msg} variant='error' />} */}
 
-      {profiles && (
+      {profiles?.length && (
         <ContentWrapper>
           <TableHead>
             <li>Name</li>

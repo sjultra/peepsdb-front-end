@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { capitalizeString } from '../../utils/helpers';
 
 const Item = styled.ul`
   display: grid;
@@ -37,22 +38,22 @@ const StatusIndicator = styled.span`
 const UsersContent = ({ profiles, filterText }) => {
   const filterUsers = (item) => {
     return (
-      item.firstname.toLowerCase().includes(filterText.toLowerCase()) ||
-      item.lastname.toLowerCase().includes(filterText.toLowerCase()) ||
-      item.googleGmailId.toLowerCase().includes(filterText.toLowerCase()) ||
-      item.role.toLowerCase().includes(filterText.toLowerCase())
+      item?.firstName?.toLowerCase().includes(filterText.toLowerCase()) ||
+      item?.lastName?.toLowerCase().includes(filterText.toLowerCase()) ||
+      item?.googleGmailId?.toLowerCase().includes(filterText.toLowerCase()) ||
+      item?.role.toLowerCase().includes(filterText.toLowerCase())
     );
   };
 
   return (
     <div>
-      {profiles &&
+      {profiles?.length &&
         profiles.filter(filterUsers).map((profile, index) => {
-          const { user, firstname, lastname, googleGmailId, role } = profile;
+          const { _id:user, firstName:firstname, lastName:lastname, googleGmailId, role } = profile;
 
-          const fName = firstname[0].toUpperCase() + firstname.slice(1);
-          const lName = lastname[0].toUpperCase() + lastname.slice(1);
-
+          const fName = capitalizeString(firstname);
+          const lName = capitalizeString(lastname);
+          console.log('user id',user)
           return (
             <Link key={index} to={`/admin/users/${user}`}>
               <Item>

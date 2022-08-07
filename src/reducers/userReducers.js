@@ -25,7 +25,6 @@ export const userLoginReducer = (state = userLoginInitialState, action) => {
         isAuthenticated: true,
       };
 
-
     case RESET_STATE:
       localStorage.removeItem('peepdb-auth-token');
       return {

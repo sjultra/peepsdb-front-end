@@ -3,6 +3,8 @@ import { isRejectedWithValue } from "@reduxjs/toolkit";
 import auth from './reducers/auth';
 import widget from './reducers/widget';
 import meeting from './reducers/meeting';
+import team from './reducers/team';
+
 import { getAdoProjectsReducer, getAllIssuesReducer, getAllWorkItemsDetailsReducer, getAllWorkItemsIdReducer, getJiraLabelsReducer, getLabelIssuesReducer, getProjectWorkItemsReducer, setAdoFilterReducer, setJiraFilterReducer, toggleReducer } from '../reducers';
 
 
@@ -21,6 +23,7 @@ const rootReducer = combineReducers({
     jiraFilter: setJiraFilterReducer,
     adoProjects: getAdoProjectsReducer,
     toggle: toggleReducer,
+    team
     
 });
   
