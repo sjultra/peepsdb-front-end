@@ -75,6 +75,7 @@ export const Name = styled.div`
 const SignOut = styled.p`
   font-weight: 500;
   cursor: pointer;
+  width:100%
 `;
 
 export const Margin = styled.div`
@@ -87,7 +88,7 @@ export const Margin = styled.div`
 const UserDropdown = ({ user }) => {
 
   const {
-    username,
+    alias,
     firstName: firstname,
     lastName: lastname,
     role,
@@ -107,8 +108,8 @@ const UserDropdown = ({ user }) => {
     borderRadius: "50%",
   };
 
-  const displayName = username ? (
-    username
+  const displayName = alias ? (
+    alias
   ) : firstname && lastname ? (
     <>
       {" "}
@@ -126,13 +127,13 @@ const UserDropdown = ({ user }) => {
         </MenuButton>
         <MenuList>
           <MenuItem>
-            <Link style={{display:'flex'}} to="/profile">
+            <Link style={{display:'flex',width:'100%'}} to="/profile">
               {displayName}
               <Text>({role})</Text>
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link to="/meeting">
+            <Link style={{display:'flex',width:'100%'}} to="/meeting">
               <p
                 // onClick={() => setOpenDropdown(false)}
               >
@@ -143,7 +144,7 @@ const UserDropdown = ({ user }) => {
 
           {role === "Admin" && (
             <MenuItem>
-              <Link to="/admin/users">
+              <Link style={{display:'flex',width:'100%'}} to="/admin/users">
                 <p
                   style={{ margin: "1rem 0" }}
                   // onClick={() => setOpenDropdown(false)}

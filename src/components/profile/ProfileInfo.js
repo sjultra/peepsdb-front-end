@@ -96,7 +96,7 @@ const ProfileInfo = ({ profile }) => {
     githubProfileUrl,
     linkedinProfileUrl,
     calendlyProfileUrl,
-  } = profile;
+  } = profile || {};
 
 
 

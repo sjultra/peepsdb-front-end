@@ -13,6 +13,8 @@ const EditProfileScreen = () => {
 
   const {loading} = useWidget()
 
+  console.log('user profile',profile);
+
   if (!loading && profile) {
     return <UserForm profile={profile} loading={loading} />;
   } else if (!loading && !profile) {

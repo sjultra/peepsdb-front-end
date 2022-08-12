@@ -12,6 +12,7 @@ const UserForm = ({ profile, loading }) => {
     skypeId: '',
     googleGmailId: '',
     appleEmailId: '',
+    microsoftEmailId:'', 
     phone: '',
     timeZoneUrl: '',
     daysPerWeek: '',
@@ -25,6 +26,8 @@ const UserForm = ({ profile, loading }) => {
     githubProfileUrl: '',
     linkedinProfileUrl: '',
     calendlyProfileUrl: '',
+    provider:profile?.provider
+    
   });
 
   useEffect(() => {

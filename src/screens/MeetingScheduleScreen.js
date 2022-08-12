@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import MeetingScheduleContent from '../components/meeting/MeetingScheduleContent';
@@ -10,7 +10,7 @@ import {
   TitleFilter,
   Filter,
 } from './ScreenResources';
-import useMeetings from '../hooks/useMeetings';
+import useTeams from '../hooks/useTeams';
 import useWidget from '../hooks/useWidget';
 
 const TableHead = styled.div`
@@ -38,13 +38,15 @@ const TableHead = styled.div`
 
 const MeetingScheduleScreen = () => {
 
-  const {profiles} = useMeetings();
+  const {profiles,fetchAllProfiles} = useTeams();
 
   const {loading} = useWidget()
 
-  // Selectors
-  const error = false;
+  useEffect(()=>{
+    !profiles.length && fetchAllProfiles()
+  },[])
 
+  const error = false;
 
   const [filterText, setFilterText] = useState('');
 
@@ -52,9 +54,11 @@ const MeetingScheduleScreen = () => {
   return (
     <div>
       <TitleFilter>
+        
         <PrimaryHeading className='text-primary'>
           Schedule Meeting
         </PrimaryHeading>
+
         {!error && (
           <Filter>
             <BiSearch />
@@ -66,6 +70,7 @@ const MeetingScheduleScreen = () => {
             />
           </Filter>
         )}
+
       </TitleFilter>
 
       {loading && <Spinner />}

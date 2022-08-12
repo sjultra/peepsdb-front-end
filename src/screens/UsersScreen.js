@@ -57,9 +57,9 @@ const UsersScreen = () => {
   const [filterText, setFilterText] = useState('');
 
   // Ensure the page is only accessible by Admins
-  if (user && user.role !== 'Admin') {
-    return <Redirect to='/' />;
-  }
+  // if (user && user.role !== 'Admin') {
+  //   return <Redirect to='/' />;
+  // }
 
   return (
     <div>

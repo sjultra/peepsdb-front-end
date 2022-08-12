@@ -5,7 +5,7 @@ import useAuthActions from './useAuth';
 
 const useLogin = ()=>{
 
-    const {setAuth,auth} = useAuthActions()
+    const {setAuth,auth,fetchMyProfile} = useAuthActions()
     
     const hrefSplit = window.location.href.split('?token=');
 
@@ -19,9 +19,11 @@ const useLogin = ()=>{
         token: query || browserToken
     })
 
-    console.log('browserToken',auth)
+    // console.log('browserToken',auth)
 
     const setAuthRef = useRef(setAuth);
+
+    const fetchMyProfileRef = useRef(fetchMyProfile);
 
 
     useEffect(()=>{
@@ -54,6 +56,7 @@ const useLogin = ()=>{
                             token:tokenRef.current.token,
                             isAuthenticated:true,                       
                         })
+                        fetchMyProfileRef.current(tokenRef.current?.token);
 
                         data.token && localStorage.setItem('peepsdb-auth',JSON.stringify(data));
     

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 import useAuthActions from '../../hooks/useAuth';
+import ModalComponent from '../layouts/Modal';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   // Selectors
@@ -11,15 +13,38 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const isAuthenticated = auth?.isAuthenticated ?true:false;
 
 
+  const RouteLayout = styled.div`
+  
+    padding: 0 5rem;
 
-  return (  
-    <Route
-      {...rest}
-      render={(props) =>
-        !isAuthenticated ? <Redirect to='/login' /> : <Component {...props} />
-      }
-    />
-  );
+    @media (max-width: 768px) {
+      padding: 0 3rem;
+    }
+
+    @media (max-width: 450px) {
+      padding: 0 2rem;
+    }
+
+
+  `
+
+  const memoizeRenderedComponent = useMemo(()=>  
+  
+  <Route
+    {...rest}
+    render={(props) =>
+      !isAuthenticated ? 
+      <Redirect to='/login' /> : 
+      <RouteLayout>
+        <ModalComponent/>
+        <Component {...props} />
+      </RouteLayout>
+    }
+  />
+
+  ,[isAuthenticated,Component])
+
+  return ( memoizeRenderedComponent );
 };
 
 export default PrivateRoute;

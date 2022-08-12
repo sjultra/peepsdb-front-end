@@ -28,13 +28,14 @@ const FormUserDetails = ({
   const toast = useToast();
 
   const {
-    firstName:firstname,
-    lastName:lastname,
+    firstName,
+    lastName,
     alias,
     skypeId,
     googleGmailId,
     appleEmailId,
     phone,
+    microsoftEmailId
   } = formData || {};
 
 
@@ -51,19 +52,20 @@ const FormUserDetails = ({
 
     
     const payload = {
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       alias,
-      skypeId,
+      // skypeId,
       googleGmailId,
-      appleEmailId,
+      // appleEmailId,
       phone,
     }
+
     console.log('formdata',payload)
 
     let error ='';
     if(!Object.values(payload).every(value=>value)){
-      error='All fields are reqired'
+      error='Please enter all required fields'
     }
     else if (!validateEmail(googleGmailId)) {
       error= ('Invalid email')
@@ -79,7 +81,8 @@ const FormUserDetails = ({
         title:'Error',
         description:error,
         status:'error',
-        position:'top'
+        position:'top',
+        isClosable:true
       })
     }
 
@@ -89,7 +92,7 @@ const FormUserDetails = ({
   };
 
   const headingText =
-    loading || !profile ? (
+    loading || !profile?.profileSetup ? (
       <span className='text-primary'>Registration</span>
     ) : (
       <Fragment>
@@ -110,13 +113,13 @@ const FormUserDetails = ({
         <Box flex={1}>
 
           <FormControl>
-            <label htmlFor='firstname'>
-              Firstname <span>*</span>
+            <label htmlFor='firstName'>
+              First Name <span>*</span>
             </label>
             <input
               type='text'
-              name='firstname'
-              value={firstname}
+              name='firstName'
+              value={firstName}
               onChange={(e) => onChange(e)}
             />
           </FormControl>
@@ -124,13 +127,13 @@ const FormUserDetails = ({
 
         <Box flex={1}>
           <FormControl>
-            <label htmlFor='lastname'>
-              Lastname <span>*</span>
+            <label htmlFor='lastName'>
+              Last Name <span>*</span>
             </label>
             <input
               type='text'
-              name='lastname'
-              value={lastname}
+              name='lastName'
+              value={lastName}
               onChange={(e) => onChange(e)}
             />
           </FormControl>
@@ -141,7 +144,7 @@ const FormUserDetails = ({
 
         <Box flex={1}>
           <FormControl>
-            <label htmlFor='alias'>Alias</label>
+            <label htmlFor='alias'>Alias <span>*</span> </label>
             <input
               type='text'
               name='alias'
@@ -174,8 +177,9 @@ const FormUserDetails = ({
             <input
               type='email'
               name='googleGmailId'
-              value={googleGmailId}
+              {...formData?.provider==='google'?{placeholder:googleGmailId}:{value:googleGmailId} }
               onChange={(e) => onChange(e)}
+              {...formData?.provider==='google'?{disabled:true}:{}}
             />
           </FormControl>
         </Box>
@@ -194,17 +198,40 @@ const FormUserDetails = ({
 
       </Flex>
       
-      <FormControl>
-        <label htmlFor='phone'>
-          Phone <span>*</span>
-        </label>
-        <input
-          type='number'
-          name='phone'
-          value={phone}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
+      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+
+        <Box flex={1}>
+            <FormControl>
+              <label htmlFor='phone'>
+                Microsoft email
+              </label>
+              <input
+                type='string'
+                name='microsoftEmailId'
+                {...formData?.provider==='microsoft'?{placeholder:microsoftEmailId}:{value:microsoftEmailId} }
+                onChange={(e) => onChange(e)}
+                {...formData?.provider==='microsoft'?{disabled:true}:{}}
+                />
+            </FormControl>
+        </Box>
+
+        <Box flex={1}>
+            <FormControl>
+              <label htmlFor='phone'>
+                Phone <span>*</span>
+              </label>
+              <input
+                type='number'
+                name='phone'
+                value={phone}
+                onChange={(e) => onChange(e)}
+              />
+            </FormControl>
+        </Box>
+
+      </Flex>
+
+
       <BtnWrapper>
         <BtnNext onClick={(e) => proceed(e)}>Next</BtnNext>
       </BtnWrapper>

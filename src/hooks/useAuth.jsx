@@ -1,21 +1,23 @@
 import { authActions, selectAuth } from "../store/reducers/auth";
 import  {useDispatch,useSelector} from 'react-redux'
-import { useCallback } from "react";
-import Axios from '../utils/axios'
-import useWidget from "./useWidget";
+import { useCallback, useState } from "react";
 import { capitalizeString } from "../utils/helpers";
+import useAxios from "./useAxios";
 
 const useAuthActions = ()=>{
 
 
     const {setAuth:set,setProfile:setP} = authActions;
 
-    const {setLoading} = useWidget()
+
+    const [loading,setLoading] = useState(false)
 
     const dispatch = useDispatch();
 
+
     const {auth,profile} = useSelector(selectAuth)
 
+    const Axios = useAxios()
 
     //store update actions
 
@@ -32,30 +34,28 @@ const useAuthActions = ()=>{
     //endpoints
     
     const updateUser  = async(payload)=>{
-        try{
-            let req = await Axios[profile?.isOnboarded?'put':'post']('/profiles',payload);
+        let req = await Axios[profile?.profileSetup?'put':'post']('/profiles',payload);
 
-            let {data,status} = req;
-            
-            return {
-                data:data,
-                status
-            }
-
-
+        let {data,status} = req;
+        
+        return {
+            data:data,
+            status
         }
-        catch(err){
-            return {
-                error:err
-            }
-        }
+
+
     }
     
-    const fetchMyProfile =async()=>{
+    const fetchMyProfile = async(token)=>{
 
         try{
-            setLoading(true)
-          let req = await Axios.get('/profiles/me');
+
+          setLoading(true)
+          let req = await Axios.get('/profiles/me',{
+            ...token?{
+                headers:{'Authorization':token}
+            }:{}
+          });
             
           let {data} = req
 
@@ -69,14 +69,16 @@ const useAuthActions = ()=>{
 
         }
         catch(err){
-          console.error('err at fectching my profile',err)
+          console.error('err at fetching my profile',err)
         }
         finally{
             setLoading(false)
         }
     }
 
+    
   
+    
     
   
     return {
@@ -86,7 +88,9 @@ const useAuthActions = ()=>{
         auth,
         profile,
         updateUser,
-        fetchMyProfile
+        fetchMyProfile,
+        setLoading,
+        loading,
     }
 
 }

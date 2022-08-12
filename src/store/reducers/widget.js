@@ -5,10 +5,10 @@ const initialState = {
     loading:false,
     modal:{
         closeOnEsc:true,
-        open:false,
-        size:'md',
-        title:'',
+        size:'4xl',
         children:null,
+        payload:null,
+        isOpen:false
     }
 }
 
@@ -17,14 +17,22 @@ const widgetSlice = createSlice({
     initialState,
     reducers: {
         setLoading :(state,action)=>{
-            state.loading=action.payload
+            state.loading=action.payload;
         },
-
-        setModal :(state,action)=>{
-            state.modal=action.payload
+        openMod :(state,action)=>{
+            let modalPayload = {
+                ...state.modal,
+                isOpen:action.payload?.isOpen,
+                children:action.payload?.children,
+                payload:action?.payload?.payload,
+                closeCb:()=> action?.payload?.onClose && action.payload.onClose()
+            }
+            state.modal=modalPayload;
         },
-
-        
+        closeMod:(state)=>{ 
+            state.modal.closeCb && state.modal.closeCb();
+            state.modal = initialState.modal;
+        }        
         
 
     },

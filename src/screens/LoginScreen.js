@@ -112,13 +112,14 @@ const LoginScreen = () => {
 
   // Redirect if logged in
   if (auth?.token) {
+    console.log('redirecting after login')
     return <Redirect to='/' />;
   }
 
   const backendUrl = backendURL;
 
 
-  console.log('envs',backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL,)
+  // console.log('envs',backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL,)
 
 
   return (

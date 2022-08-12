@@ -10,6 +10,7 @@ import {
 } from './FormResources';
 import useAuthActions from '../../hooks/useAuth';
 import { useToast } from '@chakra-ui/react';
+import { convertCamelCase } from '../../utils/helpers';
 
 const Details = styled.div`
   @media (max-width: 800px) {
@@ -64,6 +65,7 @@ const Confirm = ({ prevStep, formData }) => {
   const [loading,setLoading] = useState(false)
 
 
+
   const trimmedFormData =()=>{
     let obj = {}
     for (const key in formData) {
@@ -105,6 +107,7 @@ const Confirm = ({ prevStep, formData }) => {
   const proceed = async(e) => {
     e.preventDefault();
     // Send data to API
+    let errorPayload  = [];
     try{      
       setLoading(true)
       let req = await updateUser({...trimmedFormData(formData)});
@@ -117,18 +120,28 @@ const Confirm = ({ prevStep, formData }) => {
           status:'success',
           position:'top',
         })
-        setProfile(req.data);
+        setProfile( req.data?._doc? req.data?._doc:req.data);
         history.push(statusText==='created'?'/':'/profile');
       }
     }
     catch(err){
-      if (err.error){
-        let error =err.error?.response
+      console.log('error at create/update profile',err?.response);
+        let error =err?.response?.data;
+        if(error?.errors){
+         (error?.errors.map((entry,index)=> index < 3 ? errorPayload.push(`${convertCamelCase(entry['param'])}: ${entry['msg']}`): undefined  ) );
+        }        
 
-        console.log('error at create/update profile',error);
-      }
     }
     finally{
+      errorPayload.length &&  
+      toast({
+        title:'Request failed',
+        description: errorPayload.join(', '),
+        status:'error',
+        position: 'top',
+        duration:errorPayload.length>1?5000:15000
+      })
+
       setLoading(false);
     }
 
