@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
 import { BiSearch } from 'react-icons/bi';
 import UsersContent from '../components/users/UsersContent';
 import Spinner from '../components/layouts/Spinner';
@@ -12,7 +11,8 @@ import {
 } from './ScreenResources';
 import useTeams from '../hooks/useTeams';
 import useWidget from '../hooks/useWidget';
-import useAuth from '../hooks/useAuth';
+// import useAuth from '../hooks/useAuth';
+import useGoback from '../hooks/useGoBack';
 
 const TableHead = styled.ul`
   background: #f8f7ff;
@@ -43,9 +43,11 @@ const UsersScreen = () => {
 
   const {profiles,fetchAllProfiles} = useTeams()
   const {loading} = useWidget();
-  const {profile:user} = useAuth();
+
 
   const fetchProfilesRef = useRef(fetchAllProfiles)
+
+  const goBack = useGoback({})
 
   useEffect(() => {
     if (!profiles?.length) {
@@ -63,6 +65,7 @@ const UsersScreen = () => {
 
   return (
     <div>
+      {goBack}
       <TitleFilter>
         <PrimaryHeading className='text-primary'>Users </PrimaryHeading>
 

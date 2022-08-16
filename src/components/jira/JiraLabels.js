@@ -10,6 +10,7 @@ import {
 import Spinner from '../layouts/Spinner';
 import JiraLabelContent from './JiraLabelContent';
 import Message from '../layouts/Message';
+import useAxios from '../../hooks/useAxios';
 
 const Wrapper = styled.div`
   margin-top: 4rem;
@@ -45,6 +46,11 @@ const JiraLabels = () => {
 
   const [search, setSearch] = useState('');
 
+  const Axios = useAxios();
+
+
+  const axiosRef = useRef(Axios)
+
   // Selectors
   const labels = useSelector((state) => state.jiraLabels.labels);
   const loading = useSelector((state) => state.jiraLabels.loading);
@@ -62,13 +68,13 @@ const JiraLabels = () => {
 
   useEffect(() => {
     if (!labelRef.current) {
-      dispatch(getJiraLabels());
+      dispatch(getJiraLabels(axiosRef.current));
     }
   }, [dispatch]);
 
   useEffect(() => {
     if (!issuesRef.current.length ) {
-      dispatch(getAllIssues(0));
+      dispatch(getAllIssues(0,axiosRef.current));
     } 
   }, [dispatch, total]);
 

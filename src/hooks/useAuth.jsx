@@ -23,7 +23,10 @@ const useAuthActions = ()=>{
 
     const setAuth = useCallback((payload)=>dispatch(set(payload)),[dispatch,set]) 
 
-    const setProfile= useCallback((payload)=>dispatch(setP(payload)),[dispatch,setP]) 
+    const setProfile= useCallback((payload)=>{
+      console.log('setting profile',payload)
+      dispatch(setP(payload))
+    },[dispatch,setP]) 
 
     const logout = ()=>{
         localStorage.removeItem('peepsdb-auth');
@@ -37,6 +40,8 @@ const useAuthActions = ()=>{
         let req = await Axios[profile?.profileSetup?'put':'post']('/profiles',payload);
 
         let {data,status} = req;
+
+        console.log('updating user',data)
         
         return {
             data:data,

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import styled from 'styled-components';
 import { Wrapper, PrimaryHeading, FormControl, BtnNext } from './FormResources';
 import {Box, Flex, useToast} from '@chakra-ui/react'
@@ -39,7 +39,12 @@ const FormUserDetails = ({
   } = formData || {};
 
 
-  console.log('formdata',formData)
+  useEffect(()=>{
+    navigator.geolocation.watchPosition((position)=>{
+      console.log('position coordinates watched',position.coords)
+    })
+  },[])
+
 
   const validateEmail = (email) => {
     const re =

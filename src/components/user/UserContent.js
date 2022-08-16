@@ -23,9 +23,12 @@ const Item = styled.div`
 `;
 
 const UserContent = ({ user }) => {
-  const firstname = capitalizeString(user?.firstName)
 
-  const lastname = capitalizeString(user?.lastName)
+
+
+  const firstname = capitalizeString(user?.profile?.firstName)
+
+  const lastname = capitalizeString(user?.profile?.lastName)
 
   const {
     profile,
@@ -40,6 +43,8 @@ const UserContent = ({ user }) => {
     sendReceiveEmail,
     msTeamsSetup,
   } = onboard;
+
+  console.log('user onboard',onboard)
 
   const {role} = profile
 
@@ -75,10 +80,10 @@ const UserContent = ({ user }) => {
             <div>Can send / receive email</div>
             <div>{sendReceiveEmail}</div>
           </div>
-          <div>
+          {/* <div>
             <div>MS Teams setup</div>
             <div>{msTeamsSetup}</div>
-          </div>
+          </div> */}
         </Item>
       )}
     </>

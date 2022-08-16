@@ -94,11 +94,13 @@ const UserDropdown = ({ user }) => {
     role,
   } = user;
 
-  const { logout } = useAuthActions();
+  const { logout,profile:auth } = useAuthActions();
 
   // const onToggleDropdown = () => {
   //   setOpenDropdown(!openDropdown);
   // };
+
+  console.log('auth in userdropdown',auth)
 
   const style = {
     color: "#000",
@@ -132,15 +134,19 @@ const UserDropdown = ({ user }) => {
               <Text>({role})</Text>
             </Link>
           </MenuItem>
-          <MenuItem>
-            <Link style={{display:'flex',width:'100%'}} to="/meeting">
-              <p
-                // onClick={() => setOpenDropdown(false)}
-              >
-                Meeting
-              </p>
-            </Link>
-          </MenuItem>
+          { 
+              auth?.profileSetup?
+              <MenuItem>
+                <Link style={{display:'flex',width:'100%'}} to="/meeting">
+                  <p
+                    // onClick={() => setOpenmefDropdown(false)}
+                  >
+                    Meeting
+                  </p>
+                </Link>
+              </MenuItem>:
+              <></>
+          }
 
           {role === "Admin" && (
             <MenuItem>

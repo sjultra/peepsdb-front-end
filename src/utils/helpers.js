@@ -13,6 +13,8 @@ export let capitalizeString = (string)=>{
 
 }
 
+export const renderIfJSXExists = (entry,fallBack=null)=>entry?entry:fallBack
+
 
 export const convertCamelCase = (str )=>
     str.replace(/([A-Z])/g, ' $1')

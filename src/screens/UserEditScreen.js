@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
 import {
   updateUserOnboardStatus,
 } from '../actions/onboardActions';
 import Spinner from '../components/layouts/Spinner';
 import {
-  Wrapper,
   PrimaryHeading,
   FormControl,
   BtnNext,
@@ -40,7 +38,6 @@ export const BtnWrapper = styled.div`
 
 const UserEditScreen = ({ payload }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   //hooks
   
   const {loading} = useWidget()
@@ -196,7 +193,7 @@ const UserEditScreen = ({ payload }) => {
               </FormControl>
             </Box>
 
-            <Box flex={1}>
+            {/* <Box flex={1}>
               <FormControl>
                 <label htmlFor='msTeamsSetup'>MS Teams setup</label>
                 <select
@@ -208,7 +205,7 @@ const UserEditScreen = ({ payload }) => {
                 </select>
               </FormControl>
             </Box>
-
+ */}
           </Flex>
 
           <BtnWrapper>

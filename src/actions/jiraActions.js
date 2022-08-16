@@ -30,7 +30,7 @@ import Axios from '../utils/axios.js';
 
 
 // GET ALL JIRA LABELS
-export const getJiraLabels = () => async (dispatch) => {
+export const getJiraLabels = (AxiosInstance=Axios) => async (dispatch) => {
   try {
     dispatch({
       type: GET_JIRA_LABELS_REQUEST,
@@ -41,7 +41,8 @@ export const getJiraLabels = () => async (dispatch) => {
     //   config
     // );
 
-    const res = await Axios.get('/jira/labels');
+
+    const res = await AxiosInstance.get('/jira/labels');
 
     console.log('jira labels at frontend',res.data)
 
@@ -59,14 +60,14 @@ export const getJiraLabels = () => async (dispatch) => {
 
 // GET ALL JIRA ISSUES
 export const getAllIssues =
-  (startAt = 0) =>
+  (startAt = 0,AxiosInstance=Axios) =>
   async (dispatch) => {
     try {
       dispatch({
         type: GET_ALL_ISSUES_REQUEST,
       });
 
-      const res = await Axios.get(`/jira/issues?start=${startAt}`);
+      const res = await AxiosInstance.get(`/jira/issues?start=${startAt}`);
 
       const {data} = res;
 
@@ -99,7 +100,7 @@ export const getAllIssues =
 
 // GET LABEL ISSUES
 export const getLabelIssues =
-  (label, startAt = 0) =>
+  (label, startAt = 0,AxiosInstance=Axios) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -110,7 +111,7 @@ export const getLabelIssues =
       //   `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/search?jql=labels%20IN%20(%22${label}%22)&startAt=${startAt}&maxResults=100`,
       //   config
       // );
-      const res = await Axios.get(`/jira/label/issues?start=${startAt}&label=${label} `);
+      const res = await AxiosInstance.get(`/jira/label/issues?start=${startAt}&label=${label} `);
 
       dispatch({
         type: GET_LABEL_ISSUES_SUCCESS,

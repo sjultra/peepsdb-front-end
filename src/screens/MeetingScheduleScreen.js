@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react';
+import React, {  useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import MeetingScheduleContent from '../components/meeting/MeetingScheduleContent';
@@ -12,6 +12,8 @@ import {
 } from './ScreenResources';
 import useTeams from '../hooks/useTeams';
 import useWidget from '../hooks/useWidget';
+import useAuthActions from '../hooks/useAuth';
+import { Redirect } from 'react-router-dom';
 
 const TableHead = styled.div`
   background: #f8f7ff;
@@ -38,18 +40,26 @@ const TableHead = styled.div`
 
 const MeetingScheduleScreen = () => {
 
-  const {profiles,fetchAllProfiles} = useTeams();
+  const {profiles,fetchAllProfiles,} = useTeams();
+
+  const {profile:auth} = useAuthActions()
 
   const {loading} = useWidget()
 
+  const profileRef = useRef(profiles)
+
   useEffect(()=>{
-    !profiles.length && fetchAllProfiles()
-  },[])
+    !profileRef.current.length && fetchAllProfiles()
+  },[fetchAllProfiles])
 
   const error = false;
 
   const [filterText, setFilterText] = useState('');
 
+
+  if(auth?.token && !auth?.profileSetup){
+    return <Redirect to='/' />
+  }
 
   return (
     <div>

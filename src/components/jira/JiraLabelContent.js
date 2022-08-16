@@ -122,7 +122,7 @@ const JiraLabelContent = ({
                   <Link to={`/jira_issues/${label}`} key={index}>
                     <Issue>
                       <ProjectName>{label}</ProjectName>
-                      <IssuesCount>
+                      {/* <IssuesCount>
                         <div>
                           {issues && issues.length === total
                             ? issues.filter((issue) =>
@@ -131,7 +131,7 @@ const JiraLabelContent = ({
                             : "-"}
                         </div>
                         <div>Issues</div>
-                      </IssuesCount>
+                      </IssuesCount> */}
                     </Issue>
                   </Link>
                 );

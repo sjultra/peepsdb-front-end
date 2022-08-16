@@ -12,6 +12,7 @@ import { capitalizeString } from '../utils/helpers';
 import useWidget from '../hooks/useWidget';
 import UserEditScreen from './UserEditScreen';
 import { Flex, Text } from '@chakra-ui/react';
+import useGoBack from '../hooks/useGoBack';
 
 
 const TitleEdit = styled.div`
@@ -99,7 +100,9 @@ const UserScreen = ({ match }) => {
 
   const fetchUserRef = useRef(fetchUserProfile)
 
-  const id = match?.params?.id
+  const id = match?.params?.id;
+
+  const goback = useGoBack({});
 
   useEffect(() => {
     (
@@ -126,6 +129,9 @@ const UserScreen = ({ match }) => {
   }
   return (
     <div>
+
+      {goback}
+
       <TitleEdit>
         <PrimaryHeading className='text-primary'>
           {firstname ? firstname : 'User'}

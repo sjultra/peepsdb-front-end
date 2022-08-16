@@ -58,9 +58,10 @@ const UsersContent = ({ profiles, filterText }) => {
             <Link key={index} to={`/admin/users/${user}`}>
               <Item>
                 <li>
-                  {fName} {lName}
+                  {fName && lName? 
+                    <>{fName} {lName} </> : 'Nil'}
                 </li>
-                <li>{googleGmailId}</li>
+                <li>{googleGmailId || 'Nil'}</li>
                 <li>{role}</li>
                 <Status>
                   <StatusIndicator role={role}></StatusIndicator>
