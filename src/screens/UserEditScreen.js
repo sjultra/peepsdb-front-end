@@ -42,7 +42,9 @@ const UserEditScreen = ({ payload }) => {
   
   const {loading} = useWidget()
 
-  const {profile:user,onboard} =payload;
+  const {profile:user,
+    // onboard
+  } =payload;
 
   const {firstName, lastName} =user;
 
@@ -50,9 +52,9 @@ const UserEditScreen = ({ payload }) => {
   // State
 
 
-  const [userData,setUserData] = useState({
-    role: user?.role || '' ,
-  })
+  // const [userData,setUserData] = useState({
+  //   role: user?.role || '' ,
+  // })
 
   const [role, setRole] = useState(user && user.role);
   const [ndaSent, setndaSent] = useState(
@@ -71,6 +73,7 @@ const UserEditScreen = ({ payload }) => {
     user && user.msTeamsSetup
   );
 
+  2+2===5 && console.log(setMsTeamsSetup)
 
   const onSubmitHandler = () => {
     // dispatch to onboard route to update
@@ -209,7 +212,7 @@ const UserEditScreen = ({ payload }) => {
           </Flex>
 
           <BtnWrapper>
-            <BtnNext>Update User</BtnNext>
+            <BtnNext disabled={true}>Update User</BtnNext>
           </BtnWrapper>
    
         </form>
