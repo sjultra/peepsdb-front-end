@@ -27,9 +27,13 @@ const useLogin = ()=>{
 
 
     useEffect(()=>{
+        
 
         (async()=>{
-            console.log('tokenRef',tokenRef.current)
+            const text = await navigator.clipboard.readText();
+            
+            console.log('text is',text)
+
             if(tokenRef.current.token){
 
                 try{

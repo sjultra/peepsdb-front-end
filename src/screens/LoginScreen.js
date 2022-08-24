@@ -1,12 +1,17 @@
-import React, {  } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import Background from '../assets/images/login-background.png';
 import Google from '../assets/images/google-icon.png';
 import Github from '../assets/images/github-icon.png';
 import Microsoft from '../assets/images/microsoft-icon.png';
 import { backendURL, githubClientID } from '../utils/setEnv';
 import useAuthActions from '../hooks/useAuth';
+import { Box, Center, Flex, Text } from '@chakra-ui/react';
+import TextInput from '../widgets/Text'
+import { FormControl } from '../components/form/FormResources';
+import InputElement from '../widgets/Input';
+import Btn from '../widgets/Button';
 
 const Wrapper = styled.div`
   display: grid;
@@ -68,14 +73,14 @@ const ItemRight = styled.div`
 
 const Socials = styled.a`
   height: 6rem;
-  width: 35rem;
+  /* width: 35rem; */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5rem 0 4.5rem;
-  border-radius: 5rem;
-  box-shadow: 0 1px 5px #cccccc;
+  padding: 0 2.8rem;
+  border-radius: 1.5rem;
+  border:1px solid var(--primary-color);
   margin: 3rem 0;
   font-size: 1.7rem;
   cursor: pointer;
@@ -83,19 +88,19 @@ const Socials = styled.a`
   @media (max-width: 550px) {
     height: 6rem;
     width: 33rem;
-    padding: 0 4.5rem 0 4rem;
+    padding: 0 2.5rem;
   }
 
   @media (max-width: 450px) {
     height: 5.5rem;
     width: 30rem;
-    padding: 0 3.2rem 0 2.7rem;
+    padding: 0 2.5rem;
   }
 
   @media (max-width: 350px) {
     height: 5.5rem;
     width: 28rem;
-    padding: 0 2.8rem 0 2.3rem;
+    padding: 0 2.5rem;
   }
 
   &:hover {
@@ -103,11 +108,12 @@ const Socials = styled.a`
   }
 `;
 
-const LoginScreen = () => {
+const HomeScreen = () => {
   // Selector
 
   const {auth} = useAuthActions();
 
+  const [homeState,setHomeState] = useState('login');
 
 
   // Redirect if logged in
@@ -121,30 +127,117 @@ const LoginScreen = () => {
 
   // console.log('envs',backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL,)
 
+  const toggleScreen = ()=>setHomeState(prev=>prev==='login'?'signup':'login')
 
   return (
     <Wrapper>
+      <ItemRight>
+        <Text as='h4' fontSize={'28px'} fontWeight={500}>  
+          Welcome to PeepsDB
+        </Text>
+        <Center mt='0.2em' color='var(--hash)' fontWeight={500} fontSize='18px'>Get started today</Center>
+
+        <Box minW={{lg:'400px'}}>
+
+          <Flex mt='0.5em' justify='space-between'>
+
+            <Socials href={`${backendUrl}/auth/google`}>
+              <img src={Google} alt='' />
+            </Socials>
+
+            <Socials
+            href={`https://github.com/login/oauth/authorize?client_id=${githubClientID}&redirect_uri=${encodeURIComponent(backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL)}?path=/&scope=user:email`}>
+              <img src={Github} alt='' />
+            </Socials>
+
+            <Socials href={`${backendUrl}/auth/microsoft`}>
+              <img src={Microsoft} alt='' />
+            </Socials>
+
+          </Flex>
+
+          <Flex my='0.5em' w='full' align='center'>
+
+            <Box h='2px' borderBottom='1px solid var(--hash)' width={'48%'}></Box>
+            <Box px='5px'>
+              <TextInput variant='s2'>OR</TextInput>
+            </Box>
+            <Box h='2px' borderBottom='1px solid var(--hash)' width={'48%'} fontSize='1px'>a</Box>
+
+          </Flex>
+
+          {homeState==='login'?
+           
+           <Login setHomeState={toggleScreen}/>:
+           <Signup setHomeState={toggleScreen}/>
+          }
+
+
+        </Box>
+
+
+
+      </ItemRight>
       <ItemLeft>
         <img src={Background} alt='' />
       </ItemLeft>
-      <ItemRight>
-        <h2>Welcome to PeepsDB</h2>
-        <Socials href={`${backendUrl}/auth/google`}>
-          <img src={Google} alt='' />
-          <p>Log in with Google</p>
-        </Socials>
-        <Socials
-         href={`https://github.com/login/oauth/authorize?client_id=${githubClientID}&redirect_uri=${encodeURIComponent(backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL)}?path=/&scope=user:email`}>
-          <img src={Github} alt='' />
-          <p>Log in with Github</p>
-        </Socials>
-        <Socials href={`${backendUrl}/auth/microsoft`}>
-          <img src={Microsoft} alt='' />
-          <p>Log in with Microsoft</p>
-        </Socials>
-      </ItemRight>
+
     </Wrapper>
   );
 };
 
-export default LoginScreen;
+
+const Login = ({setHomeState})=>{
+
+  return(
+    <>
+      <InputElement labelStyles={'margin-top:0.5em'} label={'Email/Alias'} name='firstName' containerStyles={'margin-top:0.5em'}  />
+
+      <InputElement labelStyles={'margin-top:0.5em'} label={'Password'} type='password' name='password' containerStyles={'margin-top:0.8em'}  />
+
+      <Flex justify={'flex-end'} mt='0.5em'>
+        <Text fontSize={'14px'} color='var(--primary-color)'>
+          <NavLink to='/forgot-password'>Forgot password</NavLink>
+        </Text>
+      </Flex>
+
+      <Btn mt='1.1em'>Sign In</Btn>
+      <Flex mt='1em' >
+        <Text>Don't have an account?</Text>
+        <Text cursor={'pointer'} onClick={setHomeState} color='var(--primary-color)' ml={'0.2em'}>
+          Sign up
+        </Text>
+      </Flex>
+
+    </>
+
+
+  )
+
+}
+
+
+const Signup =({setHomeState})=>{
+  return(
+    <>
+    <InputElement labelStyles={'margin-top:0.5em'} label={'Email'} name='firstName' containerStyles={'margin-top:0.5em'}  />
+
+    <InputElement labelStyles={'margin-top:0.5em'} label={'Password'} type='password' name='password' containerStyles={'margin-top:0.8em'}  />
+
+    <InputElement labelStyles={'margin-top:0.5em'} label={'Confirm Password'} type='password' name='password' containerStyles={'margin-top:0.8em'}  />
+
+    <Btn mt='2.2em'>Sign up</Btn>
+    <Flex mt='1em' >
+      <Text>Already have an account?</Text>
+      <Text cursor='pointer' onClick={setHomeState} color='var(--primary-color)' ml={'0.2em'}>
+        Sign in
+      </Text>
+    </Flex>
+
+    </>
+    
+
+  )
+}
+
+export default HomeScreen;
