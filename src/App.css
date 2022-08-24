@@ -5,6 +5,7 @@
   --primary-color: #5e55ef;
   --white-color: #fff;
   --dark-color: #000;
+  --hash:#827777;
 }
 
 .test-color {
@@ -22,7 +23,7 @@ html {
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
   font-size: 1.6rem;
   line-height: 1.7;
   background-color: var(--white-color);
@@ -46,10 +47,10 @@ button {
 }
 
 input, select {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
 }
 
-.padding-x {
+/* .padding-x {
   padding: 0 2rem;
 }
 
@@ -58,7 +59,7 @@ input, select {
     padding: 0 1.5rem;
   }
 }
-
+ */
 .text-primary {
   color: var(--primary-color);
 }

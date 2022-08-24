@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { capitalizeString } from '../../utils/helpers';
 
 const Item = styled.div`
   min-width: 70rem;
@@ -21,27 +22,35 @@ const Item = styled.div`
   }
 `;
 
-const UserContent = ({ userStatus }) => {
-  const firstname =
-    userStatus &&
-    userStatus.firstname[0].toUpperCase() + userStatus.firstname.slice(1);
+const UserContent = ({ user }) => {
 
-  const lastname =
-    userStatus &&
-    userStatus.lastname[0].toUpperCase() + userStatus.lastname.slice(1);
+
+
+  const firstname = capitalizeString(user?.profile?.firstName)
+
+  const lastname = capitalizeString(user?.profile?.lastName)
 
   const {
-    role,
-    mutualNdaSent,
-    mutualNdaSigned,
+    profile,
+    onboard,
+  } = user;
+
+
+  const {
+    ndaSent:mutualNdaSent,
+    ndaSigned:mutualNdaSigned,
     emailSetup,
     sendReceiveEmail,
     msTeamsSetup,
-  } = userStatus;
+  } = onboard;
+
+  console.log('user onboard',onboard)
+
+  const {role} = profile
 
   return (
     <>
-      {userStatus && (
+      {user && (
         <Item>
           <div>
             <div>Name</div>
@@ -57,24 +66,24 @@ const UserContent = ({ userStatus }) => {
 
           <div>
             <div>Mutual NDA sent</div>
-            <div>{mutualNdaSent}</div>
+            <div>{String(mutualNdaSent)}</div>
           </div>
           <div>
             <div>Mutual NDA signed</div>
-            <div>{mutualNdaSigned}</div>
+            <div>{String(mutualNdaSigned)}</div>
           </div>
           <div>
             <div>Email setup</div>
-            <div>{emailSetup}</div>
+            <div>{String(emailSetup)}</div>
           </div>
           <div>
             <div>Can send / receive email</div>
             <div>{sendReceiveEmail}</div>
           </div>
-          <div>
+          {/* <div>
             <div>MS Teams setup</div>
             <div>{msTeamsSetup}</div>
-          </div>
+          </div> */}
         </Item>
       )}
     </>

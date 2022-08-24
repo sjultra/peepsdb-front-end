@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { DetailsWrapper } from '../form/FormResources';
+import { Flex, Text } from '@chakra-ui/react';
+import { FiEdit } from 'react-icons/fi';
 
 const PrimaryHeading = styled.h1`
   margin: 2rem 0;
@@ -49,14 +51,14 @@ const Items = styled.div`
   }
 `;
 
-const BtnWrapper = styled.div`
+export const BtnWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 4rem;
 `;
 
-const Button = styled.div`
+export const Button = styled.div`
   display: inline-block;
   padding: 1rem 3rem;
   background: #5e55ef;
@@ -75,8 +77,8 @@ const Button = styled.div`
 
 const ProfileInfo = ({ profile }) => {
   const {
-    firstname,
-    lastname,
+    firstName:firstname,
+    lastName:lastname,
     alias,
     skypeId,
     googleGmailId,
@@ -94,7 +96,9 @@ const ProfileInfo = ({ profile }) => {
     githubProfileUrl,
     linkedinProfileUrl,
     calendlyProfileUrl,
-  } = profile;
+  } = profile || {};
+
+
 
   return (
     <DetailsWrapper>
@@ -102,6 +106,16 @@ const ProfileInfo = ({ profile }) => {
         <span className='text-primary'>User</span> Profile
       </PrimaryHeading>
       <Details>
+        <Flex justify={'flex-end'}>
+          <Link to='/edit-profile'>
+              <Flex p='0.4em 1em' borderRadius={'6px'} color={'white'} gap='0.5em' bg='var(--primary-color)' my='0.8em' align={'center'}>
+                <Text fontSize={'19px'}> Edit Profile</Text>
+                <FiEdit fontSize={'22px'} />
+              </Flex>
+          </Link>
+
+        </Flex>
+
         <Items>
           <div>Firstname</div>
           <div>{firstname ? firstname : ''}</div>
@@ -179,11 +193,6 @@ const ProfileInfo = ({ profile }) => {
           <div>{calendlyProfileUrl ? calendlyProfileUrl : ''}</div>
         </Items>
       </Details>
-      <BtnWrapper>
-        <Link to='/edit-profile'>
-          <Button>Edit Profile</Button>
-        </Link>
-      </BtnWrapper>
     </DetailsWrapper>
   );
 };

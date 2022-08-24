@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import UserDropdown from './UserDropdown';
+import useAuthActions from '../../hooks/useAuth';
 
 const Wrapper = styled.div`
   height: 8rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5rem;
   position: relative;
+  padding: 0 5rem;
 
   @media (max-width: 768px) {
     padding: 0 3rem;
@@ -27,17 +27,15 @@ const Wrapper = styled.div`
 
 const Navbar = () => {
   // Selectors
-  const user = useSelector((state) => state.userInfo.user);
-  const isAuthenticated = useSelector(
-    (state) => state.userLogin.isAuthenticated
-  );
+  const {auth} = useAuthActions()
+  const {isAuthenticated} = auth || {};
 
   return (
     <Wrapper>
       <h1>
         <Link to='/'>PeepsDB</Link>
       </h1>
-      {isAuthenticated && user && <UserDropdown user={user} />}
+      {isAuthenticated && auth && <UserDropdown user={auth} />}
     </Wrapper>
   );
 };

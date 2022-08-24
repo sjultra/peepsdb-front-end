@@ -1,12 +1,19 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { FaEdit } from 'react-icons/fa';
-import { Link, Redirect } from 'react-router-dom';
-import { getUserOnboardStatus } from '../actions/onboardActions';
+import { useEffect, useRef } from 'react';
+import { FiEdit } from 'react-icons/fi';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import Spinner from '../components/layouts/Spinner';
-import Message from '../components/layouts/Message';
+// import Message from '../components/layouts/Message';
 import UserContent from '../components/user/UserContent';
+import useTeams from '../hooks/useTeams';
+import useAuth  from '../hooks/useAuth';
+import { useState } from 'react';
+import { capitalizeString } from '../utils/helpers';
+import useWidget from '../hooks/useWidget';
+import UserEditScreen from './UserEditScreen';
+import { Flex, Text } from '@chakra-ui/react';
+import useGoBack from '../hooks/useGoBack';
+
 
 const TitleEdit = styled.div`
   display: flex;
@@ -25,7 +32,7 @@ const PrimaryHeading = styled.h1`
   margin: 2rem 0;
 
   @media (max-width: 1000px) {
-    font-size: 3rem;
+    font-size: 4.5rem;
   }
 
   @media (max-width: 800px) {
@@ -83,52 +90,83 @@ const TableHead = styled.ul`
 `;
 
 const UserScreen = ({ match }) => {
-  const dispatch = useDispatch();
+  const {profile} = useAuth();
 
-  // Selectors
-  const userStatus = useSelector((state) => state.onboardStatus.userStatus);
-  const loading = useSelector((state) => state.onboardStatus.loading);
-  const error = useSelector((state) => state.onboardStatus.error);
+  const {fetchUserProfile} = useTeams();
 
-  const user = useSelector((state) => state.userInfo.user);
+  const [user,setUser]  = useState(undefined)
+
+  const {loading,openModal} = useWidget();
+
+  const fetchUserRef = useRef(fetchUserProfile)
+
+  const id = match?.params?.id;
+
+  const goback = useGoBack({});
 
   useEffect(() => {
-    dispatch(getUserOnboardStatus(match.params.id));
-  }, [dispatch, match.params.id]);
+    (
+      async()=>{
+        let fetchUser =await fetchUserRef.current(id);
 
-  const firstname =
-    userStatus &&
-    userStatus.firstname[0].toUpperCase() + userStatus.firstname.slice(1);
+        if (fetchUser?.data) {
+          setUser(fetchUser?.data);
+        }
+        else{
+          console.error(fetchUser.error);
+        }
+      }
+    )()
+  }, [id]);
 
-      // Ensure the page is only accessible by Admins
-  if (user && user.role !== 'Admin') {
+  const firstname = capitalizeString(user?.firstName)
+
+
+
+  if (!id  && profile?.role !== 'Admin') {
+    console.log('redirect back to home at userscren')
     return <Redirect to='/' />;
   }
   return (
     <div>
+
+      {goback}
+
       <TitleEdit>
         <PrimaryHeading className='text-primary'>
           {firstname ? firstname : 'User'}
         </PrimaryHeading>
-        {userStatus && (
+        {user && (
           <StyledLink>
-            <Link to={`/admin/users/${match.params.id}/edit`}>
-              <FaEdit />
-            </Link>
+
+              <Flex p='0.4em 1em' borderRadius={'6px'} color={'white'} 
+               gap='0.5em' bg='var(--primary-color)' my='0.8em' align={'center'}
+               onClick={()=>{
+                openModal({
+                  children:UserEditScreen,
+                  payload:user,
+                  size:'4xl'
+                })} 
+                }
+               >
+                <Text fontSize={'19px'}> Edit User</Text>
+                <FiEdit fontSize={'22px'} />
+              </Flex>
+
+
           </StyledLink>
         )}
       </TitleEdit>
 
       {loading && <Spinner />}
-      {error && error.msg && <Message msg={error.msg} variant='error' />}
 
-      {userStatus && (
+      {user && (
         <ContentWrapper>
           <TableHead>
             <li>Onboarding Process</li>
             <li>Status</li>
           </TableHead>
-          <UserContent userStatus={userStatus} />
+          <UserContent user={user} />
         </ContentWrapper>
       )}
     </div>

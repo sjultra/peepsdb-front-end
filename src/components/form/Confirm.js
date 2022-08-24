@@ -1,9 +1,6 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
-import { createProfile, updateProfile } from '../../actions/profileActions';
-import { setAlert } from '../../actions/alertActions';
+import { useHistory } from 'react-router-dom';
 import {
   DetailsWrapper,
   PrimaryHeading,
@@ -11,6 +8,9 @@ import {
   BtnPrev,
   BtnNext,
 } from './FormResources';
+import useAuthActions from '../../hooks/useAuth';
+import { useToast } from '@chakra-ui/react';
+import { convertCamelCase } from '../../utils/helpers';
 
 const Details = styled.div`
   @media (max-width: 800px) {
@@ -55,38 +55,36 @@ const Items = styled.div`
 `;
 
 const Confirm = ({ prevStep, formData }) => {
-  const dispatch = useDispatch();
 
-  // Selectors
-  const profile = useSelector((state) => state.profile.profile);
+  const {updateUser,setProfile} = useAuthActions();
 
   const history = useHistory();
+  
+  const toast = useToast();
 
-  const trimmedFormData = {
-    firstname: formData.firstname.trim(),
-    lastname: formData.lastname.trim(),
-    alias: formData.alias.trim(),
-    skypeId: formData.skypeId.trim(),
-    googleGmailId: formData.googleGmailId.trim(),
-    appleEmailId: formData.appleEmailId.trim(),
-    phone: formData.phone,
-    timeZoneUrl: formData.timeZoneUrl.trim(),
-    daysPerWeek: formData.daysPerWeek.trim(),
-    hoursPerDay: formData.hoursPerDay.trim(),
-    localCurrencyUrl: formData.localCurrencyUrl.trim(),
-    femSlackProfileUrl: formData.femSlackProfileUrl.trim(),
-    startDate: formData.startDate.trim(),
-    paymentProfileUrl: formData.paymentProfileUrl.trim(),
-    twitterProfileUrl: formData.twitterProfileUrl.trim(),
-    facebookProfileUrl: formData.facebookProfileUrl.trim(),
-    githubProfileUrl: formData.githubProfileUrl.trim(),
-    linkedinProfileUrl: formData.linkedinProfileUrl.trim(),
-    calendlyProfileUrl: formData.calendlyProfileUrl.trim(),
-  };
+  const [loading,setLoading] = useState(false)
+
+
+
+  const trimmedFormData =()=>{
+    let obj = {}
+    for (const key in formData) {
+      let value = formData[key];
+      
+      if (typeof(value)==='string' && value) {
+        obj[key] =value.trim();
+      }
+      else{
+        obj[key] =value;
+      }
+    }
+
+    return obj;
+  } 
 
   const {
-    firstname,
-    lastname,
+    firstName,
+    lastName,
     alias,
     skypeId,
     googleGmailId,
@@ -104,25 +102,49 @@ const Confirm = ({ prevStep, formData }) => {
     githubProfileUrl,
     linkedinProfileUrl,
     calendlyProfileUrl,
-  } = trimmedFormData;
+  } = trimmedFormData(formData);
 
-  const proceed = (e) => {
+  const proceed = async(e) => {
     e.preventDefault();
     // Send data to API
-    if (!profile) {
-      dispatch(createProfile(trimmedFormData));
-    } else {
-      dispatch(updateProfile(trimmedFormData));
+    let errorPayload  = [];
+    try{      
+      setLoading(true)
+      let req = await updateUser({...trimmedFormData(formData)});
+      
+      if (req.data){
+        let statusText = req.status==='201'?'created':'updated'
+        toast({
+          title:'Success',
+          description:`User ${statusText} successfully`,
+          status:'success',
+          position:'top',
+        })
+        setProfile( req.data?._doc? req.data?._doc:req.data);
+        history.push(statusText==='created'?'/':'/profile');
+      }
+    }
+    catch(err){
+      console.log('error at create/update profile',err?.response);
+        let error =err?.response?.data;
+        if(error?.errors){
+         (error?.errors.map((entry,index)=> index < 3 ? errorPayload.push(`${convertCamelCase(entry['param'])}: ${entry['msg']}`): undefined  ) );
+        }        
+
+    }
+    finally{
+      errorPayload.length &&  
+      toast({
+        title:'Request failed',
+        description: errorPayload.join(', '),
+        status:'error',
+        position: 'top',
+        duration:errorPayload.length>1?5000:15000
+      })
+
+      setLoading(false);
     }
 
-    history.push('/');
-    dispatch(
-      setAlert(
-        !profile ? 'Profile created' : 'Profile updated',
-        'success',
-        3000
-      )
-    );
   };
 
   const previous = (e) => {
@@ -137,12 +159,12 @@ const Confirm = ({ prevStep, formData }) => {
       </PrimaryHeading>
       <Details>
         <Items>
-          <div>Firstname</div>
-          <div>{firstname ? firstname : ''}</div>
+          <div>firstName</div>
+          <div>{firstName ? firstName : ''}</div>
         </Items>
         <Items>
-          <div>Lastname</div>
-          <div>{lastname ? lastname : ''}</div>
+          <div>lastName</div>
+          <div>{lastName ? lastName : ''}</div>
         </Items>
         <Items>
           <div>Alias</div>
@@ -214,8 +236,8 @@ const Confirm = ({ prevStep, formData }) => {
         </Items>
       </Details>
       <BtnWrapper>
-        <BtnPrev onClick={(e) => previous(e)}>Back</BtnPrev>
-        <BtnNext onClick={(e) => proceed(e)}>Submit</BtnNext>
+        <BtnPrev disabled={loading} onClick={(e) => previous(e)}>Back</BtnPrev>
+        <BtnNext disabled={loading} onClick={(e) => proceed(e)}>Submit</BtnNext>
       </BtnWrapper>
     </DetailsWrapper>
   );

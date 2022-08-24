@@ -46,16 +46,17 @@ const ADOProjects = () => {
   const [search, setSearch] = useState('');
 
   // Selectors
-  const projects = useSelector((state) => state.adoProjects.projects);
-  const loading = useSelector((state) => state.adoProjects.loading);
-  const error = useSelector((state) => state.adoProjects.error);
+  const projects = useSelector((state) => state.adoProjects?.projects);
+  const loading = useSelector((state) => state.adoProjects?.loading);
+  const error = useSelector((state) => state.adoProjects?.error);
   const workItems = useSelector(
-    (state) => state.allWorkItemsDetails.workItemsDetails
+    (state) => state.allWorkItemsDetails?.workItemsDetails
   );
-  const workItemsId = useSelector((state) => state.allWorkItemsId.workItemsId);
+  const workItemsId = useSelector((state) => state.allWorkItemsId?.workItemsId);
   const allWorkItemsDetails = useSelector(
-    (state) => state.allWorkItemsDetails.workItemsDetails
+    (state) => state.allWorkItemsDetails?.workItemsDetails
   );
+
 
   // Get all ADO Projects
   useEffect(() => {
@@ -81,6 +82,8 @@ const ADOProjects = () => {
       }
     }
   }, [allWorkItemsDetails, dispatch, workItemsId]);
+
+
 
   return (
     <Wrapper>

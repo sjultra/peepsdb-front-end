@@ -1,3 +1,4 @@
+import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 import {
   Wrapper,
@@ -39,42 +40,63 @@ const FormSocialDetails = ({
       <PrimaryHeading className='text-center text-primary'>
         {loading || !profile ? 'Registration' : 'Edit Profile'}
       </PrimaryHeading>
-      <FormControl>
-        <label htmlFor='twitterProfileUrl'>Twitter Profile Url</label>
-        <input
-          type='text'
-          name='twitterProfileUrl'
-          value={twitterProfileUrl}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
-      <FormControl>
-        <label htmlFor='facebookProfileUrl'>Facebook Profile Url</label>
-        <input
-          type='text'
-          name='facebookProfileUrl'
-          value={facebookProfileUrl}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
-      <FormControl>
-        <label htmlFor='githubProfileUrl'>Github Profile Url</label>
-        <input
-          type='text'
-          name='githubProfileUrl'
-          value={githubProfileUrl}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
-      <FormControl>
-        <label htmlFor='timeZoneUrl'>Linkedin Profile Url</label>
-        <input
-          type='text'
-          name='linkedinProfileUrl'
-          value={linkedinProfileUrl}
-          onChange={(e) => onChange(e)}
-        />
-      </FormControl>
+
+      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+
+        <Box flex={1} >
+          <FormControl>
+            <label htmlFor='twitterProfileUrl'>Twitter Profile Url</label>
+            <input
+              type='text'
+              name='twitterProfileUrl'
+              value={twitterProfileUrl}
+              onChange={(e) => onChange(e)}
+            />
+          </FormControl>
+        </Box>
+
+        <Box flex={1}>
+          <FormControl>
+            <label htmlFor='facebookProfileUrl'>Facebook Profile Url</label>
+            <input
+              type='text'
+              name='facebookProfileUrl'
+              value={facebookProfileUrl}
+              onChange={(e) => onChange(e)}
+            />
+          </FormControl>
+        </Box>
+
+      </Flex>
+
+      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+
+        <Box flex={1} >
+          <FormControl>
+            <label htmlFor='githubProfileUrl'>Github Profile Url</label>
+            <input
+              type='text'
+              name='githubProfileUrl'
+              value={githubProfileUrl}
+              onChange={(e) => onChange(e)}
+            />
+          </FormControl>
+        </Box>
+      
+        <Box flex={1}>
+          <FormControl>
+            <label htmlFor='timeZoneUrl'>Linkedin Profile Url</label>
+            <input
+              type='text'
+              name='linkedinProfileUrl'
+              value={linkedinProfileUrl}
+              onChange={(e) => onChange(e)}
+            />
+          </FormControl>
+        </Box>
+      
+      </Flex>
+
       <FormControl>
         <label htmlFor='calendlyProfileUrl'>Calendly Profile Url</label>
         <input
@@ -84,6 +106,7 @@ const FormSocialDetails = ({
           onChange={(e) => onChange(e)}
         />
       </FormControl>
+
       <BtnWrapper>
         <BtnPrev onClick={(e) => previous(e)}>Back</BtnPrev>
         <BtnNext onClick={(e) => proceed(e)}>Next</BtnNext>

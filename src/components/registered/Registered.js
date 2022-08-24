@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import useAuthActions from '../../hooks/useAuth';
 
 const Wrapper = styled.div`
   display: flex;
@@ -55,9 +55,8 @@ const Button = styled.div`
 
 const Registered = () => {
   // Selectors
-  const user = useSelector((state) => state.userInfo.user);
-
-  const { firstName:firstname,lastName:lastname } = user;
+  const  {profile} = useAuthActions();
+  const { firstName:firstname,lastName:lastname } = profile;
 
 
   return (

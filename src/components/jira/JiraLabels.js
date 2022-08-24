@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { FiSearch } from 'react-icons/fi';
@@ -10,6 +10,7 @@ import {
 import Spinner from '../layouts/Spinner';
 import JiraLabelContent from './JiraLabelContent';
 import Message from '../layouts/Message';
+import useAxios from '../../hooks/useAxios';
 
 const Wrapper = styled.div`
   margin-top: 4rem;
@@ -45,6 +46,11 @@ const JiraLabels = () => {
 
   const [search, setSearch] = useState('');
 
+  const Axios = useAxios();
+
+
+  const axiosRef = useRef(Axios)
+
   // Selectors
   const labels = useSelector((state) => state.jiraLabels.labels);
   const loading = useSelector((state) => state.jiraLabels.loading);
@@ -52,20 +58,25 @@ const JiraLabels = () => {
   const issues = useSelector((state) => state.allIssues.issues);
   const total = useSelector((state) => state.allIssues.total);
 
+
+  
+
+  const labelRef = useRef(labels);
   // Get all Jira Labels
-  useEffect(() => {
-    if (!labels) {
-      dispatch(getJiraLabels());
-    }
-  }, [labels, dispatch]);
+  
+  const issuesRef = useRef(issues);
 
   useEffect(() => {
-    if (!issues.length) {
-      dispatch(getAllIssues(0));
-    } else if (issues.length && issues.length < total) {
-      dispatch(getAllIssues(issues.length));
+    if (!labelRef.current) {
+      dispatch(getJiraLabels(axiosRef.current));
     }
-  }, [dispatch, issues, total]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!issuesRef.current.length ) {
+      dispatch(getAllIssues(0,axiosRef.current));
+    } 
+  }, [dispatch, total]);
 
   useEffect(() => {
     dispatch(clearLabelIssues());

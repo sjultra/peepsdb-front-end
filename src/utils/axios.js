@@ -1,9 +1,12 @@
 import axios from "axios";
 
-const token = sessionStorage.getItem("peepsdb-auth-token");
+const tokenStr = localStorage.getItem("peepsdb-auth");
 
+let token = tokenStr ? JSON.parse(tokenStr).token : undefined;
 
 const baseUrl = process.env[process.env['NODE_ENV']==='development'?'REACT_APP_BACKEND_TEST_URL':'REACT_APP_BACKEND_URL'] 
+
+
 
 const Axios = token
   ? axios.create({
@@ -17,6 +20,7 @@ const Axios = token
       baseURL: baseUrl,
       headers: {
         "Content-Type": "application/json",
+        'notoken': `${tokenStr}`
       },
     });
 
