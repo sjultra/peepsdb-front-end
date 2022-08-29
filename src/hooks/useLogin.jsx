@@ -30,9 +30,8 @@ const useLogin = ()=>{
         
 
         (async()=>{
-            const text = await navigator.clipboard.readText();
             
-            console.log('text is',text)
+            console.log('text is')
 
             if(tokenRef.current.token){
 
