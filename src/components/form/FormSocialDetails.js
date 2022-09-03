@@ -1,5 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import Btn from '../../widgets/Button';
+import Input from '../../widgets/Input';
 import {
   Wrapper,
   PrimaryHeading,
@@ -36,82 +38,49 @@ const FormSocialDetails = ({
   };
 
   return (
-    <Wrapper>
-      <PrimaryHeading className='text-center text-primary'>
-        {loading || !profile ? 'Registration' : 'Edit Profile'}
-      </PrimaryHeading>
+    <Box>
 
       <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
-
-        <Box flex={1} >
-          <FormControl>
-            <label htmlFor='twitterProfileUrl'>Twitter Profile Url</label>
-            <input
-              type='text'
-              name='twitterProfileUrl'
-              value={twitterProfileUrl}
-              onChange={(e) => onChange(e)}
-            />
-          </FormControl>
-        </Box>
-
-        <Box flex={1}>
-          <FormControl>
-            <label htmlFor='facebookProfileUrl'>Facebook Profile Url</label>
-            <input
-              type='text'
-              name='facebookProfileUrl'
-              value={facebookProfileUrl}
-              onChange={(e) => onChange(e)}
-            />
-          </FormControl>
-        </Box>
-
-      </Flex>
-
-      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
-
-        <Box flex={1} >
-          <FormControl>
-            <label htmlFor='githubProfileUrl'>Github Profile Url</label>
-            <input
-              type='text'
-              name='githubProfileUrl'
-              value={githubProfileUrl}
-              onChange={(e) => onChange(e)}
-            />
-          </FormControl>
-        </Box>
-      
-        <Box flex={1}>
-          <FormControl>
-            <label htmlFor='timeZoneUrl'>Linkedin Profile Url</label>
-            <input
-              type='text'
-              name='linkedinProfileUrl'
-              value={linkedinProfileUrl}
-              onChange={(e) => onChange(e)}
-            />
-          </FormControl>
-        </Box>
-      
-      </Flex>
-
-      <FormControl>
-        <label htmlFor='calendlyProfileUrl'>Calendly Profile Url</label>
-        <input
-          type='text'
-          name='calendlyProfileUrl'
-          value={calendlyProfileUrl}
-          onChange={(e) => onChange(e)}
+        <Input label='Twitter Profile Url' value={twitterProfileUrl}
+         name='twitterProfileUrl' onChange={onChange} flex={1} 
         />
-      </FormControl>
 
-      <BtnWrapper>
-        <BtnPrev onClick={(e) => previous(e)}>Back</BtnPrev>
-        <BtnNext onClick={(e) => proceed(e)}>Next</BtnNext>
-      </BtnWrapper>
-    </Wrapper>
+        <Input label='Facebook Profile Url' value={facebookProfileUrl}
+         name='facebookProfileUrl' onChange={onChange} flex={1} 
+        />
+
+      </Flex>
+
+
+      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+        <Input label='Twitter Profile Url' value={twitterProfileUrl}
+         name='twitterProfileUrl' onChange={onChange} flex={1} 
+        />
+
+        <Input label='Linkedin Profile Url' value={linkedinProfileUrl}
+         name='linkedinProfileUrl' onChange={onChange} flex={1} 
+        />
+
+      </Flex>
+
+
+      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  
+       justify={{lg:'space-between'}} >
+        <Input label='Calendly Profile Url' value={calendlyProfileUrl}
+         name='calendlyProfileUrl' onChange={onChange} flex={1} 
+        />
+
+        <Box flex={1}></Box>
+
+      </Flex>
+
+      <Flex gap='2em' mt='2em'>
+        <Btn onClick={(e) => proceed(e)}>Next</Btn>
+        <Btn variant={'fade'}>Back</Btn>
+      </Flex>
+
+
+    </Box>
   );
 };
 

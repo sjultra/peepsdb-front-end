@@ -1,8 +1,12 @@
-import React, { Fragment, useEffect } from 'react';
+import React, {  useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Wrapper, PrimaryHeading, FormControl, BtnNext } from './FormResources';
-import {Box, Flex, useToast} from '@chakra-ui/react'
-
+import { BtnNext } from './FormResources';
+import {Box, Flex, Square, Text, useToast} from '@chakra-ui/react'
+import InputElement from '../../widgets/Input';
+import {HiOutlineUser} from 'react-icons/hi'
+import Btn from '../../widgets/Button';
+import FileInputComponent, { RenderFileImage } from '../../widgets/FileInputComponent';
+import { fileToBase64 } from '../../utils/helpers';
 
 const BtnWrapper = styled.div`
   display: flex;
@@ -31,40 +35,27 @@ const FormUserDetails = ({
     firstName,
     lastName,
     alias,
-    skypeId,
-    googleGmailId,
-    appleEmailId,
+    // skypeId,
+    // googleGmailId,
+    // appleEmailId,
     phone,
-    microsoftEmailId
+    // microsoftEmailId,
+    avatar
   } = formData || {};
 
 
-  useEffect(()=>{
-    navigator.geolocation.watchPosition((position)=>{
-      console.log('position coordinates watched',position.coords)
-    })
-  },[])
-
-
-  const validateEmail = (email) => {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  };
 
   const proceed = (e) => {
-    e.preventDefault();
-
-    
+    e.preventDefault();  
     const payload = {
       firstName,
       lastName,
       alias,
-      // skypeId,
-      googleGmailId,
-      // appleEmailId,
+      avatar,
       phone,
     }
+
+  
 
     console.log('formdata',payload)
 
@@ -72,14 +63,14 @@ const FormUserDetails = ({
     if(!Object.values(payload).every(value=>value)){
       error='Please enter all required fields'
     }
-    else if (!validateEmail(googleGmailId)) {
-      error= ('Invalid email')
-    } 
-    else if (!googleGmailId.endsWith('@gmail.com')) {
-      error=('Gmail address please');
-    } 
+    // else if (!validateEmail(googleGmailId)) {
+    //   error= ('Invalid email')
+    // } 
+    // else if (!googleGmailId.endsWith('@gmail.com')) {
+    //   error=('Gmail address please');
+    // } 
 
-    console.log('error',error)
+    // console.log('error',error)
     if (error){
       console.log('toast notif',error,)
       toast({
@@ -92,74 +83,101 @@ const FormUserDetails = ({
     }
 
     else {
-      nextStep();
+      nextStep(payload);
     }
   };
 
-  const headingText =
-    loading || !profile?.profileSetup ? (
-      <span className='text-primary'>Registration</span>
-    ) : (
-      <Fragment>
-        <span className='text-primary'>Edit </span> Profile
-      </Fragment>
-    );
+  // const headingText =
+  //   loading || !profile?.profileSetup ? (
+  //     <span className='text-primary'>Registration</span>
+  //   ) : (
+  //     <Fragment>
+  //       <span className='text-primary'>Edit </span> Profile
+  //     </Fragment>
+  //   );
+  const [state,setState] = useState({
+    alias:''
+  })
+
+  const set = e=>setState(prev=>({...prev,[e.target.name]:e.target.value}))
 
   return (
-    <Wrapper>
-      <PrimaryHeading className='text-center '>{headingText}</PrimaryHeading>
+    <Box>
+
+      {/* <PrimaryHeading className='text-center '>{headingText}</PrimaryHeading> */}
       <Required>
         required<span> * </span>
       </Required>
 
-      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+      <Flex align='center' direction={{base:'column',lg:'row'}} gap='1.5em'>
+        <Square mt='0.5em' size='100px' background={'rgba(214, 216, 220, 0.2)'}
+         borderRadius={'15px'}>
+           {RenderFileImage(
+            avatar,
+           <HiOutlineUser color='#8F9092' fontSize={'40px'}/>
+           )}
+        </Square>
 
-
-        <Box flex={1}>
-
-          <FormControl>
-            <label htmlFor='firstName'>
-              First Name <span>*</span>
-            </label>
-            <input
-              type='text'
-              name='firstName'
-              value={firstName}
-              onChange={(e) => onChange(e)}
+        <Box>
+          <Text fontWeight={500}>Choose your profile image </Text>
+          <Flex gap='1em'> 
+            <FileInputComponent
+             setOnChange={async(file)=>{
+              let stringAvatar =await  fileToBase64(file);
+              let e = {
+                target:{
+                  name:'avatar',
+                  value:stringAvatar
+                }
+              }
+              onChange(e)
+             }}
+             icon={
+              <Btn pointerEvents='none' w='1em' mt={0} fontSize={'11px'} h='32px' borderRadius='8px' 
+               variant={'secondary'}>
+                 Select Avatar
+              </Btn>
+ 
+             }
             />
-          </FormControl>
+
+            <Btn onClick={()=>{
+              let e = {
+                target:{ name:'avatar', value:''}
+              }
+              onChange(e)
+            }} w='1em' textDecoration='underline' 
+             color='red' mt={0}  fontSize={'11px'} h='32px' borderRadius='8px' 
+             variant={'fade'}>
+              Delete
+            </Btn>
+
+          </Flex>
+
+          
         </Box>
 
-        <Box flex={1}>
-          <FormControl>
-            <label htmlFor='lastName'>
-              Last Name <span>*</span>
-            </label>
-            <input
-              type='text'
-              name='lastName'
-              value={lastName}
-              onChange={(e) => onChange(e)}
-            />
-          </FormControl>
-        </Box>
 
       </Flex>
+
       <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
 
-        <Box flex={1}>
-          <FormControl>
-            <label htmlFor='alias'>Alias <span>*</span> </label>
-            <input
-              type='text'
-              name='alias'
-              value={alias}
-              onChange={(e) => onChange(e)}
-            />
-          </FormControl>
-        </Box>
+        <InputElement  fontSize='15px' flex={1} label={'First name'} required 
+         name='firstName' value={firstName} onChange={onChange} />
 
-        <Box flex={1}>    
+        <InputElement fontSize='15px' flex={1} label={'Last name'} required 
+         name='lastName' value={lastName} onChange={onChange} />
+
+      </Flex>
+      <Flex mt='1em' direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+
+        <InputElement fontSize='15px' flex={1} label={'Alias'} required 
+         name='alias' value={alias} onChange={onChange} />
+
+        <InputElement fontSize='15px' flex={1} label={'Phone number'} required 
+         name='phone' value={phone} onChange={onChange} />
+
+        {/* <Box flex={1}>    
           <FormControl>
             <label htmlFor='skypeId'>SkypeId</label>
             <input
@@ -169,78 +187,15 @@ const FormUserDetails = ({
               onChange={(e) => onChange(e)}
             />
           </FormControl>
-        </Box>
-
-      </Flex>
-
-      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
-        <Box flex={1}>
-          <FormControl>
-            <label htmlFor='googleGmailId'>
-              Google Gmail Id <span>*</span>
-            </label>
-            <input
-              type='email'
-              name='googleGmailId'
-              {...formData?.provider==='google'?{placeholder:googleGmailId}:{value:googleGmailId} }
-              onChange={(e) => onChange(e)}
-              {...formData?.provider==='google'?{disabled:true}:{}}
-            />
-          </FormControl>
-        </Box>
-
-        <Box flex={1}>
-          <FormControl>
-            <label htmlFor='appleEmailId'>Apple Email Id</label>
-            <input
-              type='email'
-              name='appleEmailId'
-              value={appleEmailId}
-              onChange={(e) => onChange(e)}
-            />
-          </FormControl>
-        </Box>
-
+        </Box> */}
+        
       </Flex>
       
-      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
-
-        <Box flex={1}>
-            <FormControl>
-              <label htmlFor='phone'>
-                Microsoft email
-              </label>
-              <input
-                type='string'
-                name='microsoftEmailId'
-                {...formData?.provider==='microsoft'?{placeholder:microsoftEmailId}:{value:microsoftEmailId} }
-                onChange={(e) => onChange(e)}
-                {...formData?.provider==='microsoft'?{disabled:true}:{}}
-                />
-            </FormControl>
-        </Box>
-
-        <Box flex={1}>
-            <FormControl>
-              <label htmlFor='phone'>
-                Phone <span>*</span>
-              </label>
-              <input
-                type='number'
-                name='phone'
-                value={phone}
-                onChange={(e) => onChange(e)}
-              />
-            </FormControl>
-        </Box>
-
+      <Flex gap='2em' mt='2em'>
+        <Btn onClick={(e) => proceed(e)}>Next</Btn>
+        {/* <Btn variant={'fade'}>Clear</Btn> */}
       </Flex>
-
-
-      <BtnWrapper>
-        <BtnNext onClick={(e) => proceed(e)}>Next</BtnNext>
-      </BtnWrapper>
-    </Wrapper>
+    </Box>
   );
 };
 
