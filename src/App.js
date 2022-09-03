@@ -16,6 +16,7 @@ import UserScreen from './screens/UserScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import PrivateRoute from './components/routing/PrivateRoute';
 import useLogin from './hooks/useLogin';
+import './styles.sass';
 
 const App = () => {
 
@@ -23,9 +24,12 @@ const App = () => {
 
   return (
     <Router>
+
       <Navbar />
+
       <div className='padding-x page-bottom-margin'>
         {/* <Alert /> */}
+
         <Switch>
           <Route path='/login' component={LoginScreen} />
           <PrivateRoute exact path='/' component={DashboardScreen} />
@@ -45,7 +49,9 @@ const App = () => {
           />
           <Route component={NotFoundScreen} />
         </Switch>
+
       </div>
+
     </Router>
   );
 };
