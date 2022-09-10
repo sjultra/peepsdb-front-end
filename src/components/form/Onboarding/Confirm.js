@@ -8,9 +8,9 @@ import {
   BtnPrev,
   BtnNext,
 } from './FormResources';
-import useAuthActions from '../../hooks/useAuth';
+import useAuthActions from '../../../hooks/useAuth';
 import { useToast } from '@chakra-ui/react';
-import { convertCamelCase } from '../../utils/helpers';
+import { convertCamelCase } from '../../../utils/helpers';
 
 const Details = styled.div`
   @media (max-width: 800px) {

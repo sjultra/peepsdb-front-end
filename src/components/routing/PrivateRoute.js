@@ -8,10 +8,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   // Selectors
   const {auth}= useAuthActions();
 
-
-
   const isAuthenticated = auth?.isAuthenticated ?true:false;
-
 
   const RouteLayout = styled.div`
   

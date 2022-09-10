@@ -9,7 +9,7 @@ import {
   PrimaryHeading,
   FormControl,
   BtnNext,
-} from '../components/form/FormResources';
+} from '../components/form/Onboarding/FormResources';
 import useWidget from '../hooks/useWidget';
 import { Box, Flex } from '@chakra-ui/react';
 import { capitalizeString } from '../utils/helpers';

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Wrapper as FormWrapper } from '../form/FormResources';
+import { Wrapper as FormWrapper } from '../form/Onboarding/FormResources';
 
 const Wrapper = styled.div`
   padding: 1rem 2rem;

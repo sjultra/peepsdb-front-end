@@ -9,7 +9,6 @@ import { backendURL, githubClientID } from '../utils/setEnv';
 import useAuthActions from '../hooks/useAuth';
 import { Box, Center, Flex, Text } from '@chakra-ui/react';
 import TextInput from '../widgets/Text'
-import { FormControl } from '../components/form/FormResources';
 import InputElement from '../widgets/Input';
 import Btn from '../widgets/Button';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 // import { useSelector } from 'react-redux';
-import UserForm from '../form/UserForm';
+import UserForm from '../form/Onboarding/UserForm';
 import Registered from '../registered/Registered';
 import Spinner from '../layouts/Spinner';
 import useAuthActions from '../../hooks/useAuth';

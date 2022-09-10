@@ -1,15 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
-import Btn from '../../widgets/Button';
-import Input from '../../widgets/Input';
-import {
-  Wrapper,
-  PrimaryHeading,
-  FormControl,
-  BtnWrapper,
-  BtnPrev,
-  BtnNext,
-} from './FormResources';
+import Btn from '../../../widgets/Button';
+import Input from '../../../widgets/Input';
 
 const FormSocialDetails = ({
   nextStep,

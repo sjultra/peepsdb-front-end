@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router';
-import UserForm from '../components/form/UserForm';
+import UserForm from '../components/form/Onboarding/UserForm';
 import Spinner from '../components/layouts/Spinner';
 import useAuthActions from '../hooks/useAuth';
 import useWidget from '../hooks/useWidget';

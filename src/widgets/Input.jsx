@@ -1,13 +1,12 @@
 import { Box, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { useMemo } from "react";
 import { useState } from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import {  AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsEye } from "react-icons/bs";
 import styled from "styled-components";
 
 
 const InputElement = ({required,label,name,type,onChange,value,
-  inputTypes,containerStyles,labelStyles,h,fontSize,className,autofocus,...rest})=>{
+  inputStyles,containerStyles,labelStyles,h,fontSize,className,autofocus,...rest})=>{
 
     const [showPassword,setShowPassword] = useState(false)
 
@@ -71,7 +70,7 @@ export default styled(InputElement)`
   
       border: 1.36937px solid rgba(4, 9, 33, 0.04);
       border-radius: 12px;
-      ${props=>props.inputTypes};
+      ${props=>props.inputStyles};
   
       &:focus {
         outline: 0;

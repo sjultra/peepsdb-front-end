@@ -2,11 +2,11 @@ import React, {  useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { BtnNext } from './FormResources';
 import {Box, Flex, Square, Text, useToast} from '@chakra-ui/react'
-import InputElement from '../../widgets/Input';
+import InputElement from '../../../widgets/Input';
 import {HiOutlineUser} from 'react-icons/hi'
-import Btn from '../../widgets/Button';
-import FileInputComponent, { RenderFileImage } from '../../widgets/FileInputComponent';
-import { fileToBase64 } from '../../utils/helpers';
+import Btn from '../../../widgets/Button';
+import FileInputComponent, { RenderFileImage } from '../../../widgets/FileInputComponent';
+import { fileToBase64 } from '../../../utils/helpers';
 
 const BtnWrapper = styled.div`
   display: flex;

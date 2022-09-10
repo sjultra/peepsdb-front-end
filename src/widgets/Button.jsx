@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/react"
 
 
 
-const Btn = ({variant,w,children,loading,h,onClick,mt,fontSize,borderRadius,...rest})=>{
+const Btn = ({variant,w,p,children,loading,h,onClick,mt,px,fontSize,borderRadius,full,...rest})=>{
 
     const variantProps = variant==='secondary'?{
         border:'1px solid var(--primary-color)',
@@ -34,10 +34,14 @@ const Btn = ({variant,w,children,loading,h,onClick,mt,fontSize,borderRadius,...r
 
     }
 
+    const isFull = full?{
+        w:'full'
+    }:{}
+
     return(
         <Button isLoading={loading || false} onClick={onClick} fontSize={fontSize|| '15px'} 
-         mt={mt || '1.2em'} borderRadius={ borderRadius ||'5px'}  {...variantProps} 
-         h={ h || '50px'} px={{ base:w || '2em', lg:w || '4em' }}  {...rest} >
+         mt={mt || '1.2em'} borderRadius={ borderRadius ||'5px'} {...isFull}  {...variantProps} 
+         h={ h || '50px'} px={{ base:w || '2em', lg:px || '4em' }}  {...rest} >
             {children}
         </Button>       
     )
