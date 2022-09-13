@@ -1,6 +1,5 @@
 import React, {  useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { BtnNext } from './FormResources';
 import {Box, Flex, Square, Text, useToast} from '@chakra-ui/react'
 import InputElement from '../../../widgets/Input';
 import {HiOutlineUser} from 'react-icons/hi'
@@ -65,6 +64,7 @@ const FormUserDetails = ({
     }
     // else if (!validateEmail(googleGmailId)) {
     //   error= ('Invalid email')
+   
     // } 
     // else if (!googleGmailId.endsWith('@gmail.com')) {
     //   error=('Gmail address please');
@@ -102,7 +102,7 @@ const FormUserDetails = ({
   const set = e=>setState(prev=>({...prev,[e.target.name]:e.target.value}))
 
   return (
-    <Box>
+    <div>
 
       {/* <PrimaryHeading className='text-center '>{headingText}</PrimaryHeading> */}
       <Required>
@@ -169,6 +169,7 @@ const FormUserDetails = ({
          name='lastName' value={lastName} onChange={onChange} />
 
       </Flex>
+
       <Flex mt='1em' direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
 
         <InputElement fontSize='15px' flex={1} label={'Alias'} required 
@@ -195,8 +196,9 @@ const FormUserDetails = ({
         <Btn onClick={(e) => proceed(e)}>Next</Btn>
         {/* <Btn variant={'fade'}>Clear</Btn> */}
       </Flex>
-    </Box>
+    </div>
   );
 };
 
 export default FormUserDetails;
+

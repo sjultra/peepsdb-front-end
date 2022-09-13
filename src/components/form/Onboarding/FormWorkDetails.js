@@ -1,5 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
+import useValidate from "../../../hooks/useValidate";
 import Btn from "../../../widgets/Button";
 import Input from "../../../widgets/Input";
 
@@ -31,9 +32,42 @@ const FormWorkDetails = ({
     return re.test(email);
   };
 
+  const {isRequired,validateConditions,error} = useValidate()
+
+
   const proceed = (e) => {
     e.preventDefault();
-    nextStep();
+
+    const payload = {
+      timeZoneUrl,
+      daysPerWeek,
+      hoursPerDay,
+      localCurrencyUrl,
+      femSlackProfileUrl,
+      startDate,
+      paymentProfileUrl,
+      googleGmailId,
+      appleEmailId,
+      skypeId,
+      microsoftEmailId,
+    }
+
+    
+    let error = false;
+
+    if (isRequired([daysPerWeek,hoursPerDay,startDate],true)) {
+      error=true;
+    }
+    else if (validateConditions([daysPerWeek,hoursPerDay,val3idateEmail(googleGmailId)],['Days per week must be at least 1','Hours per day must be at least 1','Please enter a valid google mail'])){
+      error = true;
+    }
+    else{
+      nextStep();
+
+    }
+
+
+
   };
 
   const previous = (e) => {
@@ -94,20 +128,20 @@ const FormWorkDetails = ({
 
           <Input
             label='Days Per Week'
-            type="text"
+            type="number"
             name="daysPerWeek"
             value={daysPerWeek}
-            onChange={(e) => onChange(e)}
+            onChange={(e) => onChange(e,'number')}
             flex={1}
           />
           
 
           <Input
             label='Hours Per Day'
-            type="text"
+            type="number"
             name="hoursPerDay"
             value={hoursPerDay}
-            onChange={(e) => onChange(e)}
+            onChange={(e) => onChange(e,'number')}
             flex={1}
           />
 

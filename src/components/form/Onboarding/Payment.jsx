@@ -15,14 +15,21 @@ const Payment = ({
     profile,
   })=>{
 
-    const [method,setMethod] = useState('payoneer')
+    const {
+        paymentEmail,bankName,accountNumber,
+        routing,paymentMethod,accountType
+    } = formData;
+
+    const setMethod = (value)=>setValue('paymentMethod',value)
+
 
     return(
         <Flex h='full'>
+   
             <Box p='1em 1.5em' flex={1} h='full'>
 
                 <Header  mt='1em'> Payment Method</Header>
-                <RadioGroup fontSize={'16px'} onChange={setMethod} value={method}>
+                <RadioGroup fontSize={'16px'} onChange={setMethod} value={paymentMethod}>
                     <Flex mt='1.5em' align={'center'} bg='var(--fadebg)' borderRadius={'5px'} 
                      p='0.6em 1.2em' justify={'space-between'} >
                         <Text>Payoneer </Text>
@@ -44,9 +51,8 @@ const Payment = ({
 
                 </RadioGroup>           
                 
-
-                <Btn full display='block' mt='3em' >
-                    Submit
+                <Btn full onClick={nextStep} display='block' mt='3em' >
+                    Next
                 </Btn>     
 
                 <Btn full mt='2em' variant={'fade'}  >
@@ -54,31 +60,34 @@ const Payment = ({
                 </Btn>     
 
             </Box>
+   
             <Box p='1em 1.5em' flex={1} borderLeft='1px solid #E5E5E5' minH='100%'> 
 
                 <Header  mt='1em'> Enter Account Details Below</Header>
-                
-                <Input                 
+
+                <Input value={paymentEmail} onChange={ onChange}
+                 inputStyles='height:45px' labelStyles='margin: 1rem 0;' 
+                 label='Payment email' name='paymentEmail' />
+
+                <Input value={bankName} onChange={onChange}                
                  inputStyles='height:45px' labelStyles='margin: 1rem 0;' 
                  label='Bank name' name='bankName' />
 
                 <Input label='Account number' inputStyles='height:45px' 
-                 labelStyles='margin: 1rem 0;'
+                 labelStyles='margin: 1rem 0;' value={accountNumber} onChange={'onChange'}
                  mt='0.5em' name='accountNumber' />
 
                 <Input label='Account type' inputStyles='height:45px' 
-                 labelStyles='margin: 1rem 0;' mt='0.5em' name='accountNumber' />
-
-                <Input label='Account type' inputStyles='height:45px' 
-                 mt='0.5em' name='bankAddress' />
+                 mt='0.5em' name='accountType' value={accountType} onChange={onChange} />
 
                 <Input label='Routing(ABA)' inputStyles='height:45px' 
-                 mt='0.5em' name='routing' />
+                 mt='0.5em' name='routing' value={routing} onChange={onChange} />
 
             </Box>
+   
         </Flex>
     )
 }
 
 
-export default Payment
+export default Payment;
