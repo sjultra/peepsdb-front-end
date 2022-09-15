@@ -1,8 +1,14 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
+import { AiFillEdit } from "react-icons/ai";
 import useValidate from "../../../hooks/useValidate";
+import { renderJSX } from "../../../utils/helpers";
 import Btn from "../../../widgets/Button";
 import Input from "../../../widgets/Input";
+import TextInput from "../../../widgets/Text";
+
+
+
 
 const FormWorkDetails = ({
   nextStep,
@@ -11,6 +17,7 @@ const FormWorkDetails = ({
   formData,
   loading,
   profile,
+  preview
 }) => {
   const {
     timeZoneUrl,
@@ -62,6 +69,9 @@ const FormWorkDetails = ({
       error = true;
     }
     else{
+
+      console.log('payload at step2',formData);
+      
       nextStep();
 
     }
@@ -72,11 +82,26 @@ const FormWorkDetails = ({
 
   const previous = (e) => {
     e.preventDefault();
+
     prevStep();
   };
 
   return (
     <>
+      {
+      renderJSX(
+        preview,
+        <Flex my='0.8em' align={'center'} justify={'space-between'}>
+          <TextInput variant={'s2'}>Work info</TextInput>
+          
+          <Btn  px='1.2em' h='40px' variant={'fade'} rightIcon={<AiFillEdit fontSize={'14px'} />} >Edit</Btn>
+
+        </Flex>,
+        <></>
+      )
+      }
+
+
       <Flex direction={{ base: "column", lg: "row" }} gap={"2em"}>
         <Input
           fontSize="15px"
@@ -86,6 +111,7 @@ const FormWorkDetails = ({
           name="googleGmailId"
           value={googleGmailId}
           onChange={onChange}
+          {...{preview}}
         />
 
         <Input
@@ -96,19 +122,11 @@ const FormWorkDetails = ({
           name="appleEmaailId"
           value={googleGmailId}
           onChange={onChange}
+          {...{preview}}
         />
       </Flex>
 
       <Flex direction={{ base: "column", lg: "row" }} gap={"2em"}>
-
-          <Input
-            label='Skype ID'
-            type="text"
-            name="skypeID"
-            value={skypeId}
-            onChange={(e) => onChange(e)}
-            flex={1}
-          />
 
           <Input
             label='Timezone Url'
@@ -117,7 +135,20 @@ const FormWorkDetails = ({
             value={timeZoneUrl}
             onChange={(e) => onChange(e)}
             flex={1}
+            {...{preview}}
           />
+
+            
+          <Input
+            label='Start Date'
+            type="date"
+            name="startDate"
+            value={startDate}
+            onChange={(e) => onChange(e)}
+            flex={1}
+            {...{}}
+          />
+
 
 
       </Flex>
@@ -133,6 +164,7 @@ const FormWorkDetails = ({
             value={daysPerWeek}
             onChange={(e) => onChange(e,'number')}
             flex={1}
+            {...{preview}}
           />
           
 
@@ -143,32 +175,22 @@ const FormWorkDetails = ({
             value={hoursPerDay}
             onChange={(e) => onChange(e,'number')}
             flex={1}
+            {...{preview}}
           />
 
       </Flex>
 
 
-      <Flex direction={{ base: "column", lg: "row" }} gap={"2em"}>
-
-
-          <Input
-            label='Start Date'
-            type="date"
-            name="startDate"
-            value={startDate}
-            onChange={(e) => onChange(e)}
-            flex={1}
-          />
-          <Box flex={1}></Box>
-          
-
-
-      </Flex>
-
-      <Flex gap='2em' mt='2em'>
-        <Btn onClick={(e) => proceed(e)}>Next</Btn>
-        <Btn variant={'fade'}>Back</Btn>
-      </Flex>
+      {
+        renderJSX(
+          !preview,
+          <Flex gap='2em' mt='2em'>
+            <Btn onClick={(e) => proceed(e)}>Next</Btn>
+            <Btn variant={'fade'}>Back</Btn>
+          </Flex>,
+          <></>
+        )
+      }
 
 
 

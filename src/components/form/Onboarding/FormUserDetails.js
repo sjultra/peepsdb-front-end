@@ -1,11 +1,13 @@
 import React, {  useEffect, useState } from 'react';
 import styled from 'styled-components';
-import {Box, Flex, Square, Text, useToast} from '@chakra-ui/react'
+import {Box, Button, Divider, Flex, Square, Text, useToast} from '@chakra-ui/react'
 import InputElement from '../../../widgets/Input';
 import {HiOutlineUser} from 'react-icons/hi'
 import Btn from '../../../widgets/Button';
 import FileInputComponent, { RenderFileImage } from '../../../widgets/FileInputComponent';
-import { fileToBase64 } from '../../../utils/helpers';
+import { fileToBase64, renderJSX } from '../../../utils/helpers';
+import { AiFillEdit } from 'react-icons/ai';
+import TextInput from '../../../widgets/Text';
 
 const BtnWrapper = styled.div`
   display: flex;
@@ -26,6 +28,7 @@ const FormUserDetails = ({
   formData,
   loading,
   profile,
+  previewMode
 }) => {
 
   const toast = useToast();
@@ -83,6 +86,7 @@ const FormUserDetails = ({
     }
 
     else {
+      console.log('formData at step1',formData);
       nextStep(payload);
     }
   };
@@ -102,12 +106,25 @@ const FormUserDetails = ({
   const set = e=>setState(prev=>({...prev,[e.target.name]:e.target.value}))
 
   return (
-    <div>
+    <Box>
+      {
+      renderJSX(
+        previewMode,
+        <Flex my='0.8em' align={'center'} justify={'space-between'}>
+          <TextInput variant={'s2'}>Personal</TextInput>
+          
+          <Btn  px='1.2em' h='40px' variant={'fade'} rightIcon={<AiFillEdit fontSize={'14px'} />} >Edit</Btn>
+
+        </Flex>,
+        <></>
+      )
+      }
 
       {/* <PrimaryHeading className='text-center '>{headingText}</PrimaryHeading> */}
       <Required>
         required<span> * </span>
       </Required>
+      
 
       <Flex align='center' direction={{base:'column',lg:'row'}} gap='1.5em'>
         <Square mt='0.5em' size='100px' background={'rgba(214, 216, 220, 0.2)'}
@@ -160,22 +177,27 @@ const FormUserDetails = ({
 
       </Flex>
 
+      {previewMode?
+      <Divider py='1em' />:<></>
+      }
+
+
       <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
 
-        <InputElement  fontSize='15px' flex={1} label={'First name'} required 
+        <InputElement preview={previewMode} fontSize='15px' flex={1} label={'First name'} required 
          name='firstName' value={firstName} onChange={onChange} />
 
-        <InputElement fontSize='15px' flex={1} label={'Last name'} required 
+        <InputElement preview={previewMode} fontSize='15px' flex={1} label={'Last name'} required 
          name='lastName' value={lastName} onChange={onChange} />
 
       </Flex>
 
       <Flex mt='1em' direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
 
-        <InputElement fontSize='15px' flex={1} label={'Alias'} required 
+        <InputElement preview={previewMode} fontSize='15px' flex={1} label={'Alias'} required 
          name='alias' value={alias} onChange={onChange} />
 
-        <InputElement fontSize='15px' flex={1} label={'Phone number'} required 
+        <InputElement preview={previewMode} fontSize='15px' flex={1} label={'Phone number'} required 
          name='phone' value={phone} onChange={onChange} />
 
         {/* <Box flex={1}>    
@@ -192,11 +214,17 @@ const FormUserDetails = ({
         
       </Flex>
       
-      <Flex gap='2em' mt='2em'>
-        <Btn onClick={(e) => proceed(e)}>Next</Btn>
-        {/* <Btn variant={'fade'}>Clear</Btn> */}
-      </Flex>
-    </div>
+      {
+        renderJSX(
+          previewMode,
+          <></>,
+          <Flex gap='2em' mt='2em'>
+            <Btn onClick={(e) => proceed(e)}>Next</Btn>
+            {/* <Btn variant={'fade'}>Clear</Btn> */}
+          </Flex>
+        )
+      }
+      </Box>
   );
 };
 

@@ -9,8 +9,14 @@ import {
   BtnNext,
 } from './FormResources';
 import useAuthActions from '../../../hooks/useAuth';
-import { useToast } from '@chakra-ui/react';
+import { Box, Divider, Flex, useToast } from '@chakra-ui/react';
 import { convertCamelCase } from '../../../utils/helpers';
+import FormUserDetails from './FormUserDetails';
+import FormWorkDetails from './FormWorkDetails';
+import FormSocialDetails from './FormSocialDetails';
+import Payment from './Payment';
+import Btn from '../../../widgets/Button';
+import useGoBack from '../../../hooks/useGoBack';
 
 const Details = styled.div`
   @media (max-width: 800px) {
@@ -54,7 +60,7 @@ const Items = styled.div`
   }
 `;
 
-const Confirm = ({ prevStep, formData }) => {
+const Confirm = ({ prevStep, formData,onChange,profile }) => {
 
   const {updateUser,setProfile} = useAuthActions();
 
@@ -64,10 +70,10 @@ const Confirm = ({ prevStep, formData }) => {
 
   const [loading,setLoading] = useState(false)
 
-
-
   const trimmedFormData =()=>{
     let obj = {}
+
+
     for (const key in formData) {
       let value = formData[key];
       
@@ -110,7 +116,10 @@ const Confirm = ({ prevStep, formData }) => {
     let errorPayload  = [];
     try{      
       setLoading(true)
-      let req = await updateUser({...trimmedFormData(formData)});
+
+      console.log('trimmedForm',trimmedFormData(formData))
+
+      let req = await updateUser(trimmedFormData(formData));
       
       if (req.data){
         let statusText = req.status==='201'?'created':'updated'
@@ -125,7 +134,7 @@ const Confirm = ({ prevStep, formData }) => {
       }
     }
     catch(err){
-      console.log('error at create/update profile',err?.response);
+      console.log('error at create/update profile',err,err?.response);
         let error =err?.response?.data;
         if(error?.errors){
          (error?.errors.map((entry,index)=> index < 3 ? errorPayload.push(`${convertCamelCase(entry['param'])}: ${entry['msg']}`): undefined  ) );
@@ -151,6 +160,66 @@ const Confirm = ({ prevStep, formData }) => {
     e.preventDefault();
     prevStep();
   };
+
+
+  return(
+    <Box px={{lg:'5em'}}>
+
+      {useGoBack({goBack:()=>prevStep()})}
+    
+      <FormUserDetails  
+       prevStep={prevStep}
+       onChange={onChange}
+       formData={formData}
+       profile={profile}
+       loading={loading}
+       preview
+       previewMode 
+      />
+
+      <Divider py='1em' />
+
+      <FormWorkDetails
+        prevStep={prevStep}
+        onChange={onChange}
+        formData={formData}
+        profile={profile}
+        loading={loading}
+        preview
+      />
+
+      <Divider py='1em' />
+
+      <FormSocialDetails
+        prevStep={prevStep}
+        onChange={onChange}
+        formData={formData}
+        profile={profile}
+        loading={loading}
+        preview
+      />
+
+      <Divider py='1em' />
+
+      <Payment
+        prevStep={prevStep}
+        onChange={onChange}
+        formData={formData}
+        profile={profile}
+        loading={loading}
+        preview
+      />
+
+      <Flex mt='1.2em' gap={'1.5em'}>
+        <Btn isLoading={loading} onClick={e=>proceed(e)} >Submit</Btn>
+        <Btn onClick={e=>previous(e)} variant={'fade'}>Previous</Btn>
+
+      </Flex>
+
+
+
+    </Box>
+  )
 
   return (
     <DetailsWrapper>

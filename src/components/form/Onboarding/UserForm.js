@@ -3,12 +3,12 @@ import FormUserDetails from './FormUserDetails';
 import FormWorkDetails from './FormWorkDetails';
 import FormSocialDetails from './FormSocialDetails';
 import Confirm from './Confirm';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Text, Box, Circle, Center, Square } from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Text, Box, Circle, Center, Square, Flex } from '@chakra-ui/react'
 import {  renderJSX } from '../../../utils/helpers';
 import {GiCheckMark} from 'react-icons/gi'
 import Payment from './Payment';
 import useWidget from '../../../hooks/useWidget';
-import ConnectWidget from '../../connnections';
+// import ConnectWidget from '../../connnections';
 
 const UserForm = ({ profile, loading }) => {
  
@@ -230,4 +230,15 @@ const UserForm = ({ profile, loading }) => {
   }
 };
 
+
+export const FormRow = ({children,...rest})=>{
+
+  return(
+    <Flex direction={{ base: "column", lg: "row" }} gap={"2em"} {...rest}>
+      {children}
+    </Flex>
+
+  )
+
+}
 export default UserForm;
