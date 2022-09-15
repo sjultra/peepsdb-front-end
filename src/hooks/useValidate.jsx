@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 const { useToast } = require("@chakra-ui/react")
 
@@ -13,7 +12,7 @@ const useValidate = ()=>{
         let error = ''
 
         console.log('is required payload',payload)
-        if( !(payload.every(value=> include0?  (value || value == 0 ) : value)) ) {
+        if( !(payload.every(value=> include0?  (value || value === 0 ) : value)) ) {
             error= ('Please enter all required fields');
         };
         
