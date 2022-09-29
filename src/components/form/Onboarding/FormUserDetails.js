@@ -108,21 +108,21 @@ const FormUserDetails = ({
   return (
     <Box>
       {
-      renderJSX(
-        previewMode,
-        <Flex my='0.8em' align={'center'} justify={'space-between'}>
-          <TextInput variant={'s2'}>Personal</TextInput>
-          
-          <Btn  px='1.2em' h='40px' variant={'fade'} rightIcon={<AiFillEdit fontSize={'14px'} />} >Edit</Btn>
+        renderJSX(
+          previewMode,
+          <Flex my='0.2em' align={'center'} justify={'space-between'}>
+            <TextInput variant={'s2'}>Personal</TextInput>
+            
+            <Btn  px='1.2em' h='40px' variant={'fade'} rightIcon={<AiFillEdit fontSize={'14px'} />} >Edit</Btn>
 
-        </Flex>,
-        <></>
-      )
+          </Flex>,
+          <></>
+        )
       }
 
       {/* <PrimaryHeading className='text-center '>{headingText}</PrimaryHeading> */}
       <Required>
-        required<span> * </span>
+        <span> * </span>
       </Required>
       
 
@@ -182,7 +182,7 @@ const FormUserDetails = ({
       }
 
 
-      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+      <Flex mt='2em' direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
 
         <InputElement preview={previewMode} fontSize='15px' flex={1} label={'First name'} required 
          name='firstName' value={firstName} onChange={onChange} />
@@ -192,7 +192,7 @@ const FormUserDetails = ({
 
       </Flex>
 
-      <Flex mt='1em' direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+      <Flex mt='1.5em' direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
 
         <InputElement preview={previewMode} fontSize='15px' flex={1} label={'Alias'} required 
          name='alias' value={alias} onChange={onChange} />

@@ -6,7 +6,7 @@ import { renderJSX } from "../../../utils/helpers";
 import Btn from "../../../widgets/Button";
 import Input from "../../../widgets/Input";
 import TextInput from "../../../widgets/Text";
-
+import { OnboardingContainer } from "./UserForm";
 
 
 
@@ -87,7 +87,7 @@ const FormWorkDetails = ({
   };
 
   return (
-    <>
+    <OnboardingContainer>
       {
       renderJSX(
         preview,
@@ -126,7 +126,7 @@ const FormWorkDetails = ({
         />
       </Flex>
 
-      <Flex direction={{ base: "column", lg: "row" }} gap={"2em"}>
+      <Flex className="below" direction={{ base: "column", lg: "row" }} gap={"2em"}>
 
           <Input
             label='Timezone Url'
@@ -154,7 +154,7 @@ const FormWorkDetails = ({
       </Flex>
 
 
-      <Flex direction={{ base: "column", lg: "row" }} gap={"2em"}>
+      <Flex className="below"  direction={{ base: "column", lg: "row" }} gap={"2em"}>
 
 
           <Input
@@ -192,9 +192,7 @@ const FormWorkDetails = ({
         )
       }
 
-
-
-    </>
+    </OnboardingContainer>
   );
 };
 

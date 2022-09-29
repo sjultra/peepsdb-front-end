@@ -8,6 +8,8 @@ import {  renderJSX } from '../../../utils/helpers';
 import {GiCheckMark} from 'react-icons/gi'
 import Payment from './Payment';
 import useWidget from '../../../hooks/useWidget';
+import NavLayout from '../../layouts/NavLayout';
+import styled from "styled-components";
 // import ConnectWidget from '../../connnections';
 
 const UserForm = ({ profile, loading }) => {
@@ -70,7 +72,7 @@ const UserForm = ({ profile, loading }) => {
 
 
   return(
-      <>
+      <NavLayout>
         {
           step < 4?
           <Tabs as='form' index={step} onChange={(index)=>setStep(index)}  orientation='vertical'>
@@ -182,7 +184,7 @@ const UserForm = ({ profile, loading }) => {
           <Confirm prevStep={prevStep} nextStep={nextStep} formData={formData} />
 
         }
-        </>
+        </NavLayout>
   )
 
   if (step === 1) {
@@ -229,6 +231,15 @@ const UserForm = ({ profile, loading }) => {
     );
   }
 };
+
+
+export const OnboardingContainer = styled.div`
+  .below{
+    margin-top:1em;
+  }
+
+`
+
 
 
 export const FormRow = ({children,...rest})=>{

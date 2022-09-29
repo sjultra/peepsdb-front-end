@@ -3,6 +3,7 @@ import  {useDispatch,useSelector} from 'react-redux'
 import { useCallback, useState } from "react";
 import { capitalizeString } from "../utils/helpers";
 import useAxios from "./useAxios";
+import useDeviceInfo from "./useDeviceInfo";
 
 const useAuthActions = ()=>{
 
@@ -17,6 +18,7 @@ const useAuthActions = ()=>{
 
     const {auth,profile} = useSelector(selectAuth)
 
+    const {device} = useDeviceInfo()
     const Axios = useAxios()
 
     //store update actions
@@ -35,7 +37,6 @@ const useAuthActions = ()=>{
 
 
     //endpoints
-    
     const updateUser  = async(payload)=>{
         let req = await Axios[profile?.profileSetup?'put':'post']('/profiles',payload);
 
@@ -52,13 +53,18 @@ const useAuthActions = ()=>{
     }
     
     const fetchMyProfile = async(token)=>{
+        const deviceinfo = JSON.stringify({device});
 
         try{
 
           setLoading(true)
           let req = await Axios.get('/profiles/me',{
             ...token?{
-                headers:{'Authorization':token}
+                headers:{
+                  'Authorization':token,
+                  deviceinfo
+                  
+                }
             }:{}
           });
             

@@ -12,18 +12,19 @@ const InputElement = ({required,label,name,type,onChange,value,
     const [showPassword,setShowPassword] = useState(false)
 
 
-    const [previewFocused,setPreviewFocused] = useState('unfocused')
+    const [previewFocused,setPreviewFocused] = useState( preview? 'unfocused':'')
 
     const previewRef = useRef();
     
     const inputStyle = previewFocused ==='unfocused'?{
-      background:'transparent',
       border:'none',
-      borderRadius:`12px`
+      borderRadius:`12px`,
+      background:'white',
     }:{      
       // border:`2px solid #f1f1f1`,
       border: `1.36937px solid rgba(4, 9, 33, 0.04)`,
-      borderRadius:`12px`
+      borderRadius:`12px`,
+      background:'#E8E8E8'
     }
 
     const clickEventOnPreview = preview?{

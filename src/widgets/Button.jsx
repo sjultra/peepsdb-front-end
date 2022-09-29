@@ -41,7 +41,7 @@ const Btn = ({variant,w,p,children,loading,h,onClick,mt,px,fontSize,borderRadius
     return(
         <Button isLoading={loading || false} onClick={onClick} fontSize={fontSize|| '15px'} 
          mt={mt || '1.2em'} borderRadius={ borderRadius ||'5px'} {...isFull}  {...variantProps} 
-         h={ h || '50px'} px={{ base:w || '2em', lg:px || '4em' }}  {...rest} >
+         h={ h || '50px'} px={{ base:w || '2em', lg:px || '4em' }}   {...rest} >
             {children}
         </Button>       
     )

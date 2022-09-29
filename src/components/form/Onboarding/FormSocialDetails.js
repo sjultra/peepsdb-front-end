@@ -5,6 +5,7 @@ import { renderJSX } from '../../../utils/helpers';
 import Btn from '../../../widgets/Button';
 import Input from '../../../widgets/Input';
 import TextInput from '../../../widgets/Text';
+import { OnboardingContainer } from './UserForm';
 
 const FormSocialDetails = ({
   nextStep,
@@ -36,7 +37,7 @@ const FormSocialDetails = ({
   };
 
   return (
-    <Box>
+    <OnboardingContainer>
 
 {
       renderJSX(
@@ -66,7 +67,7 @@ const FormSocialDetails = ({
       </Flex>
 
 
-      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
+      <Flex className="below" direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
 
           <Input
             label='Skype ID'
@@ -88,7 +89,7 @@ const FormSocialDetails = ({
       </Flex>
 
 
-      <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  
+      <Flex className="below" direction={{base:'column',lg:'row'}} gap={'2em'}  
        justify={{lg:'space-between'}} >
         <Input label='Calendly Profile Url' value={calendlyProfileUrl}
          name='calendlyProfileUrl' onChange={onChange} flex={1} 
@@ -111,7 +112,7 @@ const FormSocialDetails = ({
       }
 
 
-    </Box>
+    </OnboardingContainer>
   );
 };
 

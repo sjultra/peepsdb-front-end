@@ -7,6 +7,7 @@ import Github from '../assets/images/github-icon.png';
 import Microsoft from '../assets/images/microsoft-icon.png';
 import { backendURL, githubClientID } from '../utils/setEnv';
 import useAuthActions from '../hooks/useAuth';
+import NavLayout from '../components/layouts/NavLayout';
 
 const Wrapper = styled.div`
   display: grid;
@@ -112,7 +113,6 @@ const LoginScreen = () => {
 
   // Redirect if logged in
   if (auth?.token) {
-    console.log('redirecting after login')
     return <Redirect to='/' />;
   }
 
@@ -123,27 +123,27 @@ const LoginScreen = () => {
 
 
   return (
-    <Wrapper>
-      <ItemLeft>
-        <img src={Background} alt='' />
-      </ItemLeft>
-      <ItemRight>
-        <h2>Welcome to PeepsDB</h2>
-        <Socials href={`${backendUrl}/auth/google`}>
-          <img src={Google} alt='' />
-          <p>Log in with Google</p>
-        </Socials>
-        <Socials
-         href={`https://github.com/login/oauth/authorize?client_id=${githubClientID}&redirect_uri=${encodeURIComponent(backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL)}?path=/&scope=user:email`}>
-          <img src={Github} alt='' />
-          <p>Log in with Github</p>
-        </Socials>
-        <Socials href={`${backendUrl}/auth/microsoft`}>
-          <img src={Microsoft} alt='' />
-          <p>Log in with Microsoft</p>
-        </Socials>
-      </ItemRight>
-    </Wrapper>
+      <Wrapper>
+        <ItemLeft>
+          <img src={Background} alt='' />
+        </ItemLeft>
+        <ItemRight>
+          <h2>Welcome to PeepsDB</h2>
+          <Socials href={`${backendUrl}/auth/google`}>
+            <img src={Google} alt='' />
+            <p>Log in with Google</p>
+          </Socials>
+          <Socials
+          href={`https://github.com/login/oauth/authorize?client_id=${githubClientID}&redirect_uri=${encodeURIComponent(backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL)}?path=/&scope=user:email`}>
+            <img src={Github} alt='' />
+            <p>Log in with Github</p>
+          </Socials>
+          <Socials href={`${backendUrl}/auth/microsoft`}>
+            <img src={Microsoft} alt='' />
+            <p>Log in with Microsoft</p>
+          </Socials>
+        </ItemRight>
+      </Wrapper>
   );
 };
 

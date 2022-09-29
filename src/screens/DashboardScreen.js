@@ -1,35 +1,142 @@
-import React, {  useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Spinner from '../components/layouts/Spinner';
 import GuestsDashboard from '../components/dashboard/GuestsDashboard';
 import MembersDashboard from '../components/dashboard/MembersDashboard';
 import useAuthActions from '../hooks/useAuth';
+import { Box, Center, Circle, Flex, Image, Text } from '@chakra-ui/react';
+import {IoClose} from 'react-icons/io5'
+import styled from 'styled-components';
+import {deviceDetect,isMobile} from 'react-device-detect'
+import Btn from '../widgets/Button';
+import { BiLogOut } from 'react-icons/bi';
+import useDeviceInfo from '../hooks/useDeviceInfo';
+
+
 
 const DashboardScreen = () => {
   // Selectors
-  const {auth,fetchMyProfile,loading} = useAuthActions();
+  const {auth,loading,profile,logout} = useAuthActions();
 
-
-  const fetchProfile = useRef(fetchMyProfile)
-
-
-
-  // useEffect(()=>{
-  //   auth?.token && fetchProfile.current(auth?.token);
-  // },[auth])
+  const [userloading,setUserLoading] = useState(false)
 
 
 
   if(loading){
     return <Spinner />;
   }
-  if (auth?.token && auth?.role === 'Guest') {
+  else if(!userloading){
+    return <OnboardingModal proceed={setUserLoading} logout={logout} profile={profile}/>
+  }
+
+  else if (auth?.token && auth?.role === 'Guest') {
     return <GuestsDashboard />;
   } 
-  if (auth?.token && auth.role !== 'Guest') {
+  else if (auth?.token && auth.role !== 'Guest') {
     return <MembersDashboard />;
   } 
 
   return <>Nothing</>
 };
 
+
+const DeviceContainer = styled.div`
+  display:flex;
+  gap:0.2em;
+  p{
+    font-size:18px;
+
+    &.device{
+      color:var(--primary-color);
+      font-weight:500;
+    }
+  }
+
+  &.second{
+    margin-top:0.4em;
+  }
+`
+
+// let elements = document.getElementsByClassName('.whateverClassName');
+
+// for (const iterator of elements.length) {
+//   iterator.addEventListener('click',(e)=>{
+//     e.preventDefault();
+
+//   })
+// }
+
+
+
+const OnboardingModal = ({profile,proceed,logout})=>{
+
+  const {email,alias,firstname,lastname} =profile || {}
+
+  const device = deviceDetect();
+
+  console.log('device detect',device);
+
+  const clientType = isMobile?'Mobile':'Web'
+
+  const {} = useDeviceInfo()
+
+  const userAlias = email || alias || (`${firstname} ${lastname}`);
+
+  const handleClose= ()=>proceed(prev=>!prev);
+
+
+  return(
+
+    <Box p={{base:'1.2em',md:'1.5em',lg:'2em 3em'}}>
+      
+      <Flex justify={'flex-end'}>
+          <Circle cursor={'pointer'} onClick={handleClose}
+           p='0.2em' size='40px'  background='rgba(1, 86, 218, 0.31)' color='var(--primary-color)'  >
+            <IoClose fontSize={'30px'} color='var(--primary-color)' />
+          </Circle>
+      </Flex>
+
+      <Center mt='0.5em' >
+        <Box>
+
+          <Center> 
+            <Text as='h6'  fontSize='24px'>Welcome</Text> 
+          </Center>
+
+          <Center> 
+            <Text as='h6' color='var(--primary-color)'  fontSize='26px'>{userAlias}</Text> 
+          </Center>
+
+          <Center>
+            <Image src='/assets/welcome.svg' h={{base:'200px',lg:'250px'}} />
+          </Center>
+
+          <Center>
+            <Box>
+
+
+            <DeviceContainer className='second'>
+              <Text className='one'>Client Info:</Text>
+              <Text className='device'> {device?.browserName} {clientType} {device?.engineVersion} </Text>
+            </DeviceContainer>
+
+
+            </Box>
+          </Center>
+
+          <Btn onClick={handleClose} w='full' full fontSize={'16px'}> Proceed </Btn>
+
+          <Btn onClick={logout} w='full' display='flex' gap='0.4em' variant={'fade'} full >  
+            <BiLogOut color='initial'/>
+            <Text fontSize={'18px'} color='initial' fontWeight={500}> Logout</Text>
+          </Btn>
+
+        </Box>
+      </Center>
+
+
+    </Box>
+  )
+}
+
 export default DashboardScreen;
+

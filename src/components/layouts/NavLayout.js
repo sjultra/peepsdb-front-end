@@ -5,22 +5,25 @@ import UserDropdown from './UserDropdown';
 import useAuthActions from '../../hooks/useAuth';
 
 
-const Navbar = ({boxShadow,className}) => {
+const NavLayout = ({boxShadow,className,children}) => {
   // Selectors
   const {auth} = useAuthActions()
   const {isAuthenticated} = auth || {};
 
   return (
+    <>
     <div className={className}>
       <h1>
         <Link to='/'>PeepsDB</Link>
       </h1>
       {isAuthenticated && auth && <UserDropdown user={auth} />}
     </div>
+      {children}
+    </>
   );
 };
 
-export default styled(Navbar)`
+export default styled(NavLayout)`
 
   height: 8rem;
   display: flex;

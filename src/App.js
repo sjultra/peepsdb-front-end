@@ -1,7 +1,6 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Navbar from './components/layouts/Navbar';
 // import Alert from './components/layouts/Alert';
 import NotFoundScreen from './screens/NotFoundScreen';
 import DashboardScreen from './screens/DashboardScreen';
@@ -25,7 +24,6 @@ const App = () => {
   return (
     <Router>
 
-      <Navbar />
 
       <div className='padding-x page-bottom-margin'>
         {/* <Alert /> */}
