@@ -45,7 +45,7 @@ const FormSocialDetails = ({
         <Flex my='0.8em' align={'center'} justify={'space-between'}>
           <TextInput variant={'s2'}>Social</TextInput>
           
-          <Btn px='1.2em' h='40px' variant={'fade'} rightIcon={<AiFillEdit fontSize={'14px'} />} >Edit</Btn>
+          {/* <Btn px='1.2em' h='40px' variant={'fade'} rightIcon={<AiFillEdit fontSize={'14px'} />} >Edit</Btn> */}
 
         </Flex>,
         <></>

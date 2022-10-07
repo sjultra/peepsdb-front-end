@@ -21,7 +21,7 @@ const DashboardScreen = () => {
   const userloading =  welcome;
 
 
-  console.log('loading value',userloading);
+  console.log('loading value',auth);
 
 
   if(loading || !profile){
@@ -32,7 +32,7 @@ const DashboardScreen = () => {
     )
   }
 
-  else if(userloading && !auth?.profileSetup){
+  else if(userloading && auth?.profileSetup){
     return <OnboardingModal proceed={closeWelcome} logout={logout} profile={profile}/>
   }
 

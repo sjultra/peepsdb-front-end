@@ -113,7 +113,7 @@ const FormUserDetails = ({
           <Flex my='0.2em' align={'center'} justify={'space-between'}>
             <TextInput variant={'s2'}>Personal</TextInput>
             
-            <Btn  px='1.2em' h='40px' variant={'fade'} rightIcon={<AiFillEdit fontSize={'14px'} />} >Edit</Btn>
+            {/* <Btn  px='1.2em' h='40px' variant={'fade'} rightIcon={<AiFillEdit fontSize={'14px'} />} >Edit</Btn> */}
 
           </Flex>,
           <></>
