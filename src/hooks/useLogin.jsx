@@ -44,7 +44,6 @@ const useLogin = ()=>{
                     });
 
                     const {status,data:dataPayload} = req;
-
                     
                     let data = {
                         ...dataPayload,
@@ -52,19 +51,21 @@ const useLogin = ()=>{
                         lastName:capitalizeString(dataPayload?.lastName || '')
                     }
 
-
                     if(status===200 || status===201){
                         setAuthRef.current({
                             ...data,
                             token:tokenRef.current.token,
                             isAuthenticated:true,                       
-                        })
+                        });
+
                         fetchMyProfileRef.current(tokenRef.current?.token);
-
-
-                        data.token && localStorage.setItem('peepsdb-auth',JSON.stringify(data));
                         
-                        
+                        let firstLoginEntry = localStorage.getItem('firstLoginStamp');
+
+                        !firstLoginEntry && localStorage.setItem('firstLoginStamp',true);
+
+                        data.token && localStorage.setItem('peepsdb-auth',JSON.stringify(data));                     
+
                     }
 
 

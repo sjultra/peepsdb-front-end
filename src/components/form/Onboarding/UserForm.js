@@ -103,7 +103,7 @@ const UserForm = ({ profile, loading }) => {
 
                             {
                               index===step?
-                              <Square mx='auto' cursor={'pointer'} display={'flex'} bg='var(--primary-color)' justifyContent='center' 
+                              <Square mx='auto'  cursor={'pointer'} display={'flex'} bg='var(--primary-color)' justifyContent='center' 
                               borderRadius={'8px'}  size='35px' alignItems='center'>
                                 <GiCheckMark fontSize={'22px'} color='white' />
                               </Square>

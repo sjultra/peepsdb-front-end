@@ -4,9 +4,10 @@ let auth = localStorage.getItem('peepsdb-auth');
 
 const initialState = {
     auth: {
-        isAuthenticated: auth?true:false
+        isAuthenticated: auth?true:false,
     },
-    profile:undefined
+    profile:undefined,
+    welcome:true
 }
 
 const authSlice = createSlice({
@@ -18,7 +19,9 @@ const authSlice = createSlice({
         },
         setProfile:(state,action)=>{
             state['profile']={...action.payload}
-
+        },
+        closeWelcome:(state)=>{
+            state['welcome']= false
         }
 
         

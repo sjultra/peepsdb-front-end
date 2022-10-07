@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     profiles:[],
+    logs:[]
 }
 
 const teamSlice = createSlice({
@@ -21,8 +22,13 @@ const teamSlice = createSlice({
             profileHolder[profileIndex] = action.payload;
 
             state.profiles = [profileIndex]
-
+        },
+        setLogs:(state,action)=>{
+          state.logs = action.payload  
         }
+
+        
+
 
         
         

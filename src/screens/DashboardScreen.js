@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Spinner from '../components/layouts/Spinner';
 import GuestsDashboard from '../components/dashboard/GuestsDashboard';
-import MembersDashboard from '../components/dashboard/MembersDashboard';
+import UserWorkspace from '../components/workspace';
 import useAuthActions from '../hooks/useAuth';
 import { Box, Center, Circle, Flex, Image, Text } from '@chakra-ui/react';
 import {IoClose} from 'react-icons/io5'
@@ -10,32 +10,46 @@ import {deviceDetect,isMobile} from 'react-device-detect'
 import Btn from '../widgets/Button';
 import { BiLogOut } from 'react-icons/bi';
 import useDeviceInfo from '../hooks/useDeviceInfo';
+import AdminDashboard from './Admin';
 
 
 
 const DashboardScreen = () => {
   // Selectors
-  const {auth,loading,profile,logout} = useAuthActions();
+  const {auth,loading,profile,logout,welcome,closeWelcome} = useAuthActions();
 
-  const [userloading,setUserLoading] = useState(false)
+  const userloading =  welcome;
 
 
+  console.log('loading value',userloading);
 
-  if(loading){
-    return <Spinner />;
+
+  if(loading || !profile){
+    return (
+      <Flex position={'fixed'} w='100vw' h='100vh' align={'center'} justify='center' top={0} left={0}>
+        <Spinner />
+      </Flex>
+    )
   }
-  else if(!userloading){
-    return <OnboardingModal proceed={setUserLoading} logout={logout} profile={profile}/>
+
+  else if(userloading && !auth?.profileSetup){
+    return <OnboardingModal proceed={closeWelcome} logout={logout} profile={profile}/>
+  }
+
+  else if(auth?.token && auth?.role==='Admin'){
+    return <AdminDashboard />;
   }
 
   else if (auth?.token && auth?.role === 'Guest') {
     return <GuestsDashboard />;
   } 
-  else if (auth?.token && auth.role !== 'Guest') {
-    return <MembersDashboard />;
+  
+  else if (auth?.token && auth.role === 'Freelancer') {
+    return <UserWorkspace />;
   } 
 
   return <>Nothing</>
+
 };
 
 
@@ -67,13 +81,12 @@ const DeviceContainer = styled.div`
 
 
 
-const OnboardingModal = ({profile,proceed,logout})=>{
+const OnboardingModal = ({profile,logout,proceed})=>{
 
   const {email,alias,firstname,lastname} =profile || {}
 
   const device = deviceDetect();
 
-  console.log('device detect',device);
 
   const clientType = isMobile?'Mobile':'Web'
 
@@ -81,7 +94,7 @@ const OnboardingModal = ({profile,proceed,logout})=>{
 
   const userAlias = email || alias || (`${firstname} ${lastname}`);
 
-  const handleClose= ()=>proceed(prev=>!prev);
+
 
 
   return(
@@ -89,7 +102,7 @@ const OnboardingModal = ({profile,proceed,logout})=>{
     <Box p={{base:'1.2em',md:'1.5em',lg:'2em 3em'}}>
       
       <Flex justify={'flex-end'}>
-          <Circle cursor={'pointer'} onClick={handleClose}
+          <Circle cursor={'pointer'} onClick={proceed}
            p='0.2em' size='40px'  background='rgba(1, 86, 218, 0.31)' color='var(--primary-color)'  >
             <IoClose fontSize={'30px'} color='var(--primary-color)' />
           </Circle>
@@ -123,7 +136,7 @@ const OnboardingModal = ({profile,proceed,logout})=>{
             </Box>
           </Center>
 
-          <Btn onClick={handleClose} w='full' full fontSize={'16px'}> Proceed </Btn>
+          <Btn onClick={proceed} w='full' full fontSize={'16px'}> Proceed </Btn>
 
           <Btn onClick={logout} w='full' display='flex' gap='0.4em' variant={'fade'} full >  
             <BiLogOut color='initial'/>

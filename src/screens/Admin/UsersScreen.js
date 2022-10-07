@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
-import UsersContent from '../components/users/UsersContent';
-import Spinner from '../components/layouts/Spinner';
+import UsersContent from '../../components/users/UsersContent';
+import Spinner from '../../components/layouts/Spinner';
 import {
   PrimaryHeading,
   ContentWrapper,
   TitleFilter,
   Filter,
-} from './ScreenResources';
-import useTeams from '../hooks/useTeams';
-import useWidget from '../hooks/useWidget';
+} from '../ScreenResources';
+import useTeams from '../../hooks/useTeams';
+import useWidget from '../../hooks/useWidget';
 // import useAuth from '../hooks/useAuth';
-import useGoback from '../hooks/useGoBack';
 
 const TableHead = styled.ul`
   background: #f8f7ff;
@@ -43,17 +42,13 @@ const UsersScreen = () => {
 
   const {profiles,fetchAllProfiles} = useTeams()
   const {loading} = useWidget();
+  const fetchProfilesRef = useRef(fetchAllProfiles);
 
-
-  const fetchProfilesRef = useRef(fetchAllProfiles)
-
-  const goBack = useGoback({})
-
+  
   useEffect(() => {
     if (!profiles?.length) {
       fetchProfilesRef.current()
     }
-    console.log('profiles',profiles)
   }, [profiles]);
 
   const [filterText, setFilterText] = useState('');
@@ -65,7 +60,6 @@ const UsersScreen = () => {
 
   return (
     <div>
-      {goBack}
       <TitleFilter>
         <PrimaryHeading className='text-primary'>Users </PrimaryHeading>
 

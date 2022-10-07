@@ -62,7 +62,7 @@ const Items = styled.div`
 
 const Confirm = ({ prevStep, formData,onChange,profile }) => {
 
-  const {updateUser,setProfile} = useAuthActions();
+  const {updateUser,setProfile,setAuth,auth} = useAuthActions();
 
   const history = useHistory();
   
@@ -122,14 +122,19 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
       let req = await updateUser(trimmedFormData(formData));
       
       if (req.data){
-        let statusText = req.status==='201'?'created':'updated'
+        let statusText = req.status==='201'?'created':'updated';
+        
+        statusText==='created'&& setAuth({...auth,profileSetup:true});
+
         toast({
           title:'Success',
           description:`User ${statusText} successfully`,
           status:'success',
           position:'top',
-        })
+        });
+
         setProfile( req.data?._doc? req.data?._doc:req.data);
+        
         history.push(statusText==='created'?'/':'/profile');
       }
     }

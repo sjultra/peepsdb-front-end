@@ -1,13 +1,15 @@
-import { Box, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { Box, Input, InputGroup, InputRightElement, Square, Tooltip } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import {  AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsEye } from "react-icons/bs";
 import styled from "styled-components";
 import { MdOutlineEdit} from 'react-icons/md'
 import { renderJSX } from "../utils/helpers";
+import { IoSync } from "react-icons/io5";
 
 const InputElement = ({required,label,name,type,onChange,value,
-  inputStyles,containerStyles,labelStyles,h,fontSize,className,autofocus,preview,selectChild,...rest})=>{
+  syncFn,
+  inputStyles,containerStyles,labelStyles,h,fontSize,className,autofocus,preview,selectChild,tooltipText,...rest})=>{
 
     const [showPassword,setShowPassword] = useState(false)
 
@@ -35,7 +37,16 @@ const InputElement = ({required,label,name,type,onChange,value,
     return(
       <Box {...rest} className={className}>
           <label htmlFor={name}>
-                {label} { required? <span>*</span>:''}
+                {label} 
+                { required? <span>*</span>:''}
+                {renderJSX(
+                  syncFn,
+                  <Tooltip label={`Sync with ${tooltipText || name}`}>
+                    <Square mx='0.4em' cursor='pointer' display={'inline-flex'} size='19px' p='0.1em' borderRadius={'2px'} bg='#FAFAFA'>
+                    <IoSync fontSize={'15px'} color='var(--primary-color)'/>
+                    </Square>
+                  </Tooltip>
+                )}
           </label>
           {/* display select / input field accordingly */}
           {
@@ -91,6 +102,8 @@ export default styled(InputElement)`
       margin: 1rem 0;
       color: rgba(4, 9, 33, 0.76);
       font-size:15px;
+      display:flex;
+      align-items:center;
       ${props=>props.labelStyles};
     }
 

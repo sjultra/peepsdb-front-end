@@ -10,24 +10,23 @@ import EditProfileScreen from './screens/EditProfileScreen';
 import ADOWorkItemsScreen from './screens/ADOWorkItemsScreen';
 import JiraIssuesScreen from './screens/JiraIssuesScreen';
 import MeetingScheduleScreen from './screens/MeetingScheduleScreen';
-import UsersScreen from './screens/UsersScreen';
 import UserScreen from './screens/UserScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import PrivateRoute from './components/routing/PrivateRoute';
 import useLogin from './hooks/useLogin';
 import './styles.sass';
+import AdminRoute from './components/routing/AdminRoute';
+import AdminUsers from './screens/Admin/users';
+import AdminWorkspace from './screens/Admin/workspace';
 
 const App = () => {
 
   useLogin();
 
   return (
+    
     <Router>
-
-
-      <div className='padding-x page-bottom-margin'>
         {/* <Alert /> */}
-
         <Switch>
           <Route path='/login' component={LoginScreen} />
           <PrivateRoute exact path='/' component={DashboardScreen} />
@@ -39,7 +38,8 @@ const App = () => {
           />
           <PrivateRoute path='/jira_issues/:id' component={JiraIssuesScreen} />
           <PrivateRoute path='/meeting' component={MeetingScheduleScreen} />
-          <PrivateRoute exact path='/admin/users' component={UsersScreen} />
+          <AdminRoute path='/admin/users' component={AdminUsers} />
+          <AdminRoute path='/admin/workspaces' component={AdminWorkspace} />
           <PrivateRoute path='/admin/users/:id' component={UserScreen} exact />
           <PrivateRoute
             path='/admin/users/:id/edit'
@@ -48,7 +48,6 @@ const App = () => {
           <Route component={NotFoundScreen} />
         </Switch>
 
-      </div>
 
     </Router>
   );

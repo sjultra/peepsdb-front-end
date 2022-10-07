@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { toggleAdo, toggleJira } from '../../actions/toggleActions';
+import ADOProjects from '../ado/ADOProjects';
+import JiraLabels from '../jira/JiraLabels';
+import MainHeading from '../layouts/MainHeading';
+
+const Wrapper = styled.div`
+  padding: 0 2rem;
+
+  @media (max-width: 1000px) {
+    padding: 0 1rem;
+  }
+
+  @media (max-width: 900px) {
+    padding: 0 0.5rem;
+  }
+
+  @media (max-width: 900px) {
+    padding: 0 0;
+  }
+`;
+
 
 const TitleToggle = styled.div`
   display: flex;
@@ -84,55 +101,39 @@ const Toggle = styled.div`
 
 const AdoToggle = styled.div`
   background: ${(props) =>
-    props.ado ==='ADO Projects' ? 'rgba(95, 85, 239, 0.75)' : 'rgba(95, 85, 239, 0.08)'};
+    props.ado ? 'rgba(95, 85, 239, 0.75)' : 'rgba(95, 85, 239, 0.08)'};
   color: ${(props) => (props.ado ? '#fff' : '#000')};
   font-weight: ${(props) => (props.ado ? '600' : '#400')};
 `;
 
 const JiraToggle = styled.div`
   background: ${(props) =>
-    props.jira ==='Jira Labels' ? 'rgba(95, 85, 239, 0.75)' : 'rgba(95, 85, 239, 0.08)'};
+    props.jira ? 'rgba(95, 85, 239, 0.75)' : 'rgba(95, 85, 239, 0.08)'};
   color: ${(props) => (props.jira ? '#fff' : '#000')};
   font-weight: ${(props) => (props.jira ? '600' : '#400')};
 `;
 
-const MainHeading = ({ title,toggle }) => {
-  const dispatch = useDispatch();
 
-  // Selectors
-  const display = useSelector((state) => state.toggle);
 
-  const defaultTitle = display.ado ? 'ADO Projects' : 'Jira Labels';
 
-  const toggleAdoHandler = () => {
-    dispatch(toggleAdo());
-  };
 
-  const toggleJiraHandler = () => {
-    dispatch(toggleJira());
-  };
+const UserWorkspace = () => {
 
+  // const display = useSelector((state) => state.toggle);
+
+  const [activeScreen,setactiveScreen] = useState('ado');
+
+  const title = activeScreen==='ado' ? 'ADO Projects' : 'Jira Labels';
+
+  const toggle = ()=>setactiveScreen(prev=>prev==='ado'?'jira':'ado')
+  
   return (
-    <TitleToggle>
-      <h1 className='text-primary'>{title ? title : defaultTitle}</h1>
-      <Toggle>
-          <AdoToggle
-            className='ado'
-            ado={title}
-            onClick={toggle}
-          >
-            ADO
-          </AdoToggle>
-          <JiraToggle
-            className='jira'
-            onClick={toggle}
-            jira={title}
-          >
-            JIRA
-          </JiraToggle>
-      </Toggle>
-    </TitleToggle>
+    
+    <Wrapper>
+      <MainHeading  title={title} {...{toggle}} />
+      {activeScreen==='ado' ? <ADOProjects   /> : <JiraLabels />}
+    </Wrapper>
   );
 };
 
-export default MainHeading;
+export default UserWorkspace;

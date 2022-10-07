@@ -31,6 +31,7 @@ const FormWorkDetails = ({
     appleEmailId,
     skypeId,
     microsoftEmailId,
+    title
   } = formData;
 
   const val3idateEmail = (email) => {
@@ -119,14 +120,32 @@ const FormWorkDetails = ({
           flex={1}
           label={"Apple Email ID"}
           required
+          tooltipText='apple'
           name="appleEmaailId"
           value={googleGmailId}
           onChange={onChange}
           {...{preview}}
+          // syncFn={
+          //   ()=>{
+              
+          //   }
+          // }
+
         />
       </Flex>
 
       <Flex className="below" direction={{ base: "column", lg: "row" }} gap={"2em"}>
+
+          <Input
+           label='Title'
+           type="text"
+           name="title"
+           value={title}
+           onChange={(e) => onChange(e)}
+           flex={1}
+           {...{preview}}
+          />
+
 
           <Input
             label='Timezone Url'
@@ -138,7 +157,13 @@ const FormWorkDetails = ({
             {...{preview}}
           />
 
-            
+  
+
+      </Flex>
+
+
+      <Flex className="below"  direction={{ base: "column", lg: "row" }} gap={"2em"}>
+
           <Input
             label='Start Date'
             type="date"
@@ -146,15 +171,7 @@ const FormWorkDetails = ({
             value={startDate}
             onChange={(e) => onChange(e)}
             flex={1}
-            {...{}}
           />
-
-
-
-      </Flex>
-
-
-      <Flex className="below"  direction={{ base: "column", lg: "row" }} gap={"2em"}>
 
 
           <Input
@@ -167,6 +184,9 @@ const FormWorkDetails = ({
             {...{preview}}
           />
           
+      </Flex>
+
+      <Flex className="below"  direction={{ base: "column", lg: "row" }} gap={"2em"}>
 
           <Input
             label='Hours Per Day'
@@ -174,12 +194,11 @@ const FormWorkDetails = ({
             name="hoursPerDay"
             value={hoursPerDay}
             onChange={(e) => onChange(e,'number')}
-            flex={1}
+            flex={{base:1,lg:0.5}}
             {...{preview}}
           />
 
       </Flex>
-
 
       {
         renderJSX(

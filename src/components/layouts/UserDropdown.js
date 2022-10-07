@@ -148,18 +148,6 @@ const UserDropdown = ({ user }) => {
               <></>
           }
 
-          {role === "Admin" && (
-            <MenuItem>
-              <Link style={{display:'flex',width:'100%'}} to="/admin/users">
-                <p
-                  style={{ margin: "1rem 0" }}
-                  // onClick={() => setOpenDropdown(false)}
-                >
-                  Admin
-                </p>
-              </Link>
-            </MenuItem>
-          )}
 
           <MenuItem>
             <SignOut onClick={logout}>Sign Out</SignOut>
