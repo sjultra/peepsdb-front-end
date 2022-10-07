@@ -21,7 +21,7 @@ const DashboardScreen = () => {
   const userloading =  welcome;
 
 
-  console.log('loading value',auth);
+  console.log('loading included value',auth);
 
 
   if(loading || !profile){
