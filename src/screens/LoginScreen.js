@@ -8,6 +8,7 @@ import Microsoft from '../assets/images/microsoft-icon.png';
 import { backendURL, githubClientID } from '../utils/setEnv';
 import useAuthActions from '../hooks/useAuth';
 import NavLayout from '../components/layouts/NavLayout';
+import { renderJSX } from '../utils/helpers';
 
 const Wrapper = styled.div`
   display: grid;
@@ -104,6 +105,18 @@ const Socials = styled.a`
   }
 `;
 
+export const githubAuthCall = (userid)=> 
+`https://github.com/login/oauth/authorize?client_id=${githubClientID}&redirect_uri=${encodeURIComponent(backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL)}?path=${'/'+renderJSX(userid,userid,'')}&scope=user:email`
+
+
+export const googleAuthUrl = (userid)=>
+`${backendURL}/auth/google${renderJSX(userid,`?userid=`+userid,'')}`;
+
+export const microsoftAuthUrl = (userid)=>
+`${backendURL}/auth/microsoft${renderJSX(userid,`?userid=`+userid,'')}`;
+
+
+
 const LoginScreen = () => {
   // Selector
 
@@ -116,7 +129,6 @@ const LoginScreen = () => {
     return <Redirect to='/' />;
   }
 
-  const backendUrl = backendURL;
 
 
   // console.log('envs',backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL,)
@@ -129,16 +141,16 @@ const LoginScreen = () => {
         </ItemLeft>
         <ItemRight>
           <h2>Welcome to PeepsDB</h2>
-          <Socials href={`${backendUrl}/auth/google`}>
+          <Socials href={googleAuthUrl()}>
             <img src={Google} alt='' />
             <p>Log in with Google</p>
           </Socials>
           <Socials
-          href={`https://github.com/login/oauth/authorize?client_id=${githubClientID}&redirect_uri=${encodeURIComponent(backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL)}?path=/&scope=user:email`}>
+           href={githubAuthCall()}>
             <img src={Github} alt='' />
             <p>Log in with Github</p>
           </Socials>
-          <Socials href={`${backendUrl}/auth/microsoft`}>
+          <Socials href={microsoftAuthUrl()}>
             <img src={Microsoft} alt='' />
             <p>Log in with Microsoft</p>
           </Socials>

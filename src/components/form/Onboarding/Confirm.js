@@ -115,11 +115,15 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
     // Send data to API
     let errorPayload  = [];
     try{      
+
       setLoading(true)
+      const trimmedForm  =trimmedFormData(formData);
+      const payload = {
+        ...trimmedForm,
+      }
+      console.log('trimmedForm',payload?.avatar)
 
-      console.log('trimmedForm',trimmedFormData(formData))
-
-      let req = await updateUser(trimmedFormData(formData));
+      let req = await updateUser(trimmedFormData(payload));
       
       if (req.data){
         let statusText = req.status==='201'?'created':'updated';

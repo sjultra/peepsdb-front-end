@@ -1,13 +1,14 @@
-import { Box, Flex } from "@chakra-ui/react";
+import {  Flex } from "@chakra-ui/react";
 import React from "react";
-import { AiFillEdit } from "react-icons/ai";
 import useValidate from "../../../hooks/useValidate";
+import useWidget from "../../../hooks/useWidget";
 import { renderJSX } from "../../../utils/helpers";
 import Btn from "../../../widgets/Button";
 import Input from "../../../widgets/Input";
 import TextInput from "../../../widgets/Text";
 import { OnboardingContainer } from "./UserForm";
-
+import {LoginSocialGoogle} from 'reactjs-social-login'
+import { backendURL } from "../../../utils/setEnv";
 
 
 const FormWorkDetails = ({
@@ -31,7 +32,8 @@ const FormWorkDetails = ({
     appleEmailId,
     skypeId,
     microsoftEmailId,
-    title
+    title,
+    provider
   } = formData;
 
   const val3idateEmail = (email) => {
@@ -42,6 +44,7 @@ const FormWorkDetails = ({
 
   const {isRequired,validateConditions,error} = useValidate()
 
+  const {openModal} = useWidget()
 
   const proceed = (e) => {
     e.preventDefault();
@@ -87,6 +90,9 @@ const FormWorkDetails = ({
     prevStep();
   };
 
+
+
+
   return (
     <OnboardingContainer>
       {
@@ -105,14 +111,30 @@ const FormWorkDetails = ({
 
       <Flex direction={{ base: "column", lg: "row" }} gap={"2em"}>
         <Input
-          fontSize="15px"
-          flex={1}
-          label={"Google gmail ID"}
-          required
-          name="googleGmailId"
-          value={googleGmailId}
-          onChange={onChange}
-          {...{preview}}
+         fontSize="15px"
+         flex={1}
+         label={"Google gmail ID"}
+         required
+         name="googleGmailId"
+         value={googleGmailId}
+         onChange={onChange}
+         {...{preview}}
+         Sync={LoginSocialGoogle}
+         syncProps={{
+            client_id:process.env['REACT_APP_GOOGLE_CLIENT_ID'],
+            scope:"openid profile email",
+            discoveryDocs:"claims_supported",
+            access_type:"offline",
+            redirect_uri:backendURL+process.env['REACT_APP_GOOGLE_CALLBACK_URL'],
+            onResolve:({ provider, data }) => {
+              console.log('provider',provider);
+              console.log('data',data)
+            },
+            onReject:err => {
+              console.log(err)
+            }
+         }}
+         isNotProvider={provider !=='google' }
         />
 
         <Input
@@ -130,7 +152,6 @@ const FormWorkDetails = ({
               
           //   }
           // }
-
         />
       </Flex>
 

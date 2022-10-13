@@ -1,12 +1,17 @@
-import React, { useMemo } from 'react';
+import React, { Children, useMemo } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import useAuthActions from '../../hooks/useAuth';
+import useWidget from '../../hooks/useWidget';
 import ModalComponent from '../layouts/Modal';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   // Selectors
   const {auth}= useAuthActions();
+
+  const {modal} = useWidget();
+
+  const { children:Child,payload,isOpen } = modal
 
   const isAuthenticated = auth?.isAuthenticated ?true:false;
 

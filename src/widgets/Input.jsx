@@ -7,9 +7,12 @@ import { MdOutlineEdit} from 'react-icons/md'
 import { renderJSX } from "../utils/helpers";
 import { IoSync } from "react-icons/io5";
 
-const InputElement = ({required,label,name,type,onChange,value,
-  syncFn,
-  inputStyles,containerStyles,labelStyles,h,fontSize,className,autofocus,preview,selectChild,tooltipText,...rest})=>{
+const InputElement = ({
+    required,label,name,type,onChange,value,Sync,syncProps,
+    inputStyles,containerStyles,labelStyles,h,fontSize,
+    className,autofocus,preview,selectChild,tooltipText,isNotProvider,
+    ...rest
+  })=>{
 
     const [showPassword,setShowPassword] = useState(false)
 
@@ -33,6 +36,9 @@ const InputElement = ({required,label,name,type,onChange,value,
       onBlur:()=>setPreviewFocused('unfocused')
     }:{};
 
+    
+
+
 
     return(
       <Box {...rest} className={className}>
@@ -40,11 +46,12 @@ const InputElement = ({required,label,name,type,onChange,value,
                 {label} 
                 { required? <span>*</span>:''}
                 {renderJSX(
-                  syncFn,
-                  <Tooltip label={`Sync with ${tooltipText || name}`}>
-                    <Square mx='0.4em' cursor='pointer' display={'inline-flex'} size='19px' p='0.1em' borderRadius={'2px'} bg='#FAFAFA'>
-                    <IoSync fontSize={'15px'} color='var(--primary-color)'/>
-                    </Square>
+                  Sync && isNotProvider,
+                  <Tooltip  label={`Sync with ${tooltipText || name}`}>
+                      <Square onClick={Sync}  mx='0.4em' cursor='pointer' display={'inline-flex'} 
+                       size='19px' p='0.1em' borderRadius={'2px'} bg='#FAFAFA'>
+                         <IoSync  fontSize={'15px'} color='var(--primary-color)'/>
+                      </Square>
                   </Tooltip>
                 )}
           </label>

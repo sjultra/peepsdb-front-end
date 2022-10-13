@@ -1,12 +1,11 @@
-import React, {  useEffect, useState } from 'react';
+import React, {   useState } from 'react';
 import styled from 'styled-components';
-import {Box, Button, Divider, Flex, Square, Text, useToast} from '@chakra-ui/react'
+import {Box, Divider, Flex, Img, Square, Text, useToast} from '@chakra-ui/react'
 import InputElement from '../../../widgets/Input';
 import {HiOutlineUser} from 'react-icons/hi'
 import Btn from '../../../widgets/Button';
 import FileInputComponent, { RenderFileImage } from '../../../widgets/FileInputComponent';
 import { fileToBase64, renderJSX } from '../../../utils/helpers';
-import { AiFillEdit } from 'react-icons/ai';
 import TextInput from '../../../widgets/Text';
 
 const BtnWrapper = styled.div`
@@ -140,7 +139,9 @@ const FormUserDetails = ({
           <Flex gap='1em'> 
             <FileInputComponent
              setOnChange={async(file)=>{
+
               let stringAvatar =await  fileToBase64(file);
+              sessionStorage.setItem('fileType',file.type)
               let e = {
                 target:{
                   name:'avatar',

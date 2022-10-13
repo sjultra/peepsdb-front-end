@@ -38,6 +38,9 @@ const useAuthActions = ()=>{
     //endpoints
     const updateUser  = async(payload)=>{
 
+
+      console.log('profile payload',payload)
+
         let req = await Axios[profile?.profileSetup?'put':'post']('/profiles',payload);
         let {data,status} = req;
         return {

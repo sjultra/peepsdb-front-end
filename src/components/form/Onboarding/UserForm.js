@@ -12,6 +12,9 @@ import NavLayout from '../../layouts/NavLayout';
 import styled from "styled-components";
 // import ConnectWidget from '../../connnections';
 
+
+
+
 const UserForm = ({ profile, loading }) => {
  
   const [formData, setFormData] = useState({
@@ -34,10 +37,12 @@ const UserForm = ({ profile, loading }) => {
   }, []);
 
   useEffect(()=>{
-    // openModal({
-    //   children:ConnectWidget
-    // })
-  },[])
+    window.addEventListener('message',e=>{
+      console.log('message caught',e.origin)
+        console.log('event data',e.data)
+    })
+    return window.removeEventListener('message',window)
+  })
 
   const [step, setStep] = useState(0);
   // company: loading || !profile.company ? '' : profile.company,
@@ -243,6 +248,7 @@ export const OnboardingContainer = styled.div`
 
 
 export const FormRow = ({children,...rest})=>{
+
 
   return(
     <Flex direction={{ base: "column", lg: "row" }} gap={"2em"} {...rest}>

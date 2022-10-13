@@ -22,6 +22,7 @@ const widgetSlice = createSlice({
         openMod :(state,action)=>{
             let modalPayload = {
                 ...state.modal,
+                ...action?.payload,
                 isOpen:action.payload?.isOpen,
                 children:action.payload?.children,
                 payload:action?.payload?.payload,
