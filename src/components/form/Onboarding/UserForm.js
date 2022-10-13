@@ -39,7 +39,7 @@ const UserForm = ({ profile, loading }) => {
   useEffect(()=>{
     window.addEventListener('message',e=>{
       console.log('message caught',e.origin)
-        console.log('event data',e.data)
+        // console.log('event data',e.data)
     })
     return window.removeEventListener('message',window)
   })
