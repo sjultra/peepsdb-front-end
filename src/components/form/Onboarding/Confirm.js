@@ -14,7 +14,7 @@ import { convertCamelCase } from '../../../utils/helpers';
 import FormUserDetails from './FormUserDetails';
 import FormWorkDetails from './FormWorkDetails';
 import FormSocialDetails from './FormSocialDetails';
-import Payment from './Payment';
+// import Payment from './Payment';
 import Btn from '../../../widgets/Button';
 import useGoBack from '../../../hooks/useGoBack';
 
@@ -182,7 +182,6 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
        formData={formData}
        profile={profile}
        loading={loading}
-       preview
        previewMode 
       />
 
@@ -208,7 +207,7 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
         preview
       />
 
-      <Divider py='1em' />
+      {/* <Divider py='1em' />
 
       <Payment
         prevStep={prevStep}
@@ -218,7 +217,7 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
         loading={loading}
         preview
       />
-
+ */}
       <Flex mt='1.2em' gap={'1.5em'}>
         <Btn isLoading={loading} onClick={e=>proceed(e)} >Submit</Btn>
         <Btn onClick={e=>previous(e)} variant={'fade'}>Previous</Btn>

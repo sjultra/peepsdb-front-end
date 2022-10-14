@@ -1,6 +1,6 @@
 import React from 'react';
 import Spinner from '../components/layouts/Spinner';
-import GuestsDashboard from '../components/dashboard/GuestsDashboard';
+import OnboardUser from '../components/form/Onboarding/UserForm';
 import UserWorkspace from '../components/workspace';
 import useAuthActions from '../hooks/useAuth';
 import { Box, Center, Circle, Flex, Image, Text } from '@chakra-ui/react';
@@ -21,8 +21,7 @@ const DashboardScreen = () => {
   const userloading =  welcome;
 
 
-  console.log('loading included value',auth);
-
+  // console.log('loading included value',auth);
 
   if(loading || !profile){
     return (
@@ -32,7 +31,9 @@ const DashboardScreen = () => {
     )
   }
 
-  else if(userloading && auth?.profileSetup){
+  else if (!auth?.profileSetup)  return <OnboardUser />;
+
+  else if(userloading){
     return <OnboardingModal proceed={closeWelcome} logout={logout} profile={profile}/>
   }
 
@@ -40,9 +41,6 @@ const DashboardScreen = () => {
     return <AdminDashboard />;
   }
 
-  else if (auth?.token && auth?.role === 'Guest') {
-    return <GuestsDashboard />;
-  } 
   
   else if (auth?.token && auth.role === 'Freelancer') {
     return <UserWorkspace />;

@@ -6,8 +6,8 @@ import Confirm from './Confirm';
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Text, Box, Circle, Center, Square, Flex } from '@chakra-ui/react'
 import {  renderJSX } from '../../../utils/helpers';
 import {GiCheckMark} from 'react-icons/gi'
-import Payment from './Payment';
-import useWidget from '../../../hooks/useWidget';
+// import Payment from './Payment';
+// import useWidget from '../../../hooks/useWidget';
 import NavLayout from '../../layouts/NavLayout';
 import styled from "styled-components";
 // import ConnectWidget from '../../connnections';
@@ -30,7 +30,7 @@ const UserForm = ({ profile, loading }) => {
     routing:'',paymentType:'',   
   });
 
-  const {openModal} = useWidget();
+  // const {openModal} = useWidget();
 
   useEffect(() => {
    profile &&  setFormData(prev=>({...prev,...profile}));
@@ -79,7 +79,7 @@ const UserForm = ({ profile, loading }) => {
   return(
       <NavLayout>
         {
-          step < 4?
+          step < 3?
           <Tabs as='form' index={step} onChange={(index)=>setStep(index)}  orientation='vertical'>
 
             <TabList py={10} justifyContent='flex-start' ml={{lg:'5rem'}} position={'fixed'}  top='8rem' left={0} borderLeft={'none'}>
@@ -88,7 +88,10 @@ const UserForm = ({ profile, loading }) => {
                 <Box>
 
                   {
-                    ['Personal','Work','Social','Payment'].map((entry,index)=>{
+                    ['Personal',
+                     'Work','Social',
+                    // 'Payment'
+                    ].map((entry,index)=>{
 
                       const activeLineColor = index===step?'var(--primary-color)':'#EFF0F7'
                       return(
@@ -99,8 +102,7 @@ const UserForm = ({ profile, loading }) => {
                                 index ,
                                 <Center>                  
                                   <Box borderRight={`2px solid ${activeLineColor}`} 
-                                  my='7px' fontSize={'1px'} color='transparent' h='45px'>
-
+                                   my='12px' fontSize={'1px'} color='transparent' h='65px'>
                                   </Box>
                                 </Center>
                               )
@@ -170,7 +172,7 @@ const UserForm = ({ profile, loading }) => {
             />
               </TabPanel>
 
-              <TabPanel p={0} py={'1em'} h='full'>
+              {/* <TabPanel p={0} py={'1em'} h='full'>
                 <Payment 
                 prevStep={prevStep}
                 nextStep={nextStep}
@@ -180,13 +182,13 @@ const UserForm = ({ profile, loading }) => {
                 profile={profile}
                 loading={loading}            
                 />
-              </TabPanel>
+              </TabPanel> */}
             
             </TabPanels>
 
           </Tabs>:
 
-          <Confirm prevStep={prevStep} nextStep={nextStep} formData={formData} />
+          <Confirm onChange={onChange} prevStep={prevStep} nextStep={nextStep} formData={formData} />
 
         }
         </NavLayout>
