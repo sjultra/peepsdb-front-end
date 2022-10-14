@@ -18,6 +18,7 @@ import './styles.sass';
 import AdminRoute from './components/routing/AdminRoute';
 import AdminUsers from './screens/Admin/users';
 import AdminWorkspace from './screens/Admin/workspace';
+import NapoLoginScreen from './screens/Napoleon/LoginScreen';
 
 const App = () => {
 
@@ -32,6 +33,7 @@ const App = () => {
           <PrivateRoute exact path='/' component={DashboardScreen} />
           <PrivateRoute path='/profile' component={ProfileScreen} />
           <PrivateRoute path='/edit-profile' component={EditProfileScreen} />
+          <Route path='/nap/loginscreen' component={NapoLoginScreen} />
           <PrivateRoute
             path='/ado_workitems/:id'
             component={ADOWorkItemsScreen}
