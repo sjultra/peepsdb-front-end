@@ -83,15 +83,15 @@ const UserForm = ({ profile, loading }) => {
           <Tabs as='form' index={step} onChange={(index)=>setStep(index)}  orientation='vertical'>
 
             <TabList py={10} justifyContent='flex-start' ml={{lg:'5rem'}} position={'fixed'}  top='8rem' left={0} borderLeft={'none'}>
-              <Text fontSize={'15px'} fontWeight={500} mb={'1em'}>Onboarding guide</Text>
+              {/* <Text fontSize={'15px'} fontWeight={500} mb={'1em'}>Onboarding guide</Text> */}
               <Center>
                 <Box>
 
                   {
-                    ['Personal',
-                     'Work','Social',
+                    [0,
+                     1,2,
                     // 'Payment'
-                    ].map((entry,index)=>{
+                    ].map((index)=>{
 
                       const activeLineColor = index===step?'var(--primary-color)':'#EFF0F7'
                       return(
@@ -123,7 +123,7 @@ const UserForm = ({ profile, loading }) => {
                                 </Circle>
                               </Center>
                             }
-                            <Text color={step===index?'var(--primary-color)':'#D7D8DA'} fontSize={'14px'}> {entry} </Text>
+                            {/* <Text color={step===index?'var(--primary-color)':'#D7D8DA'} fontSize={'14px'}> {entry} </Text> */}
 
                           </Box>
                         </Tab>
