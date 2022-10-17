@@ -85,15 +85,11 @@ const OnboardingModal = ({profile,logout,proceed})=>{
 
   const device = deviceDetect();
 
-
   const clientType = isMobile?'Mobile':'Web'
 
   const {} = useDeviceInfo()
 
   const userAlias = email || alias || (`${firstname} ${lastname}`);
-
-
-
 
   return(
 
