@@ -102,7 +102,7 @@ const UserForm = ({ profile, loading }) => {
                                 index ,
                                 <Center>                  
                                   <Box borderRight={`2px solid ${activeLineColor}`} 
-                                   my='12px' fontSize={'1px'} color='transparent' h='65px'>
+                                   my='12px' fontSize={'1px'} color='transparent' h='90px'>
                                   </Box>
                                 </Center>
                               )

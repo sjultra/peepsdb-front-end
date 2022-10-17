@@ -13,6 +13,18 @@ import useTeams from '../../hooks/useTeams';
 import useWidget from '../../hooks/useWidget';
 // import useAuth from '../hooks/useAuth';
 
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from '@chakra-ui/react'
+
 const TableHead = styled.ul`
   background: #f8f7ff;
   height: 6rem;
@@ -24,7 +36,7 @@ const TableHead = styled.ul`
   margin-top: 3rem;
   margin-bottom: 1rem;
   padding: 1.7rem 1rem 1.7rem 3rem;
-  min-width: 120rem;
+  /* min-width: 120rem; */
   font-weight: 500;
 
   @media (max-width: 600px) {
@@ -80,15 +92,28 @@ const UsersScreen = () => {
       {/* {error && error.msg && <Message msg={error.msg} variant='error' />} */}
 
       {profiles?.length && (
-        <ContentWrapper>
-          <TableHead>
-            <li>Name</li>
-            <li>Email</li>
-            <li>Role</li>
-            <li>Status</li>
-          </TableHead>
-          <UsersContent profiles={profiles} filterText={filterText} />
-        </ContentWrapper>
+        
+        <>
+        <TableContainer mt='1em'>
+          <Table variant='simple'>
+    
+            <Thead>
+              <Tr>
+                <Th py='0.8em' fontSize={'14px'}>Name</Th>
+                <Th py='0.8em'  fontSize={'14px'}>Role</Th>
+                <Th py='0.8em' fontSize={'14px'} >Sign Up Date</Th>
+                <Th py='0.8em' fontSize={'14px'}>Onboarding</Th>
+                {/* <Th>Action</Th> */}
+              </Tr>
+
+
+            </Thead>
+            <UsersContent profiles={profiles} filterText={filterText} />
+    
+          </Table>
+        </TableContainer>
+
+        </>
       )}
     </div>
   );
