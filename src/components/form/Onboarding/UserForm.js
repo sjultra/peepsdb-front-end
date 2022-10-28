@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,} from 'react';
 import FormUserDetails from './FormUserDetails';
 import FormWorkDetails from './FormWorkDetails';
 import FormSocialDetails from './FormSocialDetails';
 import Confirm from './Confirm';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Text, Box, Circle, Center, Square, Flex } from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Circle, Center, Square, Flex } from '@chakra-ui/react'
 import {  renderJSX } from '../../../utils/helpers';
 import {GiCheckMark} from 'react-icons/gi'
 // import Payment from './Payment';
 // import useWidget from '../../../hooks/useWidget';
 import NavLayout from '../../layouts/NavLayout';
 import styled from "styled-components";
+import useConnections from '../../../hooks/useConnections.jsx'
+import useWidget from '../../../hooks/useWidget';
 // import ConnectWidget from '../../connnections';
 
 
@@ -30,7 +32,17 @@ const UserForm = ({ profile, loading }) => {
     routing:'',paymentType:'',   
   });
 
-  // const {openModal} = useWidget();
+  const {openModal,closeModal} = useWidget();
+
+
+
+  const {
+    connectionsRef:windowRef,
+    githubConnect,linkedinConnect,ConnectionsModal
+  } = useConnections();
+
+
+
 
   useEffect(() => {
    profile &&  setFormData(prev=>({...prev,...profile}));
@@ -38,11 +50,56 @@ const UserForm = ({ profile, loading }) => {
 
   useEffect(()=>{
     window.addEventListener('message',e=>{
-      console.log('message caught',e.origin)
-        // console.log('event data',e.data)
+      if(e.origin === 'http://localhost:5000') {
+        // console.log('message caught',e.origin,e.data)
+        if(windowRef?.current?.close){
+          let profileData = e.data;
+
+          const initPayload  = JSON.parse(profileData);
+
+          openConnections(initPayload);
+
+          windowRef.current?.close && windowRef.current.close()
+        }
+      }
+      // console.log('event data',e.data)
     })
     return window.removeEventListener('message',window)
-  })
+  },[])
+
+  const openConnections =(initPayload=false)=>{
+
+    const payload={
+      view:'onboarding',
+      padd:true,
+      setValues: (values,selected)=>{ 
+        let payload = {}
+        for (const key in values) {
+          if(selected.includes(key)) {
+            payload[key] = values[key]
+          }
+        }
+        setFormData(payload)
+      },
+      close:closeModal,
+      ...initPayload && !initPayload?.target ?{initPayload}:{}   
+    }
+
+    console.log('final payload',payload);
+
+    openModal({
+      children:ConnectionsModal,
+      size:'xl',      
+      isOpen:true,
+      payload,
+    })
+
+  }
+  
+
+  useEffect(()=>{
+    openConnections()
+  },[])
 
   const [step, setStep] = useState(0);
   // company: loading || !profile.company ? '' : profile.company,
@@ -93,7 +150,7 @@ const UserForm = ({ profile, loading }) => {
                     // 'Payment'
                     ].map((index)=>{
 
-                      const activeLineColor = index===step?'var(--primary-color)':'#EFF0F7'
+                      const activeLineColor = index===step?'var(--primary-color)':'#EFF0F7';
                       return(
                         <Tab key={index}  minW={'80px'} justifyContent={'center'} borderLeft={'none'}>
                           <Box  >
@@ -146,6 +203,7 @@ const UserForm = ({ profile, loading }) => {
                   formData={formData}
                   profile={profile}
                   loading={loading}
+                  openConnections={openConnections}
                 />
 
               </TabPanel>
@@ -158,18 +216,27 @@ const UserForm = ({ profile, loading }) => {
                   formData={formData}
                   profile={profile}
                   loading={loading}
+                  openConnections={openConnections}
+                  
                 />
               </TabPanel>
             
               <TabPanel>
-              <FormSocialDetails
-              prevStep={prevStep}
-              nextStep={nextStep}
-              onChange={onChange}
-              formData={formData}
-              profile={profile}
-              loading={loading}
-            />
+                <FormSocialDetails
+                 prevStep={prevStep}
+                 nextStep={nextStep}
+                 onChange={onChange}
+                 formData={formData}
+                 windowRef={windowRef}
+                 profile={profile}
+                 loading={loading}
+                 connections={{
+                  githubConnect,
+                  linkedinConnect
+                 }}
+                 openConnections={openConnections}
+
+                />
               </TabPanel>
 
               {/* <TabPanel p={0} py={'1em'} h='full'>
@@ -191,7 +258,7 @@ const UserForm = ({ profile, loading }) => {
           <Confirm onChange={onChange} prevStep={prevStep} nextStep={nextStep} formData={formData} />
 
         }
-        </NavLayout>
+      </NavLayout>
   )
 
   if (step === 1) {

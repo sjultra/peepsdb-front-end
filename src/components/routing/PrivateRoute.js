@@ -39,7 +39,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
           !isAuthenticated ? 
           <Redirect to='/login' /> : 
           <RouteLayout>
-            <ModalComponent/>
             <Component {...props} />
           </RouteLayout>
         }

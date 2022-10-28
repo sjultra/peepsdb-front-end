@@ -11,11 +11,11 @@ const InputElement = ({
     required,label,name,type,onChange,value,Sync,syncProps,
     inputStyles,containerStyles,labelStyles,h,fontSize,
     className,autofocus,preview,selectChild,tooltipText,isNotProvider,
+    placeholder,
     ...rest
   })=>{
 
     const [showPassword,setShowPassword] = useState(false)
-
 
     const [previewFocused,setPreviewFocused] = useState( preview? 'unfocused':'')
 
@@ -37,8 +37,6 @@ const InputElement = ({
     }:{};
 
     
-
-
 
     return(
       <Box {...rest} className={className}>
@@ -71,6 +69,7 @@ const InputElement = ({
                     pointerEvents={preview && previewFocused==='unfocused'? 'none':'initial'}
                     onChange={(e)=>onChange(e)}
                     {...clickEventOnPreview}
+                    {...placeholder?{placeholder}:{}}
                     {...inputStyle}
                   />
                   {type==='password' || preview?

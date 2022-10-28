@@ -19,6 +19,7 @@ import AdminRoute from './components/routing/AdminRoute';
 import AdminUsers from './screens/Admin/users';
 import AdminWorkspace from './screens/Admin/workspace';
 import NapoLoginScreen from './screens/Napoleon/LoginScreen';
+import ModalComponent from './components/layouts/Modal';
 
 const App = () => {
 
@@ -28,7 +29,12 @@ const App = () => {
     
     <Router>
         {/* <Alert /> */}
+
+        <ModalComponent/>
+        
         <Switch>
+  
+
           <Route path='/login' component={LoginScreen} />
           <PrivateRoute exact path='/' component={DashboardScreen} />
           <PrivateRoute path='/profile' component={ProfileScreen} />

@@ -20,7 +20,18 @@ const Btn = ({variant,w,p,children,loading,h,onClick,mt,px,fontSize,borderRadius
             color:'var(--primary-color)'
         }
     }:
+    variant==='blank'?
     {
+        bg:'transparent',
+        p:'0 !important',
+        _focus:{
+            bg:'transparent',
+        },
+        _hover:{
+            bg:'transparent',
+        }
+
+    }:{
         bg:'var(--primary-color)',
         color:'white',
         _focus:{
@@ -40,8 +51,8 @@ const Btn = ({variant,w,p,children,loading,h,onClick,mt,px,fontSize,borderRadius
 
     return(
         <Button isLoading={loading || false} onClick={onClick} fontSize={fontSize|| '15px'} 
-         mt={mt || '1.2em'} borderRadius={ borderRadius ||'5px'} {...isFull}  {...variantProps} 
-         h={ h || '50px'} px={{ base:w || '2em', lg:px || '4em' }}   {...rest} >
+         mt={mt || 0 } borderRadius={ borderRadius ||'5px'} {...isFull}   
+         h={ h || '40px'} px={{ base:w || '2em', lg:px || '4em' }} {...variantProps}  {...rest} >
             {children}
         </Button>       
     )

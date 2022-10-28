@@ -2,7 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import {GrClose} from 'react-icons/gr';
 import useWidget from "../../../hooks/useWidget";
 import { backendURL } from "../../../utils/setEnv";
-import {useRef} from 'react'
+// import {useRef} from 'react'
 
 const ConnectSocialWidget = ({payload})=>{
 
@@ -12,7 +12,7 @@ const ConnectSocialWidget = ({payload})=>{
 
     // const baseUrl = backendURL;
 
-    const windowObjectRef = useRef(window);
+    // const windowObjectRef = useRef(window);
 
 
     return(

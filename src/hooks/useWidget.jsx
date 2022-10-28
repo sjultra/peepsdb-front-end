@@ -27,18 +27,19 @@ const useWidget = ()=>{
         });
     }
       
-
-    const openModal = useCallback(payload=>{
-        onOpen();
-        console.log('opening payload',payload)
+    const openModal = useCallback(async({children,size,payload,onClose})=>{
+        // console.log('opening modal',isOpen)
+        
         dispatch(openMod({
-            ...payload,
-            isOpen,
+            payload,
+            isOpen:true,
+            children,
+            size,
+            onClose
         }));
     },[dispatch,openMod,onOpen,isOpen]);
     
     const closeModal = useCallback(()=>{
-        onClose();
         dispatch(closeMod());
     },[closeMod,onClose,dispatch])
 

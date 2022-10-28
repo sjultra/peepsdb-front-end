@@ -21,8 +21,7 @@ const DashboardScreen = () => {
   const userloading =  welcome;
 
   
-
-  console.log('loading included value',auth);
+  // console.log('loading included value',auth);
 
   if(loading || !profile){
     return (
@@ -32,7 +31,7 @@ const DashboardScreen = () => {
     )
   }
 
-  else if (!auth?.profileSetup)  return <OnboardUser />;
+  else if (!auth?.profileSetup)  return <OnboardUser profile={profile} />;
 
   else if(userloading){
     return <OnboardingModal proceed={closeWelcome} logout={logout} profile={profile}/>
@@ -131,9 +130,9 @@ const OnboardingModal = ({profile,logout,proceed})=>{
             </Box>
           </Center>
 
-          <Btn onClick={proceed} w='full' full fontSize={'16px'}> Proceed </Btn>
+          <Btn mt='1.2em' onClick={proceed} w='full' full fontSize={'16px'}> Proceed </Btn>
 
-          <Btn onClick={logout} w='full' display='flex' gap='0.4em' variant={'fade'} full >  
+          <Btn mt='1.3em' onClick={logout} w='full' display='flex' gap='0.4em' variant={'fade'} full >  
             <BiLogOut color='initial'/>
             <Text fontSize={'18px'} color='initial' fontWeight={500}> Logout</Text>
           </Btn>

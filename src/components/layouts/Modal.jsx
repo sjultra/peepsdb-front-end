@@ -9,22 +9,24 @@ const ModalComponent = () => {
 
     const { children:Child,payload,isOpen,size,scrollBehavior,...rest } = modal
 
-    
+    // console.log('close modal fn',closeModal)
 
-    console.log('modal isOpen',isOpen)
+    // console.log('modal',modal)
     
     return (
         <Modal
          isCentered
-         {...scrollBehavior?{scrollBehavior}:{}}
          isOpen={isOpen}
          onClose={closeModal}
-         size={size || '5xl'} 
+         size={size || '3xl'} 
+         {...scrollBehavior?{scrollBehavior}:{}}
          {...rest}
+         
+        //  onEsc={closeModal}
         >
           <ModalOverlay/>
           <ModalContent className="modalContent"   >
-               { Child && <Child payload={payload} />}
+               { Child && <Child {...payload} />}
           </ModalContent>
         </Modal>
   );

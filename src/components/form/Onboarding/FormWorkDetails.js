@@ -1,15 +1,14 @@
 import {  Flex } from "@chakra-ui/react";
 import React from "react";
 import useValidate from "../../../hooks/useValidate";
-import useWidget from "../../../hooks/useWidget";
 import { renderJSX } from "../../../utils/helpers";
 import Btn from "../../../widgets/Button";
 import Input from "../../../widgets/Input";
 import TextInput from "../../../widgets/Text";
 import { OnboardingContainer } from "./UserForm";
-import {LoginSocialGoogle} from 'reactjs-social-login'
 import { backendURL } from "../../../utils/setEnv";
-
+// import { useGoogleLogin } from '@react-oauth/google';
+import useWidget from "../../../hooks/useWidget";
 
 const FormWorkDetails = ({
   nextStep,
@@ -18,7 +17,8 @@ const FormWorkDetails = ({
   formData,
   loading,
   profile,
-  preview
+  preview,
+  openConnections
 }) => {
   const {
     timeZoneUrl,
@@ -44,24 +44,32 @@ const FormWorkDetails = ({
 
   const {isRequired,validateConditions,error} = useValidate()
 
-  const {openModal} = useWidget()
+  
+  console.log('google url',`${backendURL}/auth/inapp`)
+
+  const googleLogin =  ()=>{}
+  // useGoogleLogin({
+  //   onSuccess: codeResponse => console.log('google login',codeResponse),
+  //   flow: 'auth-code',
+  //   redirect_uri:`${backendURL}/auth/inapp`
+  // });
 
   const proceed = (e) => {
     e.preventDefault();
 
-    const payload = {
-      timeZoneUrl,
-      daysPerWeek,
-      hoursPerDay,
-      localCurrencyUrl,
-      femSlackProfileUrl,
-      startDate,
-      paymentProfileUrl,
-      googleGmailId,
-      appleEmailId,
-      skypeId,
-      microsoftEmailId,
-    }
+    // const payload = {
+    //   timeZoneUrl,
+    //   daysPerWeek,
+    //   hoursPerDay,
+    //   localCurrencyUrl,
+    //   femSlackProfileUrl,
+    //   startDate,
+    //   paymentProfileUrl,
+    //   googleGmailId,
+    //   appleEmailId,
+    //   skypeId,
+    //   microsoftEmailId,
+    // }
 
     
     let error = false;
@@ -95,18 +103,20 @@ const FormWorkDetails = ({
 
   return (
     <OnboardingContainer>
-      {
-      renderJSX(
-        preview,
-        <Flex my='0.8em' align={'center'} justify={'space-between'}>
-          <TextInput variant={'s2'}>Work info</TextInput>
-          
-          {/* <Btn  px='1.2em' h='40px' variant={'fade'} rightIcon={<AiFillEdit fontSize={'14px'} />} >Edit</Btn> */}
+            <Flex my='0.2em' align={'center'} justify={ preview?'space-between' :'flex-end'}>
+              {
+                renderJSX(
+                  preview,
+                  <TextInput variant={'s2'}>Work</TextInput>
+                )
+              }
 
-        </Flex>,
-        <></>
-      )
-      }
+              <Btn px='1em' onClick={openConnections}>
+                My Connections
+              </Btn>
+
+
+            </Flex>
 
 
       <Flex direction={{ base: "column", lg: "row" }} gap={"2em"}>
@@ -119,32 +129,19 @@ const FormWorkDetails = ({
          value={googleGmailId}
          onChange={onChange}
          {...{preview}}
-         Sync={LoginSocialGoogle}
-         syncProps={{
-            client_id:process.env['REACT_APP_GOOGLE_CLIENT_ID'],
-            scope:"openid profile email",
-            discoveryDocs:"claims_supported",
-            access_type:"offline",
-            redirect_uri:backendURL+process.env['REACT_APP_GOOGLE_CALLBACK_URL'],
-            onResolve:({ provider, data }) => {
-              console.log('provider',provider);
-              console.log('data',data)
-            },
-            onReject:err => {
-              console.log(err)
-            }
-         }}
+         Sync={googleLogin}
          isNotProvider={provider !=='google' }
+         tooltipText='google'
         />
 
         <Input
           fontSize="15px"
           flex={1}
           label={"Apple Email ID"}
-          required
+          // required
           tooltipText='apple'
-          name="appleEmaailId"
-          value={googleGmailId}
+          name="appleEmailId"
+          value={appleEmailId}
           onChange={onChange}
           {...{preview}}
           // syncFn={
@@ -192,6 +189,7 @@ const FormWorkDetails = ({
             value={startDate}
             onChange={(e) => onChange(e)}
             flex={1}
+            required
           />
 
 
@@ -203,6 +201,7 @@ const FormWorkDetails = ({
             onChange={(e) => onChange(e,'number')}
             flex={1}
             {...{preview}}
+            required
           />
           
       </Flex>
@@ -217,6 +216,7 @@ const FormWorkDetails = ({
             onChange={(e) => onChange(e,'number')}
             flex={{base:1,lg:0.5}}
             {...{preview}}
+            required
           />
 
       </Flex>

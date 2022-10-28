@@ -6,10 +6,8 @@ import Btn from '../../../widgets/Button';
 import Input from '../../../widgets/Input';
 import TextInput from '../../../widgets/Text';
 import { OnboardingContainer } from './UserForm';
-import {LoginSocialLinkedin} from 'reactjs-social-login'
-import { backendURL } from '../../../utils/setEnv';
+
 import useWidget from '../../../hooks/useWidget';
-import { githubAuthCall } from '../../../screens/LoginScreen';
 
 const FormSocialDetails = ({
   nextStep,
@@ -18,7 +16,10 @@ const FormSocialDetails = ({
   formData,
   // loading,
   profile,
-  preview
+  preview,
+  windowRef,
+  connections,
+  openConnections
 }) => {
   const {
     twitterProfileUrl,
@@ -43,23 +44,26 @@ const FormSocialDetails = ({
 
   const {openSocialConnectPopup} = useWidget()
 
+
     
 
   return (
     <OnboardingContainer>
 
-      {
-        renderJSX(
-          preview,
-          <Flex my='0.8em' align={'center'} justify={'space-between'}>
-            <TextInput variant={'s2'}>Social</TextInput>
-            
-            {/* <Btn px='1.2em' h='40px' variant={'fade'} rightIcon={<AiFillEdit fontSize={'14px'} />} >Edit</Btn> */}
+      <Flex my='0.2em' align={'center'} justify={ preview?'space-between' :'flex-end'}>
+        {
+          renderJSX(
+            preview,
+            <TextInput variant={'s2'}>Personal</TextInput>
+          )
+        }
 
-          </Flex>,
-          <></>
-        )
-      }
+        <Btn px='1em' onClick={openConnections}>
+          My Connections
+        </Btn>
+
+
+      </Flex>
 
 
       <Flex direction={{base:'column',lg:'row'}} gap={'2em'}  justify={{lg:'space-between'}} >
@@ -90,23 +94,11 @@ const FormSocialDetails = ({
 
             <Input label='Linkedin Profile Url' value={linkedinProfileUrl}
              name='linkedinProfileUrl' onChange={onChange} flex={1} 
-             Sync={LoginSocialLinkedin}
-             syncProps={{
-                client_id:process.env['REACT_APP_LINKEDIN_CLIENT_ID'],
-                client_secret:process.env['REACT_APP_LINKEDIN_CLIENT_ID'],
-                scope:"openid profile email",
-                discoveryDocs:"claims_supported",
-                access_type:"offline",
-                redirect_uri:`${backendURL}/`+process.env['REACT_APP_LINKEDIN_CALLBACK_URL'],
-                onResolve:({ provider, data }) => {
-                  console.log('provider',provider);
-                  console.log('data',data)
-                },
-                onReject:err => {
-                  console.log(err)
-                }
+             Sync={()=>{
+              connections?.linkedinConnect('-inapp')
              }}
-             isNotProvider={true}
+             tooltipText='linkedin'
+             isNotProvider={provider !=='linkedin'}
              {...{preview}}
             />
 
@@ -116,7 +108,11 @@ const FormSocialDetails = ({
       <Flex className="below" direction={{base:'column',lg:'row'}} gap={'2em'}  
        justify={{lg:'space-between'}} >
 
-        <Input Sync={()=>window.open(githubAuthCall(`inapp`),'Sign in with github',"width=550,height=450")} 
+        <Input Sync={()=>{ 
+          connections?.githubConnect('-inapp')
+
+         }
+        } 
          tooltipText='github' isNotProvider={provider!=='github'} 
          label='Github Profile Url' value={githubProfileUrl}
          name='githubProfileUrl' onChange={onChange} flex={1} 
