@@ -33,5 +33,9 @@ export const fileToBase64 = file => new Promise((resolve, reject) => {
 });
 
 
+export const shortenText  = (text,length=30,delimiter='...')=> text?.length > length ? text.slice(0,30) + delimiter :text
+
+
+
     
     

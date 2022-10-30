@@ -13,6 +13,7 @@ import styled from "styled-components";
 import useConnections from '../../../hooks/useConnections.jsx'
 import useWidget from '../../../hooks/useWidget';
 // import ConnectWidget from '../../connnections';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 
 
@@ -134,6 +135,7 @@ const UserForm = ({ profile, loading }) => {
 
 
   return(
+    <GoogleOAuthProvider clientId={process.env['REACT_APP_GOOGLE_CLIENT_ID']}>
       <NavLayout>
         {
           step < 3?
@@ -259,6 +261,7 @@ const UserForm = ({ profile, loading }) => {
 
         }
       </NavLayout>
+    </GoogleOAuthProvider>
   )
 
   if (step === 1) {

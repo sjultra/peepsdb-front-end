@@ -4,7 +4,6 @@ import {useSelector,useDispatch} from 'react-redux'
 import { useCallback, useRef } from "react";
 import useAxios from "./useAxios";
 import { useEffect } from "react";
-import moment from 'moment'
 import { renderJSX } from "../utils/helpers";
 
 const useAppAudits = (limit)=>{
@@ -13,14 +12,9 @@ const useAppAudits = (limit)=>{
 
     const dispatch = useDispatch();
 
-    let appLimit = limit ==='today'? moment().format('YYYY-MM-DD'): 
-    limit ==='2days'?moment().subtract(2,'days').format('YYYY-MM-DD'):
-    limit==='7days'?moment().subtract(7,'days').format('YYYY-MM-DD'):
-    limit==='1month'?moment().subtract(1,'months').format('YYYY-MM-DD'):null
+    let appLimit = limit
 
     // const {setLoading} = useWidget();
-
-    console.log('app limit',appLimit)
 
     const setLogs = useCallback((data)=>dispatch(setL(data)),[setL,dispatch])
 
@@ -29,7 +23,7 @@ const useAppAudits = (limit)=>{
     const fetchUserAudits = async()=>{
         try{
             // setLoading(false);
-            let req = await Axios.get(`/audit${renderJSX(limit,`?limit=${appLimit}`)}`)
+            let req = await Axios.get(`/audit${renderJSX(limit,`?limit=${appLimit}`,'')}`)
             setLogs(req.data);
         }
         catch(err){

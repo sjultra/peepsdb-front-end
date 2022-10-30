@@ -5,7 +5,7 @@ import UsersContent from '../../components/users/UsersContent';
 import Spinner from '../../components/layouts/Spinner';
 import {
   PrimaryHeading,
-  ContentWrapper,
+  // ContentWrapper,
   TitleFilter,
   Filter,
 } from '../ScreenResources';
@@ -16,12 +16,8 @@ import useWidget from '../../hooks/useWidget';
 import {
   Table,
   Thead,
-  Tbody,
-  Tfoot,
   Tr,
   Th,
-  Td,
-  TableCaption,
   TableContainer,
 } from '@chakra-ui/react'
 
@@ -100,9 +96,10 @@ const UsersScreen = () => {
             <Thead>
               <Tr>
                 <Th py='0.8em' fontSize={'14px'}>Name</Th>
-                <Th py='0.8em'  fontSize={'14px'}>Role</Th>
-                <Th py='0.8em' fontSize={'14px'} >Sign Up Date</Th>
-                <Th py='0.8em' fontSize={'14px'}>Onboarding</Th>
+                <Th py='0.8em'  fontSize={'14px'}>Title</Th>
+                <Th py='0.8em' fontSize={'14px'} >Role</Th>
+                <Th py='0.8em' fontSize={'14px'} >Sign up Date</Th>
+                <Th py='0.8em' fontSize={'14px'}>Action</Th>
                 {/* <Th>Action</Th> */}
               </Tr>
 

@@ -83,7 +83,7 @@ const AdminWrapper = ({children}) => {
                                 gap={'5px'} align='center' cursor={'pointer'}
                             >
                                 <TiDocumentText/>
-                                <Text fontSize={'14px'} fontWeight='600' >Logs</Text>
+                                <Text fontSize={'14px'} fontWeight='600' >Audit Trail</Text>
                             </Flex>
                         </NavLink>
                     </StyledNavContainer>

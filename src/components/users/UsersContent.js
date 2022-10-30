@@ -1,18 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { capitalizeString } from '../../utils/helpers';
+import { capitalizeString, renderJSX } from '../../utils/helpers';
 import {
-  Table,
-  Thead,
   Tbody,
-  Tfoot,
   Tr,
-  Th,
   Td,
-  TableCaption,
-  TableContainer,
+  Button,
+  Image,
+  Flex,
+  Text,
+  Circle,
 } from '@chakra-ui/react'
+import Btn from '../../widgets/Button';
+import { AiOutlineUser } from 'react-icons/ai';
 
 const Item = styled.ul`
   display: grid;
@@ -63,27 +63,48 @@ const UsersContent = ({ profiles, filterText }) => {
         {
           profiles?.length?
             profiles.filter(filterUsers).map((profile, index) => {
-              const { _id:user, firstName:firstname, lastName:lastname, googleGmailId, role } = profile;
+              const { _id:user, avatar,firstName:firstname, lastName:lastname, title, role,createdAt } = profile;
 
               const fName = capitalizeString(firstname);
               const lName = capitalizeString(lastname);
-              console.log('user id',user)
+              const titleValue = title || 'Nil';
+              const signedUp = createdAt?.slice(0,10)
               return (
                   <Tr key={index}>
                     <Td py='0.9em'>
-                        {fName && lName? 
-                        <>{fName} {lName} </> : 'Nil'}
+                        <Flex gap='0.5em' align='center'>
+                          {
+                            renderJSX(
+                              avatar,
+                              <Image width={'45px'} height='45px' borderRadius={'50%'} src={avatar} />,
+
+                              <Circle border='1px solid var(--borders)' size='46px'>
+                                <AiOutlineUser fontSize={'25px'}/>
+                              </Circle>
+
+                            )
+                          }
+                          <Text>
+                            {fName && lName? 
+                            <>{fName} {lName} </> : 'Nil'}
+                          </Text>
+                        </Flex>
                     </Td>
-                    <Td py='0.9em'>{googleGmailId || 'Nil'}</Td>
+                    <Td py='0.9em'>{title || 'Nil'}</Td>
                     <Td py={'0.9em'}>{role}</Td>
-                    <Td py='0.9em'>
+                    <Td py={'0.9em'}>{signedUp}</Td>
+                    <Td py={'0.9em'}>
+                        <Btn px='0.8em' bg='white' border={'1px solid #F2F2F2'} variant={'secondary'}>View Profile</Btn>
+                    </Td>
+                    {/* <Td py='0.9em'>
 
                       <StatusIndicator role={role}></StatusIndicator>
                       <span>{role === 'Guest' ? 'Pending' : 'Active'}</span>
 
-                    </Td>
+                    </Td> */}
                   </Tr>        
               );
+
             }):
           <h3>No user</h3>
         }

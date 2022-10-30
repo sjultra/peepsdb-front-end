@@ -20,6 +20,7 @@ import AdminUsers from './screens/Admin/users';
 import AdminWorkspace from './screens/Admin/workspace';
 import NapoLoginScreen from './screens/Napoleon/LoginScreen';
 import ModalComponent from './components/layouts/Modal';
+import Audit from './screens/Admin/audit';
 
 const App = () => {
 
@@ -46,6 +47,7 @@ const App = () => {
           />
           <PrivateRoute path='/jira_issues/:id' component={JiraIssuesScreen} />
           <PrivateRoute path='/meeting' component={MeetingScheduleScreen} />
+          <AdminRoute path='/admin/logs' component={Audit} />
           <AdminRoute path='/admin/users' component={AdminUsers} />
           <AdminRoute path='/admin/workspaces' component={AdminWorkspace} />
           <PrivateRoute path='/admin/users/:id' component={UserScreen} exact />
