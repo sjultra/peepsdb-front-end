@@ -1,6 +1,6 @@
 import { Box,  Center, Flex, Image,  Text } from "@chakra-ui/react";
 import {  useEffect, useRef } from "react";
-import { githubAuthCall, linkedinAuthUrl, microsoftAuthUrl } from "../screens/LoginScreen";
+import { facebookAuthUrl, githubAuthCall, linkedinAuthUrl, microsoftAuthUrl } from "../screens/LoginScreen";
 import TextInput from "../widgets/Text";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
@@ -25,44 +25,45 @@ const SelectDataComponent = ({
   payloadList,
   setPayload
 })=>{
+  if(keyValue !=='provider'){
+    return(
+      <Flex 
+      justify={'space-between'}
+      borderTop="1px solid rgba(0,0,0,0.2)"
+      align='center'
+      p='0.5em 0.8em'
+      >
 
-  return(
-    <Flex 
-     justify={'space-between'}
-     borderTop="1px solid rgba(0,0,0,0.2)"
-     align='center'
-     p='0.5em 0.8em'
-    >
+            <Box>
+                <Text fontSize={"16px"} fontWeight={500}>
+                    {capitalizeString(keyValue)}
+                </Text>
 
-          <Box>
-              <Text fontSize={"16px"} fontWeight={500}>
-                  {capitalizeString(keyValue)}
-              </Text>
+                <Text textAlign={'initial'} 
+                  mt="0.2em" fontSize={"12px"}>
+                    {
+                      keyValue==='avatar'?
+                      <Image width={'100px'} borderRadius='3px' src={value} />:
+                      value
+                    }
+                </Text>
+            </Box>
 
-              <Text textAlign={'initial'} 
-                mt="0.2em" fontSize={"12px"}>
-                  {
-                    keyValue==='avatar'?
-                    <Image width={'100px'} borderRadius='3px' src={value} />:
-                    value
-                  }
-              </Text>
-          </Box>
+            <CheckboxInput checked={payloadList.includes(keyValue)} onClick={()=>setPayload(prev=>{
+              console.log('payload', prev);
+              return prev.includes(keyValue)? prev.filter(value=>value !==keyValue): [...prev,keyValue]
 
-          <CheckboxInput checked={payloadList.includes(keyValue)} onClick={()=>setPayload(prev=>{
-            console.log('payload', prev);
-            return prev.includes(keyValue)? prev.filter(value=>value !==keyValue): [...prev,keyValue]
-
-           }
-          )}
-           w='initial' flex='initial' 
-           h='initial' type={'checkbox'} height='50px' 
-          />
+            }
+            )}
+            w='initial' flex='initial' 
+            h='initial' type={'checkbox'} height='50px' 
+            />
 
 
 
-    </Flex>
-  )
+      </Flex>
+    )
+  }
 
 }
 
@@ -90,8 +91,11 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
 
       microsoftConnect:()=>{
         window.location.assign(microsoftAuthUrl(''))
-      }
+      },
 
+      facebookConnect:()=>{
+        window.location.assign(facebookAuthUrl(''))
+      },
 
 
     },
@@ -122,11 +126,22 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
           "Sign in with LinkedIn",
           "width=550,height=450"
         );
+      },
+      
+      facebookConnect: () => {
+        connectionRef.current = window.open(
+          `${facebookAuthUrl( view==='login'?'':'-inapp')}`,
+          "Sign in with Facebook",
+          "width=550,height=450"
+        );
       }    
+
 
     },
  
   };
+
+
 
   const [payload,setPayload] = useState( initPayload? initPayload : {
 
@@ -134,9 +149,9 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
 
   const [fetched,setFetched] = useState( initPayload?true:false)
 
-  const [payloadList,setPayloadList] = useState( initPayload? Object.keys(initPayload).filter(entry=>entry!=='provider') : [])
+  const [payloadList,setPayloadList] = useState( initPayload? Object.keys(initPayload):[])
 
-  const checkSelectAllEntries = (Object.keys(payload).length-1) === payloadList.length
+  const checkSelectAllEntries = (Object.keys(payload).length) === payloadList.length
 
 
   useEffect(()=>{
@@ -150,7 +165,9 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
         console.log('profile caught',profileData)
         setFetched(true);
         setPayload(payload);
-        setPayloadList(Object.keys(payload).filter(entry=>entry !=='provider'))
+        setPayloadList(Object.keys(payload)
+        // .filter(entry=>entry !=='provider')
+        )
       
         connectionRef.current?.close && connectionRef.current.close()
       }
@@ -166,42 +183,45 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
         fetched?
         <>
           <Text textAlign={'center'} fontSize={'13px'} color='var(--hash)'>
-              We collected the following info from your google account. 
+              We collected the following info from your {payload?.provider}  account. 
               Select the data you would like us to update your profile with
           </Text>
 
           <Flex mt='1em' justify={'flex-end'}>
             <Btn onClick={()=>
               checkSelectAllEntries? setPayloadList([]): 
-              setPayloadList(Object.keys(payload).filter(entry=>entry!=='provider'))
+              setPayloadList(Object.keys(payload))
             } p='1px' height={'12px'} fontWeight={400} fontSize='13px' 
              variant={'blank'} color='var(--primary-color)'>{ checkSelectAllEntries ?'Unselect':'Select'} All</Btn>
           </Flex>
-          {
-            (()=>{
-              const payloadArr = Object.keys(payload).map(entry=>({
-                keyValue:entry,
-                value:payload[entry]
-              }))
+          <Box maxH={'300px'} overflowY='auto'>
 
-              return(
-                
-                payloadArr.map((ent,key)=>
-                    ent.keyValue !=='provider'?
-                    <Box key={key} mt={!key?'1em':0}>
-                      <SelectDataComponent key={key} {...ent} 
-                       payloadList={payloadList} setPayload={setPayloadList}
-                       previous={()=>setFetched(false)} 
-                      />
+            {
+              (()=>{
+                const payloadArr = Object.keys(payload).map(entry=>({
+                  keyValue:entry,
+                  value:payload[entry]
+                }))
 
-                    </Box>:<></>
+                return(
+                  
+                  payloadArr.map((ent,key)=>
+                      ent.keyValue !=='provider'?
+                      <Box key={key} mt={!key?'1em':0}>
+                        <SelectDataComponent key={key} {...ent} 
+                        payloadList={payloadList} setPayload={setPayloadList}
+                        previous={()=>setFetched(false)} 
+                        />
+
+                      </Box>:<></>
+                  )
+
+                  
                 )
 
-                
-              )
-
-            })()
-          }
+              })()
+            }
+          </Box>
 
           <Flex 
             mt='0.6em'
@@ -240,7 +260,9 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
           </Box>
 
           <Box>
-        
+
+
+
             <Flex 
             justify={'space-between'}
             borderTop="1px solid rgba(0,0,0,0.2)"
@@ -361,7 +383,37 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
                 </Btn>
 
             </Flex>
-    
+
+            <Flex 
+            borderTop="1px solid rgba(0,0,0,0.2)"
+            justify='space-between' align='center'
+            py="0.5em"
+            >
+                <Flex
+                align="center"
+                gap="0.6em"
+                >
+                    <Center w="45px">
+                        <Image src="/Assets/Facebook-png.svg" w="36px" />
+                    </Center>
+
+                    <Box>
+                        <Text fontSize={"16px"} fontWeight={500}>
+                         Facebook
+                        </Text>
+                        <Text mt="0.2em" fontSize={"12px"}>
+                          {ConnectionViews[view].actionText} your Facebook
+                        </Text>
+                    </Box>
+                </Flex>
+
+                <Btn onClick={ConnectionViews[view]?.facebookConnect} h='30px' px='0.8em'>
+                    {ConnectionViews[view].text}            
+                </Btn>
+
+            </Flex>
+
+
           </Box>
 
         </>
@@ -392,10 +444,20 @@ const useConnections = () => {
     );
   };
 
+  const facebookConnect=(inapp='') => {
+    connectionsRef.current = window.open(
+      `${facebookAuthUrl(inapp)}`,
+      "Sign in with Facebook",
+      "width=550,height=450"
+    );
+  }    
+
+
   return {
     googleConnect,
     githubConnect,
     linkedinConnect,
+    facebookConnect,
     connectionsRef,
     ConnectionsModal,
   };

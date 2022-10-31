@@ -9,7 +9,7 @@ import { backendURL, githubClientID } from '../utils/setEnv';
 import useAuthActions from '../hooks/useAuth';
 // import NavLayout from '../components/layouts/NavLayout';
 import { renderJSX } from '../utils/helpers';
-import { Box,  Center, Flex, Grid, Text, useDisclosure } from '@chakra-ui/react';
+import { Box,  Button,  Center, Flex, Grid, Text, useDisclosure } from '@chakra-ui/react';
 import { FaKeybase, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import TextInput from '../widgets/Text';
 import Btn from '../widgets/Button';
@@ -23,6 +23,7 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 import useConnections from '../hooks/useConnections';
+import { AiOutlineRight } from 'react-icons/ai';
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -122,17 +123,21 @@ const ItemRight = styled.div`
 const Socials = styled.a`
   /* height: 6rem; */
   /* width: 35rem; */
-  padding:1.2em 1.4em;
+  width:80px;
+  height:80px;
   border:1px solid var(--primary-color);
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   border-radius: 8px;
   margin-top: 3rem;
   font-size: 1.7rem;
   cursor: pointer;
 
+  img{
+    max-height:40px;
+  }
 
   &:hover {
     background: #f9f9f9;
@@ -161,11 +166,13 @@ export const linkedinAuthUrl = (inapp='')=>{
 
 }
 
+export const facebookAuthUrl = (inapp='')=> `${backendURL}/auth/facebook${inapp}`;
 
 export const microsoftAuthUrl = (userid)=>
 `${backendURL}/auth/microsoft${renderJSX(userid,`?userid=`+userid,'')}`;
 
 const inputStyles = 'background:white;border:1px solid var(--borders);border-radius:0.4em;margin-top:0.4em;height:40px;font-size:13px;'
+
 
 const NewConnection = ({handleClose})=>{
 
@@ -322,16 +329,22 @@ const LoginScreen = () => {
                 </Socials>
 
                 <Socials
-                href={githubAuthCall()}>
+                 href={githubAuthCall()}>
                   <img src={Github} alt='' />
                 </Socials>
+ 
                 <Socials href={'microsoftAuthUrl()'}>
                   <img src={Microsoft} alt='' />
                 </Socials>
 
-                <Socials href={'microsoftAuthUrl()'}>
-                  <FaKeybase fontSize='35px' />
+
+                <Socials href={facebookAuthUrl()}>
+                  <img src={'Assets/Facebook-png.svg'} alt='' />
                 </Socials>
+
+                {/* <Socials href={'microsoftAuthUrl()'}>
+                  <FaKeybase fontSize='35px' />
+                </Socials> */}
 
                 <Socials href={microsoftAuthUrl()}>
                   <FaTwitter color='#1d9bf0' fontSize='35px' />
@@ -345,10 +358,10 @@ const LoginScreen = () => {
 
             </Grid>
 
-            {/* <Button onClick={()=>handleOpen('more-connections')} mt='2.5em' bg='white' h={'3.5em'} border='1px solid var(--primary-color)'  w='full' borderRadius='5px' >
+            <Button onClick={()=>handleOpen('more-connections')} mt='2.5em' bg='white' h={'3.5em'} border='1px solid var(--primary-color)'  w='full' borderRadius='5px' >
                 <Text mr={'0.3em'} fontSize={'15px'} color='var(--primary-color)'>More connections</Text>
                 <AiOutlineRight fontSize={'14px'} color='var(--primary-color)' />
-            </Button> */}
+            </Button>
 
             <Flex align='center' my='1.5em'>
               <Box h='1px' borderTop='1px solid var(--borders)' flex={0.49}></Box>

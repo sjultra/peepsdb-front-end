@@ -39,7 +39,7 @@ const UserForm = ({ profile, loading }) => {
 
   const {
     connectionsRef:windowRef,
-    githubConnect,linkedinConnect,ConnectionsModal
+    githubConnect,linkedinConnect,ConnectionsModal,facebookConnect
   } = useConnections();
 
 
@@ -59,6 +59,8 @@ const UserForm = ({ profile, loading }) => {
           const initPayload  = JSON.parse(profileData);
 
           openConnections(initPayload);
+
+          
 
           windowRef.current?.close && windowRef.current.close()
         }
@@ -234,7 +236,8 @@ const UserForm = ({ profile, loading }) => {
                  loading={loading}
                  connections={{
                   githubConnect,
-                  linkedinConnect
+                  linkedinConnect,
+                  facebookConnect
                  }}
                  openConnections={openConnections}
 

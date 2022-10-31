@@ -7,16 +7,22 @@ const useLogin = ()=>{
 
     const {setAuth,auth,fetchMyProfile} = useAuthActions()
     
-    const hrefSplit = window.location.href.split('?token=');
+    // const hrefSplit = window.location.href.split('?token=');
 
-    const query = hrefSplit[1];
+
+    const windowQueries = window.location.search;
+    const urlSearch = new URLSearchParams(windowQueries)
+    const queries = Object.fromEntries(urlSearch.entries())  || {};
+
+    console.log('queries',queries)
 
     const browserToken = auth?.token? auth?.token :JSON.parse(localStorage.getItem('peepsdb-auth'))?.token;
 
     
+
     const tokenRef = useRef({
-        type:query?'sign':'',
-        token: query || browserToken
+        type:queries?.token?'sign':'',
+        token: queries?.token || browserToken
     })
 
     // console.log('browserToken',auth)

@@ -75,6 +75,12 @@ const FormSocialDetails = ({
         <Input label='Facebook Profile Url' value={facebookProfileUrl}
          name='facebookProfileUrl' onChange={onChange} flex={1} 
          {...{preview}}
+         Sync={()=>{
+          connections?.facebookConnect('-inapp')
+         }}
+         tooltipText='linkedin'
+         isNotProvider={provider !=='linkedin'}
+
          />
 
       </Flex>
