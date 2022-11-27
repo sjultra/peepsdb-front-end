@@ -29,7 +29,11 @@ const FileInputComponent = ({
 
     let toast = useToast();
 
+
     return( 
+      <>
+        <input type='file' />
+
         <Box position='relative' {...rest}>
             <Input type='file' opacity={0} 
              {...(inputRef && {ref: inputRef})}
@@ -66,6 +70,7 @@ const FileInputComponent = ({
               />
             }
         </Box>
+      </>
 
     )
 }

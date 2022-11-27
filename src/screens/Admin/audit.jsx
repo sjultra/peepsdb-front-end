@@ -23,7 +23,7 @@ const Audit= ()=>{
     const userLogs = logs.map(log=>({
         user:
         
-        (log?.user?.firstName || log?.user?.lastName)? `${log?.user?.firstName} ${log?.user?.lastName}`: log?.alias,
+        (log?.user?.firstName || log?.user?.lastName)? `${log?.user?.firstName} ${log?.user?.lastName}`: log?.user?.alias,
         type:log?.type,
         createdAt:log?.createdAt?.slice(0,10),
         description:shortenText(log?.description,40),
@@ -46,7 +46,7 @@ const Audit= ()=>{
             </Text>
 
             <Box mt='2.2em'>
-                <TableComponent bodyEntries={['user','type','createdAt','description','action']}  body={userLogs}   headers={['User','Timestamp','Description','Action']} />
+                <TableComponent bodyEntries={['user','type','createdAt','description','action']}  body={userLogs}   headers={['User','Type','Timestamp','Description','Action']} />
             </Box>
 
         </AdminWrapper>

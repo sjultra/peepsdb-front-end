@@ -18,7 +18,6 @@ export const renderIfJSXExists = (entry,fallBack=null)=>entry?entry:fallBack
 export const renderJSX = (condition,entry,fallBack=null)=>(condition)?(entry):fallBack
 
 
-
 export const convertCamelCase = (str )=>
     str.replace(/([A-Z])/g, ' $1')
     // uppercase the first character
