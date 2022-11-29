@@ -120,6 +120,7 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
       const trimmedForm  =trimmedFormData(formData);
       const payload = {
         ...trimmedForm,
+        _id:auth?._id
       }
       console.log('trimmedForm',payload?.avatar)
 
@@ -127,7 +128,7 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
       
       if (req.data){
         let statusText = req.status==='201'?'created':'updated';
-        
+                
         statusText==='created'&& setAuth({...auth,profileSetup:true});
 
         toast({
@@ -143,11 +144,23 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
       }
     }
     catch(err){
+
       console.log('error at create/update profile',err,err?.response);
-        let error =err?.response?.data;
-        if(error?.errors){
-         (error?.errors.map((entry,index)=> index < 3 ? errorPayload.push(`${convertCamelCase(entry['param'])}: ${entry['msg']}`): undefined  ) );
-        }        
+      let error =err?.response?.data;
+      // if(error?.errors){
+
+      //   (
+      //   error?.errors.map((entry,index)=> index < 3 ? errorPayload.push(
+      //     `${convertCamelCase(entry['param'])}: ${entry['msg']}`): undefined  
+      //   ) 
+      //   );
+
+      // } 
+      if (error){
+        Object.keys(error).map((entry,index)=> index < 3 ? errorPayload.push(
+          `${convertCamelCase(entry)}: ${error[entry]}`): undefined  
+        ) 
+    }
 
     }
     finally{
@@ -157,7 +170,8 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
         description: errorPayload.join(', '),
         status:'error',
         position: 'top',
-        duration:errorPayload.length>1?5000:15000
+        duration:errorPayload.length>2?15000: errorPayload?.length>1?8000:5000,
+        isClosable:true
       })
 
       setLoading(false);
@@ -175,15 +189,17 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
     <Box px={{lg:'5em'}}>
 
       {useGoBack({goBack:()=>prevStep()})}
-    
-      <FormUserDetails  
-       prevStep={prevStep}
-       onChange={onChange}
-       formData={formData}
-       profile={profile}
-       loading={loading}
-       previewMode 
-      />
+
+      <Box mt='1.2em'>
+        <FormUserDetails  
+        prevStep={prevStep}
+        onChange={onChange}
+        formData={formData}
+        profile={profile}
+        loading={loading}
+        previewMode 
+        />
+      </Box>
 
       <Divider py='1em' />
 

@@ -1,9 +1,15 @@
+//follow come
+
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './App';
+
+// self imported
 import { Provider } from 'react-redux';
 import store from './store/index';
-import App from './App';
 import { ChakraProvider  } from '@chakra-ui/react'
+
+
 
 ReactDOM.render(
   <ChakraProvider>

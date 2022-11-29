@@ -11,6 +11,7 @@ import Btn from '../widgets/Button';
 import { BiLogOut } from 'react-icons/bi';
 import useDeviceInfo from '../hooks/useDeviceInfo';
 import AdminDashboard from './Admin';
+import NavLayout from '../components/layouts/NavLayout';
 
 
 
@@ -20,8 +21,9 @@ const DashboardScreen = () => {
 
   const userloading =  welcome;
 
+
   
-  // console.log('loading included value',auth);
+  console.log('loading included value',auth);
 
   if(loading || !profile){
     return (
@@ -40,10 +42,13 @@ const DashboardScreen = () => {
   else if(auth?.token && auth?.role==='Admin'){
     return <AdminDashboard />;
   }
-
   
   else if (auth?.token && auth.role === 'Freelancer') {
-    return <UserWorkspace />;
+    return(
+      <NavLayout>
+        <UserWorkspace />
+      </NavLayout>
+    )
   } 
 
   return <>Nothing</>

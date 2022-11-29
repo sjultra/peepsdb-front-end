@@ -99,13 +99,13 @@ const FormUserDetails = ({
 
   return (
       <Box>
-            <Flex my='0.2em' align={'center'} justify={ previewMode?'space-between' :'flex-end'}>
-              {
+            <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
+              {/* {
                 renderJSX(
                   previewMode,
-                  <TextInput variant={'s2'}>Personal</TextInput>
+                  <TextInput variant={'s2'}></TextInput>
                 )
-              }
+              } */}
 
               <Btn px='1em' onClick={openConnections}>
                 My Connections

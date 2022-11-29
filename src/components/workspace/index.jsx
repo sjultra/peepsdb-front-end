@@ -3,22 +3,8 @@ import styled from 'styled-components';
 import ADOProjects from '../ado/ADOProjects';
 import JiraLabels from '../jira/JiraLabels';
 import MainHeading from '../layouts/MainHeading';
+import NavLayout from '../layouts/NavLayout';
 
-const Wrapper = styled.div`
-  padding: 0 2rem;
-
-  @media (max-width: 1000px) {
-    padding: 0 1rem;
-  }
-
-  @media (max-width: 900px) {
-    padding: 0 0.5rem;
-  }
-
-  @media (max-width: 900px) {
-    padding: 0 0;
-  }
-`;
 
 
 const TitleToggle = styled.div`
@@ -128,11 +114,10 @@ const UserWorkspace = () => {
   const toggle = ()=>setactiveScreen(prev=>prev==='ado'?'jira':'ado')
   
   return (
-    
-    <Wrapper>
+    <>
       <MainHeading  title={title} {...{toggle}} />
       {activeScreen==='ado' ? <ADOProjects   /> : <JiraLabels />}
-    </Wrapper>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ import useConnections from '../../../hooks/useConnections.jsx'
 import useWidget from '../../../hooks/useWidget';
 // import ConnectWidget from '../../connnections';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { backendURL } from '../../../utils/setEnv';
 
 
 
@@ -33,8 +34,8 @@ const UserForm = ({ profile, loading }) => {
     routing:'',paymentType:'',   
   });
 
-  const {openModal,closeModal} = useWidget();
 
+  const {openModal,closeModal} = useWidget();
 
 
   const {
@@ -42,17 +43,14 @@ const UserForm = ({ profile, loading }) => {
     githubConnect,linkedinConnect,ConnectionsModal,facebookConnect
   } = useConnections();
 
-
-
-
   useEffect(() => {
    profile &&  setFormData(prev=>({...prev,...profile}));
   }, []);
 
   useEffect(()=>{
     window.addEventListener('message',e=>{
-      if(e.origin === 'http://localhost:5000') {
-        // console.log('message caught',e.origin,e.data)
+      if(e.origin === backendURL) {
+        console.log('message caught',e.origin);
         if(windowRef?.current?.close){
           let profileData = e.data;
 

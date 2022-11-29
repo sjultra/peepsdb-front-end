@@ -7,8 +7,6 @@ const useDeviceInfo = ()=>{
     const device = deviceDetect();
     const clientType = isMobile?'Mobile':'Web'
 
-    
-
     return {
         device:{
             ...device,

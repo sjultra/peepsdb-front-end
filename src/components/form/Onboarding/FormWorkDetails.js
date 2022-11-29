@@ -4,11 +4,11 @@ import useValidate from "../../../hooks/useValidate";
 import { renderJSX } from "../../../utils/helpers";
 import Btn from "../../../widgets/Button";
 import Input from "../../../widgets/Input";
-import TextInput from "../../../widgets/Text";
+// import TextInput from "../../../widgets/Text";
 import { OnboardingContainer } from "./UserForm";
 import { backendURL } from "../../../utils/setEnv";
 // import { useGoogleLogin } from '@react-oauth/google';
-import useWidget from "../../../hooks/useWidget";
+// import useWidget from "../../../hooks/useWidget";
 
 const FormWorkDetails = ({
   nextStep,
@@ -99,21 +99,26 @@ const FormWorkDetails = ({
   };
 
 
-
-
   return (
     <OnboardingContainer>
-            <Flex my='0.2em' align={'center'} justify={ preview?'space-between' :'flex-end'}>
-              {
+            <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
+              {/* {
                 renderJSX(
                   preview,
                   <TextInput variant={'s2'}>Work</TextInput>
                 )
               }
+ */}
 
-              <Btn px='1em' onClick={openConnections}>
-                My Connections
-              </Btn>
+              {
+                renderJSX(
+                  !preview,
+                  <Btn px='1em' onClick={openConnections}>
+                    My Connections
+                  </Btn>
+                )
+              }
+
 
 
             </Flex>

@@ -50,19 +50,23 @@ const FormSocialDetails = ({
   return (
     <OnboardingContainer>
 
-      <Flex my='0.2em' align={'center'} justify={ preview?'space-between' :'flex-end'}>
-        {
+      <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
+        {/* {
           renderJSX(
             preview,
             <TextInput variant={'s2'}>Personal</TextInput>
           )
+        } */}
+
+        {
+          renderJSX(
+          
+            <Btn px='1em' onClick={openConnections}>
+              My Connections
+            </Btn>
+          )
         }
-
-        <Btn px='1em' onClick={openConnections}>
-          My Connections
-        </Btn>
-
-
+          
       </Flex>
 
 

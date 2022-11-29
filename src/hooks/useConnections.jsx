@@ -9,7 +9,6 @@ import { useState } from "react";
 import { capitalizeString } from "../utils/helpers";
 import styled from "styled-components";
 
-
 const CheckboxInput = styled.input`
 
   height:40px;
@@ -140,8 +139,6 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
     },
  
   };
-
-
 
   const [payload,setPayload] = useState( initPayload? initPayload : {
 
