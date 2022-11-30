@@ -7,16 +7,22 @@ const useLogin = ()=>{
 
     const {setAuth,auth,fetchMyProfile} = useAuthActions()
     
-    const hrefSplit = window.location.href.split('?token=');
+    // const hrefSplit = window.location.href.split('?token=');
 
-    const query = hrefSplit[1];
+
+    const windowQueries = window.location.search;
+    const urlSearch = new URLSearchParams(windowQueries)
+    const queries = Object.fromEntries(urlSearch.entries())  || {};
+
+    console.log('queries',queries)
 
     const browserToken = auth?.token? auth?.token :JSON.parse(localStorage.getItem('peepsdb-auth'))?.token;
 
     
+
     const tokenRef = useRef({
-        type:query?'sign':'',
-        token: query || browserToken
+        type:queries?.token?'sign':'',
+        token: queries?.token || browserToken
     })
 
     // console.log('browserToken',auth)
@@ -27,9 +33,12 @@ const useLogin = ()=>{
 
 
     useEffect(()=>{
+        
 
         (async()=>{
-            console.log('tokenRef',tokenRef.current)
+            
+            console.log('text is')
+
             if(tokenRef.current.token){
 
                 try{
@@ -41,7 +50,6 @@ const useLogin = ()=>{
                     });
 
                     const {status,data:dataPayload} = req;
-
                     
                     let data = {
                         ...dataPayload,
@@ -49,17 +57,21 @@ const useLogin = ()=>{
                         lastName:capitalizeString(dataPayload?.lastName || '')
                     }
 
-
                     if(status===200 || status===201){
                         setAuthRef.current({
                             ...data,
                             token:tokenRef.current.token,
                             isAuthenticated:true,                       
-                        })
-                        fetchMyProfileRef.current(tokenRef.current?.token);
+                        });
 
-                        data.token && localStorage.setItem('peepsdb-auth',JSON.stringify(data));
-    
+                        fetchMyProfileRef.current(tokenRef.current?.token);
+                        
+                        let firstLoginEntry = localStorage.getItem('firstLoginStamp');
+
+                        !firstLoginEntry && localStorage.setItem('firstLoginStamp',true);
+
+                        data.token && localStorage.setItem('peepsdb-auth',JSON.stringify(data));                     
+
                     }
 
 

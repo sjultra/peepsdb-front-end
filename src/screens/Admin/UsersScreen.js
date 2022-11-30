@@ -1,18 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
-import UsersContent from '../components/users/UsersContent';
-import Spinner from '../components/layouts/Spinner';
+import UsersContent from '../../components/users/UsersContent';
+import Spinner from '../../components/layouts/Spinner';
 import {
   PrimaryHeading,
-  ContentWrapper,
+  // ContentWrapper,
   TitleFilter,
   Filter,
-} from './ScreenResources';
-import useTeams from '../hooks/useTeams';
-import useWidget from '../hooks/useWidget';
+} from '../ScreenResources';
+import useTeams from '../../hooks/useTeams';
+import useWidget from '../../hooks/useWidget';
 // import useAuth from '../hooks/useAuth';
-import useGoback from '../hooks/useGoBack';
+
+import {
+  Table,
+  Thead,
+  Tr,
+  Th,
+  TableContainer,
+} from '@chakra-ui/react'
 
 const TableHead = styled.ul`
   background: #f8f7ff;
@@ -25,7 +32,7 @@ const TableHead = styled.ul`
   margin-top: 3rem;
   margin-bottom: 1rem;
   padding: 1.7rem 1rem 1.7rem 3rem;
-  min-width: 120rem;
+  /* min-width: 120rem; */
   font-weight: 500;
 
   @media (max-width: 600px) {
@@ -43,17 +50,13 @@ const UsersScreen = () => {
 
   const {profiles,fetchAllProfiles} = useTeams()
   const {loading} = useWidget();
+  const fetchProfilesRef = useRef(fetchAllProfiles);
 
-
-  const fetchProfilesRef = useRef(fetchAllProfiles)
-
-  const goBack = useGoback({})
-
+  
   useEffect(() => {
     if (!profiles?.length) {
       fetchProfilesRef.current()
     }
-    console.log('profiles',profiles)
   }, [profiles]);
 
   const [filterText, setFilterText] = useState('');
@@ -65,7 +68,6 @@ const UsersScreen = () => {
 
   return (
     <div>
-      {goBack}
       <TitleFilter>
         <PrimaryHeading className='text-primary'>Users </PrimaryHeading>
 
@@ -86,15 +88,29 @@ const UsersScreen = () => {
       {/* {error && error.msg && <Message msg={error.msg} variant='error' />} */}
 
       {profiles?.length && (
-        <ContentWrapper>
-          <TableHead>
-            <li>Name</li>
-            <li>Email</li>
-            <li>Role</li>
-            <li>Status</li>
-          </TableHead>
-          <UsersContent profiles={profiles} filterText={filterText} />
-        </ContentWrapper>
+        
+        <>
+        <TableContainer mt='1em'>
+          <Table variant='simple'>
+    
+            <Thead>
+              <Tr>
+                <Th py='0.8em' fontSize={'14px'}>Name</Th>
+                <Th py='0.8em'  fontSize={'14px'}>Title</Th>
+                <Th py='0.8em' fontSize={'14px'} >Role</Th>
+                <Th py='0.8em' fontSize={'14px'} >Sign up Date</Th>
+                <Th py='0.8em' fontSize={'14px'}>Action</Th>
+                {/* <Th>Action</Th> */}
+              </Tr>
+
+
+            </Thead>
+            <UsersContent profiles={profiles} filterText={filterText} />
+    
+          </Table>
+        </TableContainer>
+
+        </>
       )}
     </div>
   );

@@ -19,7 +19,8 @@ const widgetSlice = createSlice({
         setLoading :(state,action)=>{
             state.loading=action.payload;
         },
-        openMod :(state,action)=>{
+        openMod:(state,action)=>{
+            // console.log('opening modal payload',action.payload)
             let modalPayload = {
                 ...state.modal,
                 isOpen:action.payload?.isOpen,

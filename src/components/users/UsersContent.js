@@ -1,7 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { capitalizeString } from '../../utils/helpers';
+import { capitalizeString, renderJSX } from '../../utils/helpers';
+import {
+  Tbody,
+  Tr,
+  Td,
+  Button,
+  Image,
+  Flex,
+  Text,
+  Circle,
+} from '@chakra-ui/react'
+import Btn from '../../widgets/Button';
+import { AiOutlineUser } from 'react-icons/ai';
 
 const Item = styled.ul`
   display: grid;
@@ -9,7 +20,7 @@ const Item = styled.ul`
   grid-column-gap: 3rem;
   padding: 1.2rem 1rem 1.2rem 3rem;
   border-bottom: 1px solid #f1f1f1;
-  min-width: 120rem;
+  /* min-width: 120rem; */
   font-size: 1.5rem;
 
   @media (max-width: 600px) {
@@ -35,6 +46,7 @@ const StatusIndicator = styled.span`
   background: ${(props) => (props.role === 'Guest' ? '#7f7f7f' : '#5e55ef')};
 `;
 
+
 const UsersContent = ({ profiles, filterText }) => {
   const filterUsers = (item) => {
     return (
@@ -46,33 +58,61 @@ const UsersContent = ({ profiles, filterText }) => {
   };
 
   return (
-    <div>
-      {profiles?.length &&
-        profiles.filter(filterUsers).map((profile, index) => {
-          const { _id:user, firstName:firstname, lastName:lastname, googleGmailId, role } = profile;
+      <Tbody>
 
-          const fName = capitalizeString(firstname);
-          const lName = capitalizeString(lastname);
-          console.log('user id',user)
-          return (
-            <Link key={index} to={`/admin/users/${user}`}>
-              <Item>
-                <li>
-                  {fName && lName? 
-                    <>{fName} {lName} </> : 'Nil'}
-                </li>
-                <li>{googleGmailId || 'Nil'}</li>
-                <li>{role}</li>
-                <Status>
-                  <StatusIndicator role={role}></StatusIndicator>
-                  <span>{role === 'Guest' ? 'Pending' : 'Active'}</span>
-                </Status>
-              </Item>
-            </Link>
-          );
-        })}
-      {profiles === [] && <h3>No user</h3>}
-    </div>
+        {
+          profiles?.length?
+            profiles.filter(filterUsers).map((profile, index) => {
+              const { _id:user, avatar,firstName:firstname, lastName:lastname, title, role,createdAt } = profile;
+
+              const fName = capitalizeString(firstname);
+              const lName = capitalizeString(lastname);
+              const titleValue = title || 'Nil';
+              const signedUp = createdAt?.slice(0,10)
+              return (
+                  <Tr key={index}>
+                    <Td py='0.9em'>
+                        <Flex gap='0.5em' align='center'>
+                          {
+                            renderJSX(
+                              avatar,
+                              <Image width={'45px'} height='45px' borderRadius={'50%'} src={avatar} />,
+
+                              <Circle border='1px solid var(--borders)' size='46px'>
+                                <AiOutlineUser fontSize={'25px'}/>
+                              </Circle>
+
+                            )
+                          }
+                          <Text>
+                            {fName && lName? 
+                            <>{fName} {lName} </> : 'Nil'}
+                          </Text>
+                        </Flex>
+                    </Td>
+                    <Td py='0.9em'>{title || 'Nil'}</Td>
+                    <Td py={'0.9em'}>{role}</Td>
+                    <Td py={'0.9em'}>{signedUp}</Td>
+                    <Td py={'0.9em'}>
+                        <Btn px='0.8em' bg='white' border={'1px solid #F2F2F2'} variant={'secondary'}>View Profile</Btn>
+                    </Td>
+                    {/* <Td py='0.9em'>
+
+                      <StatusIndicator role={role}></StatusIndicator>
+                      <span>{role === 'Guest' ? 'Pending' : 'Active'}</span>
+
+                    </Td> */}
+                  </Tr>        
+              );
+
+            }):
+          <h3>No user</h3>
+        }
+
+
+      </Tbody>
+
+
   );
 };
 

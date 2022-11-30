@@ -8,9 +8,15 @@ import {
   BtnPrev,
   BtnNext,
 } from './FormResources';
-import useAuthActions from '../../hooks/useAuth';
-import { useToast } from '@chakra-ui/react';
-import { convertCamelCase } from '../../utils/helpers';
+import useAuthActions from '../../../hooks/useAuth';
+import { Box, Divider, Flex, useToast } from '@chakra-ui/react';
+import { convertCamelCase } from '../../../utils/helpers';
+import FormUserDetails from './FormUserDetails';
+import FormWorkDetails from './FormWorkDetails';
+import FormSocialDetails from './FormSocialDetails';
+// import Payment from './Payment';
+import Btn from '../../../widgets/Button';
+import useGoBack from '../../../hooks/useGoBack';
 
 const Details = styled.div`
   @media (max-width: 800px) {
@@ -54,9 +60,9 @@ const Items = styled.div`
   }
 `;
 
-const Confirm = ({ prevStep, formData }) => {
+const Confirm = ({ prevStep, formData,onChange,profile }) => {
 
-  const {updateUser,setProfile} = useAuthActions();
+  const {updateUser,setProfile,setAuth,auth} = useAuthActions();
 
   const history = useHistory();
   
@@ -64,10 +70,10 @@ const Confirm = ({ prevStep, formData }) => {
 
   const [loading,setLoading] = useState(false)
 
-
-
   const trimmedFormData =()=>{
     let obj = {}
+
+
     for (const key in formData) {
       let value = formData[key];
       
@@ -109,27 +115,52 @@ const Confirm = ({ prevStep, formData }) => {
     // Send data to API
     let errorPayload  = [];
     try{      
+
       setLoading(true)
-      let req = await updateUser({...trimmedFormData(formData)});
+      const trimmedForm  =trimmedFormData(formData);
+      const payload = {
+        ...trimmedForm,
+        _id:auth?._id
+      }
+      console.log('trimmedForm',payload?.avatar)
+
+      let req = await updateUser(trimmedFormData(payload));
       
       if (req.data){
-        let statusText = req.status==='201'?'created':'updated'
+        let statusText = req.status==='201'?'created':'updated';
+                
+        statusText==='created'&& setAuth({...auth,profileSetup:true});
+
         toast({
           title:'Success',
           description:`User ${statusText} successfully`,
           status:'success',
           position:'top',
-        })
+        });
+
         setProfile( req.data?._doc? req.data?._doc:req.data);
+        
         history.push(statusText==='created'?'/':'/profile');
       }
     }
     catch(err){
-      console.log('error at create/update profile',err?.response);
-        let error =err?.response?.data;
-        if(error?.errors){
-         (error?.errors.map((entry,index)=> index < 3 ? errorPayload.push(`${convertCamelCase(entry['param'])}: ${entry['msg']}`): undefined  ) );
-        }        
+
+      console.log('error at create/update profile',err,err?.response);
+      let error =err?.response?.data;
+      // if(error?.errors){
+
+      //   (
+      //   error?.errors.map((entry,index)=> index < 3 ? errorPayload.push(
+      //     `${convertCamelCase(entry['param'])}: ${entry['msg']}`): undefined  
+      //   ) 
+      //   );
+
+      // } 
+      if (error){
+        Object.keys(error).map((entry,index)=> index < 3 ? errorPayload.push(
+          `${convertCamelCase(entry)}: ${error[entry]}`): undefined  
+        ) 
+    }
 
     }
     finally{
@@ -139,7 +170,8 @@ const Confirm = ({ prevStep, formData }) => {
         description: errorPayload.join(', '),
         status:'error',
         position: 'top',
-        duration:errorPayload.length>1?5000:15000
+        duration:errorPayload.length>2?15000: errorPayload?.length>1?8000:5000,
+        isClosable:true
       })
 
       setLoading(false);
@@ -151,6 +183,67 @@ const Confirm = ({ prevStep, formData }) => {
     e.preventDefault();
     prevStep();
   };
+
+
+  return(
+    <Box px={{lg:'5em'}}>
+
+      {useGoBack({goBack:()=>prevStep()})}
+
+      <Box mt='1.2em'>
+        <FormUserDetails  
+        prevStep={prevStep}
+        onChange={onChange}
+        formData={formData}
+        profile={profile}
+        loading={loading}
+        previewMode 
+        />
+      </Box>
+
+      <Divider py='1em' />
+
+      <FormWorkDetails
+        prevStep={prevStep}
+        onChange={onChange}
+        formData={formData}
+        profile={profile}
+        loading={loading}
+        preview
+      />
+
+      <Divider py='1em' />
+
+      <FormSocialDetails
+        prevStep={prevStep}
+        onChange={onChange}
+        formData={formData}
+        profile={profile}
+        loading={loading}
+        preview
+      />
+
+      {/* <Divider py='1em' />
+
+      <Payment
+        prevStep={prevStep}
+        onChange={onChange}
+        formData={formData}
+        profile={profile}
+        loading={loading}
+        preview
+      />
+ */}
+      <Flex mt='1.2em' gap={'1.5em'}>
+        <Btn isLoading={loading} onClick={e=>proceed(e)} >Submit</Btn>
+        <Btn onClick={e=>previous(e)} variant={'fade'}>Previous</Btn>
+
+      </Flex>
+
+
+
+    </Box>
+  )
 
   return (
     <DetailsWrapper>

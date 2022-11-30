@@ -86,7 +86,11 @@ export const FormControl = styled.div`
 
   label {
     margin: 2rem 0 1rem 0;
+    color: rgba(4, 9, 33, 0.76);
+    font-size:15px;
   }
+
+
 
   span {
     color: #ff0000;
@@ -95,9 +99,13 @@ export const FormControl = styled.div`
   input,
   select {
     height: 50px;
-    border-radius: 10px;
     border: 2px solid #f1f1f1;
     padding: 0 2rem;
+    background: rgba(4, 9, 33, 0.04);
+    /* Black / Black 4 (Dark background) */
+
+    border: 1.36937px solid rgba(4, 9, 33, 0.04);
+    border-radius: 12px;
 
     &:focus {
       outline: 0;

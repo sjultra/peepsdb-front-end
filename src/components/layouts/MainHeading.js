@@ -84,19 +84,19 @@ const Toggle = styled.div`
 
 const AdoToggle = styled.div`
   background: ${(props) =>
-    props.ado ? 'rgba(95, 85, 239, 0.75)' : 'rgba(95, 85, 239, 0.08)'};
+    props.ado ==='ADO Projects' ? 'rgba(95, 85, 239, 0.75)' : 'rgba(95, 85, 239, 0.08)'};
   color: ${(props) => (props.ado ? '#fff' : '#000')};
   font-weight: ${(props) => (props.ado ? '600' : '#400')};
 `;
 
 const JiraToggle = styled.div`
   background: ${(props) =>
-    props.jira ? 'rgba(95, 85, 239, 0.75)' : 'rgba(95, 85, 239, 0.08)'};
+    props.jira ==='Jira Labels' ? 'rgba(95, 85, 239, 0.75)' : 'rgba(95, 85, 239, 0.08)'};
   color: ${(props) => (props.jira ? '#fff' : '#000')};
   font-weight: ${(props) => (props.jira ? '600' : '#400')};
 `;
 
-const MainHeading = ({ title }) => {
+const MainHeading = ({ title,toggle }) => {
   const dispatch = useDispatch();
 
   // Selectors
@@ -116,24 +116,20 @@ const MainHeading = ({ title }) => {
     <TitleToggle>
       <h1 className='text-primary'>{title ? title : defaultTitle}</h1>
       <Toggle>
-        <Link to='/'>
           <AdoToggle
             className='ado'
-            ado={display.ado}
-            onClick={toggleAdoHandler}
+            ado={title}
+            onClick={toggle}
           >
             ADO
           </AdoToggle>
-        </Link>
-        <Link to='/'>
           <JiraToggle
             className='jira'
-            jira={display.jira}
-            onClick={toggleJiraHandler}
+            onClick={toggle}
+            jira={title}
           >
             JIRA
           </JiraToggle>
-        </Link>
       </Toggle>
     </TitleToggle>
   );

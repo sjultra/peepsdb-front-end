@@ -1,6 +1,7 @@
 import { useDisclosure } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux"
+import ConnectSocialWidget from "../components/form/Onboarding/ConnectSocialWidget";
 import { selectWidget, widgetActions } from "../store/reducers/widget"
 
 
@@ -16,17 +17,29 @@ const useWidget = ()=>{
 
     const setLoading = useCallback(payload=>{dispatch(setL(payload))},[dispatch,setL]);
 
-    const openModal = useCallback(payload=>{
-        onOpen();
-        console.log('opening payload',payload)
+    const openSocialConnectPopup  = ({url,customUrl})=>{
+        openModal({
+          children:ConnectSocialWidget,
+          payload:{
+            ...url?{url}:{},
+            ...customUrl?{customUrl}:{}
+          }
+        });
+    }
+      
+    const openModal = useCallback(async({children,size,payload,onClose})=>{
+        // console.log('opening modal',isOpen)
+        
         dispatch(openMod({
-            ...payload,
-            isOpen,
+            payload,
+            isOpen:true,
+            children,
+            size,
+            onClose
         }));
     },[dispatch,openMod,onOpen,isOpen]);
     
     const closeModal = useCallback(()=>{
-        onClose();
         dispatch(closeMod());
     },[closeMod,onClose,dispatch])
 
@@ -36,6 +49,7 @@ const useWidget = ()=>{
         setLoading,
         openModal,
         closeModal,
+        openSocialConnectPopup,
         isOpen,
     }
 }

@@ -7,25 +7,26 @@ const ModalComponent = () => {
 
     const {closeModal,modal} = useWidget();
 
-    const { children:Child,payload,isOpen,size,...rest } = modal
+    const { children:Child,payload,isOpen,size,scrollBehavior,...rest } = modal
 
+    // console.log('close modal fn',closeModal)
 
-    console.log('size in modal component',size)
+    // console.log('modal',modal)
     
     return (
         <Modal
          isCentered
-         scrollBehavior='inside'
          isOpen={isOpen}
          onClose={closeModal}
-         size={'5xl'} 
+         size={size || '3xl'} 
+         {...scrollBehavior?{scrollBehavior}:{}}
          {...rest}
+         
+        //  onEsc={closeModal}
         >
           <ModalOverlay/>
-          <ModalContent className="modalContent" maxH={'98vh'}  >
-            <ModalBody>
-               { Child && <Child payload={payload} />}
-            </ModalBody>
+          <ModalContent className="modalContent"   >
+               { Child && <Child {...payload} />}
           </ModalContent>
         </Modal>
   );

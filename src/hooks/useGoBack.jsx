@@ -3,7 +3,7 @@ import { BsArrowLeft } from "react-icons/bs"
 import { useHistory } from "react-router-dom"
 
 
-const useGoBack = ({fontSize,color,mt})=>{
+const useGoBack = ({fontSize,color,mt,goBack})=>{
     const history = useHistory()
 
 
@@ -12,7 +12,12 @@ const useGoBack = ({fontSize,color,mt})=>{
         return(
             <Flex mt={mt || '1.5em'} align='center' >
                 <BsArrowLeft cursor={'pointer'}  color={color || 'initial'} 
-                 onClick={()=>history.goBack()} fontSize={fontSize ||'25px'}/>
+                 onClick={()=>{
+                    if (goBack) goBack()
+                    else{
+                        history.goBack()
+                    }
+                }} fontSize={fontSize ||'25px'}/>
                 <Text ml='0.5em'>Back</Text>
             </Flex>
         )

@@ -24,8 +24,6 @@ const Item = styled.div`
 
 const UserContent = ({ user }) => {
 
-
-
   const firstname = capitalizeString(user?.profile?.firstName)
 
   const lastname = capitalizeString(user?.profile?.lastName)

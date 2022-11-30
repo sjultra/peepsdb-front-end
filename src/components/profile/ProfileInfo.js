@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { DetailsWrapper } from '../form/FormResources';
+import { DetailsWrapper } from '../form/Onboarding/FormResources';
 import { Flex, Text } from '@chakra-ui/react';
 import { FiEdit } from 'react-icons/fi';
 
