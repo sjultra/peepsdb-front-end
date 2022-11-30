@@ -8,6 +8,7 @@ import Btn from "../widgets/Button";
 import { useState } from "react";
 import { capitalizeString } from "../utils/helpers";
 import styled from "styled-components";
+import { backendURL } from "../utils/setEnv";
 
 const CheckboxInput = styled.input`
 
@@ -153,13 +154,13 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
 
   useEffect(()=>{
     window.addEventListener('message',e=>{
-      if(e.origin === 'http://localhost:5000') {
+      if(e.origin === backendURL) {
         // console.log('message caught',e.origin,e.data)
         let profileData = e.data;
 
         const payload = JSON.parse(profileData)
 
-        console.log('profile caught',profileData)
+        console.log('profile been caughtt',profileData)
         setFetched(true);
         setPayload(payload);
         setPayloadList(Object.keys(payload)
