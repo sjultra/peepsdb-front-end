@@ -1,5 +1,5 @@
 import {  Flex } from "@chakra-ui/react";
-import React from "react";
+import React  from "react";
 import useValidate from "../../../hooks/useValidate";
 import { renderJSX } from "../../../utils/helpers";
 import Btn from "../../../widgets/Button";
@@ -43,6 +43,8 @@ const FormWorkDetails = ({
   };
 
   const {isRequired,validateConditions,error} = useValidate()
+
+  // const {getUserLocation} = useDeviceMetaData()
 
   
   console.log('google url',`${backendURL}/auth/inapp`)
@@ -98,7 +100,7 @@ const FormWorkDetails = ({
     prevStep();
   };
 
-
+ 
   return (
     <OnboardingContainer>
             <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
