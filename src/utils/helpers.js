@@ -36,5 +36,8 @@ export const shortenText  = (text,length=30,delimiter='...')=> text?.length > le
 
 
 
+export const stringToBase64Enc = (data) => {
+    return Buffer.from(data).toString('base64');
+}
     
     

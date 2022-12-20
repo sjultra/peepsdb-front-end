@@ -90,7 +90,7 @@ const UsersContent = ({ profiles, filterText }) => {
                           </Text>
                         </Flex>
                     </Td>
-                    <Td py='0.9em'>{title || 'Nil'}</Td>
+                    {/* <Td py='0.9em'>{title || 'Nil'}</Td> */}
                     <Td py={'0.9em'}>{role}</Td>
                     <Td py={'0.9em'}>{signedUp}</Td>
                     <Td py={'0.9em'}>

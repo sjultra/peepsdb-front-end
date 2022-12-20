@@ -14,6 +14,7 @@ import useTeams from '../hooks/useTeams';
 import useWidget from '../hooks/useWidget';
 import useAuthActions from '../hooks/useAuth';
 import { Redirect } from 'react-router-dom';
+import NavLayout from '../components/layouts/NavLayout';
 
 const TableHead = styled.div`
   background: #f8f7ff;
@@ -62,7 +63,7 @@ const MeetingScheduleScreen = () => {
   }
 
   return (
-    <div>
+    <NavLayout>
       <TitleFilter>
         
         <PrimaryHeading className='text-primary'>
@@ -96,7 +97,7 @@ const MeetingScheduleScreen = () => {
           <MeetingScheduleContent profiles={profiles} filterText={filterText} />
         </ContentWrapper>
       )}
-    </div>
+    </NavLayout>
   );
 };
 

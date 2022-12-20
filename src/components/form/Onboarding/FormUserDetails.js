@@ -48,22 +48,59 @@ const FormUserDetails = ({
   } = formData || {};
 
 
-  const proceed = (e) => {
-    e.preventDefault();  
+  const validateInputs = (resolve='disable')=>{
     const payload = {
       firstName,
       lastName,
-      alias,
-      avatar,
-      phone,
+      phone
     }
 
-    console.log('formdata',payload)
 
     let error ='';
     if(!Object.values(payload).every(value=>value)){
       error='Please enter all required fields'
     }
+
+    else if (!(/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(phone))){
+      error='Invalid phone number'
+
+    } 
+    if (error){
+      if (resolve='disable') {
+        return false
+      }
+      else{
+
+        toast({
+          title:'Error',
+          description:error,
+          status:'error',
+          position:'top',
+          isClosable:true
+        })
+      }
+  }
+
+  }
+
+  const proceed = (e) => {
+    e.preventDefault();  
+    const payload = {
+      firstName,
+      lastName,
+      phone
+    }
+
+
+    let error ='';
+    if(!Object.values(payload).every(value=>value)){
+      error='Please enter all required fields'
+    }
+
+    else if (!(/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(phone))){
+      error='Invalid phone number'
+
+    } 
     // else if (!validateEmail(googleGmailId)) {
     //   error= ('Invalid email')
    
@@ -114,9 +151,9 @@ const FormUserDetails = ({
 
             </Flex>
         {/* <PrimaryHeading className='text-center '>{headingText}</PrimaryHeading> */}
-        <Required>
+        {/* <Required>
           <span> * </span>
-        </Required>
+        </Required> */}
         
 
         <Flex align='center' direction={{base:'column',lg:'row'}} gap='1.5em'>
@@ -193,7 +230,7 @@ const FormUserDetails = ({
           <InputElement preview={previewMode} fontSize='15px' flex={1} label={'Alias'} required 
           name='alias' value={alias} onChange={onChange} />
 
-          <InputElement preview={previewMode} fontSize='15px' flex={1} label={'Phone number'} required 
+          <InputElement preview={previewMode} fontSize='15px' flex={1} label={'Phone number'}  
           name='phone' value={phone} onChange={onChange} />
 
           {/* <Box flex={1}>    

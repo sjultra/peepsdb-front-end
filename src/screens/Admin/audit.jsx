@@ -1,50 +1,157 @@
-import { Box, Text } from "@chakra-ui/react"
+import { Box, Flex, Select, Text } from "@chakra-ui/react"
+import { useState } from "react"
+import { GrFilter } from "react-icons/gr"
 import TableComponent from "../../components/layouts/Table"
 import useTeams from "../../hooks/useTeams"
+import useWidget from "../../hooks/useWidget"
 import { shortenText } from "../../utils/helpers"
 import Btn from "../../widgets/Button"
 import AdminWrapper from "./wrapper"
+import moment from 'moment';
 
+
+
+
+export const ActivityLogDetail  = (payload)=>{
+
+    const {user,type,description,createdAt,deviceData,close} = payload;
+
+    const createdAtDate = moment(createdAt);
+
+    console.log('createdAt Date',createdAtDate.format('YYYY-MM-DD hh:mm A'))
+
+    return(
+        <Box bg='white' p='2em 1em'>
+
+            <Text fontSize={'18px'} fontWeight={500}>Activity Log</Text>
+
+            <Box mt='1.5em'>
+                
+                <Flex mt='1.3em' borderBottom={'1px solid rgba(0,0,0,0.2)'} justify={'space-between'}>
+
+                    <Text fontSize={'15px'} fontWeight={500}>User </Text>
+
+                    <Text fontSize={'13px'}> {logUserLabel(user)} </Text>
+
+                </Flex>
+
+                <Flex mt='1.3em' borderBottom={'1px solid rgba(0,0,0,0.2)'} justify={'space-between'}>
+
+                    <Text fontSize={'15px'} fontWeight={500}>Type </Text>
+
+                    <Text fontSize={'13px'}> {type} </Text>
+
+                </Flex>
+
+                <Flex mt='1.3em' borderBottom={'1px solid rgba(0,0,0,0.2)'} justify={'space-between'}>
+
+                    <Text fontWeight={500} fontSize={'15px'} >Description </Text>
+
+                    <Text fontSize={'13px'}> {description} </Text>
+
+                </Flex>
+
+
+                <Flex mt='1.3em' borderBottom={'1px solid rgba(0,0,0,0.2)'} justify={'space-between'}>
+
+                    <Text fontWeight={500} fontSize={'15px'} >Time </Text>
+
+                    <Text fontSize={'13px'}> {formatDateTimeString(createdAt)} </Text>
+
+                </Flex>
+
+
+                <Flex mt='1.3em' borderBottom={'1px solid rgba(0,0,0,0.2)'} justify={'space-between'}>
+
+                    <Text fontSize={'15px'} fontWeight={500}>Device Data </Text>
+
+                    <Text fontSize={'13px'}> {deviceData} </Text>
+
+                </Flex>
+
+            </Box>
+
+            <Flex mt='2em' justify={'flex-end'}>
+                <Btn w='90px' px='1.2em' py='0.2em' onClick={close}>Cancel</Btn>
+            </Flex>            
+
+        </Box>
+    )
+}
+
+export const formatDateTimeString = (dateTimeStr,am_pm=true)=>moment(dateTimeStr).format(`YYYY-MM-DD ${am_pm?'hh:mm A':''}`)
+
+export const logUserLabel = (user)=> 
+    user?.alias? user?.alias: (user?.firstName || user?.lastName)?`${user?.firstName} ${user?.lastName}`:'A new user' 
 
 
 const Audit= ()=>{
 
-    const {logs,useAppAudits,} = useTeams()
+    const {logs,useAppAudits} = useTeams();
 
-  
+    const {openModal,closeModal} = useWidget();
+    
     // const fetchAllProfilesRef = useRef(fetchAllProfiles);
-  
     
-    useAppAudits('')
-
-    console.log('audit control',logs);
-
+    const [logLimit,setLogLimit] = useState('today');
     
+    useAppAudits(logLimit);
+
     const userLogs = logs.map(log=>({
         user:
-        
-        (log?.user?.firstName || log?.user?.lastName)? `${log?.user?.firstName} ${log?.user?.lastName}`: log?.user?.alias,
+        log?.user?.alias? log?.user?.alias:
+        (log?.user?.firstName || log?.user?.lastName)?`${log?.user?.firstName} ${log?.user?.lastName}`:'A new user' ,
         type:log?.type,
-        createdAt:log?.createdAt?.slice(0,10),
+        createdAt:formatDateTimeString(log?.createdAt),
         description:shortenText(log?.description,40),
         action:
-            <Btn px='0.8em' bg='white' border={'1px solid #F2F2F2'} variant={'secondary'}>
+            <Btn px='0.8em' bg='white' onClick={()=>{
+                openModal({
+                    children:ActivityLogDetail,
+                    payload:{...log,close:closeModal},
+                    size:'2xl'
+                })
+            }}
+             border={'1px solid #F2F2F2'} variant={'secondary'}>
                 View
             </Btn>
     }))
 
 
+
+
     return(
         <AdminWrapper>
+            <Flex 
+             align={'center'}
+             justify='space-between'
+            >
+  
+                <Box>
 
-            <Text mt='0.6em' className="archivo" fontSize={"25px"} fontWeight={500}>
-                Audit Trail
-            </Text>
+                    <Text mt='0.6em' className="archivo" fontSize={"25px"} fontWeight={500}>
+                        Audit Trail
+                    </Text>
 
-            <Text>
-                View Recent Activities of users in PeepsDB
-            </Text>
+                    <Text>
+                        View Recent Activities of users in PeepsDB
+                    </Text>
+                </Box>
 
+                <Flex gap='0.6em' align='center'>
+                    
+                    <GrFilter fontSize={'18px'}/>
+                    <Select fontSize={'14px'} onClick={(e)=>setLogLimit(e.target.value)} maxW={'100px'}>
+                        <option value={'today'}>Today</option>
+                        <option value={'2days'}>Last 2 days</option>
+                        <option value='7days'>Last week</option>
+                        <option value={'1month'}>Last month</option>
+                        <option value={'all'}>All</option>
+                    </Select>
+
+                </Flex>
+
+            </Flex>
             <Box mt='2.2em'>
                 <TableComponent bodyEntries={['user','type','createdAt','description','action']}  body={userLogs}   headers={['User','Type','Timestamp','Description','Action']} />
             </Box>

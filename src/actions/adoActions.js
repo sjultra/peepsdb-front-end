@@ -34,6 +34,8 @@ export const getAdoProjects = () => async (dispatch) => {
       type: GET_ADO_PROJECTS_REQUEST,
     });
 
+  
+
     const res = await axios.get(
       'https://dev.azure.com/sjultra/_apis/projects?api-version=6.0',
       config

@@ -76,10 +76,11 @@ const FormWorkDetails = ({
     
     let error = false;
 
-    if (isRequired([daysPerWeek,hoursPerDay,startDate],true)) {
-      error=true;
-    }
-    else if (validateConditions([daysPerWeek,hoursPerDay,val3idateEmail(googleGmailId)],['Days per week must be at least 1','Hours per day must be at least 1','Please enter a valid google mail'])){
+    // if (isRequired([daysPerWeek,hoursPerDay,],true)) {
+    //   error=true;
+    // }
+    // else 
+    if ( validateConditions([daysPerWeek,hoursPerDay,val3idateEmail(googleGmailId)],['Days per week must be at least 1','Hours per day must be at least 1','Please enter a valid google mail'])){
       error = true;
     }
     else{
@@ -131,7 +132,6 @@ const FormWorkDetails = ({
          fontSize="15px"
          flex={1}
          label={"Google gmail ID"}
-         required
          name="googleGmailId"
          value={googleGmailId}
          onChange={onChange}
@@ -196,7 +196,7 @@ const FormWorkDetails = ({
             value={startDate}
             onChange={(e) => onChange(e)}
             flex={1}
-            required
+            // required
           />
 
 
@@ -208,7 +208,7 @@ const FormWorkDetails = ({
             onChange={(e) => onChange(e,'number')}
             flex={1}
             {...{preview}}
-            required
+            // required
           />
           
       </Flex>
@@ -223,7 +223,7 @@ const FormWorkDetails = ({
             onChange={(e) => onChange(e,'number')}
             flex={{base:1,lg:0.5}}
             {...{preview}}
-            required
+            // required
           />
 
       </Flex>
