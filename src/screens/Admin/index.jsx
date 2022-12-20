@@ -18,13 +18,13 @@ const AdminDashboard = () => {
 
   const {loading} = useWidget()
   
-  const [userLogs,setUserLogs] = useState({
-    today:[],
-    last2Days:[],
-    lastWeeek:[],
-    all:[]
+  // const [userLogs,setUserLogs] = useState({
+  //   today:[],
+  //   last2Days:[],
+  //   lastWeeek:[],
+  //   all:[]
   
-  })
+  // })
 
   const [logLimit,setLogLimit] = useState('today')
 
@@ -44,17 +44,7 @@ const AdminDashboard = () => {
 
   const userLogEntry =logs || []
 
-  const returnReversedLogs = ()=>{
-    let newLogs = []; 
-    for (let index = newLogs.length-1; index >=0 ; index--) {
-      console.log('log index',logs[index])
-      newLogs.push(logs[index]);
-    } 
 
-    return newLogs
-  }
-
-  console.log('reversed logs2',returnReversedLogs())
 
   return (
     <AdminWrapper>

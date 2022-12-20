@@ -2,6 +2,7 @@ import {  useEffect, useRef } from 'react';
 import Axios from '../utils/axios';
 import { capitalizeString } from '../utils/helpers';
 import useAuthActions from './useAuth';
+import useDeviceMetaData from './useDeviceInfo';
 
 const useLogin = ()=>{
 
@@ -9,6 +10,7 @@ const useLogin = ()=>{
     
     // const hrefSplit = window.location.href.split('?token=');
 
+    const {device} = useDeviceMetaData()
 
     const windowQueries = window.location.search;
     const urlSearch = new URLSearchParams(windowQueries)

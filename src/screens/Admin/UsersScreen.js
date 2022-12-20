@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import  { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import UsersContent from '../../components/users/UsersContent';
@@ -96,7 +96,7 @@ const UsersScreen = () => {
             <Thead>
               <Tr>
                 <Th py='0.8em' fontSize={'14px'}>Name</Th>
-                <Th py='0.8em'  fontSize={'14px'}>Title</Th>
+                {/* <Th py='0.8em'  fontSize={'14px'}>Title</Th> */}
                 <Th py='0.8em' fontSize={'14px'} >Role</Th>
                 <Th py='0.8em' fontSize={'14px'} >Sign up Date</Th>
                 <Th py='0.8em' fontSize={'14px'}>Action</Th>

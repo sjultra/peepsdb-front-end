@@ -14,11 +14,11 @@ const useAuthActions = ()=>{
 
     const dispatch = useDispatch();
 
-    const {auth,profile,welcome} = useSelector(selectAuth)
+    const {auth,profile,welcome} = useSelector(selectAuth);
 
-    const {device} = useDeviceInfo()
+    const {device} = useDeviceInfo();
 
-    const Axios = useAxios()
+    const Axios = useAxios();
 
     //store update actions
 
@@ -60,7 +60,7 @@ const useAuthActions = ()=>{
             ...token?{
                 headers:{
                   'Authorization':token,
-                  deviceinfo
+                  DeviceInfo:deviceinfo
                   
                 }
             }:{}

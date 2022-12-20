@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import Alert from './components/layouts/Alert';
 import NotFoundScreen from './screens/NotFoundScreen';
@@ -18,13 +18,23 @@ import './styles.sass';
 import AdminRoute from './components/routing/AdminRoute';
 import AdminUsers from './screens/Admin/users';
 import AdminWorkspace from './screens/Admin/workspace';
-import NapoLoginScreen from './screens/Napoleon/LoginScreen';
 import ModalComponent from './components/layouts/Modal';
 import Audit from './screens/Admin/audit';
+import useAppInsights from './hooks/useAppInsights';
 
 const App = () => {
 
+  const {initializeAzureLogging} = useAppInsights()
+
+  const initAzureLoggingRef = useRef(initializeAzureLogging)
+
   useLogin();
+
+
+
+  useEffect(()=>initAzureLoggingRef.current(),[])
+  
+
 
   return (
     
@@ -39,7 +49,6 @@ const App = () => {
           <PrivateRoute exact path='/' component={DashboardScreen} />
           <PrivateRoute path='/profile' component={ProfileScreen} />
           <PrivateRoute path='/edit-profile' component={EditProfileScreen} />
-          <Route path='/nap/loginscreen' component={NapoLoginScreen} />
           <PrivateRoute
             path='/ado_workitems/:id'
             component={ADOWorkItemsScreen}
