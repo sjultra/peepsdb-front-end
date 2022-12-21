@@ -1,7 +1,6 @@
 
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
-import { useEffect } from 'react';
 
 
 
@@ -22,7 +21,9 @@ const useAppInsights = ()=>{
         appInsights.loadAppInsights();
     }
 
-    useEffect(()=>initializeAzureLogging(),[])
+    return {
+        initializeAzureLogging
+    }
 };
 
 
