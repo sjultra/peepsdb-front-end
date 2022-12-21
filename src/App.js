@@ -34,7 +34,7 @@ const App = () => {
 
   useEffect(()=>initAzureLoggingRef.current(),[])
   
-
+  console.log('azure insights',process.env['REACT_APP_AZURE_INSIGHTS_CONNECTION_STRING'])
 
   return (
     
