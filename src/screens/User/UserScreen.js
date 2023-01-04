@@ -1,19 +1,18 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { FiEdit } from 'react-icons/fi';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Spinner from '../components/layouts/Spinner';
+import Spinner from '../../components/layouts/Spinner';
 // import Message from '../components/layouts/Message';
-import UserContent from '../components/user/UserContent';
-import useTeams from '../hooks/useTeams';
-import useAuth  from '../hooks/useAuth';
+import UserContent from '../../components/user/UserContent';
+import useTeams from '../../hooks/useTeams';
+import useAuth  from '../../hooks/useAuth';
 import { useState } from 'react';
-import { capitalizeString } from '../utils/helpers';
-import useWidget from '../hooks/useWidget';
-import UserEditScreen from './UserEditScreen';
+import useWidget from '../../hooks/useWidget';
+import UserEditScreen from '../UserEditScreen';
 import { Flex, Text } from '@chakra-ui/react';
-import useGoBack from '../hooks/useGoBack';
-
+import useGoBack from '../../hooks/useGoBack';
+import UserProfile from './index';
 
 const TitleEdit = styled.div`
   display: flex;
@@ -89,7 +88,7 @@ const TableHead = styled.ul`
   }
 `;
 
-const UserScreen = ({ match }) => {
+const UserScreen = () => {
   const {profile} = useAuth();
 
   const {fetchUserProfile} = useTeams();
@@ -100,9 +99,16 @@ const UserScreen = ({ match }) => {
 
   const fetchUserRef = useRef(fetchUserProfile)
 
-  const id = match?.params?.id;
+  // const id = match?.params?.id;
 
   const goback = useGoBack({});
+
+  const {id} = useParams();
+
+
+
+  useMemo(()=> console.log('user is suspended',user) ,[user?.isSuspended])
+
 
   useEffect(() => {
     (
@@ -119,7 +125,6 @@ const UserScreen = ({ match }) => {
     )()
   }, [id]);
 
-  const firstname = capitalizeString(user?.firstName)
 
 
 
@@ -132,23 +137,40 @@ const UserScreen = ({ match }) => {
 
       {goback}
 
+      {loading && <Spinner />}
+
+      {user && <UserProfile user={user} setUser={setUser} /> }
+
+
+      {user ==='user' && <V1/>}
+    </div>
+  );
+};
+
+
+const V1 = ({firstname,user,openModal})=>{
+
+  return(
+
+    <>
+        
       <TitleEdit>
-        <PrimaryHeading className='text-primary'>
-          {firstname ? firstname : 'User'}
-        </PrimaryHeading>
+      <PrimaryHeading className='text-primary'>
+        {firstname ? firstname : 'User'}
+      </PrimaryHeading>
         {user && (
           <StyledLink>
 
               <Flex p='0.4em 1em' borderRadius={'6px'} color={'white'} 
-               gap='0.5em' bg='var(--primary-color)' my='0.8em' align={'center'}
-               onClick={()=>{
+              gap='0.5em' bg='var(--primary-color)' my='0.8em' align={'center'}
+              onClick={()=>{
                 openModal({
                   children:UserEditScreen,
                   payload:user,
                   size:'4xl'
                 })} 
                 }
-               >
+              >
                 <Text fontSize={'19px'}> Edit User</Text>
                 <FiEdit fontSize={'22px'} />
               </Flex>
@@ -158,19 +180,20 @@ const UserScreen = ({ match }) => {
         )}
       </TitleEdit>
 
-      {loading && <Spinner />}
+      <ContentWrapper>
+        <TableHead>
+          <li>Onboarding Process</li>
+          <li>Status</li>
+        </TableHead>
+        <UserContent user={user} />
+      </ContentWrapper>
 
-      {user && (
-        <ContentWrapper>
-          <TableHead>
-            <li>Onboarding Process</li>
-            <li>Status</li>
-          </TableHead>
-          <UserContent user={user} />
-        </ContentWrapper>
-      )}
-    </div>
-  );
-};
+    </>
+
+  )
+
+}
+
+
 
 export default UserScreen;

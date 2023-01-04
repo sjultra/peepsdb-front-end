@@ -1,4 +1,4 @@
-import {  Flex } from "@chakra-ui/react";
+import {  Box, Flex } from "@chakra-ui/react";
 import React  from "react";
 import useValidate from "../../../hooks/useValidate";
 import { renderJSX } from "../../../utils/helpers";
@@ -7,6 +7,8 @@ import Input from "../../../widgets/Input";
 // import TextInput from "../../../widgets/Text";
 import { OnboardingContainer } from "./UserForm";
 import { backendURL } from "../../../utils/setEnv";
+import SelectInput from "../../../widgets/Select";
+import { allTimeZones } from "../../../utils/timezone-list";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import useWidget from "../../../hooks/useWidget";
 
@@ -24,14 +26,9 @@ const FormWorkDetails = ({
     timeZoneUrl,
     daysPerWeek,
     hoursPerDay,
-    localCurrencyUrl,
-    femSlackProfileUrl,
     startDate,
-    paymentProfileUrl,
     googleGmailId,
     appleEmailId,
-    skypeId,
-    microsoftEmailId,
     title,
     provider
   } = formData;
@@ -42,12 +39,13 @@ const FormWorkDetails = ({
     return re.test(email);
   };
 
-  const {isRequired,validateConditions,error} = useValidate()
+
+  const {validateConditions} = useValidate()
 
   // const {getUserLocation} = useDeviceMetaData()
 
   
-  console.log('google url',`${backendURL}/auth/inapp`)
+  console.log('timezone url',timeZoneUrl)
 
   const googleLogin =  ()=>{}
   // useGoogleLogin({
@@ -171,18 +169,33 @@ const FormWorkDetails = ({
            {...{preview}}
           />
 
+              
+          {/* <Box flex={1}>
+
+            <SelectInput onChange={(e)=>{ 
+              onChange(e);
+              return e?.target?.value;
+             }} 
+             options={allTimeZones(true)} label={'Timezone'} 
+             name='timeZoneUrl' defaultValue={timeZoneUrl} 
+            />
+
+          </Box> */}
+
+
 
           <Input
-            label='Timezone Url'
-            type="text"
-            name="timeZoneUrl"
-            value={timeZoneUrl}
-            onChange={(e) => onChange(e)}
+            label='Hours Per Day'
+            type="number"
+            name="hoursPerDay"
+            value={hoursPerDay}
+            onChange={(e) => onChange(e,'number')}
+            // flex={{base:1,lg:0.5}}
             flex={1}
             {...{preview}}
+            // required
           />
 
-  
 
       </Flex>
 
@@ -215,16 +228,6 @@ const FormWorkDetails = ({
 
       <Flex className="below"  direction={{ base: "column", lg: "row" }} gap={"2em"}>
 
-          <Input
-            label='Hours Per Day'
-            type="number"
-            name="hoursPerDay"
-            value={hoursPerDay}
-            onChange={(e) => onChange(e,'number')}
-            flex={{base:1,lg:0.5}}
-            {...{preview}}
-            // required
-          />
 
       </Flex>
 

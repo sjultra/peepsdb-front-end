@@ -333,7 +333,7 @@ const LoginScreen = () => {
                   <img src={Github} alt='' />
                 </Socials>
  
-                <Socials href={'microsoftAuthUrl()'}>
+                <Socials href={microsoftAuthUrl()}>
                   <img src={Microsoft} alt='' />
                 </Socials>
 

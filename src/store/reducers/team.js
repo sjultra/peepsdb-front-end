@@ -25,9 +25,22 @@ const teamSlice = createSlice({
         },
         setLogs:(state,action)=>{
           state.logs = action.payload  
-        }
+        },
 
-        
+        updateProfile:(state,action)=>{
+
+
+            let profileHolder = state.profiles;
+            let profileIndex = state.profiles.findIndex(profile=>profile?._id===action.payload._id);
+            console.log('profileIndex',state.profiles);
+            profileHolder[profileIndex] = {
+                ...profileHolder[profileIndex],
+                ...action.payload
+            };
+            state.profiles = [...profileHolder]
+            console.log('updating profile',action.payload)
+        },
+
 
 
         

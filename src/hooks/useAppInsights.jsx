@@ -1,6 +1,7 @@
 
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
+import countries from '../utils/timezone-cities.json'
 
 
 
@@ -19,10 +20,28 @@ const useAppInsights = ()=>{
             }
         });
         appInsights.loadAppInsights();
-    }
+    };
+
+
+    const getUserTimezone = ()=>{
+        let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        let tzArr = userTimezone.split("/");
+        let userRegion = tzArr[0];
+        let userCity = tzArr[tzArr.length - 1];
+        let userCountry = countries[userCity];
+        
+        return {
+            userTimezone,
+            userCity,
+            userCountry,
+            userRegion
+        }
+      }
+    
 
     return {
-        initializeAzureLogging
+        initializeAzureLogging,
+        getUserTimezone
     }
 };
 

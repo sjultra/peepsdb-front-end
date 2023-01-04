@@ -1,4 +1,4 @@
-import { Box, Flex, Select, Text } from "@chakra-ui/react"
+import { Box, Flex, Select, Text, Tooltip } from "@chakra-ui/react"
 import { useState } from "react"
 import { GrFilter } from "react-icons/gr"
 import TableComponent from "../../components/layouts/Table"
@@ -8,6 +8,8 @@ import { shortenText } from "../../utils/helpers"
 import Btn from "../../widgets/Button"
 import AdminWrapper from "./wrapper"
 import moment from 'moment';
+import { MdOutlineOpenInNew } from "react-icons/md"
+import { NavLink, useHistory } from "react-router-dom"
 
 
 
@@ -18,9 +20,20 @@ export const ActivityLogDetail  = (payload)=>{
 
     const createdAtDate = moment(createdAt);
 
-    console.log('createdAt Date',createdAtDate.format('YYYY-MM-DD hh:mm A'))
+    console.log('created user',user)
+
+    const history = useHistory();
+
+    const goToProfile = ()=>{
+        close();
+
+        history.push(`/admin/user/${user?._id}`);
+
+    }
+
 
     return(
+
         <Box bg='white' p='2em 1em'>
 
             <Text fontSize={'18px'} fontWeight={500}>Activity Log</Text>
@@ -30,8 +43,27 @@ export const ActivityLogDetail  = (payload)=>{
                 <Flex mt='1.3em' borderBottom={'1px solid rgba(0,0,0,0.2)'} justify={'space-between'}>
 
                     <Text fontSize={'15px'} fontWeight={500}>User </Text>
+                    
+                    <Flex gap={'0.5em'} align='center'>
+                        <Text fontSize={'13px'}> {logUserLabel(user)} </Text>
+                        
+                            <Box cursor={'pointer'}  onClick={goToProfile} position={'relative'}>
+ 
+                                <Box position={'absolute'} 
+                                 top={0} left={0}>
+                                    <Tooltip  
+                                     label='Go to profile'>
+                                        <Text color='transparent'>
+                                            a
+                                        </Text>
+                                    </Tooltip>
+                                </Box>
+                                <MdOutlineOpenInNew color='var(--primary-color)'
+                                 fontSize={'19px'}/>
 
-                    <Text fontSize={'13px'}> {logUserLabel(user)} </Text>
+                            </Box>
+
+                    </Flex>
 
                 </Flex>
 
@@ -116,6 +148,11 @@ const Audit= ()=>{
                 View
             </Btn>
     }))
+
+    const dateAsString = new Date().toString();
+    const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
+    console.log("timezone", timezone);
+
 
 
 

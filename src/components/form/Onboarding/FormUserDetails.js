@@ -111,7 +111,6 @@ const FormUserDetails = ({
 
     // console.log('error',error)
     if (error){
-      console.log('toast notif',error,)
       toast({
         title:'Error',
         description:error,
@@ -122,7 +121,6 @@ const FormUserDetails = ({
     }
 
     else {
-      console.log('formData at step1',formData);
       nextStep(payload);
     }
   };
@@ -133,6 +131,8 @@ const FormUserDetails = ({
   })
 
   const set = e=>setState(prev=>({...prev,[e.target.name]:e.target.value}))
+
+  console.log('user formdata',formData)
 
   return (
       <Box>

@@ -21,6 +21,9 @@ import { backendURL } from '../../../utils/setEnv';
 
 const UserForm = ({ profile, loading }) => {
  
+
+  
+
   const [formData, setFormData] = useState({
     firstName: '',avatar:'',lastName: '',
     alias: '',skypeId: '',paymentMethod:'payoneer',
@@ -44,7 +47,14 @@ const UserForm = ({ profile, loading }) => {
   } = useConnections();
 
   useEffect(() => {
-   profile &&  setFormData(prev=>({...prev,...profile}));
+    
+    console.log('user profile at setup',profile)
+
+    profile &&  setFormData(prev=>({
+      ...prev,
+      ...profile,
+    }));
+
   }, []);
 
   useEffect(()=>{
@@ -131,6 +141,10 @@ const UserForm = ({ profile, loading }) => {
   const prevStep = () => {
     setStep(step - 1);
   };
+
+  // if (!profile){
+  //   return <></>
+  // }
 
 
 

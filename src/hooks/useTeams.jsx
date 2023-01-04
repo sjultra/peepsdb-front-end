@@ -35,6 +35,8 @@ const useAppAudits = (limit)=>{
         // }
     }
 
+
+
     useEffect(()=>{
         fetchUserAudits()
     },[limit])
@@ -87,14 +89,20 @@ const useFetchProfiles = ()=>{
 const useTeams = ()=>{
 
 
-    const {setProfiles:setP} = teamActions;
+    const {setProfiles:setP,replaceProfile:replaceP,updateProfile:updateP} = teamActions;
     const {setLoading} = useWidget();
 
     const Axios = useAxios()
 
     const dispatch = useDispatch();
 
+
     const setProfiles = useCallback((data)=>dispatch(setP(data)),[setP,dispatch])
+
+    const replaceProfile = useCallback((data)=>dispatch(replaceP(data)),[replaceP,dispatch])
+
+    const updateProfile = useCallback((data)=>dispatch(updateP(data)),[updateP,dispatch])
+
 
     const {profiles,logs} = useSelector(selectTeam);
 
@@ -140,11 +148,15 @@ const useTeams = ()=>{
         }
     }
 
+
+
     return {
         fetchAllProfiles,
         fetchUserProfile,
         useFetchProfiles,
         useAppAudits,
+        replaceProfile,
+        updateProfile,
         profiles,
         logs
     }

@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import Btn from '../../widgets/Button';
 import { AiOutlineUser } from 'react-icons/ai';
+import { NavLink } from 'react-router-dom';
 
 const Item = styled.ul`
   display: grid;
@@ -94,7 +95,9 @@ const UsersContent = ({ profiles, filterText }) => {
                     <Td py={'0.9em'}>{role}</Td>
                     <Td py={'0.9em'}>{signedUp}</Td>
                     <Td py={'0.9em'}>
-                        <Btn px='0.8em' bg='white' border={'1px solid #F2F2F2'} variant={'secondary'}>View Profile</Btn>
+                        <NavLink to={`/admin/user/${user}`}>
+                          <Btn px='0.8em' bg='white' border={'1px solid #F2F2F2'} variant={'secondary'}>View Profile</Btn>
+                        </NavLink>
                     </Td>
                     {/* <Td py='0.9em'>
 
