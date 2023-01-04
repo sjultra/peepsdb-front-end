@@ -4,6 +4,8 @@ import { useCallback, useState } from "react";
 import { capitalizeString } from "../utils/helpers";
 import useAxios from "./useAxios";
 import useDeviceInfo from "./useDeviceInfo";
+import { useHistory } from "react-router-dom";
+import useAppInsights from "./useAppInsights";
 
 
 const useAuthActions = ()=>{
@@ -14,13 +16,23 @@ const useAuthActions = ()=>{
 
     const dispatch = useDispatch();
 
-    const {auth,profile,welcome} = useSelector(selectAuth);
+    const {auth,profile:userProfile,welcome} = useSelector(selectAuth);
+
 
     const {device} = useDeviceInfo();
 
+    const {getUserTimezone} = useAppInsights()
+
     const Axios = useAxios();
 
-    //store update actions
+
+    const history = useHistory();
+  
+
+    const profile = userProfile? {
+      ...userProfile,
+      timeZoneUrl: userProfile?.timeZoneUrl || getUserTimezone().userTimezone
+    }:undefined
 
     const setAuth = useCallback((payload)=>dispatch(set(payload)),[dispatch,set]) 
 
@@ -33,7 +45,9 @@ const useAuthActions = ()=>{
 
     const logout = ()=>{
         localStorage.removeItem('peepsdb-auth');
+        localStorage.removeItem('first-login');
         setAuth({});
+        history.push('/')
     }
     //endpoints
     const updateUser  = async(payload)=>{
@@ -56,7 +70,12 @@ const useAuthActions = ()=>{
         try{
 
           setLoading(true)
-          let req = await Axios.get('/profiles/me',{
+          let siginStamp = localStorage.getItem('first-login')
+
+
+          let profileUrl = `profiles/me${siginStamp?'':'?firstLogin=true'}`;
+
+          let req = await Axios.get(profileUrl,{
             ...token?{
                 headers:{
                   'Authorization':token,
@@ -65,9 +84,12 @@ const useAuthActions = ()=>{
                 }
             }:{}
           });
+
+          !siginStamp &&  localStorage.setItem('first-login',true);
             
           let {data} = req
           
+          console.log('result from profile',req)
 
           req.status===201 && setProfile({
             ...data,

@@ -47,10 +47,9 @@ const MeetingScheduleScreen = () => {
 
   const {loading} = useWidget()
 
-  const profileRef = useRef(profiles)
 
   useEffect(()=>{
-    !profileRef.current.length && fetchAllProfiles()
+    !profiles.length && fetchAllProfiles()
   },[fetchAllProfiles])
 
   const error = false;

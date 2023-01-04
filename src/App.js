@@ -10,7 +10,7 @@ import EditProfileScreen from './screens/EditProfileScreen';
 import ADOWorkItemsScreen from './screens/ADOWorkItemsScreen';
 import JiraIssuesScreen from './screens/JiraIssuesScreen';
 import MeetingScheduleScreen from './screens/MeetingScheduleScreen';
-import UserScreen from './screens/UserScreen';
+import UserScreen from './screens/User/UserScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import PrivateRoute from './components/routing/PrivateRoute';
 import useLogin from './hooks/useLogin';
@@ -21,6 +21,7 @@ import AdminWorkspace from './screens/Admin/workspace';
 import ModalComponent from './components/layouts/Modal';
 import Audit from './screens/Admin/audit';
 import useAppInsights from './hooks/useAppInsights';
+import User from './screens/Admin/user';
 
 const App = () => {
 
@@ -34,6 +35,7 @@ const App = () => {
 
   useEffect(()=>initAzureLoggingRef.current(),[])
   
+
 
   return (
     
@@ -55,9 +57,11 @@ const App = () => {
           <PrivateRoute path='/jira_issues/:id' component={JiraIssuesScreen} />
           <PrivateRoute path='/meeting' component={MeetingScheduleScreen} />
           <AdminRoute path='/admin/logs' component={Audit} />
-          <AdminRoute path='/admin/users' component={AdminUsers} />
+          <AdminRoute path='/admin/users/' component={AdminUsers} />
           <AdminRoute path='/admin/workspaces' component={AdminWorkspace} />
-          <PrivateRoute path='/admin/users/:id' component={UserScreen} exact />
+          <AdminRoute path='/admin/user/:id' component={User} exact />
+
+          {/* <PrivateRoute path='/admin/users/:id' component={UserScreen} exact /> */}
           <PrivateRoute
             path='/admin/users/:id/edit'
             component={UserEditScreen}
