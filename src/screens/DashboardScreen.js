@@ -44,7 +44,7 @@ const DashboardScreen = () => {
     return <AdminDashboard />;
   }
   
-  else if (auth?.token && auth.role === 'Freelancer') {
+  else {
     return(
       <NavLayout>
         <UserWorkspace />
@@ -52,7 +52,7 @@ const DashboardScreen = () => {
     )
   } 
 
-  return <>Nothing</>
+  // return <>Nothing</>
 
 };
 

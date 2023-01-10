@@ -11,12 +11,14 @@ import { AiFillFire } from "react-icons/ai";
 import TextInput from "../../widgets/Text";
 import {BsClockHistory} from 'react-icons/bs'
 import { useState } from "react";
+import { TbFlag3 } from "react-icons/tb";
+import {ActivityLogDetail, formatDateTimeString} from './audit'
 
 const AdminDashboard = () => {
 
   const {profiles,logs,useFetchProfiles,useAppAudits,} = useTeams()
 
-  const {loading} = useWidget()
+  const {loading,openModal,closeModal} = useWidget()
   
   // const [userLogs,setUserLogs] = useState({
   //   today:[],
@@ -173,19 +175,43 @@ const AdminDashboard = () => {
 
           {logs?.map((logEntry,index)=>
           
-            <Flex key={`${index}${Date.now()}`} gap='0.8em'>
-              <Box>
-                <Circle bg='#F4F2FC' size={'40px'}>
-                    <BsClockHistory color="var(--primary-color)" fontSize={'18px'}/>
-                </Circle>
-                <Flex justify={'center'}>
-                  <Box h='40px' borderLeft='1px solid #D6D6D6'></Box>                    
-                </Flex>
-              </Box>
-              <Box>
-                <Text color='#9EA2B1' fontSize={'12px'} >{logEntry?.createdAt} </Text>
-                <Text mt='0.8em' fontSize={'15px'}> {logEntry?.description} </Text>
-              </Box>
+            <Flex key={`${index}${Date.now()}`} justify='space-between' align='center' gap='0.8em'>
+              <Flex align={'center'} gap='0.8em'>
+                
+                <Box>
+                  <Circle bg='#F4F2FC' size={'40px'}>
+                      <BsClockHistory color="var(--primary-color)" fontSize={'18px'}/>
+                  </Circle>
+                  <Flex justify={'center'}>
+                    <Box h='40px' borderLeft='1px solid #D6D6D6'></Box>                    
+                  </Flex>
+                </Box>
+                <Box>
+                  <Text color='#9EA2B1' fontSize={'12px'} >{formatDateTimeString(logEntry?.createdAt)} </Text>
+                  <Text mt='0.8em' fontSize={'15px'}> {logEntry?.description} </Text>
+                </Box>
+
+              </Flex>
+
+              <Flex cursor={'pointer'} align={'center'} borderBottom={'1px solid transparent'} 
+               _hover={{borderBottomColor:'var(--primary-color)'}}  gap='0.3em'
+               onClick={()=>openModal({
+                children:ActivityLogDetail,
+                size:'2xl',
+                payload:{
+                  ...logEntry,
+                  close:closeModal
+                }
+               })}
+              >
+                <TbFlag3 color='var(--primary-color)'  />
+
+                <Text fontSize={'13px'} color='var(--primary-color)'>View Log</Text>
+
+              </Flex>
+
+
+
                 
 
             </Flex>

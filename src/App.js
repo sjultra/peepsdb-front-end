@@ -10,7 +10,7 @@ import EditProfileScreen from './screens/EditProfileScreen';
 import ADOWorkItemsScreen from './screens/ADOWorkItemsScreen';
 import JiraIssuesScreen from './screens/JiraIssuesScreen';
 import MeetingScheduleScreen from './screens/MeetingScheduleScreen';
-import UserScreen from './screens/User/UserScreen';
+// import UserScreen from './screens/User/UserScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import PrivateRoute from './components/routing/PrivateRoute';
 import useLogin from './hooks/useLogin';
@@ -29,13 +29,13 @@ const App = () => {
 
   const initAzureLoggingRef = useRef(initializeAzureLogging)
 
+
+
   useLogin();
-
-
 
   useEffect(()=>initAzureLoggingRef.current(),[])
   
-
+ 
 
   return (
     

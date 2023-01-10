@@ -3,7 +3,6 @@ import  {useDispatch,useSelector} from 'react-redux'
 import { useCallback, useState } from "react";
 import { capitalizeString } from "../utils/helpers";
 import useAxios from "./useAxios";
-import useDeviceInfo from "./useDeviceInfo";
 import { useHistory } from "react-router-dom";
 import useAppInsights from "./useAppInsights";
 
@@ -18,20 +17,15 @@ const useAuthActions = ()=>{
 
     const {auth,profile:userProfile,welcome} = useSelector(selectAuth);
 
-
-    const {device} = useDeviceInfo();
-
-    const {getUserTimezone} = useAppInsights()
+    const {getUserTimezone} = useAppInsights();
 
     const Axios = useAxios();
 
-
     const history = useHistory();
   
-
     const profile = userProfile? {
       ...userProfile,
-      timeZoneUrl: userProfile?.timeZoneUrl || getUserTimezone().userTimezone
+      timezone: userProfile?.timezone || getUserTimezone().userTimezone
     }:undefined
 
     const setAuth = useCallback((payload)=>dispatch(set(payload)),[dispatch,set]) 
@@ -52,9 +46,9 @@ const useAuthActions = ()=>{
     //endpoints
     const updateUser  = async(payload)=>{
 
-      console.log('profile payload',payload)
+        console.log('profile payload',payload)
 
-        let req = await Axios[profile?.profileSetup?'put':'post']('/profiles',payload);
+        let req = await Axios[profile?.profileSetup?'put':'post'](`/profiles?logtype=${profile?.profileSetup?'onboard':'update'}`,payload);
         let {data,status} = req;
 
         return {
@@ -65,7 +59,6 @@ const useAuthActions = ()=>{
     }
     
     const fetchMyProfile = async(token)=>{
-        const deviceinfo = JSON.stringify({device});
 
         try{
 
@@ -79,7 +72,6 @@ const useAuthActions = ()=>{
             ...token?{
                 headers:{
                   'Authorization':token,
-                  DeviceInfo:deviceinfo
                   
                 }
             }:{}

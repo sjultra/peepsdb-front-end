@@ -28,7 +28,7 @@ const UserForm = ({ profile, loading }) => {
     firstName: '',avatar:'',lastName: '',
     alias: '',skypeId: '',paymentMethod:'payoneer',
     googleGmailId: '',appleEmailId: '',microsoftEmailId:'', 
-    phone: '',timeZoneUrl: '',daysPerWeek: 4,
+    phone: '',timezone: '',daysPerWeek: 4,
     hoursPerDay: '',localCurrencyUrl: '',femSlackProfileUrl: '',
     startDate: '',paymentProfileUrl: '',paymentEmail:'', 
     twitterProfileUrl: '',facebookProfileUrl: '',githubProfileUrl: '',

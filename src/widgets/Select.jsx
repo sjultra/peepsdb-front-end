@@ -13,7 +13,11 @@ const SelectInput = ({name,label,required,Sync,isNotProvider,tooltipText,options
 
     const [value,setValue] = useState();
 
-    useEffect(()=> !value && setValue(defaultValue),[defaultValue])
+    useEffect(()=> {
+        !value && setValue(defaultValue)
+
+        
+    },[defaultValue])
 
     const onChangeFn   = (e)=>{
         let val = e?.target?.value
@@ -45,6 +49,7 @@ const SelectInput = ({name,label,required,Sync,isNotProvider,tooltipText,options
             <Select 
              background='#E8E8E8'
              borderRadius='12px'
+             name={name}
              fontSize={'13px'}
              h='50px' w='full' value={value} onChange={onChangeFn} {...rest}>
                 {options?.map((optionVal,index)=>

@@ -1,6 +1,6 @@
 import { Box,  Center, Flex, Image,  Text } from "@chakra-ui/react";
 import {  useEffect, useRef } from "react";
-import { facebookAuthUrl, githubAuthCall, linkedinAuthUrl, microsoftAuthUrl } from "../screens/LoginScreen";
+import { facebookAuthUrl, githubAuthCall, googleAuthUrl, linkedinAuthUrl, microsoftAuthUrl } from "../screens/LoginScreen";
 import TextInput from "../widgets/Text";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
@@ -79,7 +79,7 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
       subText: "",
       actionText: "Sign in with",
       text: "Sign in",
-      googleConnect:()=>'',
+      googleConnect:()=> window.location.assign(googleAuthUrl('')) ,
 
       githubConnect:()=>{
         window.location.assign(githubAuthCall())
@@ -110,7 +110,12 @@ const ConnectionsModal = ({ view,padd,setValues,close,initPayload }) => {
 
       actionText: "Connect to",
 
-      googleConnect :() => "",
+      googleConnect :() => 
+      connectionRef.current = window.open(
+        googleAuthUrl( view==='login'?'':'-inapp'),
+        "Sign in with google",
+        "width=550,height=450"
+      ),
 
       githubConnect :() => {
         connectionRef.current = window.open(

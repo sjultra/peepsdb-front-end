@@ -6,7 +6,7 @@ import Btn from "../../../widgets/Button";
 import Input from "../../../widgets/Input";
 // import TextInput from "../../../widgets/Text";
 import { OnboardingContainer } from "./UserForm";
-import { backendURL } from "../../../utils/setEnv";
+// import { backendURL } from "../../../utils/setEnv";
 import SelectInput from "../../../widgets/Select";
 import { allTimeZones } from "../../../utils/timezone-list";
 // import { useGoogleLogin } from '@react-oauth/google';
@@ -23,7 +23,7 @@ const FormWorkDetails = ({
   openConnections
 }) => {
   const {
-    timeZoneUrl,
+    timezone,
     daysPerWeek,
     hoursPerDay,
     startDate,
@@ -45,7 +45,7 @@ const FormWorkDetails = ({
   // const {getUserLocation} = useDeviceMetaData()
 
   
-  console.log('timezone url',timeZoneUrl)
+  console.log('timezone url',timezone)
 
   const googleLogin =  ()=>{}
   // useGoogleLogin({
@@ -58,7 +58,7 @@ const FormWorkDetails = ({
     e.preventDefault();
 
     // const payload = {
-    //   timeZoneUrl,
+    //   timezone,
     //   daysPerWeek,
     //   hoursPerDay,
     //   localCurrencyUrl,
@@ -170,31 +170,18 @@ const FormWorkDetails = ({
           />
 
               
-          {/* <Box flex={1}>
+          <Box flex={1}>
 
             <SelectInput onChange={(e)=>{ 
               onChange(e);
               return e?.target?.value;
              }} 
              options={allTimeZones(true)} label={'Timezone'} 
-             name='timeZoneUrl' defaultValue={timeZoneUrl} 
+             name='timezone' defaultValue={timezone} 
             />
 
-          </Box> */}
+          </Box>
 
-
-
-          <Input
-            label='Hours Per Day'
-            type="number"
-            name="hoursPerDay"
-            value={hoursPerDay}
-            onChange={(e) => onChange(e,'number')}
-            // flex={{base:1,lg:0.5}}
-            flex={1}
-            {...{preview}}
-            // required
-          />
 
 
       </Flex>
@@ -227,7 +214,18 @@ const FormWorkDetails = ({
       </Flex>
 
       <Flex className="below"  direction={{ base: "column", lg: "row" }} gap={"2em"}>
-
+    
+          <Input
+            label='Hours Per Day'
+            type="number"
+            name="hoursPerDay"
+            value={hoursPerDay}
+            onChange={(e) => onChange(e,'number')}
+            flex={{base:1,lg:0.5}}
+            // flex={1}
+            {...{preview}}
+            // required
+          />
 
       </Flex>
 

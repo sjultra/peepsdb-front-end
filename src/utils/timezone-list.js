@@ -1,3 +1,5 @@
+import timezoneCities from './timezone-cities.json'
+
 const timezoneList = [
     {
     id: 1,
@@ -421,4 +423,29 @@ export const allTimeZones = (forSelect=false)=>{
         label:timezoneObj?.tz,
         value:timezoneObj?.value
     })) :timezones
+}
+
+
+export const newTimezonesCity = ()=>{
+    let newtimzone = {
+
+    }
+    for (const key in timezoneCities) {
+        let value = timezoneCities[key]
+        if (value ==='United States') {
+            newtimzone[key] = 'usa'
+        }
+        else if (value ==='Britain (UK)'){
+            newtimzone[key]= 'uk'
+        }
+        else if ( value.split(' ').length === 2 ){
+            let valueArr = value.split(' ');
+            newtimzone[key] = `${valueArr[0]}-${valueArr[1]}`;
+        }
+        else{
+            newtimzone[key] = value
+        }
+    }
+
+    return newtimzone;
 }

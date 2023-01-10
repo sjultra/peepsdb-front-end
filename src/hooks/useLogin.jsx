@@ -1,8 +1,7 @@
 import {  useEffect, useRef } from 'react';
-import Axios from '../utils/axios';
+import useAxios from './useAxios';
 import { capitalizeString } from '../utils/helpers';
 import useAuthActions from './useAuth';
-import useDeviceMetaData from './useDeviceInfo';
 
 const useLogin = ()=>{
 
@@ -10,7 +9,9 @@ const useLogin = ()=>{
     
     // const hrefSplit = window.location.href.split('?token=');
 
-    const {device} = useDeviceMetaData()
+    // const {device} = useDeviceMetaData()
+
+    const axios  = useAxios()
 
     const windowQueries = window.location.search;
     const urlSearch = new URLSearchParams(windowQueries)
@@ -44,7 +45,7 @@ const useLogin = ()=>{
             if(tokenRef.current.token){
 
                 try{
-                    let req = await Axios.get(`/auth${tokenRef.current.type?'?sign=yes':''}`,{
+                    let req = await axios.get(`/auth${tokenRef.current.type?'?sign=yes':''}`,{
                         headers:{
                             "Content-Type": "application/json",
                             Authorization: `${tokenRef.current.token}`,    
