@@ -78,7 +78,7 @@ const FormWorkDetails = ({
     //   error=true;
     // }
     // else 
-    if ( validateConditions([daysPerWeek,hoursPerDay,val3idateEmail(googleGmailId)],['Days per week must be at least 1','Hours per day must be at least 1','Please enter a valid google mail'])){
+    if ( validateConditions([hoursPerDay,val3idateEmail(googleGmailId)],['Hours per day must be at least 1','Please enter a valid google mail'])){
       error = true;
     }
     else{
