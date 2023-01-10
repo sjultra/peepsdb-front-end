@@ -95,10 +95,10 @@ const FormUserDetails = ({
       error='Please enter all required fields'
     }
 
-    else if ( phone && !(/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(phone))){
-      error='Invalid phone number'
+    // else if ( phone && !(/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(phone))){
+    //   error='Invalid phone number'
 
-    } 
+    // } 
     // else if (!validateEmail(googleGmailId)) {
     //   error= ('Invalid email')
    
