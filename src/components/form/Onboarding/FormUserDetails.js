@@ -51,13 +51,12 @@ const FormUserDetails = ({
   const validateInputs = (resolve='disable')=>{
     const payload = {
       firstName,
-      lastName,
-      phone
+      lastName
     }
 
 
     let error ='';
-    if(!Object.values(payload).every(value=>value)){
+    if(!(Object.values(payload).every(value=>value))){
       error='Please enter all required fields'
     }
 
@@ -88,7 +87,6 @@ const FormUserDetails = ({
     const payload = {
       firstName,
       lastName,
-      phone
     }
 
 
@@ -97,7 +95,7 @@ const FormUserDetails = ({
       error='Please enter all required fields'
     }
 
-    else if (!(/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(phone))){
+    else if ( phone && !(/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(phone))){
       error='Invalid phone number'
 
     } 

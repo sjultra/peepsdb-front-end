@@ -5,7 +5,7 @@ import {
   Tbody,
   Tr,
   Td,
-  Button,
+  // Button,
   Image,
   Flex,
   Text,
@@ -14,6 +14,7 @@ import {
 import Btn from '../../widgets/Button';
 import { AiOutlineUser } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
+import { formatDateTimeString } from '../../screens/Admin/audit';
 
 const Item = styled.ul`
   display: grid;
@@ -69,7 +70,8 @@ const UsersContent = ({ profiles, filterText }) => {
               const fName = capitalizeString(firstname);
               const lName = capitalizeString(lastname);
               const titleValue = title || 'Nil';
-              const signedUp = createdAt?.slice(0,10)
+              
+              const signedUp = formatDateTimeString(createdAt)
               return (
                   <Tr key={index}>
                     <Td py='0.9em'>

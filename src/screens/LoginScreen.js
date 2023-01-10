@@ -147,8 +147,9 @@ const Socials = styled.a`
 export const githubAuthCall = (userid)=> 
 `https://github.com/login/oauth/authorize?client_id=${githubClientID}&redirect_uri=${encodeURIComponent(backendURL+'/'+process.env.REACT_APP_GITHUB_CALLBACK_URL)}?path=${'/'+renderJSX(userid,userid,'')}&scope=user:email`
 
-export const googleAuthUrl = (userid)=>
-`${backendURL}/auth/google${renderJSX(userid,`?userid=`+userid,'')}`;
+export const googleAuthUrl = (inapp)=>
+`${backendURL}/auth/google${renderJSX(inapp,inapp,'')}`;
+
 
 export const linkedinAuthUrl = (inapp='')=>{
   const baseURL ='https://www.linkedin.com/oauth/v2/authorization';
@@ -168,8 +169,7 @@ export const linkedinAuthUrl = (inapp='')=>{
 
 export const facebookAuthUrl = (inapp='')=> `${backendURL}/auth/facebook${inapp}`;
 
-export const microsoftAuthUrl = (userid)=>
-`${backendURL}/auth/microsoft${renderJSX(userid,`?userid=`+userid,'')}`;
+export const microsoftAuthUrl = (userid)=>`${backendURL}/auth/microsoft${renderJSX(userid,`?userid=`+userid,'')}`;
 
 const inputStyles = 'background:white;border:1px solid var(--borders);border-radius:0.4em;margin-top:0.4em;height:40px;font-size:13px;'
 
@@ -357,11 +357,14 @@ const LoginScreen = () => {
 
 
             </Grid>
-
-            <Button onClick={()=>handleOpen('more-connections')} mt='2.5em' bg='white' h={'3.5em'} border='1px solid var(--primary-color)'  w='full' borderRadius='5px' >
-                <Text mr={'0.3em'} fontSize={'15px'} color='var(--primary-color)'>More connections</Text>
-                <AiOutlineRight fontSize={'14px'} color='var(--primary-color)' />
-            </Button>
+            
+            {
+              2+2===5 &&
+              <Button onClick={()=>handleOpen('more-connections')} mt='2.5em' bg='white' h={'3.5em'} border='1px solid var(--primary-color)'  w='full' borderRadius='5px' >
+                  <Text mr={'0.3em'} fontSize={'15px'} color='var(--primary-color)'>More connections</Text>
+                  <AiOutlineRight fontSize={'14px'} color='var(--primary-color)' />
+              </Button>
+            }
 
             <Flex align='center' my='1.5em'>
               <Box h='1px' borderTop='1px solid var(--borders)' flex={0.49}></Box>

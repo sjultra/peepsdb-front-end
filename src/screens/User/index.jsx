@@ -124,8 +124,8 @@ const UserProfile = ({user,setUser}) => {
 
     const {
             firstName,lastName,alias,avatar,_id,
-            phone,facebookProfileUrl,appleEmailId,
-            femSlackProfile,googleGmailId,timezoneUrl,isSuspended
+            phone,facebookProfileUrl,appleEmailId,githubProfileUrl,LinkedInProfileUrl,
+            femSlackProfile,googleGmailId,timezoneUrl,isSuspended,twitterProfileUrl
         } = profile
 
 
@@ -154,9 +154,9 @@ const UserProfile = ({user,setUser}) => {
                     <Flex justify={'space-between'} my='1em'> 
 
                         <Box
-                                className='archivo' fontWeight={'700'} fontSize={{ base: '20px', lg: '32px' }} 
-                                pl='20px' 
-                            >
+                         className='archivo' fontWeight={'700'} fontSize={{ base: '20px', lg: '32px' }} 
+                         // pl='20px' 
+                        >
                                 { capitalizeString(firstName)} {capitalizeString(lastName)}
                                 <Text className='archivo' fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#384A62'}>
                                     {alias}
@@ -192,183 +192,130 @@ const UserProfile = ({user,setUser}) => {
                     </Flex>
                 </Box>
             </Box>
+
+
+
             <Box className='archivo' mt='4em' w={{ base: '400px', lg: '1061px' }} mx={'auto'}>
-                <Flex w={{ base: '400px', lg: '600px' }} justify={'space-between'} px='50px' mt='20px'>
-                    <Flex flexDir={'column'} gap='20px'>
-                        <Box minW={'120px'}>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                First Name
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                {firstName}
-                            </Text>
-                        </Box>
-                        <Box minW={'120px'}>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Nickname/alias
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                {alias}
-                            </Text>
-                        </Box>
-                    </Flex>
-                    <Flex flexDir={'column'} gap='20px'>
-                        <Box minW={'120px'}>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Last Name
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                {lastName}
-                            </Text>
-                        </Box>
-                        <Box minW={'120px'}>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Phone number
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                {phone}
-                            </Text>
-                        </Box>
-                    </Flex>
+
+                <Flex w={{ base: '500px', lg: '700px' }} justify='space-between' mx='40px' mt='40px'>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'First name'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {firstName}
+                        </Text>
+                    </Box>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'Last name'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {lastName}
+                        </Text>
+                    </Box>
                 </Flex>
-                
-                <Flex w={{ base: '400px', lg: '600px' }} justify={'space-between'} px='50px' mt='20px'>
-                    <Flex className='containerFlex'  flexDir={'column'} gap='20px'>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Google gmail ID
-                            </Text>
-                            <Text 
-                                fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}
-                            >
-                                {googleGmailId}
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Facebook profile URL
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                {facebookProfileUrl}
-                            </Text>
-                        </Box>
-                    </Flex>
-                    <Flex className='containerFlex'  flexDir={'column'} gap='20px'>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Apple Email ID
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                {appleEmailId}
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Timezone URL
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                {timezoneUrl}
-                            </Text>
-                        </Box>
-                    </Flex>
-                </Flex>    
 
-                <Flex className='containerFlex'  w={{ base: '400px', lg: '600px' }} justify={'space-between'} px='50px' mt='20px'>
-                    <Flex flexDir={'column'} gap='20px'>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                FEM Slack profile
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                {femSlackProfile}
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Facebook profile URL
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                Shola
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Linkedin profile URL
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                Shola
-                            </Text>
-                        </Box>
-                    </Flex>
-                    
-                    <Flex flexDir={'column'} gap='20px'>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Twitter profile URL
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                Shola
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Github profile URL
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                +2349023421755
-                            </Text>
-                        </Box>
-                    </Flex>
 
-                </Flex>    
+                <Flex w={{ base: '500px', lg: '700px' }} justify='space-between' mx='40px' mt='20px'>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'Nickname/Alias'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {alias}
+                        </Text>
+                    </Box>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'Phone number'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {phone}
+                        </Text>
+                    </Box>
+                </Flex>
 
-                <Flex className='containerFlex' w={{ base: '400px', lg: '600px' }} 
-                 justify={'space-between'} px='50px' mt='20px'>
-                    <Flex flexDir={'column'} gap='20px'>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Bank name
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                Shola
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Bank address
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                Shola
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Account number
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                Shola
-                            </Text>
-                        </Box>
-                    </Flex>
-                    <Flex flexDir={'column'} gap='20px'>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Routing number
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                Shola
-                            </Text>
-                        </Box>
-                        <Box>
-                            <Text fontWeight={'400'} fontSize={{ base: '15px', lg: '15px' }} color={'#4F4A4A'}>
-                                Account type
-                            </Text>
-                            <Text fontWeight={'500'} py='20px' fontSize={{ base: '16px', lg: '18px' }} color={'#1F1D1D'}>
-                                +2349023421755
-                            </Text>
-                        </Box>
-                    </Flex>
-                </Flex>    
+
+                <Flex w={{ base: '500px', lg: '700px' }} justify='space-between' mx='40px' mt='20px'>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'Google Email id'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {googleGmailId}
+                        </Text>
+                    </Box>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'Apple Email id'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {appleEmailId}
+                        </Text>
+                    </Box>
+                </Flex>
+
+                <Flex w={{ base: '500px', lg: '700px' }} justify='space-between' mx='40px' mt='20px'>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'Facebook Profile Url'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {facebookProfileUrl}
+                        </Text>
+                    </Box>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'Timezone url'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {timezoneUrl}
+                        </Text>
+                    </Box>
+                </Flex>
+
+
+                <Flex w={{ base: '500px', lg: '700px' }} justify='space-between' mx='40px' mt='20px'>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'FEM Slack Profile'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {femSlackProfile}
+                        </Text>
+                    </Box>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'Twitter Profile Url'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {twitterProfileUrl}
+                        </Text>
+                    </Box>
+                </Flex>
+
+
+                <Flex w={{ base: '500px', lg: '700px' }} justify='space-between' mx='40px' mt='20px'>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'Github Profile Url'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {githubProfileUrl}
+                        </Text>
+                    </Box>
+                    <Box flex={'1'}>
+                        <Text fontSize={{ base: '14px', lg: '16px' }} fontWeight='400' color='#4F4A4A'>
+                            {'LinkedIn Profile Url'}
+                        </Text>
+                        <Text fontSize={{ base: '16px', lg: '20px' }} fontWeight='500' color={'#1F1D1D'} my='20px'>
+                            {LinkedInProfileUrl}
+                        </Text>
+                    </Box>
+                </Flex>
+
+
             </Box>
         </StyledProfileContainer>
     )

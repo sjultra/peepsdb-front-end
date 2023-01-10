@@ -17,6 +17,7 @@ import FormSocialDetails from './FormSocialDetails';
 // import Payment from './Payment';
 import Btn from '../../../widgets/Button';
 import useGoBack from '../../../hooks/useGoBack';
+import { newTimezonesCity } from '../../../utils/timezone-list';
 
 const Details = styled.div`
   @media (max-width: 800px) {
@@ -88,6 +89,8 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
     return obj;
   } 
 
+  const trimmedForm  =trimmedFormData(formData);
+
   const {
     firstName,
     lastName,
@@ -96,7 +99,7 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
     googleGmailId,
     appleEmailId,
     phone,
-    timeZoneUrl,
+    timezone,
     daysPerWeek,
     hoursPerDay,
     localCurrencyUrl,
@@ -108,19 +111,23 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
     githubProfileUrl,
     linkedinProfileUrl,
     calendlyProfileUrl,
-  } = trimmedFormData(formData);
+  } = trimmedForm;
 
   const proceed = async(e) => {
     e.preventDefault();
     // Send data to API
     let errorPayload  = [];
     try{      
-
-      setLoading(true)
-      const trimmedForm  =trimmedFormData(formData);
+      let city = timezone?.split('/')[1];
+      let country = newTimezonesCity()[city];
+      let timeZoneUrl =`https://www.timeanddate.com/worldclock/${country}/${city}`;
+      setLoading(true);
+      console.log('country and city',timeZoneUrl)
       const payload = {
         ...trimmedForm,
-        _id:auth?._id
+        _id:auth?._id,
+        country,
+        timeZoneUrl,
       }
       console.log('trimmedForm',payload?.avatar)
 
@@ -148,7 +155,6 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
       console.log('error at create/update profile',err,err?.response);
       let error =err?.response?.data;
       // if(error?.errors){
-
       //   (
       //   error?.errors.map((entry,index)=> index < 3 ? errorPayload.push(
       //     `${convertCamelCase(entry['param'])}: ${entry['msg']}`): undefined  
@@ -281,7 +287,7 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
         </Items>
         <Items>
           <div>Time Zone Url</div>
-          <div>{timeZoneUrl ? timeZoneUrl : ''}</div>
+          {/* <div>{timeZoneUrl ? timeZoneUrl : ''}</div> */}
         </Items>
         <Items>
           <div>Days Per Week</div>
