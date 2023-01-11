@@ -1,4 +1,4 @@
-import { useDisclosure } from "@chakra-ui/react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import ConnectSocialWidget from "../components/form/Onboarding/ConnectSocialWidget";
@@ -43,6 +43,36 @@ const useWidget = ()=>{
         dispatch(closeMod());
     },[closeMod,onClose,dispatch])
 
+
+    const toast = useToast();
+
+
+    const openToast = {
+        'success':({title,description,duration,isClosable})=>{
+            toast({
+                status:'success',
+                position:'top',
+                title:title || 'Request successful',
+                description,
+                duration,
+                isClosable
+                                
+            })
+        },
+        'fail':({title,description,duration,isClosable})=>{
+            toast({
+                status:'error',
+                position:'top',
+                title:title || 'Request failed',
+                description,                
+                duration,
+                isClosable
+            })
+        }
+
+    }
+
+
     return{
         loading,
         modal,
@@ -51,6 +81,7 @@ const useWidget = ()=>{
         closeModal,
         openSocialConnectPopup,
         isOpen,
+        openToast
     }
 }
 

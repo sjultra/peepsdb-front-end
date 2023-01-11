@@ -11,10 +11,11 @@ import {
   Text,
   Circle,
 } from '@chakra-ui/react'
-import Btn from '../../widgets/Button';
 import { AiOutlineUser } from 'react-icons/ai';
-import { NavLink } from 'react-router-dom';
 import { formatDateTimeString } from '../../screens/Admin/audit';
+
+import useWidget from '../../hooks/useWidget';
+import {  UserOptions } from '../../screens/User';
 
 const Item = styled.ul`
   display: grid;
@@ -59,6 +60,9 @@ const UsersContent = ({ profiles, filterText }) => {
     );
   };
 
+  const {openModal,closeModal} = useWidget()
+
+
   return (
       <Tbody>
 
@@ -69,7 +73,7 @@ const UsersContent = ({ profiles, filterText }) => {
 
               const fName = capitalizeString(firstname);
               const lName = capitalizeString(lastname);
-              const titleValue = title || 'Nil';
+              // const titleValue = title || 'Nil';
               
               const signedUp = formatDateTimeString(createdAt)
               return (
@@ -97,9 +101,9 @@ const UsersContent = ({ profiles, filterText }) => {
                     <Td py={'0.9em'}>{role}</Td>
                     <Td py={'0.9em'}>{signedUp}</Td>
                     <Td py={'0.9em'}>
-                        <NavLink to={`/admin/user/${user}`}>
-                          <Btn px='0.8em' bg='white' border={'1px solid #F2F2F2'} variant={'secondary'}>View Profile</Btn>
-                        </NavLink>
+                        <Flex justify={'center'}>                        
+                            <UserOptions user={profile} userlist/>
+                        </Flex>   
                     </Td>
                     {/* <Td py='0.9em'>
 
