@@ -254,6 +254,7 @@ export const EditRole = ({role,_id,close,setUser})=>{
             
             <Select onChange={onChange} value={defaultValue} mt='1em' h='40px' fontSize={'15px'} >
                 <option value='Guest'>Guest</option>
+                <option value='Staff'>Freelancer</option>
                 <option value='Staff'>Staff</option>
                 <option value='Admin'>Admin</option>
             </Select>
