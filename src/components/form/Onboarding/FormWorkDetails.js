@@ -1,4 +1,4 @@
-import {  Box, Flex } from "@chakra-ui/react";
+import {  Box, Flex, Text, Input as InputElement } from "@chakra-ui/react";
 import React  from "react";
 import useValidate from "../../../hooks/useValidate";
 import { renderJSX } from "../../../utils/helpers";
@@ -9,6 +9,7 @@ import { OnboardingContainer } from "./UserForm";
 // import { backendURL } from "../../../utils/setEnv";
 import SelectInput from "../../../widgets/Select";
 import { allTimeZones } from "../../../utils/timezone-list";
+import { RETURN_EMAIL_HIERARCHY } from "../../../utils/setEnv";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import useWidget from "../../../hooks/useWidget";
 
@@ -20,7 +21,8 @@ const FormWorkDetails = ({
   loading,
   profile,
   preview,
-  openConnections
+  openConnections,
+  setFormData
 }) => {
   const {
     timezone,
@@ -42,42 +44,14 @@ const FormWorkDetails = ({
 
   const {validateConditions} = useValidate()
 
-  // const {getUserLocation} = useDeviceMetaData()
-
-  
-  console.log('timezone url',timezone)
-
   const googleLogin =  ()=>{}
-  // useGoogleLogin({
-  //   onSuccess: codeResponse => console.log('google login',codeResponse),
-  //   flow: 'auth-code',
-  //   redirect_uri:`${backendURL}/auth/inapp`
-  // });
 
   const proceed = (e) => {
     e.preventDefault();
 
-    // const payload = {
-    //   timezone,
-    //   daysPerWeek,
-    //   hoursPerDay,
-    //   localCurrencyUrl,
-    //   femSlackProfileUrl,
-    //   startDate,
-    //   paymentProfileUrl,
-    //   googleGmailId,
-    //   appleEmailId,
-    //   skypeId,
-    //   microsoftEmailId,
-    // }
-
     
     let error = false;
 
-    // if (isRequired([daysPerWeek,hoursPerDay,],true)) {
-    //   error=true;
-    // }
-    // else 
     if ( validateConditions([hoursPerDay,val3idateEmail(googleGmailId)],['Hours per day must be at least 1','Please enter a valid google mail'])){
       error = true;
     }
@@ -102,60 +76,30 @@ const FormWorkDetails = ({
  
   return (
     <OnboardingContainer>
-            <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
-              {/* {
-                renderJSX(
-                  preview,
-                  <TextInput variant={'s2'}>Work</TextInput>
-                )
-              }
- */}
+  
+      <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
+        {/* {
+          renderJSX(
+            preview,
+            <TextInput variant={'s2'}>Work</TextInput>
+          )
+        }
+        */}
 
-              {
-                renderJSX(
-                  !preview,
-                  <Btn px='1em' onClick={openConnections}>
-                    My Connections
-                  </Btn>
-                )
-              }
-
-
-
-            </Flex>
+        {
+          renderJSX(
+            !preview,
+            <Btn px='1em' onClick={openConnections}>
+              My Connections
+            </Btn>
+          )
+        }
 
 
-      <Flex direction={{ base: "column", lg: "row" }} gap={"2em"}>
-        <Input
-         fontSize="15px"
-         flex={1}
-         label={"Google gmail ID"}
-         name="googleGmailId"
-         value={googleGmailId}
-         onChange={onChange}
-         {...{preview}}
-         Sync={googleLogin}
-         isNotProvider={provider !=='google' }
-         tooltipText='google'
-        />
 
-        <Input
-          fontSize="15px"
-          flex={1}
-          label={"Apple Email ID"}
-          // required
-          tooltipText='apple'
-          name="appleEmailId"
-          value={appleEmailId}
-          onChange={onChange}
-          {...{preview}}
-          // syncFn={
-          //   ()=>{
-              
-          //   }
-          // }
-        />
       </Flex>
+
+
 
       <Flex className="below" direction={{ base: "column", lg: "row" }} gap={"2em"}>
 
@@ -185,6 +129,72 @@ const FormWorkDetails = ({
 
 
       </Flex>
+
+
+      <Flex className="below" direction={{ base: "column", lg: "row" }} gap={"2em"}>
+
+
+          {
+
+            (()=>{
+              const workEmailValues = Object.values(RETURN_EMAIL_HIERARCHY().values);
+              const workEmailKeys = Object.keys(RETURN_EMAIL_HIERARCHY().values);
+              
+              return(
+
+                workEmailValues.map((value,index)=>{
+                    let fieldName = workEmailKeys[index]
+
+                    let defaultEmail = `${formData['alias']}`;
+
+                    
+                    //set work emails to username@workemail e.g dayvvo@sjultra.com if no existing value
+
+                    !formData[fieldName] && setFormData(prev=>({
+                      ...prev,
+                      [fieldName]:defaultEmail
+                    }))
+
+                    return(                  
+                      <Box flex={1} key={index} gap='1em' >
+                        <Text as='label' fontSize={'15px'} p='1rem 0' > 
+                          {!index?`Primary work email`:`Secondary work email${workEmailValues?.length > 2?index+1:''}`}
+                        </Text>
+                        <Flex mt='1rem' gap='1em' align={'center'}>
+
+                        <InputElement
+                         bg='#E8E8E8'
+                         h='50px'
+                         borderRadius={'10px'}
+                         type="text"
+                         name={workEmailKeys[index]}
+                         value={formData[fieldName]}
+                         onChange={(e) => onChange(e)}
+                         flex={{base:'0.85'}}
+                         //  defaultValue={}
+
+                         {...{preview}}
+                        />
+
+                        <Text fontSize='16px'>@{value}</Text>
+                        </Flex>
+                    
+                      </Box>
+                    )
+
+                  }
+                )
+
+              )
+            })()
+
+          }  
+              
+
+
+      </Flex>
+
+
 
 
       <Flex className="below"  direction={{ base: "column", lg: "row" }} gap={"2em"}>
