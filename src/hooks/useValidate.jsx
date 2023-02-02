@@ -8,11 +8,11 @@ const useValidate = ()=>{
 
     const toast = useToast();
         
-    const isRequired= (payload,include0 = false)=>{
+    const isRequired= (payload,includeNumberZero = false)=>{
         let error = ''
 
         console.log('is required payload',payload)
-        if( !(payload.every(value=> include0?  (value || value === 0 ) : value)) ) {
+        if( !(payload.every(value=> includeNumberZero?  (value || value === 0 ) : value)) ) {
             error= ('Please enter all required fields');
         };
         

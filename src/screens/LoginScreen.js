@@ -274,11 +274,13 @@ const LoginScreen = () => {
     onClose()
   }
 
-  // Redirect if logged in
+
+
+
+
   if (auth?.token) {
     return <Redirect to='/' />;
   }
-
 
 
   return (
