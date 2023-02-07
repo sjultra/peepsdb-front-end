@@ -12,10 +12,9 @@ const useAxios = ()=>{
 
     const token = JSON.parse(localStorageToken)?.token;
 
+    const deviceinfo = JSON.stringify({device});
 
-    const deviceinfo = JSON.stringify({device})
-
-    const baseUrl = process.env[process.env['NODE_ENV']==='development'?'REACT_APP_BACKEND_TEST_URL':'REACT_APP_BACKEND_URL'] 
+    const baseUrl = process.env['REACT_APP_BACKEND_URL'];
 
     const Axios = token
   ? axios.create({

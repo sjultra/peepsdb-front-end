@@ -7,6 +7,7 @@ import Btn from '../../../widgets/Button';
 import FileInputComponent, { RenderFileImage } from '../../../widgets/FileInputComponent';
 import { fileToBase64, renderJSX } from '../../../utils/helpers';
 import TextInput from '../../../widgets/Text';
+import useValidate from '../../../hooks/useValidate';
 
 
 const BtnWrapper = styled.div`
@@ -34,15 +35,19 @@ const FormUserDetails = ({
 
   const toast = useToast();
 
+  const {validateConditions,isRequired} = useValidate()
+
+  const googleLogin = ()=>{};
 
   const {
     firstName,
     lastName,
     alias,
     // skypeId,
-    // googleGmailId,
-    // appleEmailId,
+    googleGmailId,
+    appleEmailId,
     phone,
+    provider,
     // microsoftEmailId,
     avatar
   } = formData || {};
@@ -87,40 +92,17 @@ const FormUserDetails = ({
     const payload = {
       firstName,
       lastName,
-    }
+      googleGmailId
+    };
 
+    let error; 
 
-    let error ='';
-    if(!Object.values(payload).every(value=>value)){
-      error='Please enter all required fields'
-    }
+    error = isRequired(Object.values(payload));
 
-    // else if ( phone && !(/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(phone))){
-    //   error='Invalid phone number'
-
-    // } 
-    // else if (!validateEmail(googleGmailId)) {
-    //   error= ('Invalid email')
-   
-    // } 
-    // else if (!googleGmailId.endsWith('@gmail.com')) {
-    //   error=('Gmail address please');
-    // } 
-
-    // console.log('error',error)
-    if (error){
-      toast({
-        title:'Error',
-        description:error,
-        status:'error',
-        position:'top',
-        isClosable:true
-      })
-    }
-
-    else {
+    if (!error){
       nextStep(payload);
     }
+
   };
 
 
@@ -134,20 +116,20 @@ const FormUserDetails = ({
 
   return (
       <Box>
-            <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
-              {/* {
-                renderJSX(
-                  previewMode,
-                  <TextInput variant={'s2'}></TextInput>
-                )
-              } */}
+        <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
+          {/* {
+            renderJSX(
+              previewMode,
+              <TextInput variant={'s2'}></TextInput>
+            )
+          } */}
 
-              <Btn px='1em' onClick={openConnections}>
-                My Connections
-              </Btn>
+          <Btn px='1em' onClick={openConnections}>
+            My Connections
+          </Btn>
 
 
-            </Flex>
+        </Flex>
         {/* <PrimaryHeading className='text-center '>{headingText}</PrimaryHeading> */}
         {/* <Required>
           <span> * </span>
@@ -219,7 +201,7 @@ const FormUserDetails = ({
           name='firstName' value={firstName} onChange={onChange} />
 
           <InputElement preview={previewMode} fontSize='15px' flex={1} label={'Last name'} required 
-          name='lastName' value={lastName} onChange={onChange} />
+           name='lastName' value={lastName} onChange={onChange} />
 
         </Flex>
 
@@ -244,7 +226,41 @@ const FormUserDetails = ({
           </Box> */}
           
         </Flex>
-        
+
+        <Flex mt={'1.5em'} direction={{ base: "column", lg: "row" }} gap={"2em"}>
+          <InputElement
+          fontSize="15px"
+          flex={1}
+          required
+          label={"Google gmail ID"}
+          name="googleGmailId"
+          value={googleGmailId}
+          onChange={onChange}
+          {...{previewMode}}
+          Sync={googleLogin}
+          isNotProvider={provider !=='google' }
+          tooltipText='google'
+          />
+
+          <InputElement
+            fontSize="15px"
+            flex={1}
+            label={"Apple Email ID"}
+            // required
+            tooltipText='apple'
+            name="appleEmailId"
+            value={appleEmailId}
+            onChange={onChange}
+            {...{previewMode}}
+            // syncFn={
+            //   ()=>{
+                
+            //   }
+            // }
+          />
+        </Flex>
+
+
         {
           renderJSX(
             previewMode,
