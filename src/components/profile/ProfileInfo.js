@@ -97,7 +97,7 @@ const ProfileInfo = ({ profile }) => {
                   <Text fontSize={"14"}> Edit Profile</Text>
                   <FiEdit fontSize={"17"} />
                 </Flex>
-              </Link>
+              </Link> 
             </Box>
           </Stack>
         </Box>
@@ -207,7 +207,7 @@ const InfoItem = ({ title, value, colSpan }) => {
   return (
     <GridItem colSpan={colSpan}>
       <Text color="gray.500">{title}</Text>
-      <Text fontWeight="semibold" color="gray.900">
+      <Text fontWeight="semibold">
         {value ? value : ""}
       </Text>
     </GridItem>
