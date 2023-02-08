@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa"
 import { DetailsWrapper } from "../form/Onboarding/FormResources"
 import {
   Flex,
@@ -195,7 +195,7 @@ const ProfileInfo = ({ profile }) => {
         </SimpleGrid>
       </Box>
     </DetailsWrapper>
-  );
+  )
 }
 
 // display link user info
