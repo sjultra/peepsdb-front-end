@@ -104,7 +104,7 @@ const ProfileInfo = ({ profile }) => {
       </Box>
       {/** user details section */}
       <Box px={["20px", "40px", "40px"]} pb="40px" mt={20}>
-        <SimpleGrid columns={2} columnGap={1} rowGap={8} w="">
+        <SimpleGrid columns={2} columnGap={1} rowGap={8}>
           <InfoItem colSpan={colSpan} title={"Firstname"} value={firstname} />
           <InfoItem colSpan={colSpan} title={"Lastname"} value={lastname} />
           <InfoItem colSpan={colSpan} title={"Alias"} value={alias} />
