@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { FaRegUser } from "react-icons/fa";
 import { DetailsWrapper } from "../form/Onboarding/FormResources"
 import {
   Flex,
@@ -61,12 +62,27 @@ const ProfileInfo = ({ profile }) => {
           bg="var(--primary-color)"
           borderRadius={15}></Box>
         <Box as="div" px={["20px", "40px", "40px"]} mt={-20}>
-          <Avatar
-            name={`${firstname} ${lastname}`}
-            size="2xl"
-            src={`${avatar ? avatar : ""}`}
-            border="2px"
-          />
+          <Box
+            as="div"
+            border="1px"
+            borderColor="gray.200"
+            borderRadius="100px"
+            w="fit-content">
+            {avatar ? (
+              <Avatar
+              name={`${firstname} ${lastname}`}
+              size="2xl"
+              src={`${avatar}`}
+              />
+              ) : (
+                <Avatar
+                size="2xl"
+                color="gray.500"
+                bg="gray.50"
+                icon={<FaRegUser />}
+              />
+            )}
+          </Box>
           <Stack
             direction="row"
             justify="space-between"
@@ -97,7 +113,7 @@ const ProfileInfo = ({ profile }) => {
                   <Text fontSize={"14"}> Edit Profile</Text>
                   <FiEdit fontSize={"17"} />
                 </Flex>
-              </Link> 
+              </Link>
             </Box>
           </Stack>
         </Box>
@@ -179,7 +195,7 @@ const ProfileInfo = ({ profile }) => {
         </SimpleGrid>
       </Box>
     </DetailsWrapper>
-  )
+  );
 }
 
 // display link user info
