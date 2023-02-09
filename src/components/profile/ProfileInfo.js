@@ -1,85 +1,30 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { DetailsWrapper } from '../form/Onboarding/FormResources';
-import { Flex, Text } from '@chakra-ui/react';
-import { FiEdit } from 'react-icons/fi';
-
-const PrimaryHeading = styled.h1`
-  margin: 2rem 0;
-`;
-
-const Details = styled.div`
-  @media (max-width: 800px) {
-    overflow-x: auto;
-    -ms-overflow-style: none; /* IE 11 */
-    scrollbar-width: none; /* Firefox 64 */
-
-    &::-webkit-scrollbar {
-      width: 0;
-    }
-  }
-`;
-
-const Items = styled.div`
-  display: grid;
-  grid-template-columns: 0.3fr 0.7fr;
-  align-items: center;
-
-  @media (max-width: 800px) {
-    width: 76rem;
-  }
-
-  div {
-    height: 7rem;
-    padding: 1rem 2rem;
-    margin: 0.5rem 0;
-    display: flex;
-    align-items: center;
-  }
-
-  div:first-child {
-    background: rgba(100, 90, 240, 0.173);
-    border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
-  }
-
-  div:last-child {
-    border-top-right-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-    background: rgba(160, 154, 238, 0.173);
-  }
-`;
-
-export const BtnWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 4rem;
-`;
-
-export const Button = styled.div`
-  display: inline-block;
-  padding: 1rem 3rem;
-  background: #5e55ef;
-  border: 1px solid #5e55ef;
-  color: #fff;
-  text-align: center;
-  border-radius: 0.5rem;
-  width: 20rem;
-  transition: all 0.3s;
-
-  &:hover {
-    background: #5e55ef;
-    opacity: 0.9;
-  }
-`;
+import React from "react"
+import { Link } from "react-router-dom"
+import { FaRegUser } from "react-icons/fa"
+import { DetailsWrapper } from "../form/Onboarding/FormResources"
+import {
+  Flex,
+  Text,
+  Stack,
+  VStack,
+  Avatar,
+  Box,
+  SimpleGrid,
+  GridItem,
+  useBreakpointValue,
+  Link as LinkChakra,
+} from "@chakra-ui/react"
+import { FiEdit } from "react-icons/fi"
 
 const ProfileInfo = ({ profile }) => {
+  // custom colSpan breakpoint
+  const colSpan = useBreakpointValue({ base: 2, md: 1, lg: 1 })
+  // destructure user infos
   const {
-    firstName:firstname,
-    lastName:lastname,
+    firstName: firstname,
+    lastName: lastname,
     alias,
+    avatar,
     skypeId,
     googleGmailId,
     appleEmailId,
@@ -96,105 +41,193 @@ const ProfileInfo = ({ profile }) => {
     githubProfileUrl,
     linkedinProfileUrl,
     calendlyProfileUrl,
-  } = profile || {};
-
-
+  } = profile || {}
 
   return (
     <DetailsWrapper>
-      <PrimaryHeading className='text-center '>
-        <span className='text-primary'>User</span> Profile
-      </PrimaryHeading>
-      <Details>
-        <Flex justify={'flex-end'}>
-          <Link to='/edit-profile'>
-              <Flex p='0.4em 1em' borderRadius={'6px'} color={'white'} gap='0.5em' bg='var(--primary-color)' my='0.8em' align={'center'}>
-                <Text fontSize={'19px'}> Edit Profile</Text>
-                <FiEdit fontSize={'22px'} />
-              </Flex>
-          </Link>
-
-        </Flex>
-
-        <Items>
-          <div>Firstname</div>
-          <div>{firstname ? firstname : ''}</div>
-        </Items>
-        <Items>
-          <div>Lastname</div>
-          <div>{lastname ? lastname : ''}</div>
-        </Items>
-        <Items>
-          <div>Alias</div>
-          <div>{alias ? alias : ''}</div>
-        </Items>
-        <Items>
-          <div>SkypeId</div>
-          <div>{skypeId ? skypeId : ''}</div>
-        </Items>
-        <Items>
-          <div>Google Gmail Id</div>
-          <div>{googleGmailId ? googleGmailId : ''}</div>
-        </Items>
-        <Items>
-          <div>Apple Email Id</div>
-          <div>{appleEmailId ? appleEmailId : ''}</div>
-        </Items>
-        <Items>
-          <div>Phone</div>
-          <div>{phone ? phone : ''}</div>
-        </Items>
-        <Items>
-          <div>Time Zone Url</div>
-          <div>{timeZoneUrl ? timeZoneUrl : ''}</div>
-        </Items>
-        <Items>
-          <div>Days Per Week</div>
-          <div>{daysPerWeek ? daysPerWeek : ''}</div>
-        </Items>
-        <Items>
-          <div>Hours Per Day</div>
-          <div>{hoursPerDay ? hoursPerDay : ''}</div>
-        </Items>
-        <Items>
-          <div>Local Currency Url</div>
-          <div>{localCurrencyUrl ? localCurrencyUrl : ''}</div>
-        </Items>
-        <Items>
-          <div>FEM Slack Profile Url</div>
-          <div>{femSlackProfileUrl ? femSlackProfileUrl : ''}</div>
-        </Items>
-        <Items>
-          <div>Start Date</div>
-          <div>{startDate ? startDate : ''}</div>
-        </Items>
-        <Items>
-          <div>Payment Profile Url</div>
-          <div>{paymentProfileUrl ? paymentProfileUrl : ''}</div>
-        </Items>
-        <Items>
-          <div>Twitter Profile Url</div>
-          <div>{twitterProfileUrl ? twitterProfileUrl : ''}</div>
-        </Items>
-        <Items>
-          <div>Facebook Profile Url</div>
-          <div>{facebookProfileUrl ? facebookProfileUrl : ''}</div>
-        </Items>
-        <Items>
-          <div>Github Profile Url</div>
-          <div>{githubProfileUrl ? githubProfileUrl : ''}</div>
-        </Items>
-        <Items>
-          <div>Linkedin Profile Url</div>
-          <div>{linkedinProfileUrl ? linkedinProfileUrl : ''}</div>
-        </Items>
-        <Items>
-          <div>Calendly Profile Url</div>
-          <div>{calendlyProfileUrl ? calendlyProfileUrl : ''}</div>
-        </Items>
-      </Details>
+      <Box
+        as="div"
+        w="100%"
+        h="auto"
+        border="1px"
+        pb="20px"
+        borderColor="gray.200"
+        borderRadius={15}
+        overflow="hidden">
+        {/** banner section */}
+        <Box
+          as="div"
+          w="100%"
+          h="160px"
+          bg="var(--primary-color)"
+          borderRadius={15}></Box>
+        <Box as="div" px={["20px", "40px", "40px"]} mt={-20}>
+          <Box
+            as="div"
+            border="1px"
+            borderColor="gray.200"
+            borderRadius="100px"
+            w="fit-content">
+            {avatar ? (
+              <Avatar
+              name={`${firstname} ${lastname}`}
+              size="2xl"
+              src={`${avatar}`}
+              />
+              ) : (
+                <Avatar
+                size="2xl"
+                color="gray.500"
+                bg="gray.50"
+                icon={<FaRegUser />}
+              />
+            )}
+          </Box>
+          <Stack
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+            mt="20px">
+            <VStack flex="1" alignItems="flex-start">
+              <Text noOfLines={1} fontSize={["16", "20"]} fontWeight="semibold">
+                {firstname} {lastname}
+              </Text>
+              <Text
+                noOfLines={1}
+                fontSize="14"
+                fontWeight="medium"
+                color="gray.500">
+                {alias ? alias : ""}
+              </Text>
+            </VStack>
+            <Box>
+              <Link to="/edit-profile">
+                <Flex
+                  p="0.4em 1em"
+                  borderRadius={"6px"}
+                  color={"white"}
+                  gap="0.5em"
+                  bg="var(--primary-color)"
+                  alignItems={"center"}
+                  justify={"center"}>
+                  <Text fontSize={"14"}> Edit Profile</Text>
+                  <FiEdit fontSize={"17"} />
+                </Flex>
+              </Link>
+            </Box>
+          </Stack>
+        </Box>
+      </Box>
+      {/** user details section */}
+      <Box px={["20px", "40px", "40px"]} pb="40px" mt={20}>
+        <SimpleGrid columns={2} columnGap={1} rowGap={8}>
+          <InfoItem colSpan={colSpan} title={"Firstname"} value={firstname} />
+          <InfoItem colSpan={colSpan} title={"Lastname"} value={lastname} />
+          <InfoItem colSpan={colSpan} title={"Alias"} value={alias} />
+          <InfoItem colSpan={colSpan} title={"SkypeId"} value={skypeId} />
+          <InfoItem
+            colSpan={colSpan}
+            title={"Google Gmail Id"}
+            value={googleGmailId}
+          />
+          <InfoItem
+            colSpan={colSpan}
+            title={"Apple Email Id"}
+            value={appleEmailId}
+          />
+          <InfoItem colSpan={colSpan} title={"Phone"} value={phone} />
+          <LinkItem
+            colSpan={colSpan}
+            title={"Time Zone Url"}
+            link={timeZoneUrl}
+          />
+          <InfoItem
+            colSpan={colSpan}
+            title={"Days Per Week"}
+            value={daysPerWeek}
+          />
+          <InfoItem
+            colSpan={colSpan}
+            title={"Hours Per Day"}
+            value={hoursPerDay}
+          />
+          <LinkItem
+            colSpan={colSpan}
+            title={"Local Currency Url"}
+            link={localCurrencyUrl}
+          />
+          <LinkItem
+            colSpan={colSpan}
+            title={"FEM Slack Profile Url"}
+            link={femSlackProfileUrl}
+          />
+          <InfoItem colSpan={colSpan} title={"Start Date"} value={startDate} />
+          <LinkItem
+            colSpan={colSpan}
+            title={"Payment Profile Url"}
+            link={paymentProfileUrl}
+          />
+          <LinkItem
+            colSpan={colSpan}
+            title={"Twitter Profile Url"}
+            link={twitterProfileUrl}
+          />
+          <LinkItem
+            colSpan={colSpan}
+            title={"Facebook Profile Url"}
+            link={facebookProfileUrl}
+          />
+          <LinkItem
+            colSpan={colSpan}
+            title={"Github Profile Url"}
+            link={githubProfileUrl}
+          />
+          <LinkItem
+            colSpan={colSpan}
+            title={"Linkedin Profile Url"}
+            link={linkedinProfileUrl}
+          />
+          <LinkItem
+            colSpan={colSpan}
+            title={"Calendly Profile Url"}
+            link={calendlyProfileUrl}
+          />
+        </SimpleGrid>
+      </Box>
     </DetailsWrapper>
-  );
-};
+  )
+}
 
-export default ProfileInfo;
+// display link user info
+const LinkItem = ({ title, link, colSpan }) => {
+  return (
+    <GridItem colSpan={colSpan}>
+      <Text color="gray.500">{title}</Text>
+      {link ? (
+        <LinkChakra
+          href={link}
+          fontWeight="semibold"
+          color="var(--primary-color)"
+          isExternal>
+          {link}
+        </LinkChakra>
+      ) : (
+        ""
+      )}
+    </GridItem>
+  )
+}
+
+// display simple user info
+const InfoItem = ({ title, value, colSpan }) => {
+  return (
+    <GridItem colSpan={colSpan}>
+      <Text color="gray.500">{title}</Text>
+      <Text fontWeight="semibold">
+        {value ? value : ""}
+      </Text>
+    </GridItem>
+  )
+}
+
+export default ProfileInfo
