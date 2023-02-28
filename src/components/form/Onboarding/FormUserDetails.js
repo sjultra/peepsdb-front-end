@@ -149,7 +149,7 @@ const FormUserDetails = ({
             <Text fontWeight={500}>Choose your profile image </Text>
             <Flex gap='1em'> 
               <FileInputComponent
-              setOnChange={async(file)=>{
+               setOnChange={async(file)=>{
 
                 let stringAvatar =await  fileToBase64(file);
                 sessionStorage.setItem('fileType',file.type)
@@ -167,7 +167,7 @@ const FormUserDetails = ({
                   Select Avatar
                 </Btn>
   
-              }
+               }
               />
 
               <Btn mt='1em' onClick={()=>{
