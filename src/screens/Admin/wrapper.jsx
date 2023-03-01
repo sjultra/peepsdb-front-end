@@ -46,7 +46,7 @@ const StyledNavContainer = styled.div`
 
 const AdminWrapper = ({children}) => {
     return (
-        <Box>
+        <Box px="10">
             <Flex 
                 flexDir={'column'} align='center' bgColor='#FBFAFF' p={'20px 0'} w={'16%'}
                 pos='fixed' left={0} top={0} h={'100vh'}

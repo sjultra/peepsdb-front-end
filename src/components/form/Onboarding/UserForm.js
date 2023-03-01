@@ -148,6 +148,7 @@ const UserForm = ({ profile, loading }) => {
 
 
   return(
+      <Box px="16">
       <NavLayout>
         {
           step < 3?
@@ -275,6 +276,7 @@ const UserForm = ({ profile, loading }) => {
 
         }
       </NavLayout>
+      </Box>
   )
 
   if (step === 1) {

@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import UserDropdown from './UserDropdown';
 import useAuthActions from '../../hooks/useAuth';
 
-
-const NavLayout = ({boxShadow,className,children,rest,noPadding}) => {
+const NavLayout = ({boxShadow,className,children,rest,noPadding, title}) => {
   // Selectors
   const {auth} = useAuthActions()
   const {isAuthenticated} = auth || {};
@@ -14,7 +13,7 @@ const NavLayout = ({boxShadow,className,children,rest,noPadding}) => {
     <>
     <div className={className}>
       <h1>
-        <Link to='/'>PeepsDB</Link>
+        <Link to='/'>{title || "PeepsDB"}</Link>
       </h1>
       {isAuthenticated && auth && <UserDropdown user={auth} />}
     </div>
