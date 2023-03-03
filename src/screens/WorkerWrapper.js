@@ -1,13 +1,11 @@
 
 
 import React from 'react'
-import { MdDashboard, MdWorkspaces } from 'react-icons/md';
-import { HiUserGroup, } from 'react-icons/hi';
-import { Flex, Box, Text, Grid, GridItem } from '@chakra-ui/react'
+import { MdDashboard, MdWorkspaces, MdClose } from 'react-icons/md';
+import { Flex, HStack, Box, Text, Grid, GridItem, Show,Hide } from '@chakra-ui/react'
 import styled from 'styled-components';
 import NavLayout from '../components/layouts/NavLayout';
 import { NavLink } from "react-router-dom";
-import {TiDocumentText} from 'react-icons/ti'
 // import './styles.css'
 
 const StyledLogo = styled.h1`
@@ -44,16 +42,30 @@ const StyledNavContainer = styled.div`
 
 const WorkerWrapper = ({children}) => {
     return (
-      <Grid templateColumns="21rem auto">
+      <Grid templateColumns={{ base: "1fr", md: "1fr", lg: "21rem auto" }}>
         <GridItem>
           <Flex
+            style={{zIndex:"999"}}
+            left={{ base: "0px", md: "", lg: "" }}
+            right
+            top={{ base: "0px", md: "", lg: "" }}
+            position={{ base: "fixed", md: "fixed", lg: "relative" }}
+            w={{ base: "27rem", md: "24rem", lg: "auto" }}
             flexDir={"column"}
-            align="center"
             bgColor="#FBFAFF"
             minHeight={"100vh"}
             pt="10"
+            px="10"
             h={"100%"}>
-            <StyledLogo>PeepsDB</StyledLogo>
+            
+            {/** logo and close icon */}
+            <HStack alignItems="center" justify="space-between">
+              <StyledLogo>PeepsDB</StyledLogo>
+              <Show below='lg' overflow="visible">
+                <MdClose />
+              </Show>
+            </HStack>
+            {/** ___ */}
             <Flex flexDir={"column"} align="start" gap="30px" mt={"30px"}>
               <StyledNavContainer>
                 <NavLink exact to="/">

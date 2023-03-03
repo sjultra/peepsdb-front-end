@@ -54,7 +54,6 @@ const WorkerWorkspacesScreen = () => {
       <Stack
         direction="row"
         justify="space-between"
-        alignItems="center"
         bg="#f8f7ff"
         px="6"
         py="6"
@@ -67,7 +66,10 @@ const WorkerWorkspacesScreen = () => {
           {"Activity log"}
         </Text>
         <Box>
-          <Flex gap="0.6em" align="center">
+          <Flex 
+          gap="0.6em" 
+          align="center" 
+        >
             <GrFilter fontSize={"18px"} />
             <Select
               fontSize={"14px"}
@@ -83,8 +85,17 @@ const WorkerWorkspacesScreen = () => {
         </Box>
       </Stack>
       {/**Filter by searching */}
-      <Stack direction="row" mt="8" justify={"space-between"}>
-        <HStack border="1px" fontSize={"2xl"} borderColor="gray.100">
+      <Stack 
+          direction={{base:"column", md:"row", lg:"row"}}
+          mt="8" 
+          justify={"space-between"} 
+          align="center" 
+          gap="4">
+        <HStack 
+          w={{base:"full", md:"auto", lg:"auto"}} 
+          border="1px" 
+          fontSize={"2xl"} 
+          borderColor="gray.100">
           <CustumTab
             title="All"
             tab="all"
@@ -111,9 +122,10 @@ const WorkerWorkspacesScreen = () => {
           />
         </HStack>
         <HStack
+          w={{base:"full", md:"auto", lg:"auto"}} 
           bg="#f8f7ff"
           borderRadius="full"
-          px="1rem"
+          px="1.8rem"
           py="0.5rem"
           h="fit-content">
           <BiSearch />
@@ -132,7 +144,7 @@ const WorkerWorkspacesScreen = () => {
         </HStack>
       </Stack>
       {/** displaying activities -> all | Azure | sharepoint | jira */}
-      <Box mt="8">
+      <Box mt="8" overflowX={"auto"}>
         <UserActivityTable
           body={activitiesToDisplay}
           headers={["Date", "Activvity", "Event"]}
@@ -148,8 +160,8 @@ const CustumTab = ({ title, tab, selectedTab , action}) => {
   return (
     <Box
       onClick={()=>action(tab)}
-      py="6"
-      px="16"
+      py={{base:"6", md:"6", lg:"6"}}
+      px={{base:"8", md:"12", lg:"16"}}
       borderBottomWidth="2px"
       color={`${selectedTab === tab ? "var(--primary-color)" : "gray.400"}`}
       cursor={"pointer"}
