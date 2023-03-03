@@ -1,7 +1,4 @@
-"use client"
-
 import React from "react"
-
 
 const MenuContext = React.createContext({
   isopen: false,
