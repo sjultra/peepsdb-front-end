@@ -6,7 +6,7 @@ import { HiUserGroup, } from 'react-icons/hi';
 import { Flex, Box, Text, Grid, GridItem } from '@chakra-ui/react'
 import styled from 'styled-components';
 import NavLayout from '../components/layouts/NavLayout';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import {TiDocumentText} from 'react-icons/ti'
 // import './styles.css'
 
@@ -67,7 +67,7 @@ const WorkerWrapper = ({children}) => {
               </StyledNavContainer>
 
               <StyledNavContainer>
-                <NavLink to="/worker/workspaces">
+                <NavLink to="/worker/workspaces?activity=all">
                   <Flex gap={"5px"} align="center" cursor={"pointer"}>
                     <MdWorkspaces />
                     <Text fontSize={"14px"} fontWeight="600" color="#676464">
