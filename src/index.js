@@ -7,11 +7,13 @@ import App from './App';
 // self imported
 import { Provider } from 'react-redux';
 import store from './store/index';
+import { MenuProvider } from './hooks/MenuProvider';
 import { ChakraProvider  } from '@chakra-ui/react'
 
 
 
 ReactDOM.render(
+  <MenuProvider>
   <ChakraProvider>
 
     <Provider store={store}>
@@ -19,5 +21,6 @@ ReactDOM.render(
     </Provider>
 
   </ChakraProvider>
+  </MenuProvider>
 ,document.getElementById('root')
 );

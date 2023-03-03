@@ -3,8 +3,15 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserDropdown from './UserDropdown';
 import useAuthActions from '../../hooks/useAuth';
+import { useMenu } from "../../hooks/MenuProvider"
+import { FiMenu } from "react-icons/fi"
+import { HStack, Show, Box } from '@chakra-ui/react'
+
+
 
 const NavLayout = ({boxShadow,className,children,rest,noPadding, title}) => {
+  // control displaying menu
+    const drawer = useMenu()
   // Selectors
   const {auth} = useAuthActions()
   const {isAuthenticated} = auth || {};
@@ -13,7 +20,14 @@ const NavLayout = ({boxShadow,className,children,rest,noPadding, title}) => {
     <>
     <div className={className}>
       <h1>
-        <Link to='/'>{title || "PeepsDB"}</Link>
+      <HStack gap="4">
+      <Show below="lg">
+       <Box onClick={()=>drawer.setMenuStatus(true)} cursor="pointer">
+       <FiMenu />
+       </Box>
+       </Show >
+       <Link to='/'>{title || "PeepsDB"}</Link>
+      </HStack>
       </h1>
       {isAuthenticated && auth && <UserDropdown user={auth} />}
     </div>
