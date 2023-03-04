@@ -10,8 +10,8 @@ import { useEffect } from "react"
 
 const WorkerWorkspacesScreen = () => {
   //hooks
-  const router = useHistory()
-  const { search } = useLocation()
+  const router = useHistory();
+  const { search } = useLocation();
   const params = new URLSearchParams(search)
   // states
   const [logLimit, setLogLimit] = useState("today")
