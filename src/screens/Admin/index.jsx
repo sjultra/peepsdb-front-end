@@ -47,6 +47,7 @@ const AdminDashboard = () => {
   const userLogEntry =logs || []
 
 
+  console.log('user log',logs);
 
   return (
     <AdminWrapper>
