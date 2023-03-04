@@ -24,7 +24,6 @@ const WorkerWorkspacesScreen = () => {
   const changeTab = (tab) => {
     setActivityTab((prev) => (prev = tab))
     router.push(`/worker/workspaces?activity=${tab}`)
-    console.log("Activity Param :", tab)
   }
 
   useEffect(() => {
@@ -42,7 +41,6 @@ const WorkerWorkspacesScreen = () => {
       setActivitiesToDisplay(activitiesArray)
     }else{
       const getActivities = activitiesArray.filter((item)=>item.activity.type === selected)
-      console.log("getAct", getActivities)
       setActivitiesToDisplay(getActivities)
     }
 
@@ -50,7 +48,7 @@ const WorkerWorkspacesScreen = () => {
 
   return (
     <WorkerWrapper>
-      {/**Filter bu data */}
+      {/**Filter by date */}
       <Stack
         direction="row"
         justify="space-between"
@@ -156,11 +154,10 @@ const WorkerWorkspacesScreen = () => {
 
 // custom tab
 const CustumTab = ({ title, tab, selectedTab , action}) => {
-
   return (
     <Box
       onClick={()=>action(tab)}
-      py={{base:"6", md:"6", lg:"6"}}
+      py="6"
       px={{base:"8", md:"12", lg:"16"}}
       borderBottomWidth="2px"
       color={`${selectedTab === tab ? "var(--primary-color)" : "gray.400"}`}
@@ -176,7 +173,7 @@ const CustumTab = ({ title, tab, selectedTab , action}) => {
 export default WorkerWorkspacesScreen
 
 
-// data for testing
+// datas for testing
 const activitiesArray = [
   {
     date: "23/Aug/23 2:15pm",

@@ -11,34 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-/*
-.showMenu {
-  animation: _showMenu 400ms ease forwards
-}
-
-.hideMenu {
-  animation: _hideMenu 400ms ease forwards
-}
-
-@keyframes _showMenu {
-  from: {
-    left: "-100%"
-  }
-
-  to: {
-    left: "0%"
-  }
-
-}
-
-@keyframes _hideMenu {
-  from: {
-    left: "-100%"
-  }
-
-  to: {
-    left: "0%"
-  }
-
-}*/

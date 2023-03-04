@@ -4,17 +4,16 @@ const MenuContext = React.createContext({
   isopen: false,
 })
 
-// handle displaying menu 
+// handle displaying menu
 export const useMenu = () => {
   return React.useContext(MenuContext)
 }
 
 export const MenuProvider = ({ children }) => {
-  const [isopen, setMenuStatus] = React.useState(false);
+  const [isopen, setMenuStatus] = React.useState(false)
 
   return (
-    <MenuContext.Provider
-      value={{ isopen, setMenuStatus }}>
+    <MenuContext.Provider value={{ isopen, setMenuStatus }}>
       {children}
     </MenuContext.Provider>
   )
