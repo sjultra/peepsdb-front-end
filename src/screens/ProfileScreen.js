@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import React from 'react';
 import NavLayout from '../components/layouts/NavLayout';
 import Spinner from '../components/layouts/Spinner';
@@ -20,9 +21,11 @@ const ProfileScreen = () => {
 
   if(loading) return <Spinner />
   return (
-    <NavLayout>
-      <ProfileInfo profile={profile} />
-    </NavLayout>
+    <Box px="16">
+      <NavLayout>
+        <ProfileInfo profile={profile} />
+      </NavLayout>
+    </Box>
   );
 };
 
