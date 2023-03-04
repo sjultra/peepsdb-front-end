@@ -19,13 +19,19 @@ const Item = styled.div`
   }
 `;
 
+
 const MeetingScheduleContent = ({ profiles, filterText }) => {
+  
+
   const filterMeeting = (item) => {
     return (
-      item.firstname.toLowerCase().includes(filterText.toLowerCase()) ||
-      item.lastname.toLowerCase().includes(filterText.toLowerCase())
+      item?.firstName?.toLowerCase()?.includes(filterText.toLowerCase()) ||
+      item?.lastName?.toLowerCase()?.includes(filterText.toLowerCase())
     );
   };
+
+
+  console.log('meeting profiles',profiles);
 
   return (
     <div>
@@ -34,7 +40,7 @@ const MeetingScheduleContent = ({ profiles, filterText }) => {
           .filter((item) => item.role !== 'Guest')
           .filter(filterMeeting)
           .map((profile, index) => {
-            const { firstname, lastname, timeZoneUrl, calendlyProfileUrl } =
+            const { firstName:firstname, lastName:lastname, timeZoneUrl, calendlyProfileUrl } =
               profile;
             return (
               <Item key={index}>

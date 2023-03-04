@@ -1,9 +1,7 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import Navbar from './components/layouts/Navbar';
-import Alert from './components/layouts/Alert';
+// import Alert from './components/layouts/Alert';
 import NotFoundScreen from './screens/NotFoundScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -12,24 +10,43 @@ import EditProfileScreen from './screens/EditProfileScreen';
 import ADOWorkItemsScreen from './screens/ADOWorkItemsScreen';
 import JiraIssuesScreen from './screens/JiraIssuesScreen';
 import MeetingScheduleScreen from './screens/MeetingScheduleScreen';
-import UsersScreen from './screens/UsersScreen';
-import UserScreen from './screens/UserScreen';
+// import UserScreen from './screens/User/UserScreen';
 import UserEditScreen from './screens/UserEditScreen';
-import { loginUser } from './actions/userActions';
 import PrivateRoute from './components/routing/PrivateRoute';
+import useLogin from './hooks/useLogin';
+import './styles.sass';
+import AdminRoute from './components/routing/AdminRoute';
+import AdminUsers from './screens/Admin/users';
+import AdminWorkspace from './screens/Admin/workspace';
 
-// https://dev.azure.com/sjultra/VzxyTools/_git/peepsdb-fe
+import WorkerWorkspacesScreen from './screens/WorkerWorkspacesScreen';
+
+import ModalComponent from './components/layouts/Modal';
+import Audit from './screens/Admin/audit';
+import useAppInsights from './hooks/useAppInsights';
+import User from './screens/Admin/user';
+
 const App = () => {
-  const dispatch = useDispatch();
 
-  dispatch(loginUser());
+  const {initializeAzureLogging} = useAppInsights()
 
+  const initAzureLoggingRef = useRef(initializeAzureLogging)
+
+
+
+  useLogin();
+
+  useEffect(()=>initAzureLoggingRef.current(),[])
+  
+ 
 
   return (
+    
     <Router>
-      <Navbar />
-      <div className='padding-x page-bottom-margin'>
-        <Alert />
+        {/* <Alert /> */}
+
+        <ModalComponent/>
+        
         <Switch>
           <Route path='/login' component={LoginScreen} />
           <PrivateRoute exact path='/' component={DashboardScreen} />
@@ -41,15 +58,21 @@ const App = () => {
           />
           <PrivateRoute path='/jira_issues/:id' component={JiraIssuesScreen} />
           <PrivateRoute path='/meeting' component={MeetingScheduleScreen} />
-          <PrivateRoute exact path='/admin/users' component={UsersScreen} />
-          <PrivateRoute path='/admin/users/:id' component={UserScreen} exact />
+          <PrivateRoute path='/worker/workspaces' component={WorkerWorkspacesScreen} />
+          <AdminRoute path='/admin/logs' component={Audit} />
+          <AdminRoute path='/admin/users/' component={AdminUsers} />
+          <AdminRoute path='/admin/workspaces' component={AdminWorkspace} />
+          <AdminRoute path='/admin/user/:id' component={User} exact />
+
+          {/* <PrivateRoute path='/admin/users/:id' component={UserScreen} exact /> */}
           <PrivateRoute
             path='/admin/users/:id/edit'
             component={UserEditScreen}
           />
           <Route component={NotFoundScreen} />
         </Switch>
-      </div>
+
+
     </Router>
   );
 };

@@ -61,6 +61,9 @@ const JiraIssuesScreen = ({ match }) => {
     }
   }, [dispatch, match.params.id, issues, total]);
 
+
+  console.log('issues',issues);
+
   return (
     <div>
       <MainHeading title={match.params.id} />

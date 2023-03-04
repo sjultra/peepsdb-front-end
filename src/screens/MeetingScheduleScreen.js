@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
 import { BiSearch } from 'react-icons/bi';
 import MeetingScheduleContent from '../components/meeting/MeetingScheduleContent';
 import Spinner from '../components/layouts/Spinner';
-import { getAllProfiles } from '../actions/profileActions';
 import Message from '../components/layouts/Message';
 import {
   PrimaryHeading,
@@ -12,6 +10,12 @@ import {
   TitleFilter,
   Filter,
 } from './ScreenResources';
+import useTeams from '../hooks/useTeams';
+import useWidget from '../hooks/useWidget';
+import useAuthActions from '../hooks/useAuth';
+import { Redirect } from 'react-router-dom';
+import NavLayout from '../components/layouts/NavLayout';
+import { Box } from '@chakra-ui/react';
 
 const TableHead = styled.div`
   background: #f8f7ff;
@@ -37,27 +41,36 @@ const TableHead = styled.div`
 `;
 
 const MeetingScheduleScreen = () => {
-  const dispatch = useDispatch();
 
-  // Selectors
-  const profiles = useSelector((state) => state.allProfiles.profiles);
-  const loading = useSelector((state) => state.allProfiles.loading);
-  const error = useSelector((state) => state.allProfiles.error);
+  const {profiles,fetchAllProfiles,} = useTeams();
 
-  useEffect(() => {
-    if (!profiles) {
-      dispatch(getAllProfiles());
-    }
-  }, [profiles, dispatch]);
+  const {profile:auth} = useAuthActions()
+
+  const {loading} = useWidget()
+
+
+  useEffect(()=>{
+    !profiles.length && fetchAllProfiles()
+  },[fetchAllProfiles])
+
+  const error = false;
 
   const [filterText, setFilterText] = useState('');
 
+
+  if(auth?.token && !auth?.profileSetup){
+    return <Redirect to='/' />
+  }
+
   return (
-    <div>
+    <Box px="16">
+    <NavLayout>
       <TitleFilter>
+        
         <PrimaryHeading className='text-primary'>
           Schedule Meeting
         </PrimaryHeading>
+
         {!error && (
           <Filter>
             <BiSearch />
@@ -69,6 +82,7 @@ const MeetingScheduleScreen = () => {
             />
           </Filter>
         )}
+
       </TitleFilter>
 
       {loading && <Spinner />}
@@ -84,7 +98,8 @@ const MeetingScheduleScreen = () => {
           <MeetingScheduleContent profiles={profiles} filterText={filterText} />
         </ContentWrapper>
       )}
-    </div>
+    </NavLayout>
+    </Box>
   );
 };
 

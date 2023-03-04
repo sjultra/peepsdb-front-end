@@ -1,10 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap');
 
 /* Global Styles */
 :root {
   --primary-color: #5e55ef;
   --white-color: #fff;
   --dark-color: #000;
+  --hash:#827777;
+  --fadebg:#FAFAFA;
+  --borders:#9C9696;
+}
+
+.archivo {
+  font-family: 'Archivo', sans-serif;
 }
 
 .test-color {
@@ -22,7 +30,7 @@ html {
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
   font-size: 1.6rem;
   line-height: 1.7;
   background-color: var(--white-color);
@@ -46,10 +54,10 @@ button {
 }
 
 input, select {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
 }
 
-.padding-x {
+/* .padding-x {
   padding: 0 2rem;
 }
 
@@ -58,7 +66,7 @@ input, select {
     padding: 0 1.5rem;
   }
 }
-
+ */
 .text-primary {
   color: var(--primary-color);
 }

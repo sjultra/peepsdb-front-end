@@ -1,30 +1,31 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { Box } from '@chakra-ui/react';
+import React from 'react';
+import NavLayout from '../components/layouts/NavLayout';
 import Spinner from '../components/layouts/Spinner';
-import { getCurrentProfile } from '../actions/profileActions';
 import ProfileInfo from '../components/profile/ProfileInfo';
-import ProfileError from '../components/profile/ProfileError';
+import useAuthActions from '../hooks/useAuth';
+import useWidget from '../hooks/useWidget';
 
 const ProfileScreen = () => {
-  const dispatch = useDispatch();
 
   // Selectors
-  const profileState = useSelector((state) => state.profile);
 
-  const { loading, profile, error } = profileState;
 
-  useEffect(() => {
-    if (!profile) {
-      dispatch(getCurrentProfile());
-    }
-  }, [dispatch, profile]);
+  const { profile } = useAuthActions();
 
+  const {loading} = useWidget()
+
+
+
+  console.log('user profile at profilescreen',profile);
+
+  if(loading) return <Spinner />
   return (
-    <>
-      {loading && <Spinner />}
-      {(!profile || error) && <ProfileError error={error} />}
-      {!loading && profile && <ProfileInfo profile={profile} />}
-    </>
+    <Box px="16">
+      <NavLayout>
+        <ProfileInfo profile={profile} />
+      </NavLayout>
+    </Box>
   );
 };
 

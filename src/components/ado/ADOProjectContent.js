@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Paginate from "../../widgets/Paginate";
 
 const Wrapper = styled.div`
   display: grid;
@@ -96,34 +97,41 @@ const WorkItemsCount = styled.div`
   }
 `;
 
-const ADOProjectContent = ({ projects, search, workItems }) => {
+const ADOProjectContent = ({ projects: projectsArr, search, workItems }) => {
   return (
-    <Wrapper>
-      {projects &&
-        projects
-          .filter((project) =>
-            project.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((project, index) => {
-            return (
-              <Link key={index} to={`/ado_workitems/${project.name}`}>
-                <WorkItem>
-                  <ProjectName>{project.name}</ProjectName>
-                  <WorkItemsCount>
-                    <div>
-                      {workItems
-                        ? workItems.filter(
-                            (item) => item.fields.teamProject === project.name
-                          ).length
-                        : '-'}
-                    </div>
-                    <div>Work Items</div>
-                  </WorkItemsCount>
-                </WorkItem>
-              </Link>
-            );
-          })}
-    </Wrapper>
+    <Paginate
+      payload={projectsArr}
+      range={8}
+      render={(projects) => (
+        <Wrapper>
+          {projects &&
+            projects
+              .filter((project) =>
+                project.name.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((project, index) => {
+                return (
+                  <Link key={index} to={`/ado_workitems/${project.name}`}>
+                    <WorkItem>
+                      <ProjectName>{project.name}</ProjectName>
+                      <WorkItemsCount>
+                        <div>
+                          {workItems
+                            ? workItems.filter(
+                                (item) =>
+                                  item.fields.teamProject === project.name
+                              ).length
+                            : "-"}
+                        </div>
+                        <div>Work Items</div>
+                      </WorkItemsCount>
+                    </WorkItem>
+                  </Link>
+                );
+              })}
+        </Wrapper>
+      )}
+    />
   );
 };
 

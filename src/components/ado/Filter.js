@@ -75,7 +75,7 @@ const CustomSelect = styled.div`
     border-radius: 0.3rem;
     appearance: none;
     cursor: pointer;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
     font-size: 1.5rem;
     background: none;
     border: none;
