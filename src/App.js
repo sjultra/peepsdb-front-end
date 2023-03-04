@@ -18,6 +18,9 @@ import './styles.sass';
 import AdminRoute from './components/routing/AdminRoute';
 import AdminUsers from './screens/Admin/users';
 import AdminWorkspace from './screens/Admin/workspace';
+
+import WorkerWorkspacesScreen from './screens/WorkerWorkspacesScreen';
+
 import ModalComponent from './components/layouts/Modal';
 import Audit from './screens/Admin/audit';
 import useAppInsights from './hooks/useAppInsights';
@@ -45,7 +48,6 @@ const App = () => {
         <ModalComponent/>
         
         <Switch>
-
           <Route path='/login' component={LoginScreen} />
           <PrivateRoute exact path='/' component={DashboardScreen} />
           <PrivateRoute path='/profile' component={ProfileScreen} />
@@ -56,6 +58,7 @@ const App = () => {
           />
           <PrivateRoute path='/jira_issues/:id' component={JiraIssuesScreen} />
           <PrivateRoute path='/meeting' component={MeetingScheduleScreen} />
+          <PrivateRoute path='/worker/workspaces' component={WorkerWorkspacesScreen} />
           <AdminRoute path='/admin/logs' component={Audit} />
           <AdminRoute path='/admin/users/' component={AdminUsers} />
           <AdminRoute path='/admin/workspaces' component={AdminWorkspace} />

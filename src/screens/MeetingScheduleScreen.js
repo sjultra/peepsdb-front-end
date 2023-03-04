@@ -15,6 +15,7 @@ import useWidget from '../hooks/useWidget';
 import useAuthActions from '../hooks/useAuth';
 import { Redirect } from 'react-router-dom';
 import NavLayout from '../components/layouts/NavLayout';
+import { Box } from '@chakra-ui/react';
 
 const TableHead = styled.div`
   background: #f8f7ff;
@@ -62,6 +63,7 @@ const MeetingScheduleScreen = () => {
   }
 
   return (
+    <Box px="16">
     <NavLayout>
       <TitleFilter>
         
@@ -97,6 +99,7 @@ const MeetingScheduleScreen = () => {
         </ContentWrapper>
       )}
     </NavLayout>
+    </Box>
   );
 };
 
