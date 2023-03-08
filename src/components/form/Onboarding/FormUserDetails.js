@@ -106,7 +106,7 @@ const FormUserDetails = ({
   };
 
 
-  const [state,setState] = useState({
+  const [state, setState] = useState({
     alias:''
   })
 
@@ -117,24 +117,12 @@ const FormUserDetails = ({
   return (
       <Box>
         <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
-          {/* {
-            renderJSX(
-              previewMode,
-              <TextInput variant={'s2'}></TextInput>
-            )
-          } */}
 
           <Btn px='1em' onClick={openConnections}>
             My Connections
           </Btn>
 
-
         </Flex>
-        {/* <PrimaryHeading className='text-center '>{headingText}</PrimaryHeading> */}
-        {/* <Required>
-          <span> * </span>
-        </Required> */}
-        
 
         <Flex align='center' direction={{base:'column',lg:'row'}} gap='1.5em'>
           <Square mt='0.5em' size='100px' background={'rgba(214, 216, 220, 0.2)'}
@@ -259,7 +247,6 @@ const FormUserDetails = ({
             // }
           />
         </Flex>
-
 
         {
           renderJSX(

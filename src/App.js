@@ -28,17 +28,13 @@ import User from './screens/Admin/user';
 
 const App = () => {
 
-  const {initializeAzureLogging} = useAppInsights()
+  const { initializeAzureLogging } = useAppInsights()
 
   const initAzureLoggingRef = useRef(initializeAzureLogging)
-
-
 
   useLogin();
 
   useEffect(()=>initAzureLoggingRef.current(),[])
-  
- 
 
   return (
     

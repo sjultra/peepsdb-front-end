@@ -197,7 +197,7 @@ const LoginScreen = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
-
+      {/** first content showing up */}
       <Stack
         direction={"row"}
         justify="center"
@@ -276,11 +276,11 @@ const LoginScreen = () => {
             )}
 
             <Flex align="center" my="1.5em">
-              <Box h="1px" borderTop="1px solid #f4f4f4" flex={0.49}></Box>
+              <Box h="1px" borderTop="1px solid #EEEEEE" flex={0.49}></Box>
               <Text mx="0.4em" fontSize="1.3rem">
                 OR
               </Text>
-              <Box h="1px" borderTop="1px solid #f4f4f4" flex={0.49}></Box>
+              <Box h="1px" borderTop="1px solid #EEEEEE" flex={0.49}></Box>
             </Flex>
 
             <Flex gap="1" >
@@ -300,7 +300,7 @@ const LoginScreen = () => {
         </Stack>
         {/** Right illustration image -> Only visible when breakpoint:lg and more */}
         <Hide below="lg">
-          <Stack borderLeft="1px solid #f4f4f4" justify="center">
+          <Stack borderLeft="1px solid #EEEEEE" justify="center">
             <Image
               boxSize="490px"
               objectFit="cover"
