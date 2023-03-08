@@ -160,7 +160,7 @@ const UserForm = ({ profile, loading }) => {
     <Box px={{base:"0", md:"12", lg:"16"}}>
       <NavLayout>
         {step < 3 ? (
-          <Grid templateColumns={{base:'1fr', md:'10rem 1fr'}} gap={4} mt="8" w="full">
+          <Grid templateColumns={{base:'1fr', md:'10rem 1fr'}} gap={4} mt="8" w="full" pb="50px">
             <GridItem w="full" position={"relative"}>
             <Stack direction={{base:"row", md:"column"}} w={{base:"full", md:"auto", lg:"auto"}} h={{base:"auto", md:"70vh", lg:"50vh"}} justify="center">
               {[
@@ -226,7 +226,7 @@ const UserForm = ({ profile, loading }) => {
             </GridItem>
 
             {/** main body */}
-            <GridItem w="full">
+            <GridItem w="full" mt={["8", "0"]}>
             <Box>
               {/** step 01 for editing user infos */}
               {step === 0 ? (
