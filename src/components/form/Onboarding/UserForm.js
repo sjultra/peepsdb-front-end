@@ -33,7 +33,8 @@ const UserForm = ({ profile, loading }) => {
     twitterProfileUrl: '',facebookProfileUrl: '',githubProfileUrl: '',
     linkedinProfileUrl: '',calendlyProfileUrl: '',provider:profile?.provider,
     bankName:'',accountNumber:'',accountType:'',
-    routing:'',paymentType:'',   
+    routing:'',paymentType:'',
+    ...profile   
   });
 
 
@@ -45,16 +46,15 @@ const UserForm = ({ profile, loading }) => {
     githubConnect,linkedinConnect,ConnectionsModal,facebookConnect
   } = useConnections();
 
-  useEffect(() => {
-    
-    console.log('user profile at setup',profile)
+  // useEffect(() => {
+  //   profile &&  setFormData(prev=>({
+  //     ...prev,
+  //     ...profile,
+  //   }));
 
-    profile &&  setFormData(prev=>({
-      ...prev,
-      ...profile,
-    }));
+  //   console.log('profile value',profile)
 
-  }, []);
+  // }, [profile]);
 
   useEffect(()=>{
     window.addEventListener('message',e=>{

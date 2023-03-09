@@ -28,11 +28,12 @@ const FormWorkDetails = ({
 
   const [workEmails,setWorkEmails] = useState([]);
 
-
-  const setWorkEmailValue = (e)=>setFormData(prev=>({
+  const setWorkEmailValue = (e,suffix)=>setFormData(prev=>({
     ...prev,
-    [e.target.name]: e.target.value
+    [e.target.name]: `${e.target.value}@${suffix}`
   }))
+
+
 
   const {
     timezone,
@@ -40,9 +41,7 @@ const FormWorkDetails = ({
     hoursPerDay,
     startDate,
     googleGmailId,
-    appleEmailId,
     title,
-    provider
   } = formData;
 
   const val3idateEmail = (email) => {
@@ -53,7 +52,6 @@ const FormWorkDetails = ({
 
   const {validateConditions} = useValidate()
 
-  const googleLogin =  ()=>{}
 
   const proceed = (e) => {
     e.preventDefault();
@@ -86,15 +84,14 @@ const FormWorkDetails = ({
   const workEmailValues = Object.values(RETURN_EMAIL_HIERARCHY().values);
 
   useEffect(()=>{
-    const workEmailValues = Object.values(RETURN_EMAIL_HIERARCHY().values);
-    const workEmailKeys = Object.keys(RETURN_EMAIL_HIERARCHY().values);
-
     let workemails = workEmails;
 
     workEmailValues.map((value,index)=>{
       let fieldName = workEmailKeys[index]
 
       let defaultEmail = `${formData['alias']}@${value}`;
+
+      console.log('defaultEmail',value);
 
 
       workemails[index] = {
@@ -104,14 +101,15 @@ const FormWorkDetails = ({
       }
     })
 
+    console.log('work emails',workEmails)
+
     setWorkEmails(workemails)
 
   },[])
 
 
-  const validateEmailConditions = Object.keys(RETURN_EMAIL_HIERARCHY().values).map(val=>formData[val]) ;
+  // const validateEmailConditions = Object.keys(RETURN_EMAIL_HIERARCHY().values).map(val=>formData[val]) ;
   
-  // const emailsAreValid = workEmailKeys.map(key=>  ) 
   
  
   return (
@@ -177,9 +175,10 @@ const FormWorkDetails = ({
 
               workEmails.map((emailObj,index)=>{
                 
-                  const {name:fieldName,value,emailSuffix} = emailObj;
+                  const {fieldName,value,emailSuffix} = emailObj;
 
                   const valueEntry = value?.includes(emailSuffix)? value.split(`@${emailSuffix}`)[0]: value;
+
 
                   return(                  
                     <Box flex={1} key={index} gap='1em' >
@@ -195,7 +194,7 @@ const FormWorkDetails = ({
                           type="text"
                           name={fieldName}
                           defaultValue={valueEntry}
-                          onChange={(e) => setWorkEmailValue(e,index)}
+                          onChange={(e) => setWorkEmailValue(e,emailSuffix)}
                           flex={{base:'0.85'}}
                           //  defaultValue={}
 

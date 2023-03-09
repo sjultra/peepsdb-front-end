@@ -112,7 +112,7 @@ const FormUserDetails = ({
 
   const set = e=>setState(prev=>({...prev,[e.target.name]:e.target.value}))
 
-  console.log('user formdata',formData)
+  // console.log('user formdata',formData)
 
   return (
       <Box>
