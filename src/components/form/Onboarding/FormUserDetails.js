@@ -106,7 +106,7 @@ const FormUserDetails = ({
   };
 
 
-  const [state,setState] = useState({
+  const [state, setState] = useState({
     alias:''
   })
 
@@ -117,26 +117,14 @@ const FormUserDetails = ({
   return (
       <Box>
         <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
-          {/* {
-            renderJSX(
-              previewMode,
-              <TextInput variant={'s2'}></TextInput>
-            )
-          } */}
 
-          <Btn px='1em' onClick={openConnections}>
+          <Btn px='1em' mb={["8",""]} onClick={openConnections}>
             My Connections
           </Btn>
 
-
         </Flex>
-        {/* <PrimaryHeading className='text-center '>{headingText}</PrimaryHeading> */}
-        {/* <Required>
-          <span> * </span>
-        </Required> */}
-        
 
-        <Flex align='center' direction={{base:'column',lg:'row'}} gap='1.5em'>
+        <Flex alignItems={["","center"]} direction={{base:'column',md:'row'}} gap='1.5em'>
           <Square mt='0.5em' size='100px' background={'rgba(214, 216, 220, 0.2)'}
           borderRadius={'15px'}>
             {RenderFileImage(
@@ -147,7 +135,7 @@ const FormUserDetails = ({
 
           <Box>
             <Text fontWeight={500}>Choose your profile image </Text>
-            <Flex gap='1em'> 
+            <Flex direction={["column","row"]} gap='1em'> 
               <FileInputComponent
                setOnChange={async(file)=>{
 
@@ -181,12 +169,8 @@ const FormUserDetails = ({
               >
                 Delete
               </Btn>
-
-            </Flex>
-
-            
+            </Flex>   
           </Box>
-
 
         </Flex>
 
@@ -259,7 +243,6 @@ const FormUserDetails = ({
             // }
           />
         </Flex>
-
 
         {
           renderJSX(
