@@ -1,5 +1,5 @@
 import {  Box, Flex, Text, Input as InputElement } from "@chakra-ui/react";
-import React  from "react";
+import React, { useEffect, useMemo, useState }  from "react";
 import useValidate from "../../../hooks/useValidate";
 import { renderJSX } from "../../../utils/helpers";
 import Btn from "../../../widgets/Button";
@@ -24,15 +24,24 @@ const FormWorkDetails = ({
   openConnections,
   setFormData
 }) => {
+ 
+
+  const [workEmails,setWorkEmails] = useState([]);
+
+  const setWorkEmailValue = (e,suffix)=>setFormData(prev=>({
+    ...prev,
+    [e.target.name]: `${e.target.value}@${suffix}`
+  }))
+
+
+
   const {
     timezone,
     daysPerWeek,
     hoursPerDay,
     startDate,
     googleGmailId,
-    appleEmailId,
     title,
-    provider
   } = formData;
 
   const val3idateEmail = (email) => {
@@ -41,10 +50,8 @@ const FormWorkDetails = ({
     return re.test(email);
   };
 
-
   const {validateConditions} = useValidate()
 
-  const googleLogin =  ()=>{}
 
   const proceed = (e) => {
     e.preventDefault();
@@ -73,6 +80,37 @@ const FormWorkDetails = ({
     prevStep();
   };
 
+  const workEmailKeys = Object.keys(RETURN_EMAIL_HIERARCHY().values);
+  const workEmailValues = Object.values(RETURN_EMAIL_HIERARCHY().values);
+
+  useEffect(()=>{
+    let workemails = workEmails;
+
+    workEmailValues.map((value,index)=>{
+      let fieldName = workEmailKeys[index]
+
+      let defaultEmail = `${formData['alias']}@${value}`;
+
+      console.log('defaultEmail',value);
+
+
+      workemails[index] = {
+        fieldName,
+        value: formData[fieldName] || defaultEmail,
+        emailSuffix:value
+      }
+    })
+
+    console.log('work emails',workEmails)
+
+    setWorkEmails(workemails)
+
+  },[])
+
+
+  // const validateEmailConditions = Object.keys(RETURN_EMAIL_HIERARCHY().values).map(val=>formData[val]) ;
+  
+  
  
   return (
     <OnboardingContainer>
@@ -133,61 +171,47 @@ const FormWorkDetails = ({
 
       <Flex className="below" direction={{ base: "column", lg: "row" }} gap={"2em"}>
 
-
           {
 
-            (()=>{
-              const workEmailValues = Object.values(RETURN_EMAIL_HIERARCHY().values);
-              const workEmailKeys = Object.keys(RETURN_EMAIL_HIERARCHY().values);
-              
-              return(
+              workEmails.map((emailObj,index)=>{
+                
+                  const {fieldName,value,emailSuffix} = emailObj;
 
-                workEmailValues.map((value,index)=>{
-                    let fieldName = workEmailKeys[index]
+                  const valueEntry = value?.includes(emailSuffix)? value.split(`@${emailSuffix}`)[0]: value;
 
-                    let defaultEmail = `${formData['alias']}`;
 
-                    
-                    //set work emails to username@workemail e.g dayvvo@sjultra.com if no existing value
-
-                    !formData[fieldName] && setFormData(prev=>({
-                      ...prev,
-                      [fieldName]:defaultEmail
-                    }))
-
-                    return(                  
-                      <Box flex={1} key={index} gap='1em' >
-                        <Text as='label' fontSize={'15px'} p='1rem 0' > 
-                          {!index?`Primary work email`:`Secondary work email${workEmailValues?.length > 2?index+1:''}`}
-                        </Text>
-                        <Flex mt='1rem' gap='1em' align={'center'}>
+                  return(                  
+                    <Box flex={1} key={index} gap='1em' >
+                      <Text as='label' fontSize={'15px'} p='1rem 0' > 
+                        {!index?`Primary work email`:`Secondary work email${workEmails?.length > 2?index+1:''}`}
+                      </Text>
+                      <Flex mt='1rem' gap='1em' align={'center'}>
 
                         <InputElement
-                         bg='#E8E8E8'
-                         h='50px'
-                         borderRadius={'10px'}
-                         type="text"
-                         name={workEmailKeys[index]}
-                         value={formData[fieldName]}
-                         onChange={(e) => onChange(e)}
-                         flex={{base:'0.85'}}
-                         //  defaultValue={}
+                          bg='#E8E8E8'
+                          h='50px'
+                          borderRadius={'10px'}
+                          type="text"
+                          name={fieldName}
+                          defaultValue={valueEntry}
+                          onChange={(e) => setWorkEmailValue(e,emailSuffix)}
+                          flex={{base:'0.85'}}
+                          //  defaultValue={}
 
-                         {...{preview}}
+                          {...{preview}}
                         />
 
-                        <Text fontSize='16px'>@{value}</Text>
-                        </Flex>
-                    
-                      </Box>
-                    )
+                        <Text fontSize='16px'>@{emailSuffix}</Text>
 
-                  }
-                )
+                      </Flex>
 
+                      <Text mt='0.2em'></Text>
+                  
+                    </Box>
+                  )
+
+                }
               )
-            })()
-
           }  
               
 

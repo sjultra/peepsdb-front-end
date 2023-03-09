@@ -8,9 +8,7 @@ import countries from '../utils/timezone-cities.json'
 
 const useAppInsights = ()=>{
 
-
     const initializeAzureLogging = ()=>{
-    
         let reactPlugin = new ReactPlugin();
         let appInsights = new ApplicationInsights({
             config: {
@@ -24,10 +22,15 @@ const useAppInsights = ()=>{
 
 
     const getUserTimezone = ()=>{
+        
         let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        
         let tzArr = userTimezone.split("/");
+        
         let userRegion = tzArr[0];
+        
         let userCity = tzArr[tzArr.length - 1];
+        
         let userCountry = countries[userCity];
         
         return {
@@ -36,7 +39,7 @@ const useAppInsights = ()=>{
             userCountry,
             userRegion
         }
-      }
+    }
     
 
     return {
