@@ -10,7 +10,7 @@ export const RETURN_EMAIL_HIERARCHY = ()=>{
 
     console.log('split value',process.env['REACT_APP_EMAIL_SUFFIXES'])
   
-    split.forEach((entry,index)=>{
+    split?.forEach((entry,index)=>{
       emailObjectValues[`email${index+1}`] = entry;
     });
     
