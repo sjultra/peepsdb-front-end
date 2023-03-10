@@ -192,7 +192,7 @@ const Confirm = ({ prevStep, formData,onChange,profile }) => {
 
 
   return(
-    <Box px={{lg:'5em'}}>
+    <Box px={{lg:'0em'}} pb="20">
 
       {useGoBack({goBack:()=>prevStep()})}
 
