@@ -79,7 +79,7 @@ const UserForm = ({ profile, loading }) => {
 
   useEffect(() => {
     window.addEventListener("message", (e) => {
-      if (e.origin === backendURL) {
+      if (e?.origin === backendURL) {
         console.log("message caught", e.origin);
         if (windowRef?.current?.close) {
           let profileData = e.data;
