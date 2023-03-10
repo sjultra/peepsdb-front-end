@@ -116,7 +116,7 @@ const FormUserDetails = ({
 
   return (
       <Box>
-        <Flex my='0.2em' align={'center'} justify={ 'flex-end'}>
+        <Flex my='0.2em' justify={ 'flex-end'}>
 
           <Btn px='1em' mb={["8",""]} onClick={openConnections}>
             My Connections
@@ -139,7 +139,7 @@ const FormUserDetails = ({
               <FileInputComponent
                setOnChange={async(file)=>{
 
-                let stringAvatar =await  fileToBase64(file);
+                let stringAvatar = await  fileToBase64(file);
                 sessionStorage.setItem('fileType',file.type)
                 let e = {
                   target:{

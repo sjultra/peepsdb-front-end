@@ -9,18 +9,24 @@ const useGoBack = ({fontSize,color,mt,goBack})=>{
 
     const goBackFn = ()=>{
 
-        return(
-            <Flex mt={mt || '1.5em'} align='center' >
-                <BsArrowLeft cursor={'pointer'}  color={color || 'initial'} 
-                 onClick={()=>{
-                    if (goBack) goBack()
-                    else{
-                        history.goBack()
-                    }
-                }} fontSize={fontSize ||'25px'}/>
-                <Text ml='0.5em'>Back</Text>
-            </Flex>
-        )
+        return (
+          <Flex
+            cursor={"pointer"}
+            color="var(--primary-color)"
+            mt={mt || "1.5em"}
+            align="center"
+            onClick={() => {
+              if (goBack) goBack();
+              else {
+                history.goBack();
+              }
+            }}>
+            <BsArrowLeft
+              fontSize={fontSize || "2rem"}
+            />
+            <Text ml="0.5em">Back</Text>
+          </Flex>
+        );
     }
 
     return goBackFn()

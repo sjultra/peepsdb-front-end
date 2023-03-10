@@ -32,7 +32,7 @@ const FileInputComponent = ({
 
     return( 
       <>
-        <input type='file' />
+        <input type='file' style={{width:"100%"}} />
 
         <Box position='relative' {...rest}>
             <Input type='file' opacity={0} 

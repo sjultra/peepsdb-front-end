@@ -25,7 +25,7 @@ const ModalComponent = () => {
         //  onEsc={closeModal}
         >
           <ModalOverlay/>
-          <ModalContent className="modalContent"   >
+          <ModalContent className="modalContent"  mx="6">
                { Child && <Child {...payload} />}
           </ModalContent>
         </Modal>
