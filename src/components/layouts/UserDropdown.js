@@ -127,27 +127,26 @@ const UserDropdown = ({ user }) => {
         <MenuButton fontSize={"18px"}>
           <FaUserCircle style={style} />
         </MenuButton>
-        <MenuList>
+        <MenuList zIndex="100">
           <MenuItem>
-            <Link style={{display:'flex',width:'100%'}} to="/profile">
+            <Link style={{ display: "flex", width: "100%" }} to="/profile">
               {displayName}
               <Text>({role})</Text>
             </Link>
           </MenuItem>
-          { 
-              auth?.profileSetup?
-              <MenuItem>
-                <Link style={{display:'flex',width:'100%'}} to="/meeting">
-                  <p
-                    // onClick={() => setOpenmefDropdown(false)}
-                  >
-                    Meeting
-                  </p>
-                </Link>
-              </MenuItem>:
-              <></>
-          }
-
+          {auth?.profileSetup ? (
+            <MenuItem>
+              <Link style={{ display: "flex", width: "100%" }} to="/meeting">
+                <p
+                // onClick={() => setOpenmefDropdown(false)}
+                >
+                  Meeting
+                </p>
+              </Link>
+            </MenuItem>
+          ) : (
+            <></>
+          )}
 
           <MenuItem>
             <SignOut onClick={logout}>Sign Out</SignOut>

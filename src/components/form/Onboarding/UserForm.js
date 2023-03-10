@@ -169,7 +169,7 @@ const UserForm = ({ profile, loading }) => {
             position="relative">
             <GridItem
               w="full"
-              zIndex="100"
+              zIndex="10"
               bg="white"
               position={["sticky"]}
               top={["0"]}>
