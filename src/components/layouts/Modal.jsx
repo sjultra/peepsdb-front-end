@@ -1,5 +1,5 @@
 
-import { Modal, ModalBody, ModalContent, ModalOverlay } from "@chakra-ui/react";
+import { Modal,  ModalContent, ModalOverlay } from "@chakra-ui/react";
 import React from "react";
 import useWidget from "../../hooks/useWidget";
 

@@ -91,7 +91,7 @@ const FormWorkDetails = ({
 
       let defaultEmail = `${formData['alias']}@${value}`;
 
-      console.log('defaultEmail',value);
+
 
 
       workemails[index] = {
@@ -101,15 +101,59 @@ const FormWorkDetails = ({
       }
     })
 
-    console.log('work emails',workEmails)
+    console.log('work emails value before setting',workemails)
 
-    setWorkEmails(workemails)
+    setWorkEmails([...workemails])
 
   },[])
 
 
-  // const validateEmailConditions = Object.keys(RETURN_EMAIL_HIERARCHY().values).map(val=>formData[val]) ;
+  console.log('work emails in useState',workEmails)
   
+  const memoizeWorkEmails = useMemo(()=>{
+    console.log('work emails in memo',workEmails)
+ 
+    return workEmails.map((emailObj,index)=>{
+      
+        const {fieldName,value,emailSuffix} = emailObj;
+
+        const valueEntry = value?.includes(emailSuffix)? value.split(`@${emailSuffix}`)[0]: value;
+
+
+        return(                  
+          <Box flex={1} key={index} gap='1em' >
+            <Text as='label' fontSize={'15px'} p='1rem 0' > 
+              {!index?`Primary work email`:`Secondary work email${workEmails?.length > 2?index+1:''}`}
+            </Text>
+            <Flex mt='1rem' gap='1em' align={'center'}>
+
+              <InputElement
+                bg='#E8E8E8'
+                h='50px'
+                borderRadius={'10px'}
+                type="text"
+                name={fieldName}
+                defaultValue={valueEntry}
+                onChange={(e) => setWorkEmailValue(e,emailSuffix)}
+                flex={{base:'0.85'}}
+                //  defaultValue={}
+
+                {...{preview}}
+              />
+
+              <Text fontSize='16px'>@{emailSuffix}</Text>
+
+            </Flex>
+
+            <Text mt='0.2em'></Text>
+        
+          </Box>
+        )
+
+      }
+    )
+  }
+  ,[workEmails])
   
  
   return (
@@ -170,56 +214,8 @@ const FormWorkDetails = ({
 
 
       <Flex className="below" direction={{ base: "column", lg: "row" }} gap={"2em"}>
-
-          {
-
-              workEmails.map((emailObj,index)=>{
-                
-                  const {fieldName,value,emailSuffix} = emailObj;
-
-                  const valueEntry = value?.includes(emailSuffix)? value.split(`@${emailSuffix}`)[0]: value;
-
-
-                  return(                  
-                    <Box flex={1} key={index} gap='1em' >
-                      <Text as='label' fontSize={'15px'} p='1rem 0' > 
-                        {!index?`Primary work email`:`Secondary work email${workEmails?.length > 2?index+1:''}`}
-                      </Text>
-                      <Flex mt='1rem' gap='1em' align={'center'}>
-
-                        <InputElement
-                          bg='#E8E8E8'
-                          h='50px'
-                          borderRadius={'10px'}
-                          type="text"
-                          name={fieldName}
-                          defaultValue={valueEntry}
-                          onChange={(e) => setWorkEmailValue(e,emailSuffix)}
-                          flex={{base:'0.85'}}
-                          //  defaultValue={}
-
-                          {...{preview}}
-                        />
-
-                        <Text fontSize='16px'>@{emailSuffix}</Text>
-
-                      </Flex>
-
-                      <Text mt='0.2em'></Text>
-                  
-                    </Box>
-                  )
-
-                }
-              )
-          }  
-              
-
-
+        {memoizeWorkEmails}
       </Flex>
-
-
-
 
       <Flex className="below"  direction={{ base: "column", lg: "row" }} gap={"2em"}>
 
