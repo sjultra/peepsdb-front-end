@@ -50,11 +50,6 @@ const UserForm = ({ profile, loading }) => {
     linkedinProfileUrl: "",
     calendlyProfileUrl: "",
     provider: profile?.provider,
-    bankName: "",
-    accountNumber: "",
-    accountType: "",
-    routing: "",
-    paymentType: "",
   });
 
   const { openModal, closeModal } = useWidget();
