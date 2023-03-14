@@ -153,7 +153,7 @@ const UserForm = ({ profile, loading }) => {
 
   return (
     <Box px={{ base: "0", md: "12", lg: "16" }}>
-      <NavLayout>
+      <NavLayout displayAsidebar={false}>
         {step < 3 ? (
           <Grid
             templateColumns={{ base: "1fr", md: "10rem 1fr" }}

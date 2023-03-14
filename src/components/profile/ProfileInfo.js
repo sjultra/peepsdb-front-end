@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { FaRegUser } from "react-icons/fa"
-import { DetailsWrapper } from "../form/Onboarding/FormResources"
 import {
   Flex,
   Text,
@@ -44,7 +43,7 @@ const ProfileInfo = ({ profile }) => {
   } = profile || {}
 
   return (
-    <DetailsWrapper>
+    <Box>
       <Box
         as="div"
         w="100%"
@@ -194,7 +193,7 @@ const ProfileInfo = ({ profile }) => {
           />
         </SimpleGrid>
       </Box>
-    </DetailsWrapper>
+    </Box>
   )
 }
 

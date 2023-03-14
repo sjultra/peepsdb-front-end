@@ -10,8 +10,8 @@ import {
   Show,
 } from "@chakra-ui/react"
 import styled from "styled-components"
-import NavLayout from "../components/layouts/NavLayout"
-import { useMenu } from "../hooks/MenuProvider"
+import NavLayout from "./NavLayout"
+import { useMenu } from "../../hooks/MenuProvider"
 
 import { NavLink } from "react-router-dom"
 // import './styles.css'
@@ -48,7 +48,7 @@ const StyledNavContainer = styled.div`
   }
 `;
 
-const WorkerWrapper = ({ children }) => {
+const WorkerAsideBar = ({ children }) => {
   // control displaying menu
   const drawer = useMenu()
 
@@ -56,19 +56,20 @@ const WorkerWrapper = ({ children }) => {
     <Grid templateColumns={{ base: "1fr", md: "1fr", lg: "21rem auto" }}>
       {/** Side bar menu */}
       <GridItem
-        style={{ zIndex: "999", transition: "left 1s linear 0s" }}
+        style={{ zIndex: "999", transition: "left 0.5s linear 0s" }}
         left={{
           base: `${drawer.isopen ? "0%" : "-100%"}`,
           md: "",
           lg: "0%",
         }}
-        top={{ base: "0px", md: "", lg: "" }}
-        position={{ base: "fixed", md: "fixed", lg: "relative" }}
+        top="0px"
+        position={{ base: "fixed", md: "fixed", lg: "sticky" }}
         w={{ base: "27rem", md: "24rem", lg: "auto" }}>
         <Flex
           as="div"
           flexDir={"column"}
-          bgColor="#FBFAFF"
+          bgColor="#fdfdfd"
+          boxShadow="sm"
           minHeight={"100vh"}
           pt="10"
           px="10"
@@ -112,13 +113,13 @@ const WorkerWrapper = ({ children }) => {
         </Flex>
       </GridItem>
       {/** past body contents to navbar */}
-      <GridItem px="10">
-        <Box>
+      <GridItem px={["0", "4", "10"]}>
+        <Box w="full">
           <NavLayout title={"Users"}>{children}</NavLayout>
         </Box>
       </GridItem>
     </Grid>
-  )
+  );
 }
 
-export default WorkerWrapper
+export default WorkerAsideBar

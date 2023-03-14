@@ -16,10 +16,13 @@ import useAuthActions from '../hooks/useAuth';
 import { Redirect } from 'react-router-dom';
 import NavLayout from '../components/layouts/NavLayout';
 import { Box } from '@chakra-ui/react';
+import WorkerAsideBar from "../components/layouts/WorkerAsideBar"
+
 
 const TableHead = styled.div`
   background: #f8f7ff;
   height: 6rem;
+  width: 100%;
   display: grid;
   grid-template-columns: 0.22fr 0.4fr 0.38fr;
   grid-column-gap: 3rem;
@@ -63,41 +66,47 @@ const MeetingScheduleScreen = () => {
   }
 
   return (
-    <Box px="16">
-    <NavLayout>
-      <TitleFilter>
-        
-        <PrimaryHeading className='text-primary'>
-          Schedule Meeting
-        </PrimaryHeading>
+    <Box px={["0","16"]}>
+    <NavLayout displayAsidebar={false}>
+      <Box>
+        <TitleFilter>
+          <PrimaryHeading className="text-primary">
+            Schedule Meeting
+          </PrimaryHeading>
 
-        {!error && (
-          <Filter>
-            <BiSearch />
-            <input
-              type='text'
-              placeholder='Search...'
-              value={filterText}
-              onChange={(e) => setFilterText(e.target.value)}
-            />
-          </Filter>
+          {!error && (
+            <Filter>
+              <BiSearch />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={filterText}
+                onChange={(e) => setFilterText(e.target.value)}
+              />
+            </Filter>
+          )}
+        </TitleFilter>
+        {/** catch and display error */}
+        {error && error.msg && <Message msg={error.msg} variant="error" />}
+
+        {profiles && (
+          <Box overflow={"auto"} w={["calc(100vw - 6rem)","calc(100vw - 8rem)"]}>
+            <ContentWrapper>
+              <TableHead>
+                <div>Team Members</div>
+                <div>Local Times</div>
+                <div>Calendly Link</div>
+              </TableHead>
+              {/** Loading state */}
+              {loading && <Spinner />}
+              <MeetingScheduleContent
+                profiles={profiles}
+                filterText={filterText}
+              />
+            </ContentWrapper>
+          </Box>
         )}
-
-      </TitleFilter>
-
-      {loading && <Spinner />}
-      {error && error.msg && <Message msg={error.msg} variant='error' />}
-
-      {profiles && (
-        <ContentWrapper>
-          <TableHead>
-            <div>Team Members</div>
-            <div>Local Times</div>
-            <div>Calendly Link</div>
-          </TableHead>
-          <MeetingScheduleContent profiles={profiles} filterText={filterText} />
-        </ContentWrapper>
-      )}
+      </Box>
     </NavLayout>
     </Box>
   );
