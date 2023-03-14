@@ -53,7 +53,6 @@ export const linkedinAuthUrl = (inapp = "") => {
 
   const completeURL = `${baseURL}?${response_type}&${client_id}&${redirect_uri}&${state}&${scope}`
 
-  console.log("linkedinUrl", completeURL)
 
   return completeURL
 }
