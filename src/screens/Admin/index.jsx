@@ -1,4 +1,4 @@
-import AdminWrapper from "./wrapper";
+import AdminAsideBar from "./AdminAsideBar";
 import { FaUserCheck, FaUserSlash } from "react-icons/fa";
 import { HiUsers } from "react-icons/hi";
 import { Flex, Box, Text, Select, Circle } from "@chakra-ui/react";
@@ -31,7 +31,7 @@ const AdminDashboard = () => {
   const [logLimit,setLogLimit] = useState('today')
 
   // const fetchAllProfilesRef = useRef(fetchAllProfiles);
-
+ 
   useFetchProfiles()
   
   useAppAudits(logLimit)
@@ -50,7 +50,7 @@ const AdminDashboard = () => {
   console.log('user log',logs);
 
   return (
-    <AdminWrapper>
+    <AdminAsideBar>
       <Text className="archivo" fontSize={"25px"} fontWeight={500}>
         Dashboard
       </Text>
@@ -222,7 +222,7 @@ const AdminDashboard = () => {
       </Box>
 
       </Box>
-    </AdminWrapper>
+    </AdminAsideBar>
   );
 };
 

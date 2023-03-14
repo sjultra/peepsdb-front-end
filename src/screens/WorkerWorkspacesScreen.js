@@ -146,7 +146,7 @@ const WorkerWorkspacesScreen = () => {
         <Box
           mt="8"
           w={{
-            base: "calc(100vw - 6rem)",
+            base: "calc(100vw - 8rem)",
             md: "calc(100vw - 4rem)",
             lg: "calc(100vw - 22vw)",
           }}>

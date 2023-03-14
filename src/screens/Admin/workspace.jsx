@@ -1,13 +1,13 @@
 import UserWorkspace from "../../components/workspace"
-import AdminWrapper from "./wrapper"
+import AdminAsideBar from "./AdminAsideBar"
 
 
 
 const AdminWorkspace =()=>{
     return(
-        <AdminWrapper>
+        <AdminAsideBar>
             <UserWorkspace/>
-        </AdminWrapper>
+        </AdminAsideBar>
 
     )
 }
