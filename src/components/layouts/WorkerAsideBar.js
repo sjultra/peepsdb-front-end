@@ -68,8 +68,8 @@ const WorkerAsideBar = ({ children }) => {
         <Flex
           as="div"
           flexDir={"column"}
-          bgColor="#fdfdfd"
-          boxShadow="sm"
+          bgColor="#fcfcfc"
+          boxShadow="xs"
           minHeight={"100vh"}
           pt="10"
           px="10"
