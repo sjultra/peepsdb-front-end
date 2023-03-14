@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Box } from '@chakra-ui/react';
 
 const Item = styled.div`
   display: grid;
@@ -34,7 +35,7 @@ const MeetingScheduleContent = ({ profiles, filterText }) => {
   console.log('meeting profiles',profiles);
 
   return (
-    <div>
+    <Box>
       {profiles &&
         profiles
           .filter((item) => item.role !== 'Guest')
@@ -77,7 +78,7 @@ const MeetingScheduleContent = ({ profiles, filterText }) => {
             );
           })}
       {profiles === [] && <h3>No user</h3>}
-    </div>
+    </Box>
   );
 };
 

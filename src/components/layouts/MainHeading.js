@@ -3,45 +3,8 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toggleAdo, toggleJira } from '../../actions/toggleActions';
+import { Stack } from "@chakra-ui/react"
 
-const TitleToggle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 3rem;
-
-  h1 {
-    margin-right: 3rem;
-
-    @media (max-width: 450px) {
-      margin-right: 2rem;
-    }
-
-    @media (max-width: 1000px) {
-      font-size: 3rem;
-    }
-
-    @media (max-width: 800px) {
-      font-size: 2.9rem;
-    }
-
-    @media (max-width: 600px) {
-      font-size: 2.8rem;
-    }
-
-    @media (max-width: 500px) {
-      font-size: 2.6rem;
-    }
-
-    @media (max-width: 450px) {
-      font-size: 2.5rem;
-    }
-
-    @media (max-width: 400px) {
-      font-size: 2.4rem;
-    }
-  }
-`;
 
 const Toggle = styled.div`
   display: flex;
@@ -113,7 +76,7 @@ const MainHeading = ({ title,toggle }) => {
   };
 
   return (
-    <TitleToggle>
+    <Stack direction="row" alignItems="center" justify={"space-between"} mt="6">
       <h1 className='text-primary'>{title ? title : defaultTitle}</h1>
       <Toggle>
           <AdoToggle
@@ -131,7 +94,7 @@ const MainHeading = ({ title,toggle }) => {
             JIRA
           </JiraToggle>
       </Toggle>
-    </TitleToggle>
+    </Stack>
   );
 };
 
