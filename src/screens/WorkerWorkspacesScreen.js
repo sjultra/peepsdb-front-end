@@ -3,7 +3,7 @@ import { useState } from "react"
 import { BiSearch } from "react-icons/bi"
 import { GrFilter } from "react-icons/gr"
 import { Flex, Box, Text, Stack, Select, HStack } from "@chakra-ui/react"
-import WorkerWrapper from "./WorkerWrapper"
+import WorkerAsideBar from "../components/layouts/WorkerAsideBar"
 import UserActivityTable from "../components/layouts/UserActivityTable"
 import {  useLocation, useHistory } from 'react-router-dom'
 import { useEffect } from "react"
@@ -47,7 +47,7 @@ const WorkerWorkspacesScreen = () => {
   }, [activityTab])
 
   return (
-    <WorkerWrapper>
+    <WorkerAsideBar>
       {/**Filter by date */}
       <Stack
         direction="row"
@@ -64,10 +64,7 @@ const WorkerWorkspacesScreen = () => {
           {"Activity log"}
         </Text>
         <Box>
-          <Flex 
-          gap="0.6em" 
-          align="center" 
-        >
+          <Flex gap="0.6em" align="center">
             <GrFilter fontSize={"18px"} />
             <Select
               fontSize={"14px"}
@@ -83,91 +80,101 @@ const WorkerWorkspacesScreen = () => {
         </Box>
       </Stack>
       {/**Filter by searching */}
-      <Stack 
-          direction={{base:"column", md:"row", lg:"row"}}
-          mt="8" 
-          justify={"space-between"} 
-          align="center" 
+      <Box overflow={"auto"}>
+        <Stack
+          direction={{ base: "column", md: "row", lg: "row" }}
+          mt="8"
+          w="full"
+          justify={"space-between"}
+          align="center"
           gap="4">
-        <HStack 
-          w={{base:"full", md:"auto", lg:"auto"}} 
-          border="1px" 
-          fontSize={"2xl"} 
-          borderColor="gray.100">
-          <CustumTab
-            title="All"
-            tab="all"
-            selectedTab={activityTab}
-            action={changeTab}
+          <HStack
+            w={{ base: "full", md: "auto", lg: "auto" }}
+            border="1px"
+            px={{ base: "4", md: "6", lg: "8" }}
+            gap={{ base: "8", md: "12", lg: "16" }}
+            fontSize={"2xl"}
+            borderColor="gray.100">
+            <CustumTab
+              title="All"
+              tab="all"
+              selectedTab={activityTab}
+              action={changeTab}
+            />
+            <CustumTab
+              title="Azure Devops"
+              tab="azure"
+              selectedTab={activityTab}
+              action={changeTab}
+            />
+            <CustumTab
+              title="Sharepoint"
+              tab="sharepoint"
+              selectedTab={activityTab}
+              action={changeTab}
+            />
+            <CustumTab
+              title="Jira"
+              tab="jira"
+              selectedTab={activityTab}
+              action={changeTab}
+            />
+          </HStack>
+          <HStack
+            w={{ base: "full", md: "auto", lg: "auto" }}
+            bg="#f8f7ff"
+            borderRadius="full"
+            px="1.8rem"
+            py="0.5rem"
+            h="fit-content">
+            <BiSearch />
+            <input
+              type="text"
+              style={{
+                outline: "0",
+                color: "#333",
+                padding: "0.6rem",
+                backgroundColor: "transparent",
+              }}
+              placeholder="Search..."
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+            />
+          </HStack>
+        </Stack>
+        {/** displaying activities -> all | Azure | sharepoint | jira */}
+        <Box
+          mt="8"
+          w={{
+            base: "calc(100vw - 8rem)",
+            md: "calc(100vw - 4rem)",
+            lg: "calc(100vw - 22vw)",
+          }}>
+          <UserActivityTable
+            body={activitiesToDisplay}
+            headers={["Date", "Activvity", "Event"]}
           />
-          <CustumTab
-            title="Azure Devops"
-            tab="azure"
-            selectedTab={activityTab}
-            action={changeTab}
-          />
-          <CustumTab
-            title="Sharepoint"
-            tab="sharepoint"
-            selectedTab={activityTab}
-            action={changeTab}
-          />
-          <CustumTab
-            title="Jira"
-            tab="jira"
-            selectedTab={activityTab}
-            action={changeTab}
-          />
-        </HStack>
-        <HStack
-          w={{base:"full", md:"auto", lg:"auto"}} 
-          bg="#f8f7ff"
-          borderRadius="full"
-          px="1.8rem"
-          py="0.5rem"
-          h="fit-content">
-          <BiSearch />
-          <input
-            type="text"
-            style={{
-              outline: "0",
-              color: "#333",
-              padding: "0.6rem",
-              backgroundColor: "transparent",
-            }}
-            placeholder="Search..."
-            value={filterText}
-            onChange={(e) => setFilterText(e.target.value)}
-          />
-        </HStack>
-      </Stack>
-      {/** displaying activities -> all | Azure | sharepoint | jira */}
-      <Box mt="8" overflowX={"auto"}>
-        <UserActivityTable
-          body={activitiesToDisplay}
-          headers={["Date", "Activvity", "Event"]}
-        />
+        </Box>
       </Box>
-    </WorkerWrapper>
-  )
+    </WorkerAsideBar>
+  );
 }
 
 // custom tab
 const CustumTab = ({ title, tab, selectedTab , action}) => {
   return (
     <Box
-      onClick={()=>action(tab)}
+      onClick={() => action(tab)}
       py="6"
-      px={{base:"8", md:"12", lg:"16"}}
       borderBottomWidth="2px"
       color={`${selectedTab === tab ? "var(--primary-color)" : "gray.400"}`}
       cursor={"pointer"}
       borderColor={`${
         selectedTab === tab ? "var(--primary-color)" : "transparent"
       }`}>
-      {title}
+      <Text noOfLines={1}> {title} </Text>
     </Box>
-  )
+  );
 }
 
 export default WorkerWorkspacesScreen

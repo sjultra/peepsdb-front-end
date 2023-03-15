@@ -11,7 +11,7 @@ import Btn from "../widgets/Button";
 import { BiLogOut } from "react-icons/bi";
 import useDeviceInfo from "../hooks/useDeviceInfo";
 import AdminDashboard from "./Admin";
-import WorkerWrapper from "./WorkerWrapper";
+import WorkerAsideBar from "../components/layouts/WorkerAsideBar";
 
 const DashboardScreen = () => {
   // Selectors
@@ -48,9 +48,9 @@ const DashboardScreen = () => {
     return <AdminDashboard />;
   } else {
     return (
-      <WorkerWrapper>
+      <WorkerAsideBar>
         <UserWorkspace />
-      </WorkerWrapper>
+      </WorkerAsideBar>
     );
   }
 

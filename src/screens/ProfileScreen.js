@@ -5,6 +5,7 @@ import Spinner from '../components/layouts/Spinner';
 import ProfileInfo from '../components/profile/ProfileInfo';
 import useAuthActions from '../hooks/useAuth';
 import useWidget from '../hooks/useWidget';
+import WorkerAsideBar from "../components/layouts/WorkerAsideBar"
 
 const ProfileScreen = () => {
 
@@ -21,10 +22,12 @@ const ProfileScreen = () => {
 
   if(loading) return <Spinner />
   return (
-    <Box px="16">
-      <NavLayout>
+    <Box px={["0","16"]}>
+    <NavLayout displayAsidebar={false}>
+      <Box>
         <ProfileInfo profile={profile} />
-      </NavLayout>
+      </Box>
+    </NavLayout>
     </Box>
   );
 };

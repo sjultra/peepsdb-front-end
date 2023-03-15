@@ -1,5 +1,8 @@
 import React from "react"
 import { MdDashboard, MdWorkspaces, MdClose } from "react-icons/md"
+import {TiDocumentText} from 'react-icons/ti'
+import { HiUserGroup, } from 'react-icons/hi';
+
 import {
   Flex,
   HStack,
@@ -10,8 +13,8 @@ import {
   Show,
 } from "@chakra-ui/react"
 import styled from "styled-components"
-import NavLayout from "../components/layouts/NavLayout"
-import { useMenu } from "../hooks/MenuProvider"
+import NavLayout from "../../components/layouts/NavLayout"
+import { useMenu } from "../../hooks/MenuProvider"
 
 import { NavLink } from "react-router-dom"
 // import './styles.css'
@@ -48,7 +51,7 @@ const StyledNavContainer = styled.div`
   }
 `;
 
-const WorkerWrapper = ({ children }) => {
+const AdminAsideBar = ({ children }) => {
   // control displaying menu
   const drawer = useMenu()
 
@@ -56,19 +59,20 @@ const WorkerWrapper = ({ children }) => {
     <Grid templateColumns={{ base: "1fr", md: "1fr", lg: "21rem auto" }}>
       {/** Side bar menu */}
       <GridItem
-        style={{ zIndex: "999", transition: "left 1s linear 0s" }}
+        style={{ zIndex: "999", transition: "left 0.5s linear 0s" }}
         left={{
           base: `${drawer.isopen ? "0%" : "-100%"}`,
           md: "",
           lg: "0%",
         }}
-        top={{ base: "0px", md: "", lg: "" }}
-        position={{ base: "fixed", md: "fixed", lg: "relative" }}
+        top="0px"
+        position={{ base: "fixed", md: "fixed", lg: "sticky" }}
         w={{ base: "27rem", md: "24rem", lg: "auto" }}>
         <Flex
           as="div"
           flexDir={"column"}
-          bgColor="#FBFAFF"
+          bgColor="#fcfcfc"
+          boxShadow="xs"
           minHeight={"100vh"}
           pt="10"
           px="10"
@@ -87,38 +91,55 @@ const WorkerWrapper = ({ children }) => {
           </HStack>
           {/** ___ */}
           <Flex flexDir={"column"} align="start" gap="30px" mt={"30px"}>
-            <StyledNavContainer>
-              <NavLink exact to="/">
-                <Flex gap={"10px"} align="center" cursor={"pointer"}>
-                  <MdDashboard />
-                  <Text fontSize={"14px"} fontWeight="600" color="#6D64FA">
-                    Dashboard
-                  </Text>
-                </Flex>
-              </NavLink>
-            </StyledNavContainer>
-
-            <StyledNavContainer>
-              <NavLink to="/worker/workspaces?activity=all">
-                <Flex gap={"5px"} align="center" cursor={"pointer"}>
-                  <MdWorkspaces />
-                  <Text fontSize={"14px"} fontWeight="600" color="#676464">
-                    Workspaces
-                  </Text>
-                </Flex>
-              </NavLink>
-            </StyledNavContainer>
+            <CustomRouteLink
+              title={"Dashboard"}
+              icon={<MdDashboard />}
+              route={"/"}
+            />
+            <CustomRouteLink
+              title={"Workspaces"}
+              icon={<MdWorkspaces />}
+              route={"/admin/workspaces"}
+            />
+            <CustomRouteLink
+              title={"Audit Trail"}
+              icon={<TiDocumentText />}
+              route={"/admin/logs"}
+            />
+            <CustomRouteLink
+              title={"Users"}
+              icon={<HiUserGroup />}
+              route={"/admin/users"}
+            />
           </Flex>
         </Flex>
       </GridItem>
       {/** past body contents to navbar */}
-      <GridItem px="10">
-        <Box>
+      <GridItem px={["0", "4", "10"]}>
+        <Box w="full">
           <NavLayout title={"Users"}>{children}</NavLayout>
         </Box>
       </GridItem>
     </Grid>
+  );
+}
+
+// custom route link
+const CustomRouteLink = ({route, gap, title, icon})=>{
+  return(
+    <>
+    <StyledNavContainer>
+              <NavLink exact to={`${route}`}>
+                <Flex gap={"5px"} align="center" cursor={"pointer"}>
+                  {icon}
+                  <Text fontSize={"14px"} fontWeight="600">
+                    {title}
+                  </Text>
+                </Flex>
+              </NavLink>
+            </StyledNavContainer>
+    </>
   )
 }
 
-export default WorkerWrapper
+export default AdminAsideBar
