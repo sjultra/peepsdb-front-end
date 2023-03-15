@@ -1,11 +1,12 @@
 import React from "react";
-import styled from "styled-components";
+import { SiHomeadvisor } from "react-icons/si";
+
 import { Link } from "react-router-dom";
 import UserDropdown from "./UserDropdown";
 import useAuthActions from "../../hooks/useAuth";
 import { useMenu } from "../../hooks/MenuProvider";
 import { FiMenu } from "react-icons/fi";
-import { HStack,Stack, Show, Box } from "@chakra-ui/react";
+import { HStack,Stack, Show, Box, Text } from "@chakra-ui/react";
 
 const NavLayout = ({
   boxShadow,
@@ -36,9 +37,12 @@ const NavLayout = ({
               <FiMenu />
             </Box>
           </Show>
-          <Box color="var(--primary-color)">
+          <Box color="var(--primary-color)" fontSize={14}>
           <Link to="/">
-            {"PeepsDB"}
+            <Stack direction="row" alignItems="center">
+            <SiHomeadvisor />
+            <Text fontWeight="semibold"> {"Go Home"} </Text>
+          </Stack>
           </Link>
           </Box>
         </HStack>

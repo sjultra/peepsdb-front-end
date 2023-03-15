@@ -1,13 +1,13 @@
 import UserScreen from "../User/UserScreen"
-import AdminWrapper from "./wrapper"
+import AdminAsideBar from "./AdminAsideBar";
 
 
 
 const User= ()=>{
     return(
-        <AdminWrapper>
+        <AdminAsideBar>
             <UserScreen/>
-        </AdminWrapper>
+        </AdminAsideBar>
     )
 }
 
