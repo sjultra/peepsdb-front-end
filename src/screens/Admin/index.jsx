@@ -55,7 +55,7 @@ const AdminDashboard = () => {
         Dashboard
       </Text>
 
-      <Text>
+      <Text >
         You can now see all onboarding information of your organization.
       </Text>
 
