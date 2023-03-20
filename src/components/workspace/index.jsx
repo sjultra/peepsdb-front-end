@@ -5,8 +5,6 @@ import JiraLabels from '../jira/JiraLabels';
 import MainHeading from '../layouts/MainHeading';
 import NavLayout from '../layouts/NavLayout';
 
-
-
 const TitleToggle = styled.div`
   display: flex;
   justify-content: space-between;

@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { toggleAdo, toggleJira } from '../../actions/toggleActions';
 import { Stack } from "@chakra-ui/react"
 
-
 const Toggle = styled.div`
   display: flex;
   align-items: center;
