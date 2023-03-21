@@ -125,9 +125,6 @@ const UserScreen = () => {
     )()
   }, [id]);
 
-
-
-
   if (!id  && profile?.role !== 'Admin') {
     console.log('redirect back to home at userscren')
     return <Redirect to='/' />;

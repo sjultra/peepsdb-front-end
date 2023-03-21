@@ -1,5 +1,5 @@
 import React from "react";
-import { MdDashboard, MdWorkspaces, MdClose } from "react-icons/md";
+import { MdSpaceDashboard, MdWorkspaces, MdClose } from "react-icons/md";
 import {
   Flex,
   HStack,
@@ -87,10 +87,10 @@ const WorkerAsideBar = ({ children }) => {
             </Show>
           </HStack>
           {/** ___ */}
-          <Flex flexDir={"column"} align="start" gap="30px" mt={"30px"}>
+          <Flex flexDir={"column"} align="start" gap="10" mt={"12"}>
             <CustomRouteLink
               title={"Dashboard"}
-              icon={<MdDashboard />}
+              icon={<MdSpaceDashboard />}
               route={"/"}
             />
             <CustomRouteLink
