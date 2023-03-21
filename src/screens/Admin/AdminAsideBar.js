@@ -1,7 +1,7 @@
-import React from "react"
-import { MdDashboard, MdWorkspaces, MdClose } from "react-icons/md"
-import {TiDocumentText} from 'react-icons/ti'
-import { HiUserGroup, } from 'react-icons/hi';
+import React from "react";
+import { MdSpaceDashboard, MdWorkspaces, MdClose } from "react-icons/md";
+import { BsUiChecks } from "react-icons/bs";
+import { HiUsers } from "react-icons/hi";
 
 import {
   Flex,
@@ -11,12 +11,12 @@ import {
   Grid,
   GridItem,
   Show,
-} from "@chakra-ui/react"
-import styled from "styled-components"
-import NavLayout from "../../components/layouts/NavLayout"
-import { useMenu } from "../../hooks/MenuProvider"
+} from "@chakra-ui/react";
+import styled from "styled-components";
+import NavLayout from "../../components/layouts/NavLayout";
+import { useMenu } from "../../hooks/MenuProvider";
 
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
 // import './styles.css'
 
 const StyledLogo = styled.h1`
@@ -53,7 +53,7 @@ const StyledNavContainer = styled.div`
 
 const AdminAsideBar = ({ children }) => {
   // control displaying menu
-  const drawer = useMenu()
+  const drawer = useMenu();
 
   return (
     <Grid templateColumns={{ base: "1fr", md: "1fr", lg: "21rem auto" }}>
@@ -90,10 +90,10 @@ const AdminAsideBar = ({ children }) => {
             </Show>
           </HStack>
           {/** ___ */}
-          <Flex flexDir={"column"} align="start" gap="30px" mt={"30px"}>
+          <Flex flexDir={"column"} align="start" gap="10" mt={"12"}>
             <CustomRouteLink
               title={"Dashboard"}
-              icon={<MdDashboard />}
+              icon={<MdSpaceDashboard />}
               route={"/"}
             />
             <CustomRouteLink
@@ -103,12 +103,12 @@ const AdminAsideBar = ({ children }) => {
             />
             <CustomRouteLink
               title={"Audit Trail"}
-              icon={<TiDocumentText />}
+              icon={<BsUiChecks />}
               route={"/admin/logs"}
             />
             <CustomRouteLink
               title={"Users"}
-              icon={<HiUserGroup />}
+              icon={<HiUsers />}
               route={"/admin/users"}
             />
           </Flex>
@@ -122,24 +122,24 @@ const AdminAsideBar = ({ children }) => {
       </GridItem>
     </Grid>
   );
-}
+};
 
 // custom route link
-const CustomRouteLink = ({route, gap, title, icon})=>{
-  return(
+const CustomRouteLink = ({ route, gap, title, icon }) => {
+  return (
     <>
-    <StyledNavContainer>
-              <NavLink exact to={`${route}`}>
-                <Flex gap={"5px"} align="center" cursor={"pointer"}>
-                  {icon}
-                  <Text fontSize={"14px"} fontWeight="600">
-                    {title}
-                  </Text>
-                </Flex>
-              </NavLink>
-            </StyledNavContainer>
+      <StyledNavContainer>
+        <NavLink exact to={`${route}`}>
+          <Flex gap={"5px"} align="center" cursor={"pointer"}>
+            {icon}
+            <Text fontSize={"14px"} fontWeight="600">
+              {title}
+            </Text>
+          </Flex>
+        </NavLink>
+      </StyledNavContainer>
     </>
-  )
-}
+  );
+};
 
-export default AdminAsideBar
+export default AdminAsideBar;

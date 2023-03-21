@@ -1,7 +1,7 @@
 import AdminAsideBar from "./AdminAsideBar";
 import { FaUserCheck, FaUserSlash } from "react-icons/fa";
 import { HiUsers } from "react-icons/hi";
-import { Flex, Box, Text, Select, Circle } from "@chakra-ui/react";
+import { Flex, Box, Grid, GridItem, Text, Select, Circle } from "@chakra-ui/react";
 import useWidget from "../../hooks/useWidget";
 import useTeams from "../../hooks/useTeams";
 import Spinner from "../../components/layouts/Spinner";
@@ -57,12 +57,9 @@ const AdminDashboard = () => {
         You can now see all onboarding information of your organization.
       </Text>
 
-      <Flex
-        w="full"
-        align={"center"}
-        justify="start"
+      <Grid
+        templateColumns={{base:'repeat(1, 1fr)', md:'repeat(2, 1fr)', lg:'repeat(3, 1fr)'}}
         mt={"10"}
-        wrap="wrap"
         gap="8">
         <CustomStatisticCard
           title={"Total accounts"}
@@ -84,7 +81,7 @@ const AdminDashboard = () => {
           account={suspendedAccounts}>
           <FaUserSlash color="#E4746C" fontSize={"22"} />
         </CustomStatisticCard>
-      </Flex>
+      </Grid>
 
       <Box
         border={"1px solid #f7f7f7"}
@@ -174,14 +171,13 @@ const AdminDashboard = () => {
 // custom card
 const CustomStatisticCard = ({ title, children, account, color }) => {
   return (
-    <>
+    <GridItem>
       <Flex
         align={"center"}
         gap="8"
         py={"6"}
         px={"8"}
         bg="#fcfcfc"
-        w={{ base: "full", md: "auto" }}
         border="1px solid #f7f7f7"
         _hover={{
           boxShadow: "sm",
@@ -192,7 +188,7 @@ const CustomStatisticCard = ({ title, children, account, color }) => {
           {children}
         </Box>
         <Box>
-          <Text color={color} fontSize="20.97px" fontWeight="700">
+          <Text align="left" color={color} fontSize="20.97px" fontWeight="700">
             {account?.length}
           </Text>
           <Text
@@ -204,7 +200,7 @@ const CustomStatisticCard = ({ title, children, account, color }) => {
           </Text>
         </Box>
       </Flex>
-    </>
+    </GridItem>
   );
 };
 

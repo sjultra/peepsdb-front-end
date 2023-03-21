@@ -19,10 +19,10 @@ const Search = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 5rem;
-  box-shadow: 0 0 5px #e7e6f6;
-  border-radius: 1rem;
-  padding: 0.5rem 0.3rem;
+  border-radius: 100px;
+  border:1px solid #f7f7f7;
+  padding: 1rem 0.3rem;
+  background:#fcfcfc;
   width: 30rem;
   padding-left: 1rem;
 
@@ -95,6 +95,7 @@ const ADOProjects = () => {
           <FiSearch />
           <input
             type='text'
+            style={{background:"transparent"}}
             placeholder='Search...'
             value={search}
             onChange={(e) => setSearch(e.target.value)}

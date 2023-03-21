@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { toggleAdo, toggleJira } from '../../actions/toggleActions';
+import { useSelector } from 'react-redux';
 import { Stack } from "@chakra-ui/react"
 
 const Toggle = styled.div`
@@ -18,6 +16,7 @@ const Toggle = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    color: black;
 
     @media (max-width: 800px) {
       width: 9rem;
@@ -46,33 +45,27 @@ const Toggle = styled.div`
 
 const AdoToggle = styled.div`
   background: ${(props) =>
-    props.ado ==='ADO Projects' ? 'rgba(95, 85, 239, 0.75)' : 'rgba(95, 85, 239, 0.08)'};
-  color: ${(props) => (props.ado ? '#fff' : '#000')};
-  font-weight: ${(props) => (props.ado ? '600' : '#400')};
+    props?.ado === "ADO Projects" ? "rgba(95, 85, 239, 0.75)" : "#fcfcfc"};
+  color: ${(props) =>
+    props?.ado === "ADO Projects" ? "#fff !important" : "#000 !important"};
+  font-weight: ${(props) => (props?.ado === "ADO Projects" ? "600" : "#400")};
+  border: ${(props) =>
+    props?.jira === "ADO Projects" ? "" : "1px solid #f7f7f7"};
 `;
 
 const JiraToggle = styled.div`
   background: ${(props) =>
-    props.jira ==='Jira Labels' ? 'rgba(95, 85, 239, 0.75)' : 'rgba(95, 85, 239, 0.08)'};
-  color: ${(props) => (props.jira ? '#fff' : '#000')};
-  font-weight: ${(props) => (props.jira ? '600' : '#400')};
+    props?.jira === 'Jira Labels' ? "rgba(95, 85, 239, 0.75)" : "#fcfcfc"};
+  color: ${(props) => (props?.jira === 'Jira Labels' ? "#fff !important" : "#000 !important")};
+  font-weight: ${(props) => (props?.jira === 'Jira Labels' ? "600" : "#400")};
+  border: ${(props) => (props?.jira === 'Jira Labels' ? "" : "1px solid #f7f7f7")};
 `;
 
 const MainHeading = ({ title,toggle }) => {
-  const dispatch = useDispatch();
-
   // Selectors
   const display = useSelector((state) => state.toggle);
 
   const defaultTitle = display.ado ? 'ADO Projects' : 'Jira Labels';
-
-  const toggleAdoHandler = () => {
-    dispatch(toggleAdo());
-  };
-
-  const toggleJiraHandler = () => {
-    dispatch(toggleJira());
-  };
 
   return (
     <Stack direction="row" alignItems="center" justify={"space-between"} mt="6">
@@ -81,13 +74,13 @@ const MainHeading = ({ title,toggle }) => {
           <AdoToggle
             className='ado'
             ado={title}
-            onClick={toggle}
+            onClick={()=>toggle("ado")}
           >
             ADO
           </AdoToggle>
           <JiraToggle
             className='jira'
-            onClick={toggle}
+            onClick={()=>toggle("jira")}
             jira={title}
           >
             JIRA
