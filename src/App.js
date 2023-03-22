@@ -14,7 +14,6 @@ import MeetingScheduleScreen from './screens/MeetingScheduleScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import PrivateRoute from './components/routing/PrivateRoute';
 import useLogin from './hooks/useLogin';
-import './styles.sass';
 import AdminRoute from './components/routing/AdminRoute';
 import AdminUsers from './screens/Admin/users';
 import AdminWorkspace from './screens/Admin/workspace';
@@ -27,48 +26,44 @@ import useAppInsights from './hooks/useAppInsights';
 import User from './screens/Admin/user';
 
 const App = () => {
+  const { initializeAzureLogging } = useAppInsights();
 
-  const { initializeAzureLogging } = useAppInsights()
-
-  const initAzureLoggingRef = useRef(initializeAzureLogging)
+  const initAzureLoggingRef = useRef(initializeAzureLogging);
 
   useLogin();
 
-  useEffect(()=>initAzureLoggingRef.current(),[])
+  useEffect(() => initAzureLoggingRef.current(), []);
 
   return (
-    
     <Router>
-        {/* <Alert /> */}
+      {/* <Alert /> */}
 
-        <ModalComponent/>
-        
-        <Switch>
-          <Route path='/login' component={LoginScreen} />
-          <PrivateRoute exact path='/' component={DashboardScreen} />
-          <PrivateRoute path='/profile' component={ProfileScreen} />
-          <PrivateRoute path='/edit-profile' component={EditProfileScreen} />
-          <PrivateRoute
-            path='/ado_workitems/:id'
-            component={ADOWorkItemsScreen}
-          />
-          <PrivateRoute path='/jira_issues/:id' component={JiraIssuesScreen} />
-          <PrivateRoute path='/meeting' component={MeetingScheduleScreen} />
-          <PrivateRoute path='/worker/workspaces' component={WorkerWorkspacesScreen} />
-          <AdminRoute path='/admin/logs' component={Audit} />
-          <AdminRoute path='/admin/users/' component={AdminUsers} />
-          <AdminRoute path='/admin/workspaces' component={AdminWorkspace} />
-          <AdminRoute path='/admin/user/:id' component={User} exact />
+      <ModalComponent />
 
-          {/* <PrivateRoute path='/admin/users/:id' component={UserScreen} exact /> */}
-          <PrivateRoute
-            path='/admin/users/:id/edit'
-            component={UserEditScreen}
-          />
-          <Route component={NotFoundScreen} />
-        </Switch>
+      <Switch>
+        <Route path="/login" component={LoginScreen} />
+        <PrivateRoute exact path="/" component={DashboardScreen} />
+        <PrivateRoute path="/profile" component={ProfileScreen} />
+        <PrivateRoute path="/edit-profile" component={EditProfileScreen} />
+        <PrivateRoute
+          path="/ado_workitems/:id"
+          component={ADOWorkItemsScreen}
+        />
+        <PrivateRoute path="/jira_issues/:id" component={JiraIssuesScreen} />
+        <PrivateRoute path="/meeting" component={MeetingScheduleScreen} />
+        <PrivateRoute
+          path="/worker/workspaces"
+          component={WorkerWorkspacesScreen}
+        />
+        <AdminRoute path="/admin/logs" component={Audit} />
+        <AdminRoute path="/admin/users/" component={AdminUsers} />
+        <AdminRoute path="/admin/workspaces" component={AdminWorkspace} />
+        <AdminRoute path="/admin/user/:id" component={User} exact />
 
-
+        {/* <PrivateRoute path='/admin/users/:id' component={UserScreen} exact /> */}
+        <PrivateRoute path="/admin/users/:id/edit" component={UserEditScreen} />
+        <Route component={NotFoundScreen} />
+      </Switch>
     </Router>
   );
 };
