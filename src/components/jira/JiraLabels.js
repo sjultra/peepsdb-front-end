@@ -11,19 +11,16 @@ import Spinner from '../layouts/Spinner';
 import JiraLabelContent from './JiraLabelContent';
 import Message from '../layouts/Message';
 import useAxios from '../../hooks/useAxios';
-
-const Wrapper = styled.div`
-  margin-top: 4rem;
-`;
+import { Box } from "@chakra-ui/react";
 
 const Search = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 5rem;
-  box-shadow: 0 0 5px #e7e6f6;
-  border-radius: 1rem;
-  padding: 0.5rem 0.3rem;
+  border-radius: 100px;
+  border: 1px solid #f7f7f7;
+  padding: 1rem 0.3rem;
+  background: #fcfcfc;
   width: 30rem;
   padding-left: 1rem;
 
@@ -58,9 +55,6 @@ const JiraLabels = () => {
   const issues = useSelector((state) => state.allIssues.issues);
   const total = useSelector((state) => state.allIssues.total);
 
-
-  
-
   const labelRef = useRef(labels);
   // Get all Jira Labels
   
@@ -83,15 +77,16 @@ const JiraLabels = () => {
   }, [dispatch]);
 
   return (
-    <Wrapper>
+    <Box mt="2rem">
       {loading && <Spinner />}
       {error && <Message msg={error.msg} variant='error' />}
 
-      {labels && (
+        {labels && (
         <Search>
           <FiSearch />
           <input
             type='text'
+            style={{ background: "transparent" }}
             placeholder='Search...'
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -108,7 +103,8 @@ const JiraLabels = () => {
           total={total}
         />
       )}
-    </Wrapper>
+      
+    </Box>
   );
 };
 
