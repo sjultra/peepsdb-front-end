@@ -1,102 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import Spinner from "../layouts/Spinner";
-import Paginate from "../../widgets/Paginate";
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 6rem;
-
-  @media (max-width: 1400px) {
-    grid-gap: 4rem;
-  }
-
-  @media (max-width: 1300px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: 1200px) {
-    grid-gap: 3rem;
-  }
-
-  @media (max-width: 900px) {
-    grid-gap: 2rem;
-  }
-
-  @media (max-width: 800px) {
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 3rem;
-  }
-
-  @media (max-width: 600px) {
-    grid-gap: 2rem;
-  }
-
-  @media (max-width: 550px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
-`;
-
-const Issue = styled.div`
-  background: rgba(95, 85, 239, 0.07);
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 3px #e8e8e8;
-  cursor: pointer;
-`;
-
-const ProjectName = styled.div`
-  font-size: 2.8rem;
-  font-weight: 500;
-
-  @media (max-width: 1000px) {
-    font-size: 2.6rem;
-  }
-
-  @media (max-width: 600px) {
-    font-size: 2.3rem;
-  }
-`;
-
-const IssuesCount = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 4rem;
-
-  div:first-child {
-    background: #fff;
-    width: 5.5rem;
-    height: 5.5rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 2rem;
-    font-size: 2.1rem;
-    font-weight: 600;
-
-    @media (max-width: 600px) {
-      font-size: 1.9rem;
-    }
-
-    @media (max-width: 450px) {
-      width: 5rem;
-      height: 5rem;
-    }
-  }
-
-  div:last-child {
-    font-size: 2.1rem;
-    font-weight: 400;
-
-    @media (max-width: 600px) {
-      font-size: 1.9rem;
-    }
-  }
-`;
+import React from "react"
+import { Link } from "react-router-dom"
+import Spinner from "../layouts/Spinner"
+import Paginate from "../../widgets/Paginate"
+import { Grid, GridItem, Text } from "@chakra-ui/react"
 
 const JiraLabelContent = ({
   labels: labelsArr,
@@ -111,39 +17,51 @@ const JiraLabelContent = ({
         payload={labelsArr}
         range={8}
         render={(labels) => (
-          <Wrapper>
-            {
-              labels
+          <Grid
+            templateColumns={{
+              base: "repeat(1, 1fr)",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(3, 1fr)",
+            }}
+            mt="8"
+            gap="8">
+            {labels
               ?.filter((label) =>
                 label.toLowerCase().includes(search.toLowerCase())
               )
               .map((label, index) => {
-                return (
-                  <Link to={`/jira_issues/${label}`} key={index}>
-                    <Issue>
-                      <ProjectName>{label}</ProjectName>
-                      {/* <IssuesCount>
-                        <div>
-                          {issues && issues.length === total
-                            ? issues.filter((issue) =>
-                                issue.labels.includes(label)
-                              ).length
-                            : "-"}
-                        </div>
-                        <div>Issues</div>
-                      </IssuesCount> */}
-                    </Issue>
-                  </Link>
-                );
-              })
-            }
-          </Wrapper>
+                return <CustomCard label={label} index={index} />
+              })}
+          </Grid>
         )}
       />
-    );
+    )
   } else {
-    return <Spinner />;
+    return <Spinner />
   }
-};
+}
 
-export default JiraLabelContent;
+// custom card
+const CustomCard = ({ label, index }) => {
+  return (
+    <GridItem
+      key={index}
+      py={"6"}
+      px={"8"}
+      bg="#fcfcfc"
+      border="1px solid #f7f7f7"
+      _hover={{
+        boxShadow: "sm",
+      }}
+      borderRadius={"10px"}
+      gap="2">
+      <Link to={`/jira_issues/${label}`}>
+        <Text fontSize="2rem" fontWeight="semibold">
+          {label}
+        </Text>
+      </Link>
+    </GridItem>
+  )
+}
+
+export default JiraLabelContent

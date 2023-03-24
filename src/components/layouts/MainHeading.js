@@ -69,22 +69,20 @@ const MainHeading = ({ title,toggle }) => {
 
   return (
     <Stack direction="row" alignItems="center" justify={"space-between"} mt="6">
-      <h1 className='text-primary'>{title ? title : defaultTitle}</h1>
+      <h1 className="text-primary">{title ? title : defaultTitle}</h1>
       <Toggle>
-          <AdoToggle
-            className='ado'
-            ado={title}
-            onClick={()=>toggle("ado")}
-          >
-            ADO
-          </AdoToggle>
-          <JiraToggle
-            className='jira'
-            onClick={()=>toggle("jira")}
-            jira={title}
-          >
-            JIRA
-          </JiraToggle>
+        <AdoToggle
+          className="ado"
+          ado={title || defaultTitle}
+          onClick={() => toggle("ado")}>
+          ADO
+        </AdoToggle>
+        <JiraToggle
+          className="jira"
+          onClick={() => toggle("jira")}
+          jira={title || defaultTitle}>
+          JIRA
+        </JiraToggle>
       </Toggle>
     </Stack>
   );
