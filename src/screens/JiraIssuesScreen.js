@@ -8,23 +8,17 @@ import JiraIssuesContent from '../components/jira/JiraIssuesContent';
 import Filter from '../components/jira/Filter';
 import Spinner from '../components/layouts/Spinner';
 import Message from '../components/layouts/Message';
-
-const ContentWrapper = styled.div`
-  overflow-x: auto;
-  -ms-overflow-style: none; /* IE 11 */
-  scrollbar-width: none; /* Firefox 64 */
-
-  &::-webkit-scrollbar {
-    width: 0;
-  }
-`;
+import AdminAsideBar from "./Admin/AdminAsideBar"
+import { Box } from "@chakra-ui/react"
+import useGoBack from '../hooks/useGoBack';
 
 const TableHeading = styled.div`
   display: grid;
-  grid-template-columns: 0.07fr 0.58fr 0.2fr 0.15fr;
+  grid-template-columns: 5% 54% 15% 10%;
   grid-column-gap: 2rem;
   padding: 2rem 1rem 2rem 3rem;
   margin-top: 2rem;
+  width:100%;
   font-weight: 500;
   min-width: 120rem;
   margin-bottom: 1rem;
@@ -40,6 +34,8 @@ const TableHeading = styled.div`
 `;
 
 const JiraIssuesScreen = ({ match }) => {
+   const goback = useGoBack({title:`${match.params.id}`});
+
   const dispatch = useDispatch();
 
   // Selectors
@@ -60,21 +56,37 @@ const JiraIssuesScreen = ({ match }) => {
       dispatch(getLabelIssues(match.params.id, issues.length));
     }
   }, [dispatch, match.params.id, issues, total]);
+  
+    console.log('issues',issues);
 
-
-  console.log('issues',issues);
 
   return (
-    <div>
-      <MainHeading title={match.params.id} />
+    <AdminAsideBar>
+      {goback}
 
       {loading && <Spinner />}
-      {error && <Message msg={error} variant='error' />}
+      {error && <Message msg={error} variant="error" />}
 
       {issues && (
         <>
-          <Filter issues={issues} />
-          <ContentWrapper>
+          <Box
+            overflow={"auto"}
+            w={{
+              base: "calc(100vw - 6rem)",
+              md: "calc(100vw - 4rem)",
+              lg: "calc(100vw - 21vw)",
+            }}>
+            <Filter issues={issues} />
+          </Box>
+          <Box
+            pb="100px"
+            mt="8"
+            overflow={"auto"}
+            w={{
+              base: "calc(100vw - 6rem)",
+              md: "calc(100vw - 4rem)",
+              lg: "calc(100vw - 21vw)",
+            }}>
             <TableHeading>
               <div>ID</div>
               <div>Title</div>
@@ -82,11 +94,11 @@ const JiraIssuesScreen = ({ match }) => {
               <div>Status</div>
             </TableHeading>
             <JiraIssuesContent issues={issues} />
-          </ContentWrapper>
+          </Box>
         </>
       )}
-    </div>
-  );
-};
+    </AdminAsideBar>
+  )
+}
 
-export default JiraIssuesScreen;
+export default JiraIssuesScreen

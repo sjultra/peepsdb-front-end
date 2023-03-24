@@ -51,7 +51,7 @@ const ToggleStyle = styled.div`
   border: ${(props) => (props?.title === props?.initialTitle ? "" : "1px solid #f7f7f7")};
 `;
 
-const MainHeading = ({ title,toggle }) => {
+const MainHeading = ({ title, toggle }) => {
   // Selectors
   const display = useSelector((state) => state.toggle);
 

@@ -1,8 +1,7 @@
-import { Box, Flex, Text, Select, Show, Divider } from '@chakra-ui/react';
-import { useMemo, useRef, useState } from 'react';
-import { MdKeyboardArrowDown } from 'react-icons/md';
-import { AiFillCaretRight, AiFillCaretLeft } from 'react-icons/ai';
-
+import { Box, Flex, Text, Select, Show, Divider } from '@chakra-ui/react'
+import { useMemo, useRef, useState } from 'react'
+import { MdKeyboardArrowDown } from 'react-icons/md'
+import { AiFillCaretRight, AiFillCaretLeft } from 'react-icons/ai'
 
 const returnNumberArray = (range,startValue=1)=>{
 	let returnArr = [];
@@ -13,7 +12,6 @@ const returnNumberArray = (range,startValue=1)=>{
 	}
 	return returnArr
 }
-
 
 const Paginate = ({
   payload,
@@ -26,16 +24,16 @@ const Paginate = ({
 }) => {
   const [page, setPage] = useState(1);
 
-  const pageRef = useRef(Math.ceil(payload.length / range));
+  const pageRef = useRef(Math.ceil(payload.length / range))
 
-  const selectRef = useRef();
+  const selectRef = useRef()
 
   const rangeRef = useRef(range)
 
   const arrayRange = useMemo(
     () =>
       payload?.filter((entry) => {
-        let index = payload.indexOf(entry);
+        let index = payload.indexOf(entry)
         return index >= (page - 1) * rangeRef.current && index + 1 <= page * rangeRef.current;
       }),
     [page,payload]
@@ -124,7 +122,7 @@ const Paginate = ({
         </Flex>
       )}
     </Box>
-  );
-};
+  )
+}
 
-export default Paginate;
+export default Paginate

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { FiSearch } from 'react-icons/fi'
 import {
@@ -11,35 +10,10 @@ import Spinner from '../layouts/Spinner'
 import JiraLabelContent from './JiraLabelContent'
 import Message from '../layouts/Message'
 import useAxios from '../../hooks/useAxios'
-import { Box } from "@chakra-ui/react"
-
-const Search = styled.div`
-  display: flex
-  flex-direction: row
-  align-items: center
-  border-radius: 100px
-  border: 1px solid #f7f7f7
-  padding: 1rem 0.3rem
-  background: #fcfcfc
-  width: 30rem
-  padding-left: 1rem
-
-  > *:first-child {
-    font-size: 1.8rem
-    color: #6f6f74
-  }
-
-  input {
-    padding: 0.2rem 0.5rem
-    border: 0
-    outline: 0
-    width: 25rem
-    margin-left: 0.5rem
-  }
-`
+import { Box, Flex } from "@chakra-ui/react"
 
 const JiraLabels = () => {
-  
+
   const dispatch = useDispatch()
   const [search, setSearch] = useState('')
   const Axios = useAxios()
@@ -79,16 +53,16 @@ const JiraLabels = () => {
       {error && <Message msg={error.msg} variant='error' />}
 
         {labels && (
-        <Search>
-          <FiSearch />
+        <Flex align={"center"} gap="2" bg="#fcfcfc" w={["full","30rem"]} border="1px solid #f7f7f7" borderRadius="100px" px="1.3rem" py="0.5rem">
+          <FiSearch color="#6f6f74"/>
           <input
             type='text'
-            style={{ background: "transparent" }}
+            style={{background:"transparent", outline:"none", width:"100%", padding:"0.5rem"}}
             placeholder='Search...'
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-        </Search>
+        </Flex>
       )}
 
       {labels && (

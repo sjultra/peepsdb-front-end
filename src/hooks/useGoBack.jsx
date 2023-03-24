@@ -2,35 +2,34 @@ import { Flex, Text } from "@chakra-ui/react"
 import { BsArrowLeft } from "react-icons/bs"
 import { useHistory } from "react-router-dom"
 
+const useGoBack = ({ fontSize, color, mt, goBack, title }) => {
+  const history = useHistory()
 
-const useGoBack = ({fontSize,color,mt,goBack})=>{
-    const history = useHistory()
+  const goBackFn = () => {
+    return (
+      <Flex
+        color="var(--primary-color)"
+        mt={mt || "1.5em"}
+        align="center"
+        justify={"space-between"}>
+        <Flex
+          cursor={"pointer"}
+          align="center"
+          onClick={() => {
+            if (goBack) goBack()
+            else {
+              history.goBack()
+            }
+          }}>
+          <BsArrowLeft fontSize={fontSize || "2rem"} />
+          <Text ml="0.5em">Back</Text>
+        </Flex>
+        <Text fontWeight={"semibold"}>{title ? title : ""}</Text>
+      </Flex>
+    )
+  }
 
-
-    const goBackFn = ()=>{
-
-        return (
-          <Flex
-            cursor={"pointer"}
-            color="var(--primary-color)"
-            mt={mt || "1.5em"}
-            align="center"
-            onClick={() => {
-              if (goBack) goBack();
-              else {
-                history.goBack();
-              }
-            }}>
-            <BsArrowLeft
-              fontSize={fontSize || "2rem"}
-            />
-            <Text ml="0.5em">Back</Text>
-          </Flex>
-        );
-    }
-
-    return goBackFn()
+  return goBackFn()
 }
 
-
-export default useGoBack;
+export default useGoBack

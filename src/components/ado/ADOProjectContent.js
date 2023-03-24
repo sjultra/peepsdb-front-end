@@ -8,7 +8,7 @@ const ADOProjectContent = ({ projects: projectsArr, search, workItems }) => {
     <Box pb={"100px"} mt="8">
     <Paginate
       payload={projectsArr}
-      range={8}
+      range={6}
       render={(projects) => (
         <Grid
           templateColumns={{
