@@ -24,7 +24,7 @@ const useGoBack = ({ fontSize, color, mt, goBack, title }) => {
           <BsArrowLeft fontSize={fontSize || "2rem"} />
           <Text ml="0.5em">Back</Text>
         </Flex>
-        <Text fontWeight={"semibold"}>{title ? title : ""}</Text>
+        <Text noOfLines={1} fontWeight={"semibold"}>{title ? title : ""}</Text>
       </Flex>
     )
   }
