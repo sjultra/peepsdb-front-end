@@ -15,9 +15,10 @@ const JiraLabelContent = ({
     return (
       <Paginate
         payload={labelsArr}
-        range={8}
+        range={6}
         render={(labels) => (
           <Grid
+            pb="100px"
             templateColumns={{
               base: "repeat(1, 1fr)",
               md: "repeat(2, 1fr)",
