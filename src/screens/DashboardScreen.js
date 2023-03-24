@@ -110,7 +110,7 @@ const OnboardingModal = ({ profile, logout, proceed }) => {
 
           <Center>
             <Image
-              src="/assets/welcome.svg"
+              src="/Assets/welcome.svg"
               h={{ base: "200px", lg: "250px" }}
             />
           </Center>
