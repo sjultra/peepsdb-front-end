@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import React from 'react'
+import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 import { Stack } from "@chakra-ui/react"
 
 const Toggle = styled.div`
@@ -43,22 +43,12 @@ const Toggle = styled.div`
   }
 `;
 
-const AdoToggle = styled.div`
+const ToggleStyle = styled.div`
   background: ${(props) =>
-    props?.ado === "ADO Projects" ? "rgba(95, 85, 239, 0.75)" : "#fcfcfc"};
-  color: ${(props) =>
-    props?.ado === "ADO Projects" ? "#fff !important" : "#000 !important"};
-  font-weight: ${(props) => (props?.ado === "ADO Projects" ? "600" : "#400")};
-  border: ${(props) =>
-    props?.jira === "ADO Projects" ? "" : "1px solid #f7f7f7"};
-`;
-
-const JiraToggle = styled.div`
-  background: ${(props) =>
-    props?.jira === 'Jira Labels' ? "rgba(95, 85, 239, 0.75)" : "#fcfcfc"};
-  color: ${(props) => (props?.jira === 'Jira Labels' ? "#fff !important" : "#000 !important")};
-  font-weight: ${(props) => (props?.jira === 'Jira Labels' ? "600" : "#400")};
-  border: ${(props) => (props?.jira === 'Jira Labels' ? "" : "1px solid #f7f7f7")};
+    (props?.title === props?.initialTitle ? "rgba(95, 85, 239, 0.75)" : "#fcfcfc")};
+  color: ${(props) => (props?.title === props?.initialTitle ? "#fff !important" : "#000 !important")};
+  font-weight: ${(props) => (props?.title === props?.initialTitle ? "600" : "#400")};
+  border: ${(props) => (props?.title === props?.initialTitle ? "" : "1px solid #f7f7f7")};
 `;
 
 const MainHeading = ({ title,toggle }) => {
@@ -71,21 +61,23 @@ const MainHeading = ({ title,toggle }) => {
     <Stack direction="row" alignItems="center" justify={"space-between"} mt="6">
       <h1 className="text-primary">{title ? title : defaultTitle}</h1>
       <Toggle>
-        <AdoToggle
+        <ToggleStyle
           className="ado"
-          ado={title || defaultTitle}
+          title={title ? title : defaultTitle}
+          initialTitle='ADO Projects'
           onClick={() => toggle("ado")}>
           ADO
-        </AdoToggle>
-        <JiraToggle
+        </ToggleStyle>
+        <ToggleStyle
           className="jira"
-          onClick={() => toggle("jira")}
-          jira={title || defaultTitle}>
+          title={title ? title : defaultTitle}
+          initialTitle='Jira Labels'
+          onClick={() => toggle("jira")}>
           JIRA
-        </JiraToggle>
+        </ToggleStyle>
       </Toggle>
     </Stack>
-  );
-};
+  )
+}
 
-export default MainHeading;
+export default MainHeading
