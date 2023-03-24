@@ -6,7 +6,7 @@ import UserDropdown from "./UserDropdown";
 import useAuthActions from "../../hooks/useAuth";
 import { useMenu } from "../../hooks/MenuProvider";
 import { FiMenu } from "react-icons/fi";
-import { HStack,Stack, Show, Box, Text } from "@chakra-ui/react";
+import { HStack,Stack, Show, Box, Text, Flex } from "@chakra-ui/react";
 
 const NavLayout = ({
   boxShadow,
@@ -32,11 +32,6 @@ const NavLayout = ({
         py="6"
         >
         <HStack gap="4">
-          <Show below="lg">
-            <Box display={`${displayAsidebar?"":"none"}`} onClick={() => drawer.setMenuStatus(true)} cursor="pointer">
-              <FiMenu />
-            </Box>
-          </Show>
           <Box color="var(--primary-color)" fontSize={14}>
           <Link to="/">
             <Stack direction="row" alignItems="center">
@@ -46,7 +41,16 @@ const NavLayout = ({
           </Link>
           </Box>
         </HStack>
-        <Box>{isAuthenticated && auth && <UserDropdown user={auth} />}</Box>
+        <Box>
+        <Flex align="center" gap="4">
+          {isAuthenticated && auth && <UserDropdown user={auth} />}
+          <Show below="lg">
+            <Box display={`${displayAsidebar?"":"none"}`} onClick={() => drawer.setMenuStatus((_prev)=>!_prev)} cursor="pointer">
+              <FiMenu fontSize={"2rem"} />
+            </Box>
+          </Show>
+        </Flex> 
+        </Box> 
       </Stack>
       {children}
     </>
