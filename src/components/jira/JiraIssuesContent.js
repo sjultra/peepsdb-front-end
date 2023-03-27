@@ -6,7 +6,7 @@ import { filteredLabelIssues } from '../../actions/jiraActions';
 
 const Item = styled.div`
   display: grid;
-  grid-template-columns: 5% 54% 15% 10%;
+  grid-template-columns: 0.07fr 0.58fr 0.2fr 0.15fr;
   grid-column-gap: 2rem;
   padding: 1.2rem 1rem 1.2rem 3rem;
   border-bottom: 1px solid #f1f1f1;

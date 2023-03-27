@@ -14,6 +14,9 @@ import {
 import Filter from '../components/ado/Filter';
 import Spinner from '../components/layouts/Spinner';
 import ADOWorkItemsContent from '../components/ado/ADOWorkItemsContent';
+import { Box } from "@chakra-ui/react"
+import useGoBack from "../hooks/useGoBack";
+import NavLayout from '../components/layouts/NavLayout';
 
 const ContentWrapper = styled.div`
   overflow-x: auto;
@@ -46,6 +49,7 @@ const TableHeading = styled.div`
 `;
 
 const ADOWorkItemsScreen = ({ match }) => {
+  const goback = useGoBack({title:`${match.params.id}`});
   const dispatch = useDispatch();
 
   // Selectors
@@ -97,8 +101,10 @@ const ADOWorkItemsScreen = ({ match }) => {
 
 
   return (
-    <div>
-      <MainHeading title={match.params.id} />
+    <Box px={["5px", "40px", "40px"]}>
+   <NavLayout displayAsidebar={false}>
+
+      {goback}
 
       {loading && <Spinner />}
 
@@ -117,7 +123,8 @@ const ADOWorkItemsScreen = ({ match }) => {
           </ContentWrapper>
         </>
       )}
-    </div>
+    </NavLayout>
+    </Box>
   );
 };
 
