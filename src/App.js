@@ -68,6 +68,7 @@ const App = () => {
             {/* <PrivateRoute path='/admin/users/:id' component={UserScreen} exact /> */}
             <PrivateRoute
               path="/admin/users/:id/edit"
+              _user="worker"
               component={UserEditScreen}
             />
             <Route component={NotFoundScreen} />
