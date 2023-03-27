@@ -81,7 +81,7 @@ const WorkerAsideBar = ({ children }) => {
               <Box
                 fontSize="3xl"
                 cursor="pointer"
-                onClick={() => drawer.setMenuStatus(false)}>
+                onClick={() => drawer.setMenuStatus((_prev) => !_prev)}>
                 <MdClose />
               </Box>
             </Show>
@@ -113,10 +113,13 @@ const WorkerAsideBar = ({ children }) => {
 
 // custom route link
 const CustomRouteLink = ({ route, gap, title, icon }) => {
+  // control displaying menu
+  const drawer = useMenu();
   return (
     <>
       <StyledNavContainer>
-        <NavLink exact to={`${route}`}>
+        <NavLink exact to={`${route}`} 
+          onClick={() => drawer.setMenuStatus((_prev) => !_prev)}>
           <Flex gap={"5px"} align="center" cursor={"pointer"}>
             {icon}
             <Text fontSize={"14px"} fontWeight="600">

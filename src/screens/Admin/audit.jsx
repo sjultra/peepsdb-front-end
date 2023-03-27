@@ -152,17 +152,23 @@ const Audit= ()=>{
 
     return (
       <AdminAsideBar>
-        <Flex align={{base:"start", md:"center"}} gap="8" direction={{base:"column", md:"row"}} justify="space-between">
+        <Flex
+          align={{ base: "start", md: "center" }}
+          gap="8"
+          direction={{ base: "column", md: "row" }}
+          justify="space-between">
           <Box>
             <Text
               mt="0.6em"
               className="archivo"
-              fontSize={"25px"}
-              fontWeight={500}>
+              fontSize={"22"} 
+              fontWeight="semibold">
               Audit Trail
             </Text>
 
-            <Text>View Recent Activities of users in PeepsDB</Text>
+            <Text fontSize={"16"} color="gray.500">
+              View Recent Activities of users in PeepsDB
+            </Text>
           </Box>
 
           <Flex gap="0.6em" align="center">
