@@ -230,7 +230,6 @@ export const EditRole = ({ role, _id, close, setUser }) => {
   return (
     <Box p="1em 2em">
       <TextInput variant={"s1"}>Edit Role</TextInput>
-
       <Select
         onChange={onChange}
         value={defaultValue}
@@ -287,8 +286,6 @@ const UserProfile = ({ user, setUser }) => {
     isSuspended,
     twitterProfileUrl,
   } = profile;
-
-  console.log("user profile", user);
 
   return (
     <Box>

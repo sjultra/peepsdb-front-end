@@ -1,21 +1,22 @@
-import AdminAsideBar from "./AdminAsideBar";
-import { FaUserCheck, FaUserSlash } from "react-icons/fa";
-import { HiUsers } from "react-icons/hi";
-import { Flex, Box, Grid, GridItem, Text, Select, Circle } from "@chakra-ui/react";
-import useWidget from "../../hooks/useWidget";
-import useTeams from "../../hooks/useTeams";
-import Spinner from "../../components/layouts/Spinner";
-import { AiFillFire } from "react-icons/ai";
-import TextInput from "../../widgets/Text";
-import { BsClockHistory } from "react-icons/bs";
-import { useState } from "react";
-import { TbFlag3 } from "react-icons/tb";
-import { ActivityLogDetail, formatDateTimeString } from "./audit";
+import AdminAsideBar from "./AdminAsideBar"
+import { FaUserCheck, FaUserSlash } from "react-icons/fa"
+import { HiUsers } from "react-icons/hi"
+import { Flex, Box, Grid, GridItem, Text, Select, Circle } from "@chakra-ui/react"
+import useWidget from "../../hooks/useWidget"
+import useTeams from "../../hooks/useTeams"
+import Spinner from "../../components/layouts/Spinner"
+import { AiFillFire } from "react-icons/ai"
+import TextInput from "../../widgets/Text"
+import { BsClockHistory } from "react-icons/bs"
+import { useState } from "react"
+import { TbFlag3 } from "react-icons/tb"
+import { ActivityLogDetail, formatDateTimeString } from "./audit"
+import ActivityLogs from '../../components/logs/ActivityLogs'
 
 const AdminDashboard = () => {
-  const { profiles, logs, useFetchProfiles, useAppAudits } = useTeams();
+  const { profiles, logs, useFetchProfiles, useAppAudits } = useTeams()
 
-  const { loading, openModal, closeModal } = useWidget();
+  const { loading, openModal, closeModal } = useWidget()
 
   // const [userLogs,setUserLogs] = useState({
   //   today:[],
@@ -25,27 +26,25 @@ const AdminDashboard = () => {
 
   // })
 
-  const [logLimit, setLogLimit] = useState("today");
+  const [logLimit, setLogLimit] = useState("today")
 
   // const fetchAllProfilesRef = useRef(fetchAllProfiles)
 
-  useFetchProfiles();
+  useFetchProfiles()
 
-  useAppAudits(logLimit);
+  useAppAudits(logLimit)
 
-  if (loading) return <Spinner full />;
+  if (loading) return <Spinner full />
 
-  const totalAccounts = profiles?.filter((profile) => !profile?.isSuspended);
+  const totalAccounts = profiles?.filter((profile) => !profile?.isSuspended)
 
   const onboardedAccounts = totalAccounts?.filter(
     (profile) => profile?.profileSetup
-  );
+  )
 
-  const suspendedAccounts = profiles?.filter((profile) => profile?.isSuspended);
+  const suspendedAccounts = profiles?.filter((profile) => profile?.isSuspended)
 
-  const userLogEntry = logs || [];
-
-  console.log("user log", logs);
+  const userLogEntry = logs || []
 
   return (
     <AdminAsideBar>
@@ -82,6 +81,10 @@ const AdminDashboard = () => {
           <FaUserSlash color="#E4746C" fontSize={"22"} />
         </CustomStatisticCard>
       </Grid>
+      {/** Activity logs */}
+      <Box>
+       <ActivityLogs _user={"admin"} />
+      </Box>
 
       <Box
         border={"1px solid #f7f7f7"}
@@ -165,8 +168,8 @@ const AdminDashboard = () => {
         </Box>
       </Box>
     </AdminAsideBar>
-  );
-};
+  )
+}
 
 // custom card
 const CustomStatisticCard = ({ title, children, account, color }) => {
@@ -201,7 +204,7 @@ const CustomStatisticCard = ({ title, children, account, color }) => {
         </Box>
       </Flex>
     </GridItem>
-  );
-};
+  )
+}
 
-export default AdminDashboard;
+export default AdminDashboard

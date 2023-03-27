@@ -138,7 +138,6 @@ const UserScreen = () => {
 
       {user && <UserProfile user={user} setUser={setUser} /> }
 
-
       {user ==='user' && <V1/>}
     </div>
   );
