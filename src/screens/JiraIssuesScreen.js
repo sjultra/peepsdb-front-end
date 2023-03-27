@@ -11,14 +11,24 @@ import Message from '../components/layouts/Message';
 import AdminAsideBar from "./Admin/AdminAsideBar"
 import { Box } from "@chakra-ui/react"
 import useGoBack from '../hooks/useGoBack';
+import NavLayout from "../components/layouts/NavLayout";
+
+const ContentWrapper = styled.div`
+  overflow-x: auto;
+  -ms-overflow-style: none; /* IE 11 */
+  scrollbar-width: none; /* Firefox 64 */
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+`;
 
 const TableHeading = styled.div`
   display: grid;
-  grid-template-columns: 5% 54% 15% 10%;
+  grid-template-columns: 0.07fr 0.58fr 0.2fr 0.15fr;
   grid-column-gap: 2rem;
   padding: 2rem 1rem 2rem 3rem;
   margin-top: 2rem;
-  width:100%;
   font-weight: 500;
   min-width: 120rem;
   margin-bottom: 1rem;
@@ -61,7 +71,9 @@ const JiraIssuesScreen = ({ match }) => {
 
 
   return (
-    <AdminAsideBar>
+    <Box px={["5px", "40px", "40px"]}>
+      <NavLayout displayAsidebar={false}>
+
       {goback}
 
       {loading && <Spinner />}
@@ -69,24 +81,8 @@ const JiraIssuesScreen = ({ match }) => {
 
       {issues && (
         <>
-          <Box
-            overflow={"auto"}
-            w={{
-              base: "calc(100vw - 6rem)",
-              md: "calc(100vw - 4rem)",
-              lg: "calc(100vw - 21vw)",
-            }}>
-            <Filter issues={issues} />
-          </Box>
-          <Box
-            pb="100px"
-            mt="8"
-            overflow={"auto"}
-            w={{
-              base: "calc(100vw - 6rem)",
-              md: "calc(100vw - 4rem)",
-              lg: "calc(100vw - 21vw)",
-            }}>
+          <Filter issues={issues} />
+          <ContentWrapper>
             <TableHeading>
               <div>ID</div>
               <div>Title</div>
@@ -94,11 +90,12 @@ const JiraIssuesScreen = ({ match }) => {
               <div>Status</div>
             </TableHeading>
             <JiraIssuesContent issues={issues} />
-          </Box>
+          </ContentWrapper>
         </>
       )}
-    </AdminAsideBar>
-  )
+      </NavLayout>
+    </Box>
+  );
 }
 
 export default JiraIssuesScreen
