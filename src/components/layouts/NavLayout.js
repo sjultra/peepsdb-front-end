@@ -1,65 +1,60 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import UserDropdown from './UserDropdown';
-import useAuthActions from '../../hooks/useAuth';
-import { useMenu } from "../../hooks/MenuProvider"
-import { FiMenu } from "react-icons/fi"
-import { HStack, Show, Box } from '@chakra-ui/react'
+import React from "react";
+import { SiHomeadvisor } from "react-icons/si";
 
+import { Link } from "react-router-dom";
+import UserDropdown from "./UserDropdown";
+import useAuthActions from "../../hooks/useAuth";
+import { useMenu } from "../../hooks/MenuProvider";
+import { FiMenu } from "react-icons/fi";
+import { HStack,Stack, Show, Box, Text, Flex } from "@chakra-ui/react";
 
-
-const NavLayout = ({boxShadow,className,children,rest,noPadding, title}) => {
+const NavLayout = ({
+  boxShadow,
+  className,
+  children,
+  rest,
+  noPadding,
+  title,
+  displayAsidebar = true
+}) => {
   // control displaying menu
-    const drawer = useMenu()
+  const drawer = useMenu();
   // Selectors
-  const {auth} = useAuthActions()
-  const {isAuthenticated} = auth || {};
+  const { auth } = useAuthActions();
+  const { isAuthenticated } = auth || {};
 
   return (
     <>
-    <div className={className}>
-      <h1>
-      <HStack gap="4">
-      <Show below="lg">
-       <Box onClick={()=>drawer.setMenuStatus(true)} cursor="pointer">
-       <FiMenu />
-       </Box>
-       </Show >
-       <Link to='/'>{title || "PeepsDB"}</Link>
-      </HStack>
-      </h1>
-      {isAuthenticated && auth && <UserDropdown user={auth} />}
-    </div>
+      <Stack
+        alignItems="center"
+        justify="space-between"
+        direction="row"
+        py="6"
+        >
+        <HStack gap="4">
+          <Box color="var(--primary-color)" fontSize={14}>
+          <Link to="/">
+            <Stack direction="row" alignItems="center">
+            <SiHomeadvisor />
+            <Text fontWeight="semibold"> {"Go Home"} </Text>
+          </Stack>
+          </Link>
+          </Box>
+        </HStack>
+        <Box>
+        <Flex align="center" gap="4">
+          {isAuthenticated && auth && <UserDropdown user={auth} />}
+          <Show below="lg">
+            <Box display={`${displayAsidebar?"":"none"}`} onClick={() => drawer.setMenuStatus((_prev)=>!_prev)} cursor="pointer">
+              <FiMenu fontSize={"2rem"} />
+            </Box>
+          </Show>
+        </Flex> 
+        </Box> 
+      </Stack>
       {children}
     </>
   );
 };
 
-export default styled(NavLayout)`
-
-  height: 8rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  ${props=>props.boxShadow?`box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.03);`:''}
-  
-  ${props=>props.noPadding?
-    `
-      padding: 0 5rem;
-      @media (max-width: 768px) {
-        padding: 0 3rem;
-      }
-      @media (max-width: 450px) {
-        padding: 0 2rem;
-      }
-    `:``}
-
-
-  h1 {
-    font-size: 2.5rem;
-  }
-
-
-`;
+export default NavLayout

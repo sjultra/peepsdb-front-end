@@ -10,7 +10,8 @@ import {
 } from '../../actions/jiraActions';
 
 const Wrapper = styled.div`
-  background: #f8f7ff;
+  background: #fcfcfc;
+  border:&px solid #f7f7f7;
   height: 6rem;
   display: flex;
   align-items: center;
@@ -46,6 +47,8 @@ const InputField = styled.div`
     outline: 0;
     width: 25rem;
     border: 0;
+    border-radius:100px;
+    margin-left:7px;
     outline: 0;
     background: #f8f7ff;
   }

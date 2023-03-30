@@ -7,18 +7,16 @@ import useWidget from '../hooks/useWidget';
 
 const EditProfileScreen = () => {
 
-  // Selectors
-
   const { profile } = useAuthActions();
 
   const {loading} = useWidget()
 
-  console.log('user profile',profile);
+  console.log('user profile', profile);
 
   if (!loading && profile) {
     return <UserForm profile={profile} loading={loading} />;
   } else if (!loading && !profile) {
-    return <Redirect to='/profile' />;
+    //return <Redirect to='/profile' />;
   } else {
     return <Spinner />;
   }

@@ -125,9 +125,6 @@ const UserScreen = () => {
     )()
   }, [id]);
 
-
-
-
   if (!id  && profile?.role !== 'Admin') {
     console.log('redirect back to home at userscren')
     return <Redirect to='/' />;
@@ -140,7 +137,6 @@ const UserScreen = () => {
       {loading && <Spinner />}
 
       {user && <UserProfile user={user} setUser={setUser} /> }
-
 
       {user ==='user' && <V1/>}
     </div>

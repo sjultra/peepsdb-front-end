@@ -38,7 +38,6 @@ const queryErrorHandler = (_api) => (next) => (action) => {
 };
 
 
-
   
 const store = configureStore({
 reducer: rootReducer,
@@ -46,7 +45,7 @@ middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat([
     // logger,
     queryErrorHandler,
-    ]),
+  ]),
 });
   
 export default store;

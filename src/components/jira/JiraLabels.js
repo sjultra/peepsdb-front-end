@@ -1,102 +1,68 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { FiSearch } from 'react-icons/fi';
+import React, { useState, useEffect, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { FiSearch } from 'react-icons/fi'
 import {
   getJiraLabels,
   getAllIssues,
   clearLabelIssues,
-} from '../../actions/jiraActions';
-import Spinner from '../layouts/Spinner';
-import JiraLabelContent from './JiraLabelContent';
-import Message from '../layouts/Message';
-import useAxios from '../../hooks/useAxios';
-
-const Wrapper = styled.div`
-  margin-top: 4rem;
-`;
-
-const Search = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 5rem;
-  box-shadow: 0 0 5px #e7e6f6;
-  border-radius: 1rem;
-  padding: 0.5rem 0.3rem;
-  width: 30rem;
-  padding-left: 1rem;
-
-  > *:first-child {
-    font-size: 1.8rem;
-    color: #6f6f74;
-  }
-
-  input {
-    padding: 0.2rem 0.5rem;
-    border: 0;
-    outline: 0;
-    width: 25rem;
-    margin-left: 0.5rem;
-  }
-`;
+} from '../../actions/jiraActions'
+import Spinner from '../layouts/Spinner'
+import JiraLabelContent from './JiraLabelContent'
+import Message from '../layouts/Message'
+import useAxios from '../../hooks/useAxios'
+import { Box, Flex } from "@chakra-ui/react"
 
 const JiraLabels = () => {
-  const dispatch = useDispatch();
 
-  const [search, setSearch] = useState('');
-
-  const Axios = useAxios();
-
-
+  const dispatch = useDispatch()
+  const [search, setSearch] = useState('')
+  const Axios = useAxios()
   const axiosRef = useRef(Axios)
 
   // Selectors
-  const labels = useSelector((state) => state.jiraLabels.labels);
-  const loading = useSelector((state) => state.jiraLabels.loading);
-  const error = useSelector((state) => state.jiraLabels.error);
-  const issues = useSelector((state) => state.allIssues.issues);
-  const total = useSelector((state) => state.allIssues.total);
+  const labels = useSelector((state) => state.jiraLabels.labels)
+  const loading = useSelector((state) => state.jiraLabels.loading)
+  const error = useSelector((state) => state.jiraLabels.error)
+  const issues = useSelector((state) => state.allIssues.issues)
+  const total = useSelector((state) => state.allIssues.total)
 
-
-  
-
-  const labelRef = useRef(labels);
+  const labelRef = useRef(labels)
   // Get all Jira Labels
   
-  const issuesRef = useRef(issues);
+  const issuesRef = useRef(issues)
 
   useEffect(() => {
     if (!labelRef.current) {
-      dispatch(getJiraLabels(axiosRef.current));
+      dispatch(getJiraLabels(axiosRef.current))
     }
-  }, [dispatch]);
+  }, [dispatch])
 
   useEffect(() => {
     if (!issuesRef.current.length ) {
-      dispatch(getAllIssues(0,axiosRef.current));
+      dispatch(getAllIssues(0,axiosRef.current))
     } 
-  }, [dispatch, total]);
+  }, [dispatch, total])
 
   useEffect(() => {
-    dispatch(clearLabelIssues());
-  }, [dispatch]);
+    dispatch(clearLabelIssues())
+  }, [dispatch])
 
   return (
-    <Wrapper>
+    <Box mt="2rem">
       {loading && <Spinner />}
       {error && <Message msg={error.msg} variant='error' />}
 
-      {labels && (
-        <Search>
-          <FiSearch />
+        {labels && (
+        <Flex align={"center"} gap="2" bg="#fcfcfc" w={["full","30rem"]} border="1px solid #f7f7f7" borderRadius="100px" px="1.3rem" py="0.5rem">
+          <FiSearch color="#6f6f74"/>
           <input
             type='text'
+            style={{background:"transparent", outline:"none", width:"100%", padding:"0.5rem"}}
             placeholder='Search...'
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-        </Search>
+        </Flex>
       )}
 
       {labels && (
@@ -108,8 +74,9 @@ const JiraLabels = () => {
           total={total}
         />
       )}
-    </Wrapper>
-  );
-};
+      
+    </Box>
+  )
+}
 
-export default JiraLabels;
+export default JiraLabels
