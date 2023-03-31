@@ -10,12 +10,11 @@ import store from './store/index';
 
 
 ReactDOM.render(
-  <MenuProvider>
-    <ChakraProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ChakraProvider>
-  </MenuProvider>,
+  <ChakraProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ChakraProvider>
+  ,
   document.getElementById("root")
 );
