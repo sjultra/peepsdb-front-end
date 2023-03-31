@@ -8,6 +8,10 @@ import JiraIssuesContent from '../components/jira/JiraIssuesContent';
 import Filter from '../components/jira/Filter';
 import Spinner from '../components/layouts/Spinner';
 import Message from '../components/layouts/Message';
+import AdminAsideBar from "./Admin/AdminAsideBar"
+import { Box } from "@chakra-ui/react"
+import useGoBack from '../hooks/useGoBack';
+import NavLayout from "../components/layouts/NavLayout";
 
 const ContentWrapper = styled.div`
   overflow-x: auto;
@@ -40,6 +44,8 @@ const TableHeading = styled.div`
 `;
 
 const JiraIssuesScreen = ({ match }) => {
+   const goback = useGoBack({title:`${match.params.id}`});
+
   const dispatch = useDispatch();
 
   // Selectors
@@ -60,16 +66,18 @@ const JiraIssuesScreen = ({ match }) => {
       dispatch(getLabelIssues(match.params.id, issues.length));
     }
   }, [dispatch, match.params.id, issues, total]);
+  
+    console.log('issues',issues);
 
-
-  console.log('issues',issues);
 
   return (
-    <div>
-      <MainHeading title={match.params.id} />
+    <Box px={["5px", "40px", "40px"]}>
+      <NavLayout displayAsidebar={false}>
+
+      {goback}
 
       {loading && <Spinner />}
-      {error && <Message msg={error} variant='error' />}
+      {error && <Message msg={error} variant="error" />}
 
       {issues && (
         <>
@@ -85,8 +93,9 @@ const JiraIssuesScreen = ({ match }) => {
           </ContentWrapper>
         </>
       )}
-    </div>
+      </NavLayout>
+    </Box>
   );
-};
+}
 
-export default JiraIssuesScreen;
+export default JiraIssuesScreen

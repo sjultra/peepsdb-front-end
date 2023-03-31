@@ -1,5 +1,5 @@
 import React from "react";
-import { MdDashboard, MdWorkspaces, MdClose } from "react-icons/md";
+import { MdSpaceDashboard, MdWorkspaces, MdClose } from "react-icons/md";
 import {
   Flex,
   HStack,
@@ -81,16 +81,16 @@ const WorkerAsideBar = ({ children }) => {
               <Box
                 fontSize="3xl"
                 cursor="pointer"
-                onClick={() => drawer.setMenuStatus(false)}>
+                onClick={() => drawer.setMenuStatus((_prev) => !_prev)}>
                 <MdClose />
               </Box>
             </Show>
           </HStack>
           {/** ___ */}
-          <Flex flexDir={"column"} align="start" gap="30px" mt={"30px"}>
+          <Flex flexDir={"column"} align="start" gap="10" mt={"12"}>
             <CustomRouteLink
               title={"Dashboard"}
-              icon={<MdDashboard />}
+              icon={<MdSpaceDashboard />}
               route={"/"}
             />
             <CustomRouteLink
@@ -113,10 +113,13 @@ const WorkerAsideBar = ({ children }) => {
 
 // custom route link
 const CustomRouteLink = ({ route, gap, title, icon }) => {
+  // control displaying menu
+  const drawer = useMenu();
   return (
     <>
       <StyledNavContainer>
-        <NavLink exact to={`${route}`}>
+        <NavLink exact to={`${route}`} 
+          onClick={() => drawer.setMenuStatus((_prev) => !_prev)}>
           <Flex gap={"5px"} align="center" cursor={"pointer"}>
             {icon}
             <Text fontSize={"14px"} fontWeight="600">

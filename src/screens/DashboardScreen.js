@@ -1,4 +1,3 @@
-import React from "react";
 import Spinner from "../components/layouts/Spinner";
 import OnboardUser from "../components/form/Onboarding/UserForm";
 import UserWorkspace from "../components/workspace";
@@ -53,8 +52,6 @@ const DashboardScreen = () => {
       </WorkerAsideBar>
     );
   }
-
-  // return <>Nothing</>
 };
 
 const DeviceContainer = styled.div`
@@ -74,25 +71,14 @@ const DeviceContainer = styled.div`
   }
 `;
 
-// let elements = document.getElementsByClassName('.whateverClassName');
-
-// for (const iterator of elements.length) {
-//   iterator.addEventListener('click',(e)=>{
-//     e.preventDefault();
-
-//   })
-// }
-
 const OnboardingModal = ({ profile, logout, proceed }) => {
-  const { email, alias, firstname, lastname } = profile || {};
+  const { email, alias, firstname, lastname } = profile || {}
 
-  const device = deviceDetect();
+  const device = deviceDetect()
 
-  const clientType = isMobile ? "Mobile" : "Web";
+  const clientType = isMobile ? "Mobile" : "Web"
 
-  const {} = useDeviceInfo();
-
-  const userAlias = email || alias || `${firstname} ${lastname}`;
+  const userAlias = email || alias || `${firstname} ${lastname}`
 
   return (
     <Box p={{ base: "1.2em", md: "1.5em", lg: "2em 3em" }}>
@@ -124,7 +110,7 @@ const OnboardingModal = ({ profile, logout, proceed }) => {
 
           <Center>
             <Image
-              src="/assets/welcome.svg"
+              src="/Assets/welcome.svg"
               h={{ base: "200px", lg: "250px" }}
             />
           </Center>
@@ -163,7 +149,7 @@ const OnboardingModal = ({ profile, logout, proceed }) => {
         </Box>
       </Center>
     </Box>
-  );
-};
+  )
+}
 
 export default DashboardScreen;

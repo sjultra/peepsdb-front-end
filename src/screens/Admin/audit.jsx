@@ -11,9 +11,6 @@ import moment from 'moment';
 import { MdOutlineOpenInNew } from "react-icons/md"
 import { NavLink, useHistory } from "react-router-dom"
 
-
-
-
 export const ActivityLogDetail  = (payload)=>{
 
     const {user,type,description,createdAt,deviceData,close} = payload;
@@ -153,48 +150,58 @@ const Audit= ()=>{
     const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
     console.log("timezone", timezone);
 
+    return (
+      <AdminAsideBar>
+        <Flex
+          align={{ base: "start", md: "center" }}
+          gap="8"
+          direction={{ base: "column", md: "row" }}
+          justify="space-between">
+          <Box>
+            <Text
+              mt="0.6em"
+              className="archivo"
+              fontSize={"22"} 
+              fontWeight="semibold">
+              Audit Trail
+            </Text>
 
+            <Text fontSize={"16"} color="gray.500">
+              View Recent Activities of users in PeepsDB
+            </Text>
+          </Box>
 
-
-
-    return(
-        <AdminAsideBar>
-            <Flex 
-             align={'center'}
-             justify='space-between'
-            >
-  
-                <Box>
-
-                    <Text mt='0.6em' className="archivo" fontSize={"25px"} fontWeight={500}>
-                        Audit Trail
-                    </Text>
-
-                    <Text>
-                        View Recent Activities of users in PeepsDB
-                    </Text>
-                </Box>
-
-                <Flex gap='0.6em' align='center'>
-                    
-                    <GrFilter fontSize={'18px'}/>
-                    <Select fontSize={'14px'} onClick={(e)=>setLogLimit(e.target.value)} maxW={'100px'}>
-                        <option value={'today'}>Today</option>
-                        <option value={'2days'}>Last 2 days</option>
-                        <option value='7days'>Last week</option>
-                        <option value={'1month'}>Last month</option>
-                        <option value={'all'}>All</option>
-                    </Select>
-
-                </Flex>
-
-            </Flex>
-            <Box mt='2.2em'>
-                <TableComponent bodyEntries={['user','type','createdAt','description','action']}  body={userLogs}   headers={['User','Type','Timestamp','Description','Action']} />
-            </Box>
-
-        </AdminAsideBar>
-    )
+          <Flex gap="0.6em" align="center">
+            <GrFilter fontSize={"18px"} />
+            <Select
+              fontSize={"14px"}
+              onClick={(e) => setLogLimit(e.target.value)}
+              maxW={"100px"}>
+              <option value={"today"}>Today</option>
+              <option value={"2days"}>Last 2 days</option>
+              <option value="7days">Last week</option>
+              <option value={"1month"}>Last month</option>
+              <option value={"all"}>All</option>
+            </Select>
+          </Flex>
+        </Flex>
+        <Box
+          pb="100px"
+          mt="2.2em"
+          overflow={"auto"}
+          w={{
+            base: "calc(100vw - 6rem)",
+            md: "calc(100vw - 4rem)",
+            lg: "calc(100vw - 21vw)",
+          }}>
+          <TableComponent
+            bodyEntries={["user", "type", "createdAt", "description", "action"]}
+            body={userLogs}
+            headers={["User", "Type", "Timestamp", "Description", "Action"]}
+          />
+        </Box>
+      </AdminAsideBar>
+    );
 }
 
 export default Audit

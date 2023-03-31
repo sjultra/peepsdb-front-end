@@ -12,10 +12,10 @@ const override = css`
   border-color: #5e55ef;
 `;
 
-const Spinner = ({className,full}) => {
+const Spinner = ({className,full, fontSize=10}) => {
   return (
     <div className={className +` sweet-loading ${full && 'full'}`}>
-      <BeatLoader color={'#5e55ef'} loading={true} css={override} size={10} />
+      <BeatLoader color={'#5e55ef'} loading={true} css={override} size={fontSize} />
     </div>
   );
 };
