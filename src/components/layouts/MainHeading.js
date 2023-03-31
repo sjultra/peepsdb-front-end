@@ -44,8 +44,7 @@ const Toggle = styled.div`
 `;
 
 const ToggleStyle = styled.div`
-  background: ${(props) =>
-    (props?.title === props?.initialTitle ? "rgba(95, 85, 239, 0.75)" : "#fcfcfc")};
+  background: ${(props) =>(props?.title === props?.initialTitle ? "rgba(95, 85, 239, 0.75)" : "#fcfcfc")};
   color: ${(props) => (props?.title === props?.initialTitle ? "#fff !important" : "#000 !important")};
   font-weight: ${(props) => (props?.title === props?.initialTitle ? "600" : "#400")};
   border: ${(props) => (props?.title === props?.initialTitle ? "" : "1px solid #f7f7f7")};
