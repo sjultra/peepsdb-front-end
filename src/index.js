@@ -10,6 +10,7 @@ import store from "./store/index";
 import { MenuProvider } from "./hooks/MenuProvider";
 import { ChakraProvider } from "@chakra-ui/react";
 
+
 ReactDOM.render(
   <MenuProvider>
     <ChakraProvider>
