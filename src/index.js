@@ -1,7 +1,7 @@
 //follow come
 
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import App from './App';
 
 // self imported
@@ -10,11 +10,9 @@ import store from './store/index';
 
 
 ReactDOM.render(
-  <ChakraProvider>
     <Provider store={store}>
       <App />
     </Provider>
-  </ChakraProvider>
   ,
   document.getElementById("root")
 );
