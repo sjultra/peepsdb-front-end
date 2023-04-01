@@ -38,7 +38,7 @@ const MainHeading = ({ title, toggle }) => {
       </Flex>
     </Stack>
   );
-};
+}
 
 // custom tab
 const CustomTab = ({ tabName, toggle, value, title, initialTitle, ...rest }) => {
