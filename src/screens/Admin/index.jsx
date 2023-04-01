@@ -28,11 +28,10 @@ const AdminDashboard = () => {
 
   const [logLimit, setLogLimit] = useState("today")
 
-  // const fetchAllProfilesRef = useRef(fetchAllProfiles)
 
   useFetchProfiles()
 
-  useAppAudits(logLimit)
+  useAppAudits({limit:logLimit,type:''})
 
   if (loading) return <Spinner full />
 
@@ -52,9 +51,9 @@ const AdminDashboard = () => {
         Dashboard
       </Text>
 
-      <Text fontSize={"16"} color="gray.500">
+      {/* <Text fontSize={"16"} color="gray.500">
         You can now see all onboarding information of your organization.
-      </Text>
+      </Text> */}
 
       <Grid
         templateColumns={{base:'repeat(1, 1fr)', md:'repeat(2, 1fr)', lg:'repeat(3, 1fr)'}}

@@ -6,13 +6,13 @@ import useAxios from "./useAxios";
 import { useEffect } from "react";
 import { renderJSX } from "../utils/helpers";
 
-const useAppAudits = (limit)=>{
+const useAppAudits = ({limit,type})=>{
 
     const {setLogs:setL} = teamActions;
 
     const dispatch = useDispatch();
 
-    let appLimit = limit
+    // let appLimit = limit
 
     // const {setLoading} = useWidget();
 
@@ -20,10 +20,15 @@ const useAppAudits = (limit)=>{
 
     const Axios = useAxios();
 
+
     const fetchUserAudits = async()=>{
         try{
             // setLoading(false);
-            let req = await Axios.get(`/audit${renderJSX(limit,`?limit=${appLimit}`,'')}`)
+            let req = await Axios.get(`/audit${renderJSX(limit,`?limit=${limit}`,'')}${renderJSX(type,`&type=${type}`,'')}`)
+
+            
+            console.log('req data length',req?.data?.length)
+
             setLogs(req.data);
         }
         catch(err){
@@ -36,10 +41,9 @@ const useAppAudits = (limit)=>{
     }
 
 
-
     useEffect(()=>{
         fetchUserAudits()
-    },[limit])
+    },[limit,type])
 }
 
 const useFetchProfiles = ()=>{
