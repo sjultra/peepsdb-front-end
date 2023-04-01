@@ -2,50 +2,101 @@ import React from "react"
 import { useState } from "react"
 import { BiSearch } from "react-icons/bi"
 import { GrFilter } from "react-icons/gr"
-import { Flex, Box, Text, Stack, Select, HStack } from "@chakra-ui/react"
+import { Flex, Box, Text, Stack, Select, HStack, Center } from "@chakra-ui/react"
 import UserActivityTable from "../layouts/UserActivityTable"
 import {  useLocation, useHistory } from 'react-router-dom'
 import { useEffect } from "react"
+import useTeams from "../../hooks/useTeams"
+import useWidget from "../../hooks/useWidget"
+import Spinner from "../layouts/Spinner"
+import { renderJSX } from "../../utils/helpers"
+
 
 const ActivityLogs = ({_user}) => {
+  
   //hooks
   const router = useHistory()
   const { search } = useLocation()
   const params = new URLSearchParams(search)
+  
+  
   // states
-  const [logLimit, setLogLimit] = useState("today")
-  const [activityTab, setActivityTab] = useState(params.get("activity"))
-  const [filterText, setFilterText] = useState("")
-  const [activitiesToDisplay, setActivitiesToDisplay] =
-    useState(activitiesArray)
+  const [logLimit, setLogLimit] = useState("today");
+  const [activityTab, setActivityTab] = useState('');
+  const [filterText, setFilterText] = useState("");
 
+  const [activitiesToDisplay, setActivitiesToDisplay] = useState(activitiesArray);
+
+  
   // change tab
   const changeTab = (tab) => {
-    setActivityTab((prev) => (prev = tab))
-    router.push(
-      `${_user === "admin" ? "/" : "/worker/workspaces"}?activity=${tab}`
-    );
+    setActivityTab(tab);
+    // router.push(
+    //   `${_user === "admin" ? "/" : "/worker/workspaces"}?activity=${tab}`
+    // );
   }
 
-  useEffect(() => {
-    // avoid wrong activity param
-    const selected =
-      activityTab !== "all" &
-      activityTab !== "jira" &
-      activityTab !== "azure" &
-      activityTab !== "sharepoint"
-        ? "all"
-        : activityTab
-    setActivityTab(selected)
-    
-    if(selected === "all"){
-      setActivitiesToDisplay(activitiesArray)
-    }else{
-      const getActivities = activitiesArray.filter((item)=>item.activity.type === selected)
-      setActivitiesToDisplay(getActivities)
-    }
 
-  }, [activityTab])
+  const { profiles, logs, useFetchProfiles, useAppAudits } = useTeams()
+
+
+  const { loading, openModal, closeModal } = useWidget()
+
+
+  useAppAudits({limit:logLimit,activityTab});
+
+
+  // useEffect(() => {
+
+  //   // avoid wrong activity param
+  //   let filterByType = activityTab;
+
+    
+  //   const selected =
+  //     activityTab !== "all" &
+  //     activityTab !== "jira" &
+  //     activityTab !== "azure" &
+  //     activityTab !== "sharepoint"
+  //       ? "all"
+  //       : activityTab;
+    
+  //   setActivityTab(selected);
+    
+  //   if(selected === "all"){
+  //     setActivitiesToDisplay(activitiesArray)
+  //   }
+  //   else{
+  //     const getActivities = activitiesArray.filter((item)=>item.activity.type === selected)
+  //     setActivitiesToDisplay(getActivities)
+  //   }
+  // }, [logs,activityTab])
+
+
+  useEffect(() => {
+
+    // avoid wrong activity param
+
+    const typeFilters =  {
+      all:'',
+      jira:'webhook-jira',
+      ado:'webhook-ado',
+      sharepoint:'webhook-sharepoint'
+    }
+    let filter  = typeFilters[activityTab]? logs.filter(log=>log?.type?.includes(typeFilters[activityTab])): logs;
+    
+
+    console.log('filter found',filter)
+
+    setActivitiesToDisplay(filter)
+
+  }, [activityTab,logLimit])
+
+
+  if (loading) return <Spinner full />
+
+
+
+
 
   return (
     <Box>
@@ -98,13 +149,13 @@ const ActivityLogs = ({_user}) => {
             borderColor="gray.100">
             <CustumTab
               title="All"
-              tab="all"
+              tab=""
               selectedTab={activityTab}
               action={changeTab}
             />
             <CustumTab
               title="Azure Devops"
-              tab="azure"
+              tab="ado"
               selectedTab={activityTab}
               action={changeTab}
             />
@@ -152,11 +203,18 @@ const ActivityLogs = ({_user}) => {
             md: "calc(100vw - 4rem)",
             lg: "calc(100vw - 22vw)",
           }}>
-          <UserActivityTable
-            body={activitiesToDisplay}
-            headers={["Date", "Activvity", "Event"]}
-          />
-        </Box>
+
+          {
+            renderJSX(
+              activitiesToDisplay.length,
+              <UserActivityTable
+                body={activitiesToDisplay}
+                headers={["Date", "Type", "Description"]}
+              />,
+              <Center> No items meet your description </Center>
+          )
+        }
+      </Box>
       </Box>
     </Box>
   );
