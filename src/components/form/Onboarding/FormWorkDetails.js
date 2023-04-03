@@ -83,6 +83,7 @@ const FormWorkDetails = ({
   const workEmailKeys = Object.keys(RETURN_EMAIL_HIERARCHY().values);
   const workEmailValues = Object.values(RETURN_EMAIL_HIERARCHY().values);
 
+
   useEffect(()=>{
     let workemails = workEmails;
 
@@ -91,17 +92,15 @@ const FormWorkDetails = ({
 
       let defaultEmail = `${formData['alias']}@${value}`;
 
-
-
-
       workemails[index] = {
         fieldName,
         value: formData[fieldName] || defaultEmail,
         emailSuffix:value
-      }
+      };
+
     })
 
-    console.log('work emails value before setting',workemails)
+    console.log('initial work email keys and values',workEmailKeys,workEmailValues,workEmails)
 
     setWorkEmails([...workemails])
 
