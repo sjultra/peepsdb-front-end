@@ -1,7 +1,7 @@
 import Spinner from "../components/layouts/Spinner";
 import OnboardUser from "../components/form/Onboarding/UserForm";
 import UserWorkspace from "../components/workspace";
-import useAuthActions from "../hooks/useAuth";
+import useAuthActions from "../hooks/useAuth"
 import { Box, Center, Circle, Flex, Image, Text } from "@chakra-ui/react";
 import { IoClose } from "react-icons/io5";
 import styled from "styled-components";
