@@ -1,8 +1,8 @@
-import UserScreen from "../User/UserScreen"
-import AdminAsideBar from "./AdminAsideBar"
-import useAuthActions from "../../hooks/useAuth"
-import WorkerAsideBar from "../../components/layouts/WorkerAsideBar"
-import Spinner from "../../components/layouts/Spinner"
+import UserScreen from "./UserScreen"
+import AdminAsideBar from "../../../components/layouts/AdminAsideBar"
+import useAuthActions from "../../../hooks/useAuth"
+import WorkerAsideBar from "../../../components/layouts/WorkerAsideBar"
+import Spinner from "../../../components/layouts/Spinner"
 import { Flex } from "@chakra-ui/react"
 
 const User = () => {

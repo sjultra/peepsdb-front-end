@@ -1,11 +1,11 @@
 import UsersScreen from "./UsersScreen"
-import AdminAsideBar from "./AdminAsideBar"
+import AdminAsideBar from "../../components/layouts/AdminAsideBar"
 import useAuthActions from "../../hooks/useAuth"
 import WorkerAsideBar from "../../components/layouts/WorkerAsideBar"
 import Spinner from "../../components/layouts/Spinner"
 import { Flex } from "@chakra-ui/react"
 
-const AdminUsers = () => {
+const Teams = () => {
   // Selectors
   const { auth, loading, profile } = useAuthActions()
 
@@ -43,4 +43,4 @@ const AdminUsers = () => {
   )
 }
 
-export default AdminUsers
+export default Teams

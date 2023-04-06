@@ -37,22 +37,41 @@ const UsersScreen = () => {
 
   return (
     <Box>
-      <Flex direction={{base:"column", md:"row"}} gap="8" align={["start", "center"]} justify="space-between">
-        <Text fontSize="2rem" color="var(--primary-color)">Users </Text>
+      <Flex
+        direction={{ base: "column", md: "row" }}
+        gap="8"
+        align={["start", "center"]}
+        justify="space-between"
+      >
+        <Text fontSize="2rem" color="var(--primary-color)">
+          Users{" "}
+        </Text>
 
-        <Box w={["full","30rem"]}>
-          <Flex align={"center"} gap="2" bg="#fcfcfc" border="1px solid #f7f7f7" borderRadius="100px" px="1.3rem" py="0.5rem">
-          <FiSearch color="#6f6f74"/>
+        <Box w={["full", "30rem"]}>
+          <Flex
+            align={"center"}
+            gap="2"
+            bg="#fcfcfc"
+            border="1px solid #f7f7f7"
+            borderRadius="100px"
+            px="1.3rem"
+            py="0.5rem"
+          >
+            <FiSearch color="#6f6f74" />
             <input
               type="text"
-              style={{background:"transparent", outline:"none", width:"100%", padding:"0.5rem"}}
+              style={{
+                background: "transparent",
+                outline: "none",
+                width: "100%",
+                padding: "0.5rem",
+              }}
               placeholder="Search..."
               value={filterText}
               onChange={(e) => setFilterText(e.target.value)}
             />
           </Flex>
         </Box>
-        
       </Flex>
 
       {loading && <Spinner />}
@@ -63,11 +82,13 @@ const UsersScreen = () => {
           pb="100px"
           mt="8"
           overflow={"auto"}
+          className="dontShowScrollBar"
           w={{
             base: "calc(100vw - 6rem)",
             md: "calc(100vw - 4rem)",
             lg: "calc(100vw - 21vw)",
-          }}>
+          }}
+        >
           <TableContainer mt="1em">
             <Table variant="simple">
               <Thead>

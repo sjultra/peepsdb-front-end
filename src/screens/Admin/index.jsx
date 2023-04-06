@@ -1,7 +1,15 @@
-import AdminAsideBar from "./AdminAsideBar"
+import AdminAsideBar from "../../components/layouts/AdminAsideBar"
 import { FaUserCheck, FaUserSlash } from "react-icons/fa"
 import { HiUsers } from "react-icons/hi"
-import { Flex, Box, Grid, GridItem, Text, Select, Circle } from "@chakra-ui/react"
+import {
+  Flex,
+  Box,
+  Grid,
+  GridItem,
+  Text,
+  Select,
+  Circle,
+} from "@chakra-ui/react"
 import useWidget from "../../hooks/useWidget"
 import useTeams from "../../hooks/useTeams"
 import Spinner from "../../components/layouts/Spinner"
@@ -11,7 +19,7 @@ import { BsClockHistory } from "react-icons/bs"
 import { useState } from "react"
 import { TbFlag3 } from "react-icons/tb"
 import { ActivityLogDetail, formatDateTimeString } from "./audit"
-import ActivityLogs from '../../components/logs/ActivityLogs'
+import ActivityLogs from "../../components/logs/ActivityLogs"
 
 const AdminDashboard = () => {
   const { profiles, logs, useFetchProfiles, useAppAudits } = useTeams()
@@ -28,10 +36,9 @@ const AdminDashboard = () => {
 
   const [logLimit, setLogLimit] = useState("today")
 
-
   useFetchProfiles()
 
-  useAppAudits({limit:logLimit,type:''})
+  useAppAudits({ limit: logLimit, type: "" })
 
   if (loading) return <Spinner full />
 
@@ -56,40 +63,49 @@ const AdminDashboard = () => {
       </Text> */}
 
       <Grid
-        templateColumns={{base:'repeat(1, 1fr)', md:'repeat(2, 1fr)', lg:'repeat(3, 1fr)'}}
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(3, 1fr)",
+        }}
         mt={"10"}
-        gap="8">
+        gap="8"
+      >
         <CustomStatisticCard
           title={"Total accounts"}
           color="#3D7DFF"
-          account={totalAccounts}>
+          account={totalAccounts}
+        >
           <HiUsers className="svg" color="#3D7DFF" fontSize={"22"} />
         </CustomStatisticCard>
 
         <CustomStatisticCard
           title={"Onboarded accounts"}
           color="#4ECB71"
-          account={onboardedAccounts}>
+          account={onboardedAccounts}
+        >
           <FaUserCheck color="#4ECB71" fontSize={"22"} />
         </CustomStatisticCard>
 
         <CustomStatisticCard
           title={"Suspended accounts"}
           color="#E4746C"
-          account={suspendedAccounts}>
+          account={suspendedAccounts}
+        >
           <FaUserSlash color="#E4746C" fontSize={"22"} />
         </CustomStatisticCard>
       </Grid>
       {/** Activity logs */}
       <Box>
-       <ActivityLogs _user={"admin"} />
+        <ActivityLogs _user={"admin"} />
       </Box>
 
       <Box
         border={"1px solid #f7f7f7"}
         borderTopRadius="5px"
         mt="2.5em"
-        p="2rem">
+        p="2rem"
+      >
         <Flex align="center" justify={"space-between"}>
           <Flex align="center" gap="0.3em">
             <TextInput>What's hot</TextInput>
@@ -99,7 +115,8 @@ const AdminDashboard = () => {
           <Select
             onClick={(e) => setLogLimit(e.target.value)}
             maxW={"100px"}
-            outlineColor="none">
+            outlineColor="none"
+          >
             <option value={"today"}>Today</option>
             <option value={"2days"}>Last 2 days</option>
             <option value="7days">Last week</option>
@@ -110,17 +127,15 @@ const AdminDashboard = () => {
 
         <Box mt="2em">
           {logs?.map((logEntry, index) => (
-            <Box
-              key={`${index}${Date.now()}`}
-              mb={{base:"4", md:"0"}}
-              >
+            <Box key={`${index}${Date.now()}`} mb={{ base: "4", md: "0" }}>
               <Flex align={"start"} gap="0.8em">
                 {/** circle */}
                 <Box>
                   <Circle
                     bg="#fcfcfc"
                     border={"1px solid #f7f7f7"}
-                    size={"40px"}>
+                    size={"40px"}
+                  >
                     <BsClockHistory
                       color="var(--primary-color)"
                       fontSize={"18px"}
@@ -131,12 +146,19 @@ const AdminDashboard = () => {
                   </Flex>
                 </Box>
                 {/** content */}
-                <Flex direction={{base:"column", md:"row"}} gap={{base:"2", md:"4", lg:"8"}} flex="1" justify="space-between">
+                <Flex
+                  direction={{ base: "column", md: "row" }}
+                  gap={{ base: "2", md: "4", lg: "8" }}
+                  flex="1"
+                  justify="space-between"
+                >
                   <Box>
                     <Text color="#9EA2B1" fontSize={"12px"}>
                       {formatDateTimeString(logEntry?.createdAt)}
                     </Text>
-                    <Text noOfLines={[2, 3, 4]} fontSize={"15px"}>{logEntry?.description}</Text>
+                    <Text noOfLines={[2, 3, 4]} fontSize={"15px"}>
+                      {logEntry?.description}
+                    </Text>
                   </Box>
                   <Flex
                     cursor={"pointer"}
@@ -153,7 +175,8 @@ const AdminDashboard = () => {
                           close: closeModal,
                         },
                       })
-                    }>
+                    }
+                  >
                     <TbFlag3 color="var(--primary-color)" />
 
                     <Text fontSize={"13px"} color="var(--primary-color)">
@@ -185,7 +208,8 @@ const CustomStatisticCard = ({ title, children, account, color }) => {
           boxShadow: "sm",
         }}
         borderRadius={"10px"}
-        cursor={"pointer"}>
+        cursor={"pointer"}
+      >
         <Box borderRadius={"50px"} boxShadow="sm" p="18px" bgColor="#ffffff">
           {children}
         </Box>
@@ -197,7 +221,8 @@ const CustomStatisticCard = ({ title, children, account, color }) => {
             color={"#9EA2B1"}
             className="archivo"
             fontSize="15.87px"
-            fontWeight="400">
+            fontWeight="400"
+          >
             {title}
           </Text>
         </Box>

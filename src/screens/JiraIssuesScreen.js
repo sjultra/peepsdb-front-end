@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import MainHeading from '../components/layouts/MainHeading';
-import { toggleJira } from '../actions/toggleActions';
-import { getLabelIssues } from '../actions/jiraActions';
-import JiraIssuesContent from '../components/jira/JiraIssuesContent';
-import Filter from '../components/jira/Filter';
-import Spinner from '../components/layouts/Spinner';
-import Message from '../components/layouts/Message';
-import AdminAsideBar from "./Admin/AdminAsideBar"
+import React, { useEffect } from "react"
+import styled from "styled-components"
+import { useSelector, useDispatch } from "react-redux"
+import MainHeading from "../components/layouts/MainHeading"
+import { toggleJira } from "../actions/toggleActions"
+import { getLabelIssues } from "../actions/jiraActions"
+import JiraIssuesContent from "../components/jira/JiraIssuesContent"
+import Filter from "../components/jira/Filter"
+import Spinner from "../components/layouts/Spinner"
+import Message from "../components/layouts/Message"
+import AdminAsideBar from "../components/layouts/AdminAsideBar"
 import { Box } from "@chakra-ui/react"
-import useGoBack from '../hooks/useGoBack';
-import NavLayout from "../components/layouts/NavLayout";
+import useGoBack from "../hooks/useGoBack"
+import NavLayout from "../components/layouts/NavLayout"
 
 const ContentWrapper = styled.div`
   overflow-x: auto;
@@ -21,7 +21,7 @@ const ContentWrapper = styled.div`
   &::-webkit-scrollbar {
     width: 0;
   }
-`;
+`
 
 const TableHeading = styled.div`
   display: grid;
@@ -41,61 +41,59 @@ const TableHeading = styled.div`
   @media (max-width: 500px) {
     padding: 1.7rem 1rem 1.7rem 1rem;
   }
-`;
+`
 
 const JiraIssuesScreen = ({ match }) => {
-   const goback = useGoBack({title:`${match.params.id}`});
+  const goback = useGoBack({ title: `${match.params.id}` })
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   // Selectors
-  const issues = useSelector((state) => state.labelIssues.issues);
-  const error = useSelector((state) => state.labelIssues.error);
-  const loading = useSelector((state) => state.labelIssues.loading);
-  const total = useSelector((state) => state.labelIssues.total);
+  const issues = useSelector((state) => state.labelIssues.issues)
+  const error = useSelector((state) => state.labelIssues.error)
+  const loading = useSelector((state) => state.labelIssues.loading)
+  const total = useSelector((state) => state.labelIssues.total)
 
   useEffect(() => {
-    dispatch(toggleJira());
-  }, [dispatch]);
+    dispatch(toggleJira())
+  }, [dispatch])
 
   // Get the total result of label issues
   useEffect(() => {
     if (!issues.length) {
-      dispatch(getLabelIssues(match.params.id, 0));
+      dispatch(getLabelIssues(match.params.id, 0))
     } else if (issues.length && issues.length < total) {
-      dispatch(getLabelIssues(match.params.id, issues.length));
+      dispatch(getLabelIssues(match.params.id, issues.length))
     }
-  }, [dispatch, match.params.id, issues, total]);
-  
-    console.log('issues',issues);
+  }, [dispatch, match.params.id, issues, total])
 
+  console.log("issues", issues)
 
   return (
     <Box px={["5px", "40px", "40px"]}>
       <NavLayout displayAsidebar={false}>
+        {goback}
 
-      {goback}
+        {loading && <Spinner />}
+        {error && <Message msg={error} variant="error" />}
 
-      {loading && <Spinner />}
-      {error && <Message msg={error} variant="error" />}
-
-      {issues && (
-        <>
-          <Filter issues={issues} />
-          <ContentWrapper>
-            <TableHeading>
-              <div>ID</div>
-              <div>Title</div>
-              <div>Assigned To</div>
-              <div>Status</div>
-            </TableHeading>
-            <JiraIssuesContent issues={issues} />
-          </ContentWrapper>
-        </>
-      )}
+        {issues && (
+          <>
+            <Filter issues={issues} />
+            <ContentWrapper>
+              <TableHeading>
+                <div>ID</div>
+                <div>Title</div>
+                <div>Assigned To</div>
+                <div>Status</div>
+              </TableHeading>
+              <JiraIssuesContent issues={issues} />
+            </ContentWrapper>
+          </>
+        )}
       </NavLayout>
     </Box>
-  );
+  )
 }
 
 export default JiraIssuesScreen

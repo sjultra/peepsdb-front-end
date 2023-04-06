@@ -6,7 +6,7 @@ import { AiOutlineUser } from "react-icons/ai"
 import { formatDateTimeString } from "../../screens/Admin/audit"
 
 import useWidget from "../../hooks/useWidget"
-import { UserOptions } from "../../screens/User"
+import { UserOptions } from "../UserProfile"
 
 const Item = styled.ul`
   display: grid;
