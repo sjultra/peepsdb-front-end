@@ -1,22 +1,14 @@
-import React from "react";
-import { MdSpaceDashboard, MdWorkspaces, MdClose } from "react-icons/md";
-import { BsUiChecks } from "react-icons/bs";
-import { HiUsers } from "react-icons/hi";
+import React from "react"
+import { MdSpaceDashboard, MdWorkspaces, MdClose } from "react-icons/md"
+import { BsUiChecks } from "react-icons/bs"
+import { HiUsers } from "react-icons/hi"
 
-import {
-  Flex,
-  HStack,
-  Box,
-  Text,
-  Grid,
-  GridItem,
-  Show,
-} from "@chakra-ui/react";
-import styled from "styled-components";
-import NavLayout from "../../components/layouts/NavLayout";
-import { useMenu } from "../../hooks/MenuProvider";
+import { Flex, HStack, Box, Text, Grid, GridItem, Show } from "@chakra-ui/react"
+import styled from "styled-components"
+import NavLayout from "./NavLayout"
+import { useMenu } from "../../hooks/MenuProvider"
 
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom"
 // import './styles.css'
 
 const StyledLogo = styled.h1`
@@ -25,7 +17,7 @@ const StyledLogo = styled.h1`
   font-family: "Amita", cursive;
   font-size: 28px;
   font-weight: 700;
-`;
+`
 
 const StyledNavContainer = styled.div`
   a {
@@ -49,11 +41,11 @@ const StyledNavContainer = styled.div`
       color: #676464;
     }
   }
-`;
+`
 
 const AdminAsideBar = ({ children }) => {
   // control displaying menu
-  const drawer = useMenu();
+  const drawer = useMenu()
 
   return (
     <Grid templateColumns={{ base: "1fr", md: "1fr", lg: "21rem auto" }}>
@@ -67,7 +59,8 @@ const AdminAsideBar = ({ children }) => {
         }}
         top="0px"
         position={{ base: "fixed", md: "fixed", lg: "sticky" }}
-        w={{ base: "27rem", md: "24rem", lg: "auto" }}>
+        w={{ base: "27rem", md: "24rem", lg: "auto" }}
+      >
         <Flex
           as="div"
           flexDir={"column"}
@@ -76,7 +69,8 @@ const AdminAsideBar = ({ children }) => {
           minHeight={"100vh"}
           pt="10"
           px="10"
-          h={"100%"}>
+          h={"100%"}
+        >
           {/** logo and close icon */}
           <HStack alignItems="center" justify="space-between">
             <StyledLogo>PeepsDB</StyledLogo>
@@ -84,7 +78,8 @@ const AdminAsideBar = ({ children }) => {
               <Box
                 fontSize="3xl"
                 cursor="pointer"
-                onClick={() => drawer.setMenuStatus(_prev=>!_prev)}>
+                onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
+              >
                 <MdClose />
               </Box>
             </Show>
@@ -121,13 +116,13 @@ const AdminAsideBar = ({ children }) => {
         </Box>
       </GridItem>
     </Grid>
-  );
-};
+  )
+}
 
 // custom route link
 const CustomRouteLink = ({ route, gap, title, icon }) => {
   // control displaying menu
-  const drawer = useMenu();
+  const drawer = useMenu()
 
   return (
     <>
@@ -135,7 +130,8 @@ const CustomRouteLink = ({ route, gap, title, icon }) => {
         <NavLink
           exact
           to={`${route}`}
-          onClick={() => drawer.setMenuStatus((_prev) => !_prev)}>
+          onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
+        >
           <Flex gap={"5px"} align="center" cursor={"pointer"}>
             {icon}
             <Text fontSize={"14px"} fontWeight="600">
@@ -145,7 +141,7 @@ const CustomRouteLink = ({ route, gap, title, icon }) => {
         </NavLink>
       </StyledNavContainer>
     </>
-  );
-};
+  )
+}
 
-export default AdminAsideBar;
+export default AdminAsideBar

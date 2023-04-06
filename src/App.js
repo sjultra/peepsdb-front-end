@@ -1,40 +1,36 @@
-import './App.css';
-import React, { useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { ChakraProvider } from '@chakra-ui/react';
-// import Alert from './components/layouts/Alert';
-import NotFoundScreen from './screens/NotFoundScreen';
-import DashboardScreen from './screens/DashboardScreen';
-import LoginScreen from './screens/LoginScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import EditProfileScreen from './screens/EditProfileScreen';
-import ADOWorkItemsScreen from './screens/ADOWorkItemsScreen';
-import JiraIssuesScreen from './screens/JiraIssuesScreen';
-import MeetingScheduleScreen from './screens/MeetingScheduleScreen';
-// import UserScreen from './screens/User/UserScreen';
-import UserEditScreen from './screens/UserEditScreen';
-import PrivateRoute from './components/routing/PrivateRoute';
-import useLogin from './hooks/useLogin';
-import AdminRoute from './components/routing/AdminRoute';
-import AdminUsers from './screens/Admin/users';
-import AdminWorkspace from './screens/Admin/workspace';
-
-import WorkerWorkspacesScreen from './screens/WorkerWorkspacesScreen';
-
-import ModalComponent from './components/layouts/Modal';
-import Audit from './screens/Admin/audit';
-import useAppInsights from './hooks/useAppInsights';
-import { MenuProvider } from './hooks/MenuProvider';
-import User from './screens/Admin/user';
+import "./App.css"
+import React, { useEffect, useRef } from "react"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { ChakraProvider } from "@chakra-ui/react"
+import NotFoundScreen from "./screens/NotFoundScreen"
+import DashboardScreen from "./screens/DashboardScreen"
+import LoginScreen from "./screens/LoginScreen"
+import ProfileScreen from "./screens/ProfileScreen"
+import EditProfileScreen from "./screens/EditProfileScreen"
+import ADOWorkItemsScreen from "./screens/ADOWorkItemsScreen"
+import JiraIssuesScreen from "./screens/JiraIssuesScreen"
+import MeetingScheduleScreen from "./screens/MeetingScheduleScreen"
+import UserEditScreen from "./screens/UserEditScreen"
+import PrivateRoute from "./components/routing/PrivateRoute"
+import useLogin from "./hooks/useLogin"
+import AdminRoute from "./components/routing/AdminRoute"
+import Teams from "./screens/teams"
+import AdminWorkspace from "./screens/Admin/workspace"
+import WorkerWorkspacesScreen from "./screens/WorkerWorkspacesScreen"
+import ModalComponent from "./components/layouts/Modal"
+import Audit from "./screens/Admin/audit"
+import useAppInsights from "./hooks/useAppInsights"
+import { MenuProvider } from "./hooks/MenuProvider"
+import User from "./screens/teams/user"
 
 const App = () => {
-  const { initializeAzureLogging } = useAppInsights();
+  const { initializeAzureLogging } = useAppInsights()
 
-  const initAzureLoggingRef = useRef(initializeAzureLogging);
+  const initAzureLoggingRef = useRef(initializeAzureLogging)
 
-  useLogin();
+  useLogin()
 
-  useEffect(() => initAzureLoggingRef.current(), []);
+  useEffect(() => initAzureLoggingRef.current(), [])
 
   return (
     <MenuProvider>
@@ -61,9 +57,9 @@ const App = () => {
               component={WorkerWorkspacesScreen}
             />
             <AdminRoute path="/admin/logs" component={Audit} />
-            <PrivateRoute path="/teams" component={AdminUsers} />
+            <PrivateRoute path="/teams" component={Teams} exact/>
+            <PrivateRoute path="/teams/user/:id" component={User} exact />
             <AdminRoute path="/admin/workspaces" component={AdminWorkspace} />
-            <AdminRoute path="/admin/user/:id" component={User} exact />
 
             {/* <PrivateRoute path='/admin/users/:id' component={UserScreen} exact /> */}
             <PrivateRoute
@@ -76,7 +72,7 @@ const App = () => {
         </Router>
       </ChakraProvider>
     </MenuProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

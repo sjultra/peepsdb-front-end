@@ -2,17 +2,16 @@ import { useEffect, useMemo, useRef } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { Redirect, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Spinner from '../../components/layouts/Spinner';
-// import Message from '../components/layouts/Message';
-import UserContent from '../../components/user/UserContent';
-import useTeams from '../../hooks/useTeams';
-import useAuth  from '../../hooks/useAuth';
+import Spinner from '../../../components/layouts/Spinner';
+import UserContent from '../../../components/user/UserContent';
+import useTeams from '../../../hooks/useTeams';
+import useAuth  from '../../../hooks/useAuth';
 import { useState } from 'react';
-import useWidget from '../../hooks/useWidget';
-import UserEditScreen from '../UserEditScreen';
+import useWidget from '../../../hooks/useWidget';
+import UserEditScreen from '../../UserEditScreen';
 import { Flex, Text } from '@chakra-ui/react';
-import useGoBack from '../../hooks/useGoBack';
-import UserProfile from './index';
+import useGoBack from '../../../hooks/useGoBack';
+import UserProfile from "../../../components/UserProfile"
 
 const TitleEdit = styled.div`
   display: flex;
@@ -95,7 +94,7 @@ const UserScreen = () => {
 
   const [user,setUser]  = useState(undefined)
 
-  const {loading,openModal} = useWidget();
+  const {loading, openModal} = useWidget();
 
   const fetchUserRef = useRef(fetchUserProfile)
 

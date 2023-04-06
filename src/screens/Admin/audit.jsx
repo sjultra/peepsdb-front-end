@@ -6,7 +6,7 @@ import useTeams from "../../hooks/useTeams"
 import useWidget from "../../hooks/useWidget"
 import { shortenText } from "../../utils/helpers"
 import Btn from "../../widgets/Button"
-import AdminAsideBar from "./AdminAsideBar";
+import AdminAsideBar from "../../components/layouts/AdminAsideBar";
 import moment from 'moment';
 import { MdOutlineOpenInNew } from "react-icons/md"
 import { NavLink, useHistory } from "react-router-dom"

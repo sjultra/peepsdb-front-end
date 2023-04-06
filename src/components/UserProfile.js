@@ -2,15 +2,15 @@ import { Box, Flex, IconButton, Select, Text } from "@chakra-ui/react"
 import { useState } from "react"
 import { FaRegUser } from "react-icons/fa"
 import { TbFlag3 } from "react-icons/tb"
-import useAxios from "../../hooks/useAxios"
-import useTeams from "../../hooks/useTeams"
-import useWidget from "../../hooks/useWidget"
-import Btn from "../../widgets/Button"
-import TextInput from "../../widgets/Text"
+import useAxios from "../hooks/useAxios"
+import useTeams from "../hooks/useTeams"
+import useWidget from "../hooks/useWidget"
+import Btn from "../widgets/Button"
+import TextInput from "../widgets/Text"
 import { NavLink } from "react-router-dom"
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { Menu, MenuButton, MenuList, MenuItem, Avatar } from "@chakra-ui/react"
-import useAuthActions from "../../hooks/useAuth"
+import useAuthActions from "../hooks/useAuth"
 
 const toggleUserActiveState = (isSuspended) =>
   isSuspended ? "Enable" : "Suspend"
@@ -34,7 +34,7 @@ export const UserOptions = ({ userlist, user, setUser }) => {
       <MenuList>
         {userlist && (
           <MenuItem py="0.7em">
-            <NavLink to={`/admin/user/${_id}`}>View Profile</NavLink>
+            <NavLink to={`/teams/user/${_id}`}>View Profile</NavLink>
           </MenuItem>
         )}
         {auth?.token && auth?.role === "Admin" ? (
