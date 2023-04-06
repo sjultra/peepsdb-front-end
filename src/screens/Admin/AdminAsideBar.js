@@ -109,7 +109,7 @@ const AdminAsideBar = ({ children }) => {
             <CustomRouteLink
               title={"Users"}
               icon={<HiUsers />}
-              route={"/admin/users"}
+              route={"/teams"}
             />
           </Flex>
         </Flex>

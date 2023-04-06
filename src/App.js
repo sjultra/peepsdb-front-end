@@ -61,7 +61,7 @@ const App = () => {
               component={WorkerWorkspacesScreen}
             />
             <AdminRoute path="/admin/logs" component={Audit} />
-            <AdminRoute path="/admin/users/" component={AdminUsers} />
+            <PrivateRoute path="/teams" component={AdminUsers} />
             <AdminRoute path="/admin/workspaces" component={AdminWorkspace} />
             <AdminRoute path="/admin/user/:id" component={User} exact />
 

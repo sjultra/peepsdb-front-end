@@ -1,5 +1,6 @@
 import React from "react";
 import { MdSpaceDashboard, MdWorkspaces, MdClose } from "react-icons/md";
+import { BsFillPeopleFill } from "react-icons/bs";
 import {
   Flex,
   HStack,
@@ -97,6 +98,11 @@ const WorkerAsideBar = ({ children }) => {
               title={"Workspaces"}
               icon={<MdWorkspaces />}
               route={"/worker/workspaces?activity=all"}
+            />
+            <CustomRouteLink
+              title={"Teams"}
+              icon={<BsFillPeopleFill />}
+              route={"/teams"}
             />
           </Flex>
         </Flex>
