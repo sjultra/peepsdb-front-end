@@ -48,11 +48,27 @@ const AdminAsideBar = ({ children }) => {
   const drawer = useMenu()
 
   return (
+    <>
+      <Box
+        w={{ base: "full", lg: "0" }}
+        h={{ base: "full", lg: "0" }}
+        bg="black"
+        p="0px"
+        top="0px"
+        left="0px"
+        bottom="0px"
+        right="0px"
+        opacity={"0.3"}
+        style={{ zIndex: "998" }}
+        position={"fixed"}
+        display={`${drawer.isopen ? "auto" : "none"}`}
+        onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
+      ></Box>
     <Grid templateColumns={{ base: "1fr", md: "1fr", lg: "21rem auto" }}>
       {/** Side bar menu */}
       <GridItem
-        style={{ zIndex: "999", transition: "left 0.5s linear 0s" }}
-        left={{
+        style={{ zIndex: "999", transition: "right 0.5s linear 0s" }}
+        right={{
           base: `${drawer.isopen ? "0%" : "-100%"}`,
           md: "",
           lg: "0%",
@@ -116,6 +132,7 @@ const AdminAsideBar = ({ children }) => {
         </Box>
       </GridItem>
     </Grid>
+    </>
   )
 }
 
