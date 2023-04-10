@@ -1,201 +1,78 @@
-import React from "react";
-import styled from "styled-components";
-import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import useAuthActions from "../../hooks/useAuth";
+import React from "react"
+import { Link } from "react-router-dom"
+import useAuthActions from "../../hooks/useAuth"
 import {
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   Text,
-} from "@chakra-ui/react";
-
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-
-export const DropDownWrapper = styled.div`
-  position: absolute;
-  top: 6.3rem;
-  z-index: 2;
-`;
-
-export const Callout = styled.div`
-  margin-left: 32.8rem;
-  width: 0;
-  height: 0;
-  border-left: 6.5px solid transparent;
-  border-right: 6.5px solid transparent;
-  border-bottom: 7.5px solid #d3d0fb;
-
-  @media (max-width: 768px) {
-    margin-left: 27.8rem;
-  }
-
-  @media (max-width: 350px) {
-    margin-left: 28rem;
-  }
-
-  @media (max-width: 330px) {
-    margin-left: 27rem;
-  }
-`;
-
-export const DropDown = styled.div`
-  background: #d3d0fb;
-  min-width: 35rem;
-  padding: 2rem 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 10px #ddd;
-
-  @media (max-width: 768px) {
-    min-width: 30rem;
-  }
-
-  @media (max-width: 450px) {
-    font-size: 1.4rem;
-  }
-
-  @media (max-width: 330px) {
-    min-width: 29rem;
-  }
-`;
-
-export const Name = styled.div`
-  display: flex;
-
-  h4 {
-    margin-right: 1rem;
-  }
-`;
-
-const SignOut = styled.p`
-  font-weight: 500;
-  cursor: pointer;
-  width:100%
-`;
-
-export const Margin = styled.div`
-  height: 0.1rem;
-  background: #e9e9e9;
-  margin-top: 1.2rem;
-  margin-bottom: 1.2rem;
-`;
+  Avatar,
+  Box,
+} from "@chakra-ui/react"
+import { FaUser } from "react-icons/fa"
 
 const UserDropdown = ({ user }) => {
+  const { alias, firstName: firstname, lastName: lastname, role } = user
 
-  const {
-    alias,
-    firstName: firstname,
-    lastName: lastname,
-    role,
-  } = user;
+  const { logout, profile: auth } = useAuthActions()
 
-  const { logout,profile:auth } = useAuthActions();
-
-  // const onToggleDropdown = () => {
-  //   setOpenDropdown(!openDropdown);
-  // };
-
-  console.log('auth in userdropdown',auth)
-
-  const style = {
-    color: "#000",
-    fontSize: "3.2rem",
-    cursor: "pointer",
-    border: "2px solid #d3d0fb",
-    borderRadius: "50%",
-  };
+  const { avatar } = auth || {}
 
   const displayName = alias ? (
     alias
   ) : firstname && lastname ? (
     <>
-      {" "}
-      {firstname} {lastname}{" "}
+      {firstname} {lastname}
     </>
   ) : (
     "user"
-  );
+  )
 
   return (
     <>
       <Menu>
         <MenuButton fontSize={"18px"}>
-          <FaUserCircle style={style} />
+          <Box
+            as="div"
+            border="1px"
+            borderColor="gray.200"
+            borderRadius="100px"
+            w="fit-content"
+          >
+            {avatar ? (
+              <Avatar src={`${avatar}`} />
+            ) : (
+              <Avatar color="gray.500" bg="#fcfcfc" icon={<FaUser />} />
+            )}
+          </Box>
         </MenuButton>
-        <MenuList zIndex="100">
-          <MenuItem>
+        <MenuList zIndex="100" p="3" borderRadius="10px">
+          <MenuItem py="2" px="3" borderRadius="5px" _hover={{bg:"#fcfcfc"}}>
             <Link style={{ display: "flex", width: "100%" }} to="/profile">
               {displayName}
               <Text>({role})</Text>
             </Link>
           </MenuItem>
           {auth?.profileSetup ? (
-            <MenuItem>
+            <MenuItem py="2" px="3" borderRadius="5px" _hover={{bg:"#fcfcfc"}}>
               <Link style={{ display: "flex", width: "100%" }} to="/meeting">
-                <p
-                // onClick={() => setOpenmefDropdown(false)}
-                >
-                  Meeting
-                </p>
+                <Text as="p"> Meeting</Text>
               </Link>
             </MenuItem>
           ) : (
             <></>
           )}
 
-          <MenuItem>
-            <SignOut onClick={logout}>Sign Out</SignOut>
+          <MenuItem py="2" px="3" borderRadius="5px" _hover={{bg:"#fcfcfc"}}>
+            <Text as="p" onClick={logout}>
+              Sign Out
+            </Text>
           </MenuItem>
         </MenuList>
       </Menu>
-
-      {/* <Wrapper>
-        {user && <FaUserCircle style={style} onClick={onToggleDropdown} />}
-        {openDropdown && (
-          <DropDownWrapper>
-            <Callout />
-
-            <DropDown>
-              <Link to="/profile">
-                <Name onClick={() => setOpenDropdown(false)}>
-                  <h4> {displayName} </h4>
-                  <p>({role})</p>
-                </Name>
-              </Link>
-              <p style={{ margin: "1rem 0" }}>{email}</p>
-              <Margin></Margin>
-              <Link to="/meeting">
-                <p
-                  style={{ margin: "1rem 0" }}
-                  onClick={() => setOpenDropdown(false)}
-                >
-                  Meeting
-                </p>
-              </Link>
-
-              {role === "Admin" && (
-                <Link to="/admin/users">
-                  <p
-                    style={{ margin: "1rem 0" }}
-                    onClick={() => setOpenDropdown(false)}
-                  >
-                    Admin
-                  </p>
-                </Link>
-              )}
-
-              <SignOut onClick={logout}>Sign Out</SignOut>
-            </DropDown>
-          </DropDownWrapper>
-        )}
-      </Wrapper> */}
     </>
-  );
-};
+  )
+}
 
-export default UserDropdown;
+export default UserDropdown
