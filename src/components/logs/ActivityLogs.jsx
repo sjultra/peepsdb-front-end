@@ -107,12 +107,14 @@ const ActivityLogs = ({_user}) => {
         bg="#fcfcfc"
         px="6"
         py="6"
-        mt="20px">
+        mt="20px"
+      >
         <Text
           noOfLines={1}
           fontSize="18"
           fontWeight="semibold"
-          color="gray.900">
+          color="gray.900"
+        >
           {"Activity log"}
         </Text>
         <Box>
@@ -121,7 +123,8 @@ const ActivityLogs = ({_user}) => {
             <Select
               fontSize={"14px"}
               onClick={(e) => setLogLimit(e.target.value)}
-              maxW={"100px"}>
+              maxW={"100px"}
+            >
               <option value={"today"}>Today</option>
               <option value={"2days"}>Last 2 days</option>
               <option value="7days">Last week</option>
@@ -132,21 +135,30 @@ const ActivityLogs = ({_user}) => {
         </Box>
       </Stack>
       {/**Filter by searching */}
-      <Box overflow={"auto"}>
+      <Box
+        overflow={"auto"}
+        w={{
+          base: "calc(100vw - 8rem)",
+          md: "calc(100vw - 4rem)",
+          lg: "calc(100vw - 22vw)",
+        }}
+      >
         <Stack
           direction={{ base: "column", md: "row", lg: "row" }}
           mt="8"
           w="full"
           justify={"space-between"}
           align="center"
-          gap="4">
+          gap="4"
+        >
           <HStack
             w={{ base: "full", md: "auto", lg: "auto" }}
-            border="1px"
+            flex="1"
             px={{ base: "4", md: "6", lg: "8" }}
             gap={{ base: "8", md: "12", lg: "16" }}
             fontSize={"2xl"}
-            borderColor="gray.100">
+            borderColor="gray.100"
+          >
             <CustumTab
               title="All"
               tab=""
@@ -179,7 +191,8 @@ const ActivityLogs = ({_user}) => {
             border="1px solid #f7f7f7"
             px="1.8rem"
             py="0.5rem"
-            h="fit-content">
+            h="fit-content"
+          >
             <BiSearch />
             <input
               type="text"
@@ -202,22 +215,20 @@ const ActivityLogs = ({_user}) => {
             base: "calc(100vw - 8rem)",
             md: "calc(100vw - 4rem)",
             lg: "calc(100vw - 22vw)",
-          }}>
-
-          {
-            renderJSX(
-              activitiesToDisplay.length,
-              <UserActivityTable
-                body={activitiesToDisplay}
-                headers={["Date", "Type", "Description"]}
-              />,
-              <Center> No items meet your description </Center>
-          )
-        }
-      </Box>
+          }}
+        >
+          {renderJSX(
+            activitiesToDisplay.length,
+            <UserActivityTable
+              body={activitiesToDisplay}
+              headers={["Date", "Type", "Description"]}
+            />,
+            <Center> No items meet your description </Center>
+          )}
+        </Box>
       </Box>
     </Box>
-  );
+  )
 }
 
 // custom tab
