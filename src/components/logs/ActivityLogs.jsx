@@ -153,7 +153,7 @@ const ActivityLogs = ({_user}) => {
         >
           <HStack
             w={{ base: "full", md: "auto", lg: "auto" }}
-            flex="1"
+            border="1px"
             px={{ base: "4", md: "6", lg: "8" }}
             gap={{ base: "8", md: "12", lg: "16" }}
             fontSize={"2xl"}
