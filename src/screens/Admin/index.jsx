@@ -1,5 +1,8 @@
-import AdminAsideBar from "../../components/layouts/AdminAsideBar"
 import { FaUserCheck, FaUserSlash } from "react-icons/fa"
+import { AiFillFire } from "react-icons/ai"
+import { BsClockHistory } from "react-icons/bs"
+import { useState } from "react"
+import { TbFlag3 } from "react-icons/tb"
 import { HiUsers } from "react-icons/hi"
 import {
   Flex,
@@ -10,16 +13,16 @@ import {
   Select,
   Circle,
 } from "@chakra-ui/react"
+
 import useWidget from "../../hooks/useWidget"
 import useTeams from "../../hooks/useTeams"
+
+import AdminAsideBar from "../../components/layouts/AdminAsideBar"
 import Spinner from "../../components/layouts/Spinner"
-import { AiFillFire } from "react-icons/ai"
-import TextInput from "../../widgets/Text"
-import { BsClockHistory } from "react-icons/bs"
-import { useState } from "react"
-import { TbFlag3 } from "react-icons/tb"
-import { ActivityLogDetail, formatDateTimeString } from "./audit"
 import ActivityLogs from "../../components/logs/ActivityLogs"
+import { ActivityLogDetail, formatDateTimeString } from "./audit"
+
+import TextInput from "../../widgets/Text"
 
 const AdminDashboard = () => {
   const { profiles, logs, useFetchProfiles, useAppAudits } = useTeams()

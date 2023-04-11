@@ -1,25 +1,27 @@
-import Spinner from "../components/layouts/Spinner";
-import OnboardUser from "../components/form/Onboarding/UserForm";
-import UserWorkspace from "../components/workspace";
+import { Box, Center, Circle, Flex, Image, Text } from "@chakra-ui/react"
+import { IoClose } from "react-icons/io5"
+import { BiLogOut } from "react-icons/bi"
+import styled from "styled-components"
+import { deviceDetect, isMobile } from "react-device-detect"
+
+import Spinner from "../components/layouts/Spinner"
+import OnboardUser from "../components/form/Onboarding/UserForm"
+import UserWorkspace from "../components/workspace"
+import WorkerAsideBar from "../components/layouts/WorkerAsideBar"
+
 import useAuthActions from "../hooks/useAuth"
-import { Box, Center, Circle, Flex, Image, Text } from "@chakra-ui/react";
-import { IoClose } from "react-icons/io5";
-import styled from "styled-components";
-import { deviceDetect, isMobile } from "react-device-detect";
-import Btn from "../widgets/Button";
-import { BiLogOut } from "react-icons/bi";
-import useDeviceInfo from "../hooks/useDeviceInfo";
-import AdminDashboard from "./Admin";
-import WorkerAsideBar from "../components/layouts/WorkerAsideBar";
+
+import Btn from "../widgets/Button"
+import AdminDashboard from "./Admin"
 
 const DashboardScreen = () => {
   // Selectors
   const { auth, loading, profile, logout, welcome, closeWelcome } =
-    useAuthActions();
+    useAuthActions()
 
-  const userloading = welcome;
+  const userloading = welcome
 
-  console.log("loading included value", auth, profile);
+  console.log("loading included value", auth, profile)
 
   if (loading || !profile) {
     return (
@@ -30,11 +32,12 @@ const DashboardScreen = () => {
         align={"center"}
         justify="center"
         top={0}
-        left={0}>
+        left={0}
+      >
         <Spinner />
       </Flex>
-    );
-  } else if (!auth?.profileSetup) return <OnboardUser profile={profile} />;
+    )
+  } else if (!auth?.profileSetup) return <OnboardUser profile={profile} />
   else if (userloading) {
     return (
       <OnboardingModal
@@ -42,17 +45,17 @@ const DashboardScreen = () => {
         logout={logout}
         profile={profile}
       />
-    );
+    )
   } else if (auth?.token && auth?.role === "Admin") {
-    return <AdminDashboard />;
+    return <AdminDashboard />
   } else {
     return (
       <WorkerAsideBar>
         <UserWorkspace />
       </WorkerAsideBar>
-    );
+    )
   }
-};
+}
 
 const DeviceContainer = styled.div`
   display: flex;
@@ -69,7 +72,7 @@ const DeviceContainer = styled.div`
   &.second {
     margin-top: 0.4em;
   }
-`;
+`
 
 const OnboardingModal = ({ profile, logout, proceed }) => {
   const { email, alias, firstname, lastname } = profile || {}
@@ -89,7 +92,8 @@ const OnboardingModal = ({ profile, logout, proceed }) => {
           p="0.2em"
           size="40px"
           background="rgba(1, 86, 218, 0.31)"
-          color="var(--primary-color)">
+          color="var(--primary-color)"
+        >
           <IoClose fontSize={"30px"} color="var(--primary-color)" />
         </Circle>
       </Flex>
@@ -139,7 +143,8 @@ const OnboardingModal = ({ profile, logout, proceed }) => {
             display="flex"
             gap="0.4em"
             variant={"fade"}
-            full>
+            full
+          >
             <BiLogOut color="initial" />
             <Text fontSize={"18px"} color="initial" fontWeight={500}>
               {" "}
@@ -152,4 +157,4 @@ const OnboardingModal = ({ profile, logout, proceed }) => {
   )
 }
 
-export default DashboardScreen;
+export default DashboardScreen
