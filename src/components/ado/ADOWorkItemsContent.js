@@ -1,22 +1,22 @@
 import React from 'react';
 
 import { useSelector } from 'react-redux';
-import { Box, Image, Heading, useMediaQuery } from '@chakra-ui/react';
+import { Box, Image, Heading, Flex, useMediaQuery } from '@chakra-ui/react';
 
 import { filteredWorkItems } from '../../actions/adoActions';
 
 const ADOWorkItemsContent = ({ projectWorkItems }) => {
   // Work Items Styles
-  const [is600] = useMediaQuery('(maxWidth: 600px');
-  const [is500] = useMediaQuery('(maxWidth: 500px');
+  const [is600px] = useMediaQuery('(max-width: 600px)');
+  const [is500px] = useMediaQuery('(max-width: 500px)');
 
-  const itemStyles = {
+  const workItemsStyles = {
     display: 'grid',
     gridTemplateColumns: '0.07fr 0.58fr 0.2fr 0.15fr',
     gridColumnGap: '2rem',
-    p: is600
-      ? '1.7rem 1rem 1.7rem 3rem'
-      : is500
+    p: is600px
+      ? '1.7rem 1rem 1.7rem 0.8rem'
+      : is500px
       ? '1.7rem 1rem 1.7rem 1rem'
       : '1.2rem 1rem 1.2rem 3rem',
     borderBottom: '1px solid #f1f1f1',
@@ -24,33 +24,14 @@ const ADOWorkItemsContent = ({ projectWorkItems }) => {
     fontSize: '1.5rem',
   };
 
-  const assignedToStyles = {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  };
-
-  const assignedToImgStyles = {
+  const assignedImgStyles = {
     w: '2rem',
     borderRadius: '50%',
     mr: '0.7rem',
   };
 
-  const stateValueStyles = {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-
-    _first: {
-      h: '1rem',
-      w: '1rem',
-      borderRadius: '50%',
-      marginRight: '0.6rem',
-    },
-  };
-
   // Sets the work item state indicator background
-  function setStateIndicator({ state }) {
+  function setStateIndicator(state) {
     const bg =
       state === 'To Do' || state === 'New'
         ? '#b2b2b2'
@@ -60,7 +41,7 @@ const ADOWorkItemsContent = ({ projectWorkItems }) => {
         ? '#ff9d00'
         : '#007acc';
 
-    return <Box as="span" style={{ background: bg }} />;
+    return <Box as="span" style={{ bg }} />;
   }
 
   const stateIndicatorStyles = {
@@ -89,13 +70,13 @@ const ADOWorkItemsContent = ({ projectWorkItems }) => {
             .map((item, index) => {
               const { fields } = item;
               return (
-                <Box {...itemStyles} key={index}>
+                <Box {...workItemsStyles} key={index}>
                   <Box>{fields.id}</Box>
                   <Box>{fields.title}</Box>
-                  <Box {...assignedToStyles}>
+                  <Flex alignItems="center">
                     {/* Profile picture */}
                     <Image
-                      {...assignedToImgStyles}
+                      {...assignedImgStyles}
                       src={
                         fields.assignedTo.imageUrl
                           ? fields.assignedTo.imageUrl
@@ -108,18 +89,15 @@ const ADOWorkItemsContent = ({ projectWorkItems }) => {
                         ? fields.assignedTo.displayName
                         : 'Unassigned'}
                     </Box>
-                  </Box>
-                  <Box {...stateValueStyles}>
+                  </Flex>
+                  <Flex alignItems="center">
                     <Box
                       as="span"
                       {...stateIndicatorStyles}
-                      bg={
-                        setStateIndicator(fields.state).props.style.background
-                      }
+                      bg={setStateIndicator(fields.state).props.style.bg}
                     />
-
                     <Box as="span">{fields.state}</Box>
-                  </Box>
+                  </Flex>
                 </Box>
               );
             })}
