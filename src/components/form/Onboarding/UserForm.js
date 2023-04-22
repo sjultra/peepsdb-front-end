@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import FormUserDetails from "./FormUserDetails";
-import FormWorkDetails from "./FormWorkDetails";
-import FormSocialDetails from "./FormSocialDetails";
-import Confirm from "./Confirm";
+import React, { useState, useEffect } from 'react';
+import FormUserDetails from './FormUserDetails';
+import FormWorkDetails from './FormWorkDetails';
+import FormSocialDetails from './FormSocialDetails';
+import Confirm from './Confirm';
 import {
   Divider,
   Stack,
@@ -10,45 +10,45 @@ import {
   Circle,
   Center,
   Hide,
-  Grid, 
+  Grid,
   GridItem,
   Flex,
-} from "@chakra-ui/react";
-import { GiCheckMark } from "react-icons/gi";
+} from '@chakra-ui/react';
+import { GiCheckMark } from 'react-icons/gi';
 // import Payment from './Payment';
 // import useWidget from '../../../hooks/useWidget';
-import NavLayout from "../../layouts/NavLayout";
-import styled from "styled-components";
-import useConnections from "../../../hooks/useConnections.jsx";
-import useWidget from "../../../hooks/useWidget";
+import NavLayout from '../../layouts/NavLayout';
+import styled from 'styled-components';
+import useConnections from '../../../hooks/useConnections.jsx';
+import useWidget from '../../../hooks/useWidget';
 // import ConnectWidget from '../../connnections';
-import { backendURL } from "../../../utils/setEnv";
+import { backendURL } from '../../../utils/setEnv';
 
 const UserForm = ({ profile, loading }) => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    avatar: "",
-    lastName: "",
-    alias: "",
-    skypeId: "",
-    paymentMethod: "payoneer",
-    googleGmailId: "",
-    appleEmailId: "",
-    microsoftEmailId: "",
-    phone: "",
-    timezone: "",
+    firstName: '',
+    avatar: '',
+    lastName: '',
+    alias: '',
+    skypeId: '',
+    paymentMethod: 'payoneer',
+    googleGmailId: '',
+    appleEmailId: '',
+    microsoftEmailId: '',
+    phone: '',
+    timezone: '',
     daysPerWeek: 4,
-    hoursPerDay: "",
-    localCurrencyUrl: "",
-    femSlackProfileUrl: "",
-    startDate: "",
-    paymentProfileUrl: "",
-    paymentEmail: "",
-    twitterProfileUrl: "",
-    facebookProfileUrl: "",
-    githubProfileUrl: "",
-    linkedinProfileUrl: "",
-    calendlyProfileUrl: "",
+    hoursPerDay: '',
+    localCurrencyUrl: '',
+    femSlackProfileUrl: '',
+    startDate: '',
+    paymentProfileUrl: '',
+    paymentEmail: '',
+    twitterProfileUrl: '',
+    facebookProfileUrl: '',
+    githubProfileUrl: '',
+    linkedinProfileUrl: '',
+    calendlyProfileUrl: '',
     provider: profile?.provider,
   });
 
@@ -63,7 +63,7 @@ const UserForm = ({ profile, loading }) => {
   } = useConnections();
 
   useEffect(() => {
-    console.log("user profile at setup", profile);
+    console.log('user profile at setup', profile);
 
     profile &&
       setFormData((prev) => ({
@@ -73,9 +73,9 @@ const UserForm = ({ profile, loading }) => {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("message", (e) => {
+    window.addEventListener('message', (e) => {
       if (e?.origin === backendURL) {
-        console.log("message caught", e.origin);
+        console.log('message caught', e.origin);
         if (windowRef?.current?.close) {
           let profileData = e.data;
 
@@ -88,12 +88,12 @@ const UserForm = ({ profile, loading }) => {
       }
       // console.log('event data',e.data)
     });
-    return window.removeEventListener("message", window);
+    return window.removeEventListener('message', window);
   }, []);
 
   const openConnections = (initPayload = false) => {
     const payload = {
-      view: "onboarding",
+      view: 'onboarding',
       padd: true,
       setValues: (values, selected) => {
         let payload = {};
@@ -108,11 +108,11 @@ const UserForm = ({ profile, loading }) => {
       ...(initPayload && !initPayload?.target ? { initPayload } : {}),
     };
 
-    console.log("final payload", payload);
+    console.log('final payload', payload);
 
     openModal({
       children: ConnectionsModal,
-      size: "xl",
+      size: 'xl',
       isOpen: true,
       payload,
     });
@@ -125,11 +125,11 @@ const UserForm = ({ profile, loading }) => {
   const [step, setStep] = useState(0);
   // company: loading || !profile.company ? '' : profile.company,
 
-  const onChange = (e, type = "text") => {
+  const onChange = (e, type = 'text') => {
     setFormData({
       ...formData,
       [e.target.name]:
-        type == "number" ? parseInt(e.target.value) : e.target.value,
+        type == 'number' ? parseInt(e.target.value) : e.target.value,
     });
   };
 
@@ -143,51 +143,55 @@ const UserForm = ({ profile, loading }) => {
   // Proceed to next step
   const nextStep = (payload) => {
     setFormData({ ...formData, ...payload });
-    setStep(step=> step+1);
+    setStep((step) => step + 1);
   };
 
   // Go back to prev step
   const prevStep = () => {
-    setStep(step =>step-1);
+    setStep((step) => step - 1);
   };
 
   return (
-    <Box px={{ base: "0", md: "12", lg: "16" }}>
+    <Box px={{ base: '0', md: '12', lg: '16' }}>
       <NavLayout displayAsidebar={false}>
         {step < 3 ? (
           <Grid
-            templateColumns={{ base: "1fr", md: "10rem 1fr" }}
+            templateColumns={{ base: '1fr', md: '10rem 1fr' }}
             gap={4}
             mt="8"
             w="full"
             pb="50px"
-            position="relative">
+            position="relative"
+          >
             <GridItem
               w="full"
               zIndex="10"
               bg="white"
-              position={["sticky"]}
-              top={["0"]}>
+              position={['sticky']}
+              top={['0']}
+            >
               <Stack
-                direction={{ base: "row", md: "column" }}
+                direction={{ base: 'row', md: 'column' }}
                 py="4"
-                position={["sticky"]}
-                top={["8"]}
-                w={{ base: "full", md: "fit-content", lg: "fit-content" }}
-                h={{ base: "fit-content", md: "70vh", lg: "50vh" }}
-                justify="center">
+                position={['sticky']}
+                top={['8']}
+                w={{ base: 'full', md: 'fit-content', lg: 'fit-content' }}
+                h={{ base: 'fit-content', md: '70vh', lg: '50vh' }}
+                justify="center"
+              >
                 {[0, 1, 2].map((index) => {
                   // custom divider border color
                   const activeLineColor =
-                    index === step ? "var(--primary-color)" : "#EFF0F7";
+                    index === step ? 'var(--primary-color)' : '#EFF0F7';
 
                   return (
                     <>
                       {/** check if tab is different to the first step before displaying a DIVIDER */}
                       {index !== 0 ? (
                         <Center
-                          w={{ base: "full", md: "auto", lg: "auto" }}
-                          h={{ base: "auto", md: "full", lg: "full" }}>
+                          w={{ base: 'full', md: 'auto', lg: 'auto' }}
+                          h={{ base: 'auto', md: 'full', lg: 'full' }}
+                        >
                           <Hide below="md">
                             <Divider
                               orientation="vertical"
@@ -204,33 +208,36 @@ const UserForm = ({ profile, loading }) => {
                           </Hide>
                         </Center>
                       ) : (
-                        ""
+                        ''
                       )}
                       <Box
                         onClick={() => {
                           // change tab
                           setStep((step) => (step = index));
-                          console.log("___index___step :", step);
+                          console.log('___index___step :', step);
                         }}
-                        key={index}>
+                        key={index}
+                      >
                         {index === step ? (
-                          <Center cursor={"pointer"}>
+                          <Center cursor={'pointer'}>
                             <Circle
-                              display={"flex"}
+                              display={'flex'}
                               bg="var(--primary-color)"
                               justifyContent="center"
                               size="35px"
-                              alignItems="center">
-                              <GiCheckMark fontSize={"1.4rem"} color="white" />
+                              alignItems="center"
+                            >
+                              <GiCheckMark fontSize={'1.4rem'} color="white" />
                             </Circle>
                           </Center>
                         ) : (
-                          <Center cursor={"pointer"}>
+                          <Center cursor={'pointer'}>
                             <Circle size="35px" background="#EFF0F7">
                               <Circle size="2rem" p="0.3em" bg="white">
                                 <Circle
                                   bg="var(--primary-color)"
-                                  size="10px"></Circle>
+                                  size="10px"
+                                ></Circle>
                               </Circle>
                             </Circle>
                           </Center>
@@ -243,7 +250,7 @@ const UserForm = ({ profile, loading }) => {
             </GridItem>
 
             {/** main body */}
-            <GridItem w="full" mt={["8", "0"]}>
+            <GridItem w="full" mt={['8', '0']}>
               <Box>
                 {/** step 01 for editing user infos */}
                 {step === 0 ? (
@@ -258,7 +265,7 @@ const UserForm = ({ profile, loading }) => {
                     />
                   </Box>
                 ) : (
-                  ""
+                  ''
                 )}
                 {/** step 02 for editing user infos */}
                 {step === 1 ? (
@@ -275,7 +282,7 @@ const UserForm = ({ profile, loading }) => {
                     />
                   </Box>
                 ) : (
-                  ""
+                  ''
                 )}
                 {/** step 02 for editing user infos */}
                 {step === 2 ? (
@@ -297,7 +304,7 @@ const UserForm = ({ profile, loading }) => {
                     />
                   </Box>
                 ) : (
-                  ""
+                  ''
                 )}
               </Box>
             </GridItem>
@@ -323,7 +330,7 @@ export const OnboardingContainer = styled.div`
 
 export const FormRow = ({ children, ...rest }) => {
   return (
-    <Flex direction={{ base: "column", lg: "row" }} gap={"2em"} {...rest}>
+    <Flex direction={{ base: 'column', lg: 'row' }} gap={'2em'} {...rest}>
       {children}
     </Flex>
   );

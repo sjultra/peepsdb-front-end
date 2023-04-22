@@ -1,164 +1,187 @@
-import React from "react"
-import { MdSpaceDashboard, MdWorkspaces, MdClose } from "react-icons/md"
-import { BsUiChecks } from "react-icons/bs"
-import { HiUsers } from "react-icons/hi"
+import React from 'react';
 
-import { Flex, HStack, Box, Text, Grid, GridItem, Show } from "@chakra-ui/react"
-import styled from "styled-components"
-import NavLayout from "./NavLayout"
-import { useMenu } from "../../hooks/MenuProvider"
+import { MdSpaceDashboard, MdWorkspaces, MdClose } from 'react-icons/md';
+import { BsUiChecks } from 'react-icons/bs';
+import { HiUsers } from 'react-icons/hi';
 
-import { NavLink } from "react-router-dom"
-// import './styles.css'
+import {
+  Flex,
+  HStack,
+  Box,
+  Text,
+  Grid,
+  GridItem,
+  Show,
+  Link,
+} from '@chakra-ui/react';
+import NavLayout from './NavLayout';
+import { useMenu } from '../../hooks/MenuProvider';
 
-const StyledLogo = styled.h1`
-  @import url("https://fonts.googleapis.com/css2?family=Amita:wght@700&display=swap");
-  cursor: pointer;
-  font-family: "Amita", cursive;
-  font-size: 28px;
-  font-weight: 700;
-`
+import { NavLink, useLocation } from 'react-router-dom';
 
-const StyledNavContainer = styled.div`
-  a {
-    padding: 0.5em 0.8em;
-    min-width: 155px;
-    display: inherit;
-    border-right: 5px solid transparent;
-    &.active,
-    &:hover {
-      background: #fff;
-      display: inherit;
-      border-right: 5px solid #6d64fa;
-      p {
-        color: var(--primary-color);
-      }
-      svg {
-        color: var(--primary-color);
-      }
-    }
-    svg {
-      color: #676464;
-    }
-  }
-`
+// Styles
+const logoStyles = {
+  cursor: 'pointer',
+  fontFamily: "'Amita', cursive",
+  fontSize: '28px',
+  fontWeight: 700,
+  sx: {
+    '@import':
+      "url('https://fonts.googleapis.com/css2?family=Amita:wght@700&display=swap')",
+  },
+};
+
+const navContainerStyles = {
+  p: '0.5em 0.8em',
+  minWidth: '155px',
+  display: 'inherit',
+  borderRight: '5px solid transparent',
+  _hover: {
+    background: '#fff',
+    display: 'inherit',
+    borderRight: '5px solid #6d64fa',
+    p: {
+      color: 'var(--primary-color)',
+    },
+    svg: {
+      color: 'var(--primary-color)',
+    },
+  },
+};
 
 const AdminAsideBar = ({ children }) => {
   // control displaying menu
-  const drawer = useMenu()
+  const drawer = useMenu();
 
   return (
     <>
       <Box
-        w={{ base: "full", lg: "0" }}
-        h={{ base: "full", lg: "0" }}
+        w={{ base: 'full', lg: '0' }}
+        h={{ base: 'full', lg: '0' }}
         bg="black"
         p="0px"
         top="0px"
         left="0px"
         bottom="0px"
         right="0px"
-        opacity={"0.3"}
-        style={{ zIndex: "998" }}
-        position={"fixed"}
-        display={`${drawer.isopen ? "auto" : "none"}`}
+        opacity={'0.3'}
+        style={{ zIndex: '998' }}
+        position={'fixed'}
+        display={`${drawer.isopen ? 'auto' : 'none'}`}
         onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
       ></Box>
-    <Grid templateColumns={{ base: "1fr", md: "1fr", lg: "21rem auto" }}>
-      {/** Side bar menu */}
-      <GridItem
-        style={{ zIndex: "999", transition: "right 0.5s linear 0s" }}
-        right={{
-          base: `${drawer.isopen ? "0%" : "-100%"}`,
-          md: "",
-          lg: "0%",
-        }}
-        top="0px"
-        position={{ base: "fixed", md: "fixed", lg: "sticky" }}
-        w={{ base: "27rem", md: "24rem", lg: "auto" }}
-      >
-        <Flex
-          as="div"
-          flexDir={"column"}
-          bgColor="#fcfcfc"
-          boxShadow="xs"
-          minHeight={"100vh"}
-          pt="10"
-          px="10"
-          h={"100%"}
+      <Grid templateColumns={{ base: '1fr', md: '1fr', lg: '21rem auto' }}>
+        {/** Side bar menu */}
+        <GridItem
+          style={{ zIndex: '999', transition: 'right 0.5s linear 0s' }}
+          right={{
+            base: `${drawer.isopen ? '0%' : '-100%'}`,
+            md: '',
+            lg: '0%',
+          }}
+          top="0px"
+          position={{ base: 'fixed', md: 'fixed', lg: 'sticky' }}
+          w={{ base: '27rem', md: '24rem', lg: 'auto' }}
         >
-          {/** logo and close icon */}
-          <HStack alignItems="center" justify="space-between">
-            <StyledLogo>PeepsDB</StyledLogo>
-            <Show below="lg">
-              <Box
-                fontSize="3xl"
-                cursor="pointer"
-                onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
-              >
-                <MdClose />
-              </Box>
-            </Show>
-          </HStack>
-          {/** ___ */}
-          <Flex flexDir={"column"} align="start" gap="10" mt={"12"}>
-            <CustomRouteLink
-              title={"Dashboard"}
-              icon={<MdSpaceDashboard />}
-              route={"/"}
-            />
-            <CustomRouteLink
-              title={"Workspaces"}
-              icon={<MdWorkspaces />}
-              route={"/admin/workspaces"}
-            />
-            <CustomRouteLink
-              title={"Audit Trail"}
-              icon={<BsUiChecks />}
-              route={"/admin/logs"}
-            />
-            <CustomRouteLink
-              title={"Users"}
-              icon={<HiUsers />}
-              route={"/teams"}
-            />
+          <Flex
+            as="div"
+            flexDir={'column'}
+            bgColor="#fcfcfc"
+            active
+            pt="10"
+            px="10"
+            h={'100%'}
+          >
+            {/** logo and close icon */}
+            <HStack alignItems="center" justify="space-between">
+              <Text {...logoStyles}>PeepsDB</Text>
+              <Show below="lg">
+                <Box
+                  fontSize="3xl"
+                  cursor="pointer"
+                  onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
+                >
+                  <MdClose />
+                </Box>
+              </Show>
+            </HStack>
+            {/** ___ */}
+            <Flex flexDir={'column'} align="start" gap="10" mt={'12'}>
+              <CustomRouteLink
+                title={'Dashboard'}
+                icon={<MdSpaceDashboard />}
+                route={'/'}
+              />
+              <CustomRouteLink
+                title={'Workspaces'}
+                icon={<MdWorkspaces />}
+                route={'/admin/workspaces'}
+              />
+              <CustomRouteLink
+                title={'Audit Trail'}
+                icon={<BsUiChecks />}
+                active
+                route={'/admin/logs'}
+              />
+              <CustomRouteLink
+                title={'Users'}
+                icon={<HiUsers />}
+                route={'/teams'}
+              />
+            </Flex>
           </Flex>
-        </Flex>
-      </GridItem>
-      {/** past body contents to navbar */}
-      <GridItem px={["0", "4", "10"]}>
-        <Box w="full">
-          <NavLayout title={"Users"}>{children}</NavLayout>
-        </Box>
-      </GridItem>
-    </Grid>
+        </GridItem>
+        {/** past body contents to navbar */}
+        <GridItem px={['0', '4', '10']}>
+          <Box w="full">
+            <NavLayout title={'Users'}>{children}</NavLayout>
+          </Box>
+        </GridItem>
+      </Grid>
     </>
-  )
-}
+  );
+};
 
 // custom route link
-const CustomRouteLink = ({ route, gap, title, icon }) => {
+const CustomRouteLink = ({ route, title, icon }) => {
   // control displaying menu
-  const drawer = useMenu()
+  const drawer = useMenu();
+
+  // gets route and changes link styling if it matches route
+  const location = useLocation();
+  const isActive = location.pathname === route;
 
   return (
     <>
-      <StyledNavContainer>
-        <NavLink
+      <Box
+        {...navContainerStyles}
+        background={isActive ? '#fff' : ''}
+        borderRight={isActive ? '5px solid #6d64fa' : '5px solid transparent'}
+      >
+        <Link
+          as={NavLink}
           exact
           to={`${route}`}
+          isActive={() => window.location.pathname === route}
           onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
         >
-          <Flex gap={"5px"} align="center" cursor={"pointer"}>
-            {icon}
-            <Text fontSize={"14px"} fontWeight="600">
+          <Flex
+            color={isActive ? 'var(--primary-color)' : '#676464'}
+            gap={'5px'}
+            align="center"
+            cursor={'pointer'}
+          >
+            {React.cloneElement(icon, {
+              color: isActive ? 'var(--primary-color)' : '#676464',
+            })}
+            <Text fontSize={'14px'} fontWeight="600">
               {title}
             </Text>
           </Flex>
-        </NavLink>
-      </StyledNavContainer>
+        </Link>
+      </Box>
     </>
-  )
-}
+  );
+};
 
-export default AdminAsideBar
+export default AdminAsideBar;

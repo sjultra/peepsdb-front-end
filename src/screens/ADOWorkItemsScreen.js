@@ -14,8 +14,8 @@ import {
 import Filter from '../components/ado/Filter';
 import Spinner from '../components/layouts/Spinner';
 import ADOWorkItemsContent from '../components/ado/ADOWorkItemsContent';
-import { Box } from "@chakra-ui/react"
-import useGoBack from "../hooks/useGoBack";
+import { Box } from '@chakra-ui/react';
+import useGoBack from '../hooks/useGoBack';
 import NavLayout from '../components/layouts/NavLayout';
 
 const ContentWrapper = styled.div`
@@ -49,7 +49,7 @@ const TableHeading = styled.div`
 `;
 
 const ADOWorkItemsScreen = ({ match }) => {
-  const goback = useGoBack({title:`${match.params.id}`});
+  const goback = useGoBack({ title: `${match.params.id}` });
   const dispatch = useDispatch();
 
   // Selectors
@@ -98,32 +98,29 @@ const ADOWorkItemsScreen = ({ match }) => {
     }
   }, [workItems, match.params.id, dispatch]);
 
-
-
   return (
-    <Box px={["5px", "40px", "40px"]}>
-   <NavLayout displayAsidebar={false}>
+    <Box px={['5px', '40px', '40px']}>
+      <NavLayout displayAsidebar={false}>
+        {goback}
 
-      {goback}
+        {loading && <Spinner />}
 
-      {loading && <Spinner />}
+        {projectWorkItems && (
+          <>
+            <Filter projectWorkItems={projectWorkItems} />
+            <ContentWrapper>
+              <TableHeading>
+                <div>ID</div>
+                <div>Title</div>
+                <div>Assigned To</div>
+                <div>State</div>
+              </TableHeading>
 
-      {projectWorkItems && (
-        <>
-          <Filter projectWorkItems={projectWorkItems} />
-          <ContentWrapper>
-            <TableHeading>
-              <div>ID</div>
-              <div>Title</div>
-              <div>Assigned To</div>
-              <div>State</div>
-            </TableHeading>
-
-            <ADOWorkItemsContent projectWorkItems={projectWorkItems} />
-          </ContentWrapper>
-        </>
-      )}
-    </NavLayout>
+              <ADOWorkItemsContent projectWorkItems={projectWorkItems} />
+            </ContentWrapper>
+          </>
+        )}
+      </NavLayout>
     </Box>
   );
 };

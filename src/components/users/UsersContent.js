@@ -1,12 +1,12 @@
-import React from "react"
-import styled from "styled-components"
-import { capitalizeString, renderJSX } from "../../utils/helpers"
-import { Tbody, Tr, Td, Image, Flex, Text, Circle } from "@chakra-ui/react"
-import { AiOutlineUser } from "react-icons/ai"
-import { formatDateTimeString } from "../../screens/Admin/audit"
+import React from 'react';
+import styled from 'styled-components';
+import { capitalizeString, renderJSX } from '../../utils/helpers';
+import { Tbody, Tr, Td, Image, Flex, Text, Circle } from '@chakra-ui/react';
+import { AiOutlineUser } from 'react-icons/ai';
+import { formatDateTimeString } from '../../screens/Admin/audit';
 
-import useWidget from "../../hooks/useWidget"
-import { UserOptions } from "../UserProfile"
+import useWidget from '../../hooks/useWidget';
+import { UserOptions } from '../UserProfile';
 
 const Item = styled.ul`
   display: grid;
@@ -24,21 +24,21 @@ const Item = styled.ul`
   @media (max-width: 500px) {
     padding: 1.7rem 1rem 1.7rem 1rem;
   }
-`
+`;
 
 const Status = styled.li`
   display: flex;
   flex-direction: row;
   align-items: center;
-`
+`;
 
 const StatusIndicator = styled.span`
   height: 1rem;
   width: 1rem;
   border-radius: 50%;
   margin-right: 0.6rem;
-  background: ${(props) => (props.role === "Guest" ? "#7f7f7f" : "#5e55ef")};
-`
+  background: ${(props) => (props.role === 'Guest' ? '#7f7f7f' : '#5e55ef')};
+`;
 
 const UsersContent = ({ profiles, filterText }) => {
   const filterUsers = (item) => {
@@ -47,10 +47,10 @@ const UsersContent = ({ profiles, filterText }) => {
       item?.lastName?.toLowerCase().includes(filterText.toLowerCase()) ||
       item?.googleGmailId?.toLowerCase().includes(filterText.toLowerCase()) ||
       item?.role.toLowerCase().includes(filterText.toLowerCase())
-    )
-  }
+    );
+  };
 
-  const { openModal, closeModal } = useWidget()
+  const { openModal, closeModal } = useWidget();
 
   return (
     <Tbody>
@@ -64,13 +64,13 @@ const UsersContent = ({ profiles, filterText }) => {
             title,
             role,
             createdAt,
-          } = profile
+          } = profile;
 
-          const fName = capitalizeString(firstname)
-          const lName = capitalizeString(lastname)
+          const fName = capitalizeString(firstname);
+          const lName = capitalizeString(lastname);
           // const titleValue = title || 'Nil';
 
-          const signedUp = formatDateTimeString(createdAt)
+          const signedUp = formatDateTimeString(createdAt);
           return (
             <Tr key={index}>
               <Td py="0.9em">
@@ -78,32 +78,32 @@ const UsersContent = ({ profiles, filterText }) => {
                   {renderJSX(
                     avatar,
                     <Image
-                      width={"45px"}
+                      width={'45px'}
                       height="45px"
-                      borderRadius={"50%"}
+                      borderRadius={'50%'}
                       src={avatar}
                     />,
 
                     <Circle border="1px solid var(--borders)" size="46px">
-                      <AiOutlineUser fontSize={"25px"} />
+                      <AiOutlineUser fontSize={'25px'} />
                     </Circle>
                   )}
                   <Text>
                     {fName && lName ? (
                       <>
-                        {fName} {lName}{" "}
+                        {fName} {lName}{' '}
                       </>
                     ) : (
-                      "Nil"
+                      'Nil'
                     )}
                   </Text>
                 </Flex>
               </Td>
               {/* <Td py='0.9em'>{title || 'Nil'}</Td> */}
-              <Td py={"0.9em"}>{role}</Td>
-              <Td py={"0.9em"}>{signedUp}</Td>
-              <Td py={"0.9em"}>
-                <Flex justify={"center"}>
+              <Td py={'0.9em'}>{role}</Td>
+              <Td py={'0.9em'}>{signedUp}</Td>
+              <Td py={'0.9em'}>
+                <Flex justify={'center'}>
                   <UserOptions user={profile} userlist />
                 </Flex>
               </Td>
@@ -114,13 +114,13 @@ const UsersContent = ({ profiles, filterText }) => {
 
                     </Td> */}
             </Tr>
-          )
+          );
         })
       ) : (
         <h3>No user</h3>
       )}
     </Tbody>
-  )
-}
+  );
+};
 
-export default UsersContent
+export default UsersContent;

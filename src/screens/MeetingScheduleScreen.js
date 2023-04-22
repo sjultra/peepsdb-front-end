@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
-import styled from "styled-components"
-import { BiSearch } from "react-icons/bi"
-import MeetingScheduleContent from "../components/meeting/MeetingScheduleContent"
-import Spinner from "../components/layouts/Spinner"
-import Message from "../components/layouts/Message"
-import useTeams from "../hooks/useTeams"
-import useWidget from "../hooks/useWidget"
-import useAuthActions from "../hooks/useAuth"
-import { Redirect } from "react-router-dom"
-import NavLayout from "../components/layouts/NavLayout"
-import { Box, Flex, HStack } from "@chakra-ui/react"
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { BiSearch } from 'react-icons/bi';
+import MeetingScheduleContent from '../components/meeting/MeetingScheduleContent';
+import Spinner from '../components/layouts/Spinner';
+import Message from '../components/layouts/Message';
+import useTeams from '../hooks/useTeams';
+import useWidget from '../hooks/useWidget';
+import useAuthActions from '../hooks/useAuth';
+import { Redirect } from 'react-router-dom';
+import NavLayout from '../components/layouts/NavLayout';
+import { Box, Flex, HStack } from '@chakra-ui/react';
 
 const TableHead = styled.div`
   background: #fcfcfc;
@@ -33,41 +33,41 @@ const TableHead = styled.div`
   @media (max-width: 500px) {
     padding: 1.7rem 1rem 1.7rem 1rem;
   }
-`
+`;
 
 const MeetingScheduleScreen = () => {
-  const { profiles, fetchAllProfiles } = useTeams()
+  const { profiles, fetchAllProfiles } = useTeams();
 
-  const { profile: auth } = useAuthActions()
+  const { profile: auth } = useAuthActions();
 
-  const { loading } = useWidget()
+  const { loading } = useWidget();
 
   useEffect(() => {
-    !profiles.length && fetchAllProfiles()
-  }, [fetchAllProfiles])
+    !profiles.length && fetchAllProfiles();
+  }, [fetchAllProfiles]);
 
-  const error = false
+  const error = false;
 
-  const [filterText, setFilterText] = useState("")
+  const [filterText, setFilterText] = useState('');
 
   if (auth?.token && !auth?.profileSetup) {
-    return <Redirect to="/" />
+    return <Redirect to="/" />;
   }
 
   return (
-    <Box px={["0", "16"]} pb="100px">
+    <Box px={['0', '16']} pb="100px">
       <NavLayout displayAsidebar={false}>
         <Box>
           <Flex
-            direction={["column", "row"]}
-            align={["start", "center"]}
+            direction={['column', 'row']}
+            align={['start', 'center']}
             justify="space-between"
           >
             <Box color="var(--primary-color)">Schedule Meeting</Box>
 
             {!error && (
               <HStack
-                w={{ base: "full", md: "auto", lg: "auto" }}
+                w={{ base: 'full', md: 'auto', lg: 'auto' }}
                 bg="#fcfcfc"
                 borderRadius="full"
                 border="1px solid #f7f7f7"
@@ -79,10 +79,10 @@ const MeetingScheduleScreen = () => {
                 <input
                   type="text"
                   style={{
-                    outline: "0",
-                    color: "#333",
-                    padding: "0.6rem",
-                    backgroundColor: "transparent",
+                    outline: '0',
+                    color: '#333',
+                    padding: '0.6rem',
+                    backgroundColor: 'transparent',
                   }}
                   placeholder="Search..."
                   value={filterText}
@@ -96,8 +96,8 @@ const MeetingScheduleScreen = () => {
 
           {profiles && (
             <Box
-              overflow={"auto"}
-              w={["calc(100vw - 6rem)", "calc(100vw - 8rem)"]}
+              overflow={'auto'}
+              w={['calc(100vw - 6rem)', 'calc(100vw - 8rem)']}
             >
               <Box overflowX="auto" className="dontShowScrollBar">
                 <TableHead>
@@ -117,7 +117,7 @@ const MeetingScheduleScreen = () => {
         </Box>
       </NavLayout>
     </Box>
-  )
-}
+  );
+};
 
-export default MeetingScheduleScreen
+export default MeetingScheduleScreen;
