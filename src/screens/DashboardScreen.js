@@ -1,43 +1,42 @@
-import { Box, Center, Circle, Flex, Image, Text } from "@chakra-ui/react"
-import { IoClose } from "react-icons/io5"
-import { BiLogOut } from "react-icons/bi"
-import styled from "styled-components"
-import { deviceDetect, isMobile } from "react-device-detect"
+import React from 'react';
 
-import Spinner from "../components/layouts/Spinner"
-import OnboardUser from "../components/form/Onboarding/UserForm"
-import UserWorkspace from "../components/workspace"
-import WorkerAsideBar from "../components/layouts/WorkerAsideBar"
+import { Box, Center, Circle, Flex, Image, Text } from '@chakra-ui/react';
+import { IoClose } from 'react-icons/io5';
+import { BiLogOut } from 'react-icons/bi';
+import { deviceDetect, isMobile } from 'react-device-detect';
 
-import useAuthActions from "../hooks/useAuth"
+import Spinner from '../components/layouts/Spinner';
+import OnboardUser from '../components/form/Onboarding/UserForm';
+import UserWorkspace from '../components/workspace';
+import WorkerAsideBar from '../components/layouts/WorkerAsideBar';
 
-import Btn from "../widgets/Button"
-import AdminDashboard from "./Admin"
+import useAuthActions from '../hooks/useAuth';
+
+import Btn from '../widgets/Button';
+import AdminDashboard from './Admin';
 
 const DashboardScreen = () => {
   // Selectors
   const { auth, loading, profile, logout, welcome, closeWelcome } =
-    useAuthActions()
+    useAuthActions();
 
-  const userloading = welcome
+  const userloading = welcome;
 
-  console.log("loading included value", auth, profile)
+  console.log('loading included value', auth, profile);
 
   if (loading || !profile) {
     return (
       <Flex
-        position={"fixed"}
+        position="fixed"
         w="100vw"
         h="100vh"
-        align={"center"}
+        align="center"
         justify="center"
-        top={0}
-        left={0}
       >
         <Spinner />
       </Flex>
-    )
-  } else if (!auth?.profileSetup) return <OnboardUser profile={profile} />
+    );
+  } else if (!auth?.profileSetup) return <OnboardUser profile={profile} />;
   else if (userloading) {
     return (
       <OnboardingModal
@@ -45,59 +44,41 @@ const DashboardScreen = () => {
         logout={logout}
         profile={profile}
       />
-    )
-  } else if (auth?.token && auth?.role === "Admin") {
-    return <AdminDashboard />
+    );
+  } else if (auth?.token && auth?.role === 'Admin') {
+    return <AdminDashboard />;
   } else {
     return (
       <WorkerAsideBar>
         <UserWorkspace />
       </WorkerAsideBar>
-    )
+    );
   }
-}
-
-const DeviceContainer = styled.div`
-  display: flex;
-  gap: 0.2em;
-  p {
-    font-size: 18px;
-
-    &.device {
-      color: var(--primary-color);
-      font-weight: 500;
-    }
-  }
-
-  &.second {
-    margin-top: 0.4em;
-  }
-`
+};
 
 const OnboardingModal = ({ profile, logout, proceed }) => {
-  const { email, alias, firstname, lastname } = profile || {}
+  const { email, alias, firstname, lastname } = profile || {};
 
-  const device = deviceDetect()
+  const device = deviceDetect();
 
-  const clientType = isMobile ? "Mobile" : "Web"
+  const clientType = isMobile ? 'Mobile' : 'Web';
 
-  const userAlias = email || alias || `${firstname} ${lastname}`
+  const userAlias = email || alias || `${firstname} ${lastname}`;
 
   return (
-    <Box p={{ base: "1.2em", md: "1.5em", lg: "2em 3em" }}>
-      <Flex justify={"flex-end"}>
+    <Box p={{ base: '1.2em', md: '1.5em', lg: '2em 3em' }}>
+      <Flex justify={'flex-end'}>
         <Circle
-          cursor={"pointer"}
+          cursor={'pointer'}
           onClick={proceed}
           p="0.2em"
           size="40px"
           background="rgba(1, 86, 218, 0.31)"
-          color="var(--primary-color)"
+          color="primary.500"
         >
-          <IoClose fontSize={"30px"} color="var(--primary-color)" />
+          <IoClose fontSize="30px" color="primary.500" />
         </Circle>
       </Flex>
-
       <Center mt="0.5em">
         <Box>
           <Center>
@@ -107,7 +88,7 @@ const OnboardingModal = ({ profile, logout, proceed }) => {
           </Center>
 
           <Center>
-            <Text as="h6" color="var(--primary-color)" fontSize="26px">
+            <Text as="h6" color="primary.500" fontSize="26px">
               {userAlias}
             </Text>
           </Center>
@@ -115,25 +96,24 @@ const OnboardingModal = ({ profile, logout, proceed }) => {
           <Center>
             <Image
               src="/Assets/welcome.svg"
-              h={{ base: "200px", lg: "250px" }}
+              h={{ base: '200px', lg: '250px' }}
             />
           </Center>
 
           <Center>
-            <Box>
-              <DeviceContainer className="second">
-                <Text className="one">Client Info:</Text>
-                <Text className="device">
-                  {" "}
-                  {device?.browserName} {clientType} {device?.engineVersion}{" "}
+            <Flex>
+              <Flex gap="0.2em" mt="0.4em">
+                <Text fontSize="18px">Client Info:</Text>
+
+                <Text fontSize="18px" fontWeight={500} color="primary.500">
+                  {device?.browserName} {clientType} {device?.engineVersion}
                 </Text>
-              </DeviceContainer>
-            </Box>
+              </Flex>
+            </Flex>
           </Center>
 
-          <Btn mt="1.2em" onClick={proceed} w="full" full fontSize={"16px"}>
-            {" "}
-            Proceed{" "}
+          <Btn mt="1.2em" onClick={proceed} w="full" full fontSize="16px">
+            Proceed
           </Btn>
 
           <Btn
@@ -142,19 +122,18 @@ const OnboardingModal = ({ profile, logout, proceed }) => {
             w="full"
             display="flex"
             gap="0.4em"
-            variant={"fade"}
+            variant="fade"
             full
           >
             <BiLogOut color="initial" />
-            <Text fontSize={"18px"} color="initial" fontWeight={500}>
-              {" "}
+            <Text fontSize="18px" color="initial" fontWeight={500}>
               Logout
             </Text>
           </Btn>
         </Box>
       </Center>
     </Box>
-  )
-}
+  );
+};
 
-export default DashboardScreen
+export default DashboardScreen;

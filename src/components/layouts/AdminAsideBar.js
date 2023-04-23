@@ -41,10 +41,10 @@ const navContainerStyles = {
     display: 'inherit',
     borderRight: '5px solid #6d64fa',
     p: {
-      color: 'var(--primary-color)',
+      color: 'primary.500',
     },
     svg: {
-      color: 'var(--primary-color)',
+      fill: 'primary.500',
     },
   },
 };
@@ -105,7 +105,7 @@ const AdminAsideBar = ({ children }) => {
                 </Box>
               </Show>
             </HStack>
-            {/** ___ */}
+
             <Flex flexDir={'column'} align="start" gap="10" mt={'12'}>
               <CustomRouteLink
                 title={'Dashboard'}
@@ -166,13 +166,13 @@ const CustomRouteLink = ({ route, title, icon }) => {
           onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
         >
           <Flex
-            color={isActive ? 'var(--primary-color)' : '#676464'}
+            color={isActive ? 'primary.500' : '#676464'}
             gap={'5px'}
             align="center"
             cursor={'pointer'}
           >
             {React.cloneElement(icon, {
-              color: isActive ? 'var(--primary-color)' : '#676464',
+              color: isActive ? 'primary.500' : '#676464',
             })}
             <Text fontSize={'14px'} fontWeight="600">
               {title}

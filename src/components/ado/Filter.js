@@ -14,7 +14,6 @@ const Filter = ({ projectWorkItems }) => {
   const dispatch = useDispatch();
 
   const [is500px] = useMediaQuery('(max-width: 500px)');
-  console.log(is500px);
 
   // Styles
   const wrapperStyles = {
