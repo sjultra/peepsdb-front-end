@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, useMediaQuery } from '@chakra-ui/react';
+import { Box, Grid, Link, Text, useMediaQuery } from '@chakra-ui/react';
 
 const MeetingScheduleContent = ({ profiles, filterText }) => {
   // Styling
@@ -46,39 +46,39 @@ const MeetingScheduleContent = ({ profiles, filterText }) => {
                 {...itemStyling}
                 key={index}
               >
-                <div>
+                <Box>
                   {firstname[0].toUpperCase() + firstname.slice(1)}{' '}
                   {lastname[0].toUpperCase() + lastname.slice(1)}
-                </div>
+                </Box>
                 {timeZoneUrl ? (
-                  <a
+                  <Link
                     href={timeZoneUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-primary"
+                    color="primary.500"
                   >
                     {timeZoneUrl}
-                  </a>
+                  </Link>
                 ) : (
-                  <div>nil</div>
+                  <Box>nil</Box>
                 )}
 
                 {calendlyProfileUrl ? (
-                  <a
+                  <Link
                     href={calendlyProfileUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-primary"
+                    color="primary.500"
                   >
                     {calendlyProfileUrl}
-                  </a>
+                  </Link>
                 ) : (
-                  <div>nil</div>
+                  <Box>nil</Box>
                 )}
               </Grid>
             );
           })}
-      {profiles === [] && <h3>No user</h3>}
+      {profiles === [] && <Text as="h3">No user</Text>}
     </Box>
   );
 };
