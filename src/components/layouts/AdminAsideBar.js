@@ -154,11 +154,11 @@ const CustomRouteLink = ({ route, title, icon }) => {
   return (
     <>
       <Box
-        {...navContainerStyles}
-        background={isActive ? '#fff' : ''}
-        borderRight={isActive ? '5px solid #6d64fa' : '5px solid transparent'}
       >
         <Link
+          {...navContainerStyles}
+          background={isActive ? '#fff' : ''}
+          borderRight={isActive ? '5px solid #6d64fa' : '5px solid transparent'}
           as={NavLink}
           exact
           to={`${route}`}
