@@ -1,15 +1,12 @@
 import UserWorkspace from "../../components/workspace"
-import AdminAsideBar from "./AdminAsideBar"
+import AdminAsideBar from "../../components/layouts/AdminAsideBar"
 
-
-
-const AdminWorkspace =()=>{
-    return(
-        <AdminAsideBar>
-            <UserWorkspace/>
-        </AdminAsideBar>
-
-    )
+const AdminWorkspace = () => {
+  return (
+    <AdminAsideBar>
+      <UserWorkspace />
+    </AdminAsideBar>
+  )
 }
 
-export default AdminWorkspace;
+export default AdminWorkspace

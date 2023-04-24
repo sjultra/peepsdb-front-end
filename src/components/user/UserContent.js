@@ -23,28 +23,23 @@ const Item = styled.div`
 `;
 
 const UserContent = ({ user }) => {
+  const firstname = capitalizeString(user?.profile?.firstName);
 
-  const firstname = capitalizeString(user?.profile?.firstName)
+  const lastname = capitalizeString(user?.profile?.lastName);
 
-  const lastname = capitalizeString(user?.profile?.lastName)
-
-  const {
-    profile,
-    onboard,
-  } = user;
-
+  const { profile, onboard } = user;
 
   const {
-    ndaSent:mutualNdaSent,
-    ndaSigned:mutualNdaSigned,
+    ndaSent: mutualNdaSent,
+    ndaSigned: mutualNdaSigned,
     emailSetup,
     sendReceiveEmail,
     msTeamsSetup,
   } = onboard;
 
-  console.log('user onboard',onboard)
+  console.log('user onboard', onboard);
 
-  const {role} = profile
+  const { role } = profile;
 
   return (
     <>

@@ -88,7 +88,7 @@ const JiraIssuesContent = ({ issues }) => {
                 <div>{issue.fields.summary}</div>
                 <AssignedTo>
                   {issue.fields.assignee.avatarUrl !== null && (
-                    <img src={issue.fields.assignee.avatarUrl} alt='' />
+                    <img src={issue.fields.assignee.avatarUrl} alt="" />
                   )}
                   {issue.fields.assignee.avatarUrl === null && (
                     <FaUserCircle style={unassigned} />

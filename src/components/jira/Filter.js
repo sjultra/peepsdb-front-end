@@ -11,7 +11,7 @@ import {
 
 const Wrapper = styled.div`
   background: #fcfcfc;
-  border:&px solid #f7f7f7;
+  border: &px solid #f7f7f7;
   height: 6rem;
   display: flex;
   align-items: center;
@@ -47,8 +47,8 @@ const InputField = styled.div`
     outline: 0;
     width: 25rem;
     border: 0;
-    border-radius:100px;
-    margin-left:7px;
+    border-radius: 100px;
+    margin-left: 7px;
     outline: 0;
     background: #f8f7ff;
   }
@@ -145,8 +145,8 @@ const Filter = ({ issues }) => {
       <InputField>
         <FiFilter />
         <input
-          type='text'
-          placeholder='Filter by keyword'
+          type="text"
+          placeholder="Filter by keyword"
           value={text}
           onChange={(e) => onChangeText(e)}
         />
@@ -154,11 +154,11 @@ const Filter = ({ issues }) => {
       <Filters>
         <CustomSelect>
           <select
-            name='assigned'
+            name="assigned"
             value={assignedTo}
             onChange={(e) => onChangeAssignedTo(e)}
           >
-            <option value=''>Assigned to</option>
+            <option value="">Assigned to</option>
             {uniqueAssignedToArr &&
               uniqueAssignedToArr.map((username, index) => (
                 <option value={username} key={index}>
@@ -173,11 +173,11 @@ const Filter = ({ issues }) => {
 
         <CustomSelect>
           <select
-            name='status'
+            name="status"
             value={status}
             onChange={(e) => onChangeStatus(e)}
           >
-            <option value=''>Status</option>
+            <option value="">Status</option>
             {uniqueStatusArr &&
               uniqueStatusArr.map((status, index) => (
                 <option value={status} key={index}>

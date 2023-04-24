@@ -18,7 +18,8 @@ const Alert = () => {
   if (alert !== null) {
     return (
       <Wrapper>
-        <AlertBg alertType={alert.alertType}>{alert.msg}</AlertBg>
+        <p>Get fucked</p>
+        {/* <AlertBg alertType={alert.alertType}>{alert.msg}</AlertBg> */}
       </Wrapper>
     );
   } else {
@@ -27,3 +28,22 @@ const Alert = () => {
 };
 
 export default Alert;
+
+// import { Box } from '@chakra-ui/react';
+
+// const AlertBg = ({ alertType, children, ...props }) => {
+//   const backgroundColor = alertType === 'error' ? '#F7DDDC' : '#d1e7dd';
+//   const textColor = alertType === 'error' ? '#712B29' : '#0F5132';
+
+//   return (
+//     <Box
+//       padding="1rem 2rem"
+//       borderRadius="0.3rem"
+//       background={backgroundColor}
+//       color={textColor}
+//       {...props}
+//     >
+//       {children}
+//     </Box>
+//   );
+// };

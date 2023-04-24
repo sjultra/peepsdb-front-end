@@ -87,10 +87,8 @@ export const FormControl = styled.div`
   label {
     margin: 2rem 0 1rem 0;
     color: rgba(4, 9, 33, 0.76);
-    font-size:15px;
+    font-size: 15px;
   }
-
-
 
   span {
     color: #ff0000;

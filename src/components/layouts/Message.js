@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { Wrapper as FormWrapper } from '../form/Onboarding/FormResources';
 
 const Wrapper = styled.div`
-  padding: 1rem 2rem;
-  height: fit-content;
-  margin: 2rem 0 1.5rem 0;
-  border-radius: 0.3rem;
+  // padding: 1rem 2rem;
+  // height: fit-content;
+  // margin: 2rem 0 1.5rem 0;
+  // border-radius: 0.3rem;
   background: ${({ variant }) => {
     if (variant === 'error') {
       return '#F7DDDC';
