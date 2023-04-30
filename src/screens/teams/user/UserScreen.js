@@ -5,13 +5,13 @@ import styled from 'styled-components';
 import Spinner from '../../../components/layouts/Spinner';
 import UserContent from '../../../components/user/UserContent';
 import useTeams from '../../../hooks/useTeams';
-import useAuth  from '../../../hooks/useAuth';
+import useAuth from '../../../hooks/useAuth';
 import { useState } from 'react';
 import useWidget from '../../../hooks/useWidget';
 import UserEditScreen from '../../UserEditScreen';
 import { Flex, Text } from '@chakra-ui/react';
 import useGoBack from '../../../hooks/useGoBack';
-import UserProfile from "../../../components/UserProfile"
+import UserProfile from '../../../components/UserProfile';
 
 const TitleEdit = styled.div`
   display: flex;
@@ -88,89 +88,81 @@ const TableHead = styled.ul`
 `;
 
 const UserScreen = () => {
-  const {profile} = useAuth();
+  const { profile } = useAuth();
 
-  const {fetchUserProfile} = useTeams();
+  const { fetchUserProfile } = useTeams();
 
-  const [user,setUser]  = useState(undefined)
+  const [user, setUser] = useState(undefined);
 
-  const {loading, openModal} = useWidget();
+  const { loading, openModal } = useWidget();
 
-  const fetchUserRef = useRef(fetchUserProfile)
+  const fetchUserRef = useRef(fetchUserProfile);
 
   // const id = match?.params?.id;
 
   const goback = useGoBack({});
 
-  const {id} = useParams();
+  const { id } = useParams();
 
-
-
-  useMemo(()=> console.log('user is suspended',user) ,[user?.isSuspended])
-
+  useMemo(() => console.log('user is suspended', user), [user?.isSuspended]);
 
   useEffect(() => {
-    (
-      async()=>{
-        let fetchUser =await fetchUserRef.current(id);
+    (async () => {
+      let fetchUser = await fetchUserRef.current(id);
 
-        if (fetchUser?.data) {
-          setUser(fetchUser?.data);
-        }
-        else{
-          console.error(fetchUser.error);
-        }
+      if (fetchUser?.data) {
+        setUser(fetchUser?.data);
+      } else {
+        console.error(fetchUser.error);
       }
-    )()
+    })();
   }, [id]);
 
-  if (!id  && profile?.role !== 'Admin') {
-    console.log('redirect back to home at userscren')
-    return <Redirect to='/' />;
+  if (!id && profile?.role !== 'Admin') {
+    console.log('redirect back to home at userscren');
+    return <Redirect to="/" />;
   }
   return (
     <div>
-
       {goback}
 
       {loading && <Spinner />}
 
-      {user && <UserProfile user={user} setUser={setUser} /> }
+      {user && <UserProfile user={user} setUser={setUser} />}
 
-      {user ==='user' && <V1/>}
+      {user === 'user' && <V1 />}
     </div>
   );
 };
 
-
-const V1 = ({firstname,user,openModal})=>{
-
-  return(
-
+const V1 = ({ firstname, user, openModal }) => {
+  return (
     <>
-        
       <TitleEdit>
-      <PrimaryHeading className='text-primary'>
-        {firstname ? firstname : 'User'}
-      </PrimaryHeading>
+        <PrimaryHeading className="text-primary">
+          {firstname ? firstname : 'User'}
+        </PrimaryHeading>
         {user && (
           <StyledLink>
-
-              <Flex p='0.4em 1em' borderRadius={'6px'} color={'white'} 
-              gap='0.5em' bg='var(--primary-color)' my='0.8em' align={'center'}
-              onClick={()=>{
+            <Flex
+              p="0.4em 1em"
+              borderRadius={'6px'}
+              color={'white'}
+              gap="0.5em"
+              bg="var(--primary-color)"
+              my="0.8em"
+              align={'center'}
+              onClick={() => {
                 openModal({
-                  children:UserEditScreen,
-                  payload:user,
-                  size:'4xl'
-                })} 
-                }
-              >
-                <Text fontSize={'19px'}> Edit User</Text>
-                <FiEdit fontSize={'22px'} />
-              </Flex>
-
-
+                  children: UserEditScreen,
+                  payload: user,
+                  size: '4xl',
+                });
+              }}
+            >
+              <Text fontSize={'19px'}> Edit User</Text>
+              <FiEdit fontSize={'22px'} />
+            </Flex>
           </StyledLink>
         )}
       </TitleEdit>
@@ -182,13 +174,8 @@ const V1 = ({firstname,user,openModal})=>{
         </TableHead>
         <UserContent user={user} />
       </ContentWrapper>
-
     </>
-
-  )
-
-}
-
-
+  );
+};
 
 export default UserScreen;
