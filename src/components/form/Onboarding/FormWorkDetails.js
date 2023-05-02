@@ -5,7 +5,6 @@ import { renderJSX } from '../../../utils/helpers';
 import Btn from '../../../widgets/Button';
 import Input from '../../../widgets/Input';
 // import TextInput from "../../../widgets/Text";
-import { OnboardingContainer } from './UserForm';
 // import { backendURL } from "../../../utils/setEnv";
 import SelectInput from '../../../widgets/Select';
 import { allTimeZones } from '../../../utils/timezone-list';
@@ -148,7 +147,7 @@ const FormWorkDetails = ({
   }, [workEmails]);
 
   return (
-    <OnboardingContainer>
+    <>
       <Flex my="0.2em" align={'center'} justify={'flex-end'}>
         {/* {
           renderJSX(
@@ -166,11 +165,7 @@ const FormWorkDetails = ({
         )}
       </Flex>
 
-      <Flex
-        className="below"
-        direction={{ base: 'column', lg: 'row' }}
-        gap={'2em'}
-      >
+      <Flex mt="1em" direction={{ base: 'column', lg: 'row' }} gap={'2em'}>
         <Input
           label="Title"
           type="text"
@@ -195,19 +190,11 @@ const FormWorkDetails = ({
         </Box>
       </Flex>
 
-      <Flex
-        className="below"
-        direction={{ base: 'column', lg: 'row' }}
-        gap={'2em'}
-      >
+      <Flex mt="1em" direction={{ base: 'column', lg: 'row' }} gap={'2em'}>
         {memoizeWorkEmails}
       </Flex>
 
-      <Flex
-        className="below"
-        direction={{ base: 'column', lg: 'row' }}
-        gap={'2em'}
-      >
+      <Flex mt="1em" direction={{ base: 'column', lg: 'row' }} gap={'2em'}>
         <Input
           label="Start Date"
           type="date"
@@ -230,11 +217,7 @@ const FormWorkDetails = ({
         />
       </Flex>
 
-      <Flex
-        className="below"
-        direction={{ base: 'column', lg: 'row' }}
-        gap={'2em'}
-      >
+      <Flex mt="1em" direction={{ base: 'column', lg: 'row' }} gap={'2em'}>
         <Input
           label="Hours Per Day"
           type="number"
@@ -256,7 +239,7 @@ const FormWorkDetails = ({
         </Flex>,
         <></>
       )}
-    </OnboardingContainer>
+    </>
   );
 };
 
