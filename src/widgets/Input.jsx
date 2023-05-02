@@ -66,8 +66,6 @@ const InputElement = ({
       }
     : {};
 
-  console.log('PULE', containerStyles);
-
   return (
     <Flex
       flexDirection="column"
