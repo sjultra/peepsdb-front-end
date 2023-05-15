@@ -41,7 +41,6 @@ const App = () => {
     <MenuProvider>
       <ChakraProvider theme={theme}>
         <Router>
-          {/* <Alert /> */}
           <ModalComponent />
           <Switch>
             <PrivateRoute
