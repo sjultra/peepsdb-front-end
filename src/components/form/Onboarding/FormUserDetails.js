@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+
 import { Box, Divider, Flex, Square, Text, useToast } from '@chakra-ui/react';
 import InputElement from '../../../widgets/Input';
 import { HiOutlineUser } from 'react-icons/hi';
@@ -7,22 +7,9 @@ import Btn from '../../../widgets/Button';
 import FileInputComponent, {
   RenderFileImage,
 } from '../../../widgets/FileInputComponent';
+
 import { fileToBase64, renderJSX } from '../../../utils/helpers';
-import TextInput from '../../../widgets/Text';
 import useValidate from '../../../hooks/useValidate';
-
-const BtnWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 4rem;
-`;
-
-const Required = styled.div`
-  span {
-    color: #ff0000;
-  }
-`;
 
 const FormUserDetails = ({
   nextStep,
@@ -240,7 +227,8 @@ const FormUserDetails = ({
           onChange={onChange}
         />
 
-        {/* <Box flex={1}>    
+        {/* Under Review
+        <Box flex={1}>    
             <FormControl>
               <label htmlFor='skypeId'>SkypeId</label>
               <input
