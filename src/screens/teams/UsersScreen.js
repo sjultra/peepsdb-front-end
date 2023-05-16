@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react"
-import { FiSearch } from "react-icons/fi"
-import UsersContent from "../../components/users/UsersContent"
-import Spinner from "../../components/layouts/Spinner"
-import useTeams from "../../hooks/useTeams"
-import useWidget from "../../hooks/useWidget"
+import { useEffect, useRef, useState } from 'react';
+import { FiSearch } from 'react-icons/fi';
+import UsersContent from '../../components/users/UsersContent';
+import Spinner from '../../components/layouts/Spinner';
+import useTeams from '../../hooks/useTeams';
+import useWidget from '../../hooks/useWidget';
 
 import {
   Table,
@@ -14,21 +14,21 @@ import {
   Text,
   Th,
   TableContainer,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react';
 
 const UsersScreen = () => {
   // Selectors
-  const { profiles, fetchAllProfiles } = useTeams()
-  const { loading } = useWidget()
-  const fetchProfilesRef = useRef(fetchAllProfiles)
+  const { profiles, fetchAllProfiles } = useTeams();
+  const { loading } = useWidget();
+  const fetchProfilesRef = useRef(fetchAllProfiles);
 
   useEffect(() => {
     if (!profiles?.length) {
-      fetchProfilesRef.current()
+      fetchProfilesRef.current();
     }
-  }, [profiles])
+  }, [profiles]);
 
-  const [filterText, setFilterText] = useState("")
+  const [filterText, setFilterText] = useState('');
 
   // Ensure the page is only accessible by Admins
   // if (user && user.role !== 'Admin') {
@@ -38,18 +38,18 @@ const UsersScreen = () => {
   return (
     <Box>
       <Flex
-        direction={{ base: "column", md: "row" }}
+        direction={{ base: 'column', md: 'row' }}
         gap="8"
-        align={["start", "center"]}
+        align={['start', 'center']}
         justify="space-between"
       >
         <Text fontSize="2rem" color="var(--primary-color)">
-          Users{" "}
+          Users{' '}
         </Text>
 
-        <Box w={["full", "30rem"]}>
+        <Box w={['full', '30rem']}>
           <Flex
-            align={"center"}
+            align={'center'}
             gap="2"
             bg="#fcfcfc"
             border="1px solid #f7f7f7"
@@ -61,10 +61,10 @@ const UsersScreen = () => {
             <input
               type="text"
               style={{
-                background: "transparent",
-                outline: "none",
-                width: "100%",
-                padding: "0.5rem",
+                background: 'transparent',
+                outline: 'none',
+                width: '100%',
+                padding: '0.5rem',
               }}
               placeholder="Search..."
               value={filterText}
@@ -81,29 +81,29 @@ const UsersScreen = () => {
         <Box
           pb="100px"
           mt="8"
-          overflow={"auto"}
+          overflow={'auto'}
           className="dontShowScrollBar"
           w={{
-            base: "calc(100vw - 6rem)",
-            md: "calc(100vw - 4rem)",
-            lg: "calc(100vw - 21vw)",
+            base: 'calc(100vw - 6rem)',
+            md: 'calc(100vw - 4rem)',
+            lg: 'calc(100vw - 21vw)',
           }}
         >
           <TableContainer mt="1em">
             <Table variant="simple">
               <Thead>
                 <Tr>
-                  <Th py="0.8em" fontSize={"14px"}>
+                  <Th py="0.8em" fontSize={'14px'}>
                     Name
                   </Th>
                   {/* <Th py='0.8em'  fontSize={'14px'}>Title</Th> */}
-                  <Th py="0.8em" fontSize={"14px"}>
+                  <Th py="0.8em" fontSize={'14px'}>
                     Role
                   </Th>
-                  <Th py="0.8em" fontSize={"14px"}>
+                  <Th py="0.8em" fontSize={'14px'}>
                     Sign up Date
                   </Th>
-                  <Th py="0.8em" fontSize={"14px"}>
+                  <Th py="0.8em" fontSize={'14px'}>
                     Action
                   </Th>
                   {/* <Th>Action</Th> */}
@@ -115,7 +115,7 @@ const UsersScreen = () => {
         </Box>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default UsersScreen
+export default UsersScreen;
