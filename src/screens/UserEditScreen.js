@@ -1,40 +1,18 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { updateUserOnboardStatus } from '../actions/onboardActions';
 import Spinner from '../components/layouts/Spinner';
-import {
-  PrimaryHeading,
-  FormControl,
-  BtnNext,
-} from '../components/form/Onboarding/FormResources';
+import { FormControl } from '../components/form/Onboarding/FormResources';
 import useWidget from '../hooks/useWidget';
-import { Box, Flex } from '@chakra-ui/react';
+import { useMediaQuery, Box, Flex } from '@chakra-ui/react';
 import { capitalizeString } from '../utils/helpers';
 
-const UserName = styled.div`
-  > div:first-child {
-    margin: 2rem 0 1rem 0;
-  }
-
-  > div:last-child {
-    height: 50px;
-    /* padding: 0 2rem; */
-    display: flex;
-    align-items: center;
-  }
-`;
-
-export const BtnWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-top: 4rem;
-  font-size: 1.6rem;
-`;
-
 const UserEditScreen = ({ payload }) => {
+  // Media Query Stylings
+  const [isLargerThan900] = useMediaQuery('(min-width: 900px)');
+  const [isLargerThan550] = useMediaQuery('(min-width: 550px)');
+  const [isLargerThan375] = useMediaQuery('(min-width: 375px)');
+
   const dispatch = useDispatch();
   //hooks
 
@@ -90,19 +68,19 @@ const UserEditScreen = ({ payload }) => {
 
   return (
     <Box className="editUser" pb="2rem">
-      <PrimaryHeading className="text-center text-primary">
+      <Box m="2rem 0" className="text-center text-primary">
         Edit User
-      </PrimaryHeading>
+      </Box>
 
       {loading && <Spinner />}
 
       {user && (
-        <UserName>
-          <div>Name</div>
-          <div>
+        <Box>
+          <Box margin="2rem 0 1rem 0">Name</Box>
+          <Flex height="50px" alignItems="center">
             {capitalizeString(firstName)} {capitalizeString(lastName)}
-          </div>
-        </UserName>
+          </Flex>
+        </Box>
       )}
 
       {user && (
@@ -193,9 +171,38 @@ const UserEditScreen = ({ payload }) => {
  */}
           </Flex>
 
-          <BtnWrapper>
-            <BtnNext disabled={true}>Update User</BtnNext>
-          </BtnWrapper>
+          <Flex
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            marginTop="4rem"
+            fontSize="1.6rem"
+          >
+            <Box
+              height="5rem"
+              width={
+                isLargerThan375
+                  ? isLargerThan550
+                    ? isLargerThan900
+                      ? '20rem'
+                      : '15rem'
+                    : '12rem'
+                  : '11rem'
+              }
+              background="#5e55ef"
+              border="1px solid #5e55ef"
+              color="#fff"
+              borderRadius="10px"
+              transition="all 0.3s"
+              _hover={{
+                background: '#fff',
+                color: '#000',
+              }}
+              disabled={true}
+            >
+              Update User
+            </Box>
+          </Flex>
         </form>
       )}
     </Box>
