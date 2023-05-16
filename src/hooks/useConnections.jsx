@@ -50,9 +50,10 @@ const SelectDataComponent = ({
           </Text>
         </Box>
 
-        <CheckboxInput
-          checked={payloadList.includes(keyValue)}
-          onClick={() =>
+        <Box
+          as="input"
+          isChecked={payloadList.includes(keyValue)}
+          onChange={() =>
             setPayload((prev) => {
               console.log('payload', prev);
               return prev.includes(keyValue)
@@ -63,8 +64,10 @@ const SelectDataComponent = ({
           w="initial"
           flex="initial"
           h="initial"
-          type={'checkbox'}
+          type="checkbox"
           height="50px"
+          size="lg"
+          transform="scale(1.4)"
         />
       </Flex>
     );
