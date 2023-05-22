@@ -67,4 +67,3 @@ export const loadUserReducer = (state = loadUserInitialState, action) => {
       return state;
   }
 };
-
