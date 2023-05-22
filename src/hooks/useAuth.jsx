@@ -17,12 +17,14 @@ const useAuthActions = ()=>{
 
     const {auth,profile:userProfile,welcome} = useSelector(selectAuth);
 
-    const {getUserTimezone} = useAppInsights();
+    const {getUserTimezone,getUserCoordinates} = useAppInsights();
 
     const Axios = useAxios();
 
     const history = useHistory();
-  
+
+    console.log('timezone',getUserTimezone())
+
     const profile = userProfile? {
       ...userProfile,
       timezone: userProfile?.timezone || getUserTimezone().userTimezone
@@ -59,6 +61,10 @@ const useAuthActions = ()=>{
     }
     
     const fetchMyProfile = async(token)=>{
+
+        const locationn = getUserCoordinates();
+
+        console.log("user location",locationn); 
 
         try{
 

@@ -53,7 +53,8 @@ const AdminDashboard = () => {
 
   const suspendedAccounts = profiles?.filter((profile) => profile?.isSuspended)
 
-  const userLogEntry = logs || []
+  const userLogEntry = logs || [];
+
 
   return (
     <AdminAsideBar>
@@ -98,7 +99,9 @@ const AdminDashboard = () => {
           <FaUserSlash color="#E4746C" fontSize={"22"} />
         </CustomStatisticCard>
       </Grid>
+
       {/** Activity logs */}
+
       <Box>
         <ActivityLogs _user={"admin"} />
       </Box>
