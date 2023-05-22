@@ -1,44 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 import { capitalizeString, renderJSX } from '../../utils/helpers';
 import { Tbody, Tr, Td, Image, Flex, Text, Circle } from '@chakra-ui/react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { formatDateTimeString } from '../../screens/Admin/audit';
 
-import useWidget from '../../hooks/useWidget';
 import { UserOptions } from '../UserProfile';
-
-const Item = styled.ul`
-  display: grid;
-  grid-template-columns: 0.26fr 0.34fr 0.2fr 0.2fr;
-  grid-column-gap: 3rem;
-  padding: 1.2rem 1rem 1.2rem 3rem;
-  border-bottom: 1px solid #f1f1f1;
-  /* min-width: 120rem; */
-  font-size: 1.5rem;
-
-  @media (max-width: 600px) {
-    padding: 1.7rem 1rem 1.7rem 3rem;
-  }
-
-  @media (max-width: 500px) {
-    padding: 1.7rem 1rem 1.7rem 1rem;
-  }
-`;
-
-const Status = styled.li`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const StatusIndicator = styled.span`
-  height: 1rem;
-  width: 1rem;
-  border-radius: 50%;
-  margin-right: 0.6rem;
-  background: ${(props) => (props.role === 'Guest' ? '#7f7f7f' : '#5e55ef')};
-`;
 
 const UsersContent = ({ profiles, filterText }) => {
   const filterUsers = (item) => {
@@ -49,8 +15,6 @@ const UsersContent = ({ profiles, filterText }) => {
       item?.role.toLowerCase().includes(filterText.toLowerCase())
     );
   };
-
-  const { openModal, closeModal } = useWidget();
 
   return (
     <Tbody>

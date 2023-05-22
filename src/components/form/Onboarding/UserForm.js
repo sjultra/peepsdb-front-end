@@ -18,7 +18,6 @@ import { GiCheckMark } from 'react-icons/gi';
 // import Payment from './Payment';
 // import useWidget from '../../../hooks/useWidget';
 import NavLayout from '../../layouts/NavLayout';
-import styled from 'styled-components';
 import useConnections from '../../../hooks/useConnections.jsx';
 import useWidget from '../../../hooks/useWidget';
 // import ConnectWidget from '../../connnections';
@@ -322,15 +321,9 @@ const UserForm = ({ profile, loading }) => {
   );
 };
 
-export const OnboardingContainer = styled.div`
-  .below {
-    margin-top: 1em;
-  }
-`;
-
 export const FormRow = ({ children, ...rest }) => {
   return (
-    <Flex direction={{ base: 'column', lg: 'row' }} gap={'2em'} {...rest}>
+    <Flex direction={{ base: 'column', lg: 'row' }} gap="2em" {...rest}>
       {children}
     </Flex>
   );

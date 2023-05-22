@@ -1,10 +1,10 @@
-import {  useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import useAxios from './useAxios';
 import { capitalizeString } from '../utils/helpers';
 import useAuthActions from './useAuth';
 import useAppInsights from './useAppInsights';
 
-const useLogin = ()=>{
+const useLogin = () => {
 
     const {setAuth,auth,fetchMyProfile} = useAuthActions()
 
@@ -25,20 +25,20 @@ const useLogin = ()=>{
     
     const queries = Object.fromEntries(urlSearch.entries())  || {};
 
-    console.log('queries',queries)
+  console.log('queries', queries);
 
-    const browserToken = auth?.token? auth?.token :JSON.parse(localStorage.getItem('peepsdb-auth'))?.token;
+  const browserToken = auth?.token
+    ? auth?.token
+    : JSON.parse(localStorage.getItem('peepsdb-auth'))?.token;
 
     const tokenRef = useRef({
         type:queries?.token?'sign':'',
         token: queries?.token || browserToken
     })
 
-    // console.log('browserToken',auth)
+  const setAuthRef = useRef(setAuth);
 
-    const setAuthRef = useRef(setAuth);
-
-    const fetchMyProfileRef = useRef(fetchMyProfile);
+  const fetchMyProfileRef = useRef(fetchMyProfile);
 
 
     useEffect(()=>{
@@ -100,7 +100,6 @@ const useLogin = ()=>{
     },[geoLocation])
 
 
-}
+};
 
-
-export default useLogin
+export default useLogin;

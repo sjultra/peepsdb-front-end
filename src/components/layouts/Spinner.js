@@ -1,38 +1,14 @@
 import React from 'react';
-import { css } from '@emotion/react';
+
+import { Flex } from '@chakra-ui/react';
 import BeatLoader from 'react-spinners/BeatLoader';
-import styled from 'styled-components';
 
-// Can be a string as well. Need to ensure each key-value pair ends with ;
-const override = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  border-color: #5e55ef;
-`;
-
-const Spinner = ({className,full, fontSize=10}) => {
+const Spinner = ({ fontSize = 10 }) => {
   return (
-    <div className={className +` sweet-loading ${full && 'full'}`}>
-      <BeatLoader color={'#5e55ef'} loading={true} css={override} size={fontSize} />
-    </div>
+    <Flex justifyContent="center" alignItems="center">
+      <BeatLoader color={'#5e55ef'} loading={true} size={fontSize} />
+    </Flex>
   );
 };
 
-export default styled(Spinner)`
-
-  &.full{
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
-  }
-
-
-
-`;
+export default Spinner;

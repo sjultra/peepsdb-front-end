@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import UsersScreen from "./UsersScreen"
 import AdminAsideBar from "../../components/layouts/AdminAsideBar"
 import useAuthActions from "../../hooks/useAuth"
@@ -5,38 +6,46 @@ import WorkerAsideBar from "../../components/layouts/WorkerAsideBar"
 import Spinner from "../../components/layouts/Spinner"
 import { Flex } from "@chakra-ui/react"
 import MongoChart from "./mongochart"
+=======
+import UsersScreen from './UsersScreen';
+import AdminAsideBar from '../../components/layouts/AdminAsideBar';
+import useAuthActions from '../../hooks/useAuth';
+import WorkerAsideBar from '../../components/layouts/WorkerAsideBar';
+import Spinner from '../../components/layouts/Spinner';
+import { Flex } from '@chakra-ui/react';
+>>>>>>> efc37c718492c9dd4e2c3bf772aa4131384da950
 
 const Teams = () => {
   // Selectors
-  const { auth, loading, profile } = useAuthActions()
+  const { auth, loading, profile } = useAuthActions();
 
   // spinner
   if (loading || !profile) {
     return (
       <Flex
-        position={"fixed"}
+        position={'fixed'}
         w="100vw"
         h="100vh"
-        align={"center"}
+        align={'center'}
         justify="center"
         top={0}
         left={0}
       >
         <Spinner />
       </Flex>
-    )
+    );
   }
 
 
   // return teams members with custom admin aside bar
-  if (auth?.token && auth?.role === "Admin") {
+  if (auth?.token && auth?.role === 'Admin') {
     return (
       <AdminAsideBar>
         {/* <MongoChart filter={{}} height={'500px'} width={'100%'}/> */}
 
         <UsersScreen />
       </AdminAsideBar>
-    )
+    );
   }
 
   // return teams members with custom worker aside bar
@@ -44,9 +53,10 @@ const Teams = () => {
     <WorkerAsideBar>
       <UsersScreen />
     </WorkerAsideBar>
-  )
-}
+  );
+};
 
+<<<<<<< HEAD
 
 const Chart = ()=>{
   return(
@@ -57,3 +67,6 @@ const Chart = ()=>{
 }
 
 export default Teams
+=======
+export default Teams;
+>>>>>>> efc37c718492c9dd4e2c3bf772aa4131384da950
