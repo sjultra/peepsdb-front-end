@@ -15,12 +15,9 @@ const useAuthActions = () => {
 
   const { auth, profile: userProfile, welcome } = useSelector(selectAuth);
 
-
   const Axios = useAxios();
 
   const {getUserTimezone,getUserCoordinates} = useAppInsights();
-
-
   const history = useHistory();
 
   console.log('timezone',getUserTimezone())
@@ -29,7 +26,6 @@ const useAuthActions = () => {
     ...userProfile,
     timezone: userProfile?.timezone || getUserTimezone().userTimezone
   }:undefined
-
   const setAuth = useCallback(
     (payload) => dispatch(set(payload)),
     [dispatch, set]
@@ -45,18 +41,7 @@ const useAuthActions = () => {
     [dispatch, setP]
   );
 
-  const logout = () => {
-    localStorage.removeItem('peepsdb-auth');
-    localStorage.removeItem('first-login');
-    setAuth({});
-    history.push('/');
-  };
- 
-  //endpoints
-  const updateUser = async (payload) => {
-    console.log('profile payload', payload);
 
-<<<<<<< HEAD
     const logout = ()=>{
         localStorage.removeItem('peepsdb-auth');
         localStorage.removeItem('first-login');
@@ -123,55 +108,7 @@ const useAuthActions = () => {
         }
     }
     
-=======
-    let req = await Axios[profile?.profileSetup ? 'put' : 'post'](
-      `/profiles?logtype=${profile?.profileSetup ? 'onboard' : 'update'}`,
-      payload
-    );
-    let { data, status } = req;
->>>>>>> efc37c718492c9dd4e2c3bf772aa4131384da950
 
-    return {
-      data: data,
-      status,
-    };
-  };
-
-  const fetchMyProfile = async (token) => {
-    try {
-      setLoading(true);
-      let siginStamp = localStorage.getItem('first-login');
-
-      let profileUrl = `profiles/me${siginStamp ? '' : '?firstLogin=true'}`;
-
-      let req = await Axios.get(profileUrl, {
-        ...(token
-          ? {
-              headers: {
-                Authorization: token,
-              },
-            }
-          : {}),
-      });
-
-      !siginStamp && localStorage.setItem('first-login', true);
-
-      let { data } = req;
-
-      console.log('result from profile', req);
-
-      req.status === 201 &&
-        setProfile({
-          ...data,
-          firstName: capitalizeString(data?.firstName),
-          lastName: capitalizeString(data?.lastName),
-        });
-    } catch (err) {
-      console.error('err at fetching my profile', err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return {
     logout,

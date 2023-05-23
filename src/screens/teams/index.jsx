@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import UsersScreen from "./UsersScreen"
 import AdminAsideBar from "../../components/layouts/AdminAsideBar"
 import useAuthActions from "../../hooks/useAuth"
@@ -6,14 +5,6 @@ import WorkerAsideBar from "../../components/layouts/WorkerAsideBar"
 import Spinner from "../../components/layouts/Spinner"
 import { Flex } from "@chakra-ui/react"
 import MongoChart from "./mongochart"
-=======
-import UsersScreen from './UsersScreen';
-import AdminAsideBar from '../../components/layouts/AdminAsideBar';
-import useAuthActions from '../../hooks/useAuth';
-import WorkerAsideBar from '../../components/layouts/WorkerAsideBar';
-import Spinner from '../../components/layouts/Spinner';
-import { Flex } from '@chakra-ui/react';
->>>>>>> efc37c718492c9dd4e2c3bf772aa4131384da950
 
 const Teams = () => {
   // Selectors
@@ -56,7 +47,6 @@ const Teams = () => {
   );
 };
 
-<<<<<<< HEAD
 
 const Chart = ()=>{
   return(
@@ -67,6 +57,3 @@ const Chart = ()=>{
 }
 
 export default Teams
-=======
-export default Teams;
->>>>>>> efc37c718492c9dd4e2c3bf772aa4131384da950
