@@ -37,6 +37,11 @@ const App = () => {
 
   useEffect(() => initAzureLoggingRef.current(), []);
 
+  useEffect((()=>{
+    let googleClientId = process.env['REACT_APP_GOOGLE_CLIENT_ID'];
+    document.getElementsByTagName('meta')[3].content = googleClientId;
+  })(),[])
+
   return (
     <MenuProvider>
       <ChakraProvider theme={theme}>
