@@ -37,6 +37,7 @@ const App = () => {
 
   useEffect(() => initAzureLoggingRef.current(), []);
 
+  
   return (
     <MenuProvider>
       <ChakraProvider theme={theme}>
