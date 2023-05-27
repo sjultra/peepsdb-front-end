@@ -1,43 +1,46 @@
-import { authActions, selectAuth } from "../store/reducers/auth";
-import  {useDispatch,useSelector} from 'react-redux'
-import { useCallback, useState } from "react";
-import { capitalizeString } from "../utils/helpers";
-import useAxios from "./useAxios";
-import { useHistory } from "react-router-dom";
-import useAppInsights from "./useAppInsights";
+import { authActions, selectAuth } from '../store/reducers/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useState } from 'react';
+import { capitalizeString } from '../utils/helpers';
+import useAxios from './useAxios';
+import { useHistory } from 'react-router-dom';
+import useAppInsights from './useAppInsights';
 
+const useAuthActions = () => {
+  const { setAuth: set, setProfile: setP, closeWelcome: close } = authActions;
 
-const useAuthActions = ()=>{
+  const [loading, setLoading] = useState(false);
 
-    const {setAuth:set,setProfile:setP,closeWelcome:close} = authActions;
+  const dispatch = useDispatch();
 
-    const [loading,setLoading] = useState(false)
+  const { auth, profile: userProfile, welcome } = useSelector(selectAuth);
 
-    const dispatch = useDispatch();
+  const Axios = useAxios();
 
-    const {auth,profile:userProfile,welcome} = useSelector(selectAuth);
+  const {getUserTimezone,getUserCoordinates} = useAppInsights();
+  const history = useHistory();
 
-    const {getUserTimezone,getUserCoordinates} = useAppInsights();
+  console.log('timezone',getUserTimezone())
 
-    const Axios = useAxios();
+  const profile = userProfile? {
+    ...userProfile,
+    timezone: userProfile?.timezone || getUserTimezone().userTimezone
+  }:undefined
+  const setAuth = useCallback(
+    (payload) => dispatch(set(payload)),
+    [dispatch, set]
+  );
 
-    const history = useHistory();
+  const closeWelcome = useCallback(() => dispatch(close()), [dispatch, close]);
 
-    console.log('timezone',getUserTimezone())
+  const setProfile = useCallback(
+    (payload) => {
+      console.log('setting profile', payload);
+      dispatch(setP(payload));
+    },
+    [dispatch, setP]
+  );
 
-    const profile = userProfile? {
-      ...userProfile,
-      timezone: userProfile?.timezone || getUserTimezone().userTimezone
-    }:undefined
-
-    const setAuth = useCallback((payload)=>dispatch(set(payload)),[dispatch,set]) 
-
-    const closeWelcome = useCallback(()=>dispatch(close()),[dispatch,close]) 
-
-    const setProfile= useCallback((payload)=>{
-      console.log('setting profile',payload)
-      dispatch(setP(payload))
-    },[dispatch,setP]) 
 
     const logout = ()=>{
         localStorage.removeItem('peepsdb-auth');
@@ -106,20 +109,20 @@ const useAuthActions = ()=>{
     }
     
 
-    return {
-        logout,
-        setAuth,
-        setProfile,
-        updateUser,
-        fetchMyProfile,
-        setLoading,
-        closeWelcome,
-        loading,
-        auth,
-        profile,
-        welcome,
-    }
 
-}
+  return {
+    logout,
+    setAuth,
+    setProfile,
+    updateUser,
+    fetchMyProfile,
+    setLoading,
+    closeWelcome,
+    loading,
+    auth,
+    profile,
+    welcome,
+  };
+};
 
 export default useAuthActions;

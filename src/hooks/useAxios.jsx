@@ -1,53 +1,37 @@
-import axios from "axios";
-import useAppInsights from "./useAppInsights";
+import axios from 'axios';
+import { deviceDetect, isMobile } from 'react-device-detect';
 // import useDeviceMetaData from "./useDeviceInfo";
 
+const useAxios = () => {
+  const device = deviceDetect();
 
+  const localStorageToken =
+    localStorage.getItem('peepsdb-auth') || JSON.stringify({});
 
-const useAxios = ()=>{
+  const token = JSON.parse(localStorageToken)?.token;
 
-    
-    const localStorageToken = localStorage.getItem("peepsdb-auth") || JSON.stringify({})
+  const deviceinfo = JSON.stringify({ device });
 
-    const {device,userTimezone} = useAppInsights()
- 
-    const token = JSON.parse(localStorageToken)?.token;
+  const baseUrl = process.env['REACT_APP_BACKEND_URL'];
 
-    const deviceinfo = JSON.stringify({
-      device,
-      userTimezone
-    });
-
- 
-    const baseUrl = process.env['REACT_APP_BACKEND_URL'];
-
-    const Axios =
-    token
+  const Axios = token
     ? axios.create({
         baseURL: baseUrl,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `${token}`,
-          deviceinfo
-
+          deviceinfo,
         },
       })
     : axios.create({
         baseURL: baseUrl,
         headers: {
-          "Content-Type": "application/json",
-        }
+          'Content-Type': 'application/json',
+          deviceinfo,
+        },
       });
 
-
-
-
-    
- 
-
-    return Axios
-    
-}
-
+  return Axios;
+};
 
 export default useAxios;

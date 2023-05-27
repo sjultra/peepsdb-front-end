@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import styled from 'styled-components';
-import useAuthActions from '../../hooks/useAuth';
+
+import { useMediaQuery, Box } from '@chakra-ui/react';
 import ModalComponent from '../layouts/Modal';
+
+import useAuthActions from '../../hooks/useAuth';
 
 const AdminRoute = ({ component: Component, ...rest }) => {
   // Selectors
@@ -11,15 +13,7 @@ const AdminRoute = ({ component: Component, ...rest }) => {
   const isAuthenticated =
     true || (auth?.isAuthenticated && auth?.role === 'admin') ? true : false;
 
-  const RouteLayout = styled.div`
-    /* padding: 0 5rem; */
-    @media (max-width: 768px) {
-      /* padding: 0 3rem; */
-    }
-    @media (max-width: 450px) {
-      padding: 0 2rem;
-    }
-  `;
+  const is450px = useMediaQuery('(max-width: 450px)');
 
   const memoizeRenderedComponent = useMemo(
     () => (
@@ -29,10 +23,10 @@ const AdminRoute = ({ component: Component, ...rest }) => {
           !isAuthenticated ? (
             <Redirect to="/login" />
           ) : (
-            <RouteLayout>
+            <Box p={is450px ? '0 2rem' : '0'}>
               <ModalComponent />
               <Component {...props} />
-            </RouteLayout>
+            </Box>
           )
         }
       />

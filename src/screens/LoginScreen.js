@@ -1,12 +1,12 @@
-import React, { useState } from "react"
-import { Redirect } from "react-router-dom"
-import Background from "../assets/images/login-background.png"
-import { FcGoogle } from "react-icons/fc"
-import { BsGithub, BsLinkedin, BsFacebook, BsTwitter } from "react-icons/bs"
-import Microsoft from "../assets/images/microsoft-icon.png"
-import { backendURL, githubClientID } from "../utils/setEnv"
-import useAuthActions from "../hooks/useAuth"
-import { renderJSX } from "../utils/helpers"
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import Background from '../assets/images/login-background.png';
+import { FcGoogle } from 'react-icons/fc';
+import { BsGithub, BsLinkedin, BsFacebook, BsTwitter } from 'react-icons/bs';
+import Microsoft from '../assets/images/microsoft-icon.png';
+import { backendURL, githubClientID } from '../utils/setEnv';
+import useAuthActions from '../hooks/useAuth';
+import { renderJSX } from '../utils/helpers';
 import {
   Box,
   Button,
@@ -24,74 +24,73 @@ import {
   ModalBody,
   Hide,
   ModalCloseButton,
-} from "@chakra-ui/react"
-import TextInput from "../widgets/Text"
-import Btn from "../widgets/Button"
-import Input from "../widgets/Input"
-import { IoIosCheckmarkCircle } from "react-icons/io"
-import useConnections from "../hooks/useConnections"
-import { AiOutlineRight } from "react-icons/ai"
+} from '@chakra-ui/react';
+import TextInput from '../widgets/Text';
+import Btn from '../widgets/Button';
+import Input from '../widgets/Input';
+import { IoIosCheckmarkCircle } from 'react-icons/io';
+import useConnections from '../hooks/useConnections';
+import { AiOutlineRight } from 'react-icons/ai';
 
 // return GitHub URL Authentication link
 export const githubAuthCall = (userid) =>
   `https://github.com/login/oauth/authorize?client_id=${githubClientID}&redirect_uri=${encodeURIComponent(
-    backendURL + "/" + process.env.REACT_APP_GITHUB_CALLBACK_URL
-  )}?path=${"/" + renderJSX(userid, userid, "")}&scope=user:email`
+    backendURL + '/' + process.env.REACT_APP_GITHUB_CALLBACK_URL
+  )}?path=${'/' + renderJSX(userid, userid, '')}&scope=user:email`;
 // return Google URL Authentication link
 export const googleAuthUrl = (inapp) =>
-  `${backendURL}/auth/google${renderJSX(inapp, inapp, "")}`
+  `${backendURL}/auth/google${renderJSX(inapp, inapp, '')}`;
 // return LinkedIn URL Authentication link
-export const linkedinAuthUrl = (inapp = "") => {
-  const baseURL = "https://www.linkedin.com/oauth/v2/authorization"
-  const client_id = `client_id=${process.env["REACT_APP_LINKEDIN_CLIENT_ID"]}`
-  const response_type = `response_type=code`
+export const linkedinAuthUrl = (inapp = '') => {
+  const baseURL = 'https://www.linkedin.com/oauth/v2/authorization';
+  const client_id = `client_id=${process.env['REACT_APP_LINKEDIN_CLIENT_ID']}`;
+  const response_type = `response_type=code`;
   const redirect_uri = `redirect_uri=${
-    backendURL + "/" + process.env.REACT_APP_LINKEDIN_CALLBACK_URL
-  }`
-  const state = `state=${inapp}`
-  const scope = `scope=${encodeURIComponent(`r_liteprofile r_emailaddress`)}`
+    backendURL + '/' + process.env.REACT_APP_LINKEDIN_CALLBACK_URL
+  }`;
+  const state = `state=${inapp}`;
+  const scope = `scope=${encodeURIComponent(`r_liteprofile r_emailaddress`)}`;
 
-  const completeURL = `${baseURL}?${response_type}&${client_id}&${redirect_uri}&${state}&${scope}`
+  const completeURL = `${baseURL}?${response_type}&${client_id}&${redirect_uri}&${state}&${scope}`;
 
-
-  return completeURL
-}
+  return completeURL;
+};
 // return Facebook URL Authentication link
-export const facebookAuthUrl = (inapp = "") =>
-  `${backendURL}/auth/facebook${inapp}`
+export const facebookAuthUrl = (inapp = '') =>
+  `${backendURL}/auth/facebook${inapp}`;
 // return Microsoft URL Authentication link
 export const microsoftAuthUrl = (userid) =>
-  `${backendURL}/auth/microsoft${renderJSX(userid, `?userid=` + userid, "")}`
+  `${backendURL}/auth/microsoft${renderJSX(userid, `?userid=` + userid, '')}`;
 
 const inputStyles =
-  "background:whiteborder:1px solid var(--borders)border-radius:0.4emmargin-top:0.4emheight:40pxfont-size:13px"
+  'background:whiteborder:1px solid var(--borders)border-radius:0.4emmargin-top:0.4emheight:40pxfont-size:13px';
 
 const NewConnection = ({ handleClose }) => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(0);
 
   const handleSubmit = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       setTimeout(() => {
-        setStep(1)
-        setLoading(false)
-      }, 2000)
+        setStep(1);
+        setLoading(false);
+      }, 2000);
     } catch (err) {
     } finally {
     }
-  }
+  };
 
   if (!step) {
     return (
       <>
         <Box p="2em">
-          <Flex justify={"center"}>
-            <TextInput variant={"s2"}>Request Connect</TextInput>
+          <Flex justify={'center'}>
+            <TextInput variant={'s2'}>Request Connect</TextInput>
           </Flex>
 
-          <Center mt="0.6em" fontSize={"13px"} color={"var(--hash)"}>
+          <Center mt="0.6em" fontSize={'13px'} color={'var(--hash)'}>
             Enter connection information
           </Center>
 
@@ -132,18 +131,18 @@ const NewConnection = ({ handleClose }) => {
           </Btn>
         </Box>
       </>
-    )
+    );
   }
   return (
-    <Box p={"1.5em"}>
+    <Box p={'1.5em'}>
       <Center mt="1.5em">
-        <IoIosCheckmarkCircle fontSize={"55px"} color="var(--primary-color)" />
+        <IoIosCheckmarkCircle fontSize={'55px'} color="var(--primary-color)" />
       </Center>
-      <Center color="var(--primary-color)" mt="0.5em" fontSize={"18px"}>
-        Thank You!{" "}
+      <Center color="var(--primary-color)" mt="0.5em" fontSize={'18px'}>
+        Thank You!{' '}
       </Center>
 
-      <Center mt={"0.5em"} color="#333333" fontSize={"13px"}>
+      <Center mt={'0.5em'} color="#333333" fontSize={'13px'}>
         You request has been successfully recorded. We're working on it!
       </Center>
 
@@ -151,29 +150,29 @@ const NewConnection = ({ handleClose }) => {
         Close
       </Btn>
     </Box>
-  )
-}
+  );
+};
 
 const LoginScreen = () => {
   // Selector
-  const { auth } = useAuthActions()
-  const { ConnectionsModal } = useConnections()
+  const { auth } = useAuthActions();
+  const { ConnectionsModal } = useConnections();
   // states
-  const [modalScreen, setModalScreen] = useState()
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [modalScreen, setModalScreen] = useState();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // open modal
   const handleOpen = (type) => {
-    setModalScreen(type)
-    onOpen()
-  }
+    setModalScreen(type);
+    onOpen();
+  };
   // close modal
   const handleClose = () => {
-    setModalScreen()
-    onClose()
-  }
+    setModalScreen();
+    onClose();
+  };
   // check if authenticated
   if (auth?.token) {
-    return <Redirect to="/" />
+    return <Redirect to="/" />;
   }
 
   return (
@@ -184,11 +183,11 @@ const LoginScreen = () => {
         <ModalContent mx="6">
           <ModalCloseButton />
           <ModalBody mt="1em">
-            {modalScreen === "new-connection" ? (
+            {modalScreen === 'new-connection' ? (
               <NewConnection handleClose={handleClose} />
-            ) : modalScreen === "more-connections" ? (
+            ) : modalScreen === 'more-connections' ? (
               <>
-                <ConnectionsModal view={"login"} />
+                <ConnectionsModal view={'login'} />
               </>
             ) : (
               <></>
@@ -198,14 +197,15 @@ const LoginScreen = () => {
       </Modal>
       {/** first content showing up */}
       <Stack
-        direction={"row"}
+        direction={'row'}
         justify="center"
         alignItems="center"
         gap="16"
         overflow="auto"
-        minH="100vh">
+        minH="100vh"
+      >
         {/** login block */}
-        <Stack direction={"column"} alignItems="center" gap="8">
+        <Stack direction={'column'} alignItems="center" gap="8">
           <Box align="center">
             <Text fontSize="2.5rem" fontWeight="semibold">
               Sign in to PeepsDB
@@ -219,14 +219,15 @@ const LoginScreen = () => {
             <Grid
               align="center"
               gap={{
-                base: "1rem",
-                md: "1rem",
-                lg: "2rem",
+                base: '1rem',
+                md: '1rem',
+                lg: '2rem',
               }}
               templateColumns={{
-                base: "repeat(3,1fr)",
-                md: "repeat(3,1fr)",
-              }}>
+                base: 'repeat(3,1fr)',
+                md: 'repeat(3,1fr)',
+              }}
+            >
               <CustomSocialLink socialAuthLink={googleAuthUrl}>
                 <FcGoogle />
               </CustomSocialLink>
@@ -254,21 +255,23 @@ const LoginScreen = () => {
 
             {2 + 2 === 5 && (
               <Button
-                onClick={() => handleOpen("more-connections")}
+                onClick={() => handleOpen('more-connections')}
                 mt="2.5em"
                 bg="white"
-                h={"3.5em"}
+                h={'3.5em'}
                 border="1px solid var(--primary-color)"
                 w="full"
-                borderRadius="5px">
+                borderRadius="5px"
+              >
                 <Text
-                  mr={"0.3em"}
-                  fontSize={"15px"}
-                  color="var(--primary-color)">
+                  mr={'0.3em'}
+                  fontSize={'15px'}
+                  color="var(--primary-color)"
+                >
                   More connections
                 </Text>
                 <AiOutlineRight
-                  fontSize={"14px"}
+                  fontSize={'14px'}
                   color="var(--primary-color)"
                 />
               </Button>
@@ -282,16 +285,17 @@ const LoginScreen = () => {
               <Box h="1px" borderTop="1px solid #EEEEEE" flex={0.49}></Box>
             </Flex>
 
-            <Flex gap="1" >
-              <Text fontSize={"xl"}>Couldn't find connection? </Text>
+            <Flex gap="1">
+              <Text fontSize={'xl'}>Couldn't find connection? </Text>
               <Text
-                onClick={() => handleOpen("new-connection")}
-                cursor={"pointer"}
-                fontSize={"xl"}
+                onClick={() => handleOpen('new-connection')}
+                cursor={'pointer'}
+                fontSize={'xl'}
                 color="var(--primary-color)"
                 _hover={{
-                  textDecoration: "underline",
-                }}>
+                  textDecoration: 'underline',
+                }}
+              >
                 Request Connect
               </Text>
             </Flex>
@@ -312,7 +316,7 @@ const LoginScreen = () => {
       </Stack>
     </>
   );
-}
+};
 
 // Customs social(s) link(s) for Auth -> Facebook | Google | GitHub | Twitter | ...
 const CustomSocialLink = ({ children, socialAuthLink }) => {
@@ -330,13 +334,14 @@ const CustomSocialLink = ({ children, socialAuthLink }) => {
         borderRadius="8px"
         fontSize="3rem"
         _hover={{
-          background: "#f9f9f9",
+          background: '#f9f9f9',
         }}
-        href={socialAuthLink()}>
+        href={socialAuthLink()}
+      >
         {children}
       </Stack>
     </GridItem>
-  )
-}
+  );
+};
 
-export default LoginScreen
+export default LoginScreen;

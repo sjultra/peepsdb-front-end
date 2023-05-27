@@ -13,7 +13,7 @@ import {
   SET_JIRA_ASSIGNEDTO_FILTER,
   SET_JIRA_STATUS_FILTER,
 } from '../constants/jiraConstants.js';
-import Axios from '../utils/axios.js';  
+import Axios from '../utils/axios.js';
 
 // Encode personalAccessToken to Base64
 // const personalAccessToken = process.env.REACT_APP_JIRA_PAT;
@@ -28,39 +28,39 @@ import Axios from '../utils/axios.js';
 //   },
 // };
 
-
 // GET ALL JIRA LABELS
-export const getJiraLabels = (AxiosInstance=Axios) => async (dispatch) => {
-  try {
-    dispatch({
-      type: GET_JIRA_LABELS_REQUEST,
-    });
+export const getJiraLabels =
+  (AxiosInstance = Axios) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: GET_JIRA_LABELS_REQUEST,
+      });
 
-    // const res = await axios.get(
-    //   `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/label`,
-    //   config
-    // );
+      // const res = await axios.get(
+      //   `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/label`,
+      //   config
+      // );
 
+      const res = await AxiosInstance.get('/jira/labels');
 
-    const res = await AxiosInstance.get('/jira/labels');
+      console.log('jira labels at frontend', res.data);
 
-    console.log('jira labels at frontend',res.data)
-
-    dispatch({
-      type: GET_JIRA_LABELS_SUCCESS,
-      payload: res.data.values,
-    });
-  } catch (err) {
-    dispatch({
-      type: GET_JIRA_LABELS_FAILURE,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
+      dispatch({
+        type: GET_JIRA_LABELS_SUCCESS,
+        payload: res.data.values,
+      });
+    } catch (err) {
+      dispatch({
+        type: GET_JIRA_LABELS_FAILURE,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  };
 
 // GET ALL JIRA ISSUES
 export const getAllIssues =
-  (startAt = 0,AxiosInstance=Axios) =>
+  (startAt = 0, AxiosInstance = Axios) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -69,15 +69,15 @@ export const getAllIssues =
 
       const res = await AxiosInstance.get(`/jira/issues?start=${startAt}`);
 
-      const {data} = res;
+      const { data } = res;
 
-      console.log('request data',data);
+      console.log('request data', data);
 
       // const res = await axios.get(
       //   `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/search?startAt=${startAt}&maxResults=100`,
       //   config
       // );
-      
+
       dispatch({
         type: GET_ALL_ISSUES_SUCCESS,
         payload: {
@@ -100,7 +100,7 @@ export const getAllIssues =
 
 // GET LABEL ISSUES
 export const getLabelIssues =
-  (label, startAt = 0,AxiosInstance=Axios) =>
+  (label, startAt = 0, AxiosInstance = Axios) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -111,7 +111,9 @@ export const getLabelIssues =
       //   `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/search?jql=labels%20IN%20(%22${label}%22)&startAt=${startAt}&maxResults=100`,
       //   config
       // );
-      const res = await AxiosInstance.get(`/jira/label/issues?start=${startAt}&label=${label} `);
+      const res = await AxiosInstance.get(
+        `/jira/label/issues?start=${startAt}&label=${label} `
+      );
 
       dispatch({
         type: GET_LABEL_ISSUES_SUCCESS,

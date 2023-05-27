@@ -20,17 +20,6 @@ import { useMenu } from '../../hooks/MenuProvider';
 import { NavLink, useLocation } from 'react-router-dom';
 
 // Styles
-const logoStyles = {
-  cursor: 'pointer',
-  fontFamily: "'Amita', cursive",
-  fontSize: '28px',
-  fontWeight: 700,
-  sx: {
-    '@import':
-      "url('https://fonts.googleapis.com/css2?family=Amita:wght@700&display=swap')",
-  },
-};
-
 const navContainerStyles = {
   p: '0.5em 0.8em',
   minWidth: '155px',
@@ -94,7 +83,14 @@ const AdminAsideBar = ({ children }) => {
           >
             {/** logo and close icon */}
             <HStack alignItems="center" justify="space-between">
-              <Text {...logoStyles}>PeepsDB</Text>
+              <Text
+                cursor="pointer"
+                fontFamily="logo"
+                fontSize="28px"
+                fontWeight="700"
+              >
+                PeepsDB
+              </Text>
               <Show below="lg">
                 <Box
                   fontSize="3xl"
@@ -153,33 +149,30 @@ const CustomRouteLink = ({ route, title, icon }) => {
 
   return (
     <>
-      <Box
+      <Link
+        {...navContainerStyles}
+        background={isActive ? '#fff' : ''}
+        borderRight={isActive ? '5px solid #6d64fa' : '5px solid transparent'}
+        as={NavLink}
+        exact
+        to={`${route}`}
+        isActive={() => window.location.pathname === route}
+        onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
       >
-        <Link
-          {...navContainerStyles}
-          background={isActive ? '#fff' : ''}
-          borderRight={isActive ? '5px solid #6d64fa' : '5px solid transparent'}
-          as={NavLink}
-          exact
-          to={`${route}`}
-          isActive={() => window.location.pathname === route}
-          onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
+        <Flex
+          color={isActive ? 'primary.500' : '#676464'}
+          gap={'5px'}
+          align="center"
+          cursor={'pointer'}
         >
-          <Flex
-            color={isActive ? 'primary.500' : '#676464'}
-            gap={'5px'}
-            align="center"
-            cursor={'pointer'}
-          >
-            {React.cloneElement(icon, {
-              color: isActive ? 'primary.500' : '#676464',
-            })}
-            <Text fontSize={'14px'} fontWeight="600">
-              {title}
-            </Text>
-          </Flex>
-        </Link>
-      </Box>
+          {React.cloneElement(icon, {
+            color: isActive ? 'primary.500' : '#676464',
+          })}
+          <Text fontSize={'14px'} fontWeight="600">
+            {title}
+          </Text>
+        </Flex>
+      </Link>
     </>
   );
 };

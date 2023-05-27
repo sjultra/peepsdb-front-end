@@ -27,7 +27,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import useLogin from './hooks/useLogin';
 import useAppInsights from './hooks/useAppInsights';
 import { MenuProvider } from './hooks/MenuProvider';
-
+import {Helmet} from 'react-helmet'
 const App = () => {
   const { initializeAzureLogging } = useAppInsights();
 
@@ -37,16 +37,20 @@ const App = () => {
 
   useEffect(() => initAzureLoggingRef.current(), []);
 
-  useEffect((()=>{
-    let googleClientId = process.env['REACT_APP_GOOGLE_CLIENT_ID'];
-    document.getElementsByTagName('meta')[3].content = googleClientId;
-  })(),[])
-
+  
+  
   return (
+    <>
+      <Helmet>
+        <meta
+          name="google-signin-client_id"
+          content={process.env['REACT_APP_GOOGLE_CLIENT_ID']}
+        />    
+      </Helmet>
+    
     <MenuProvider>
       <ChakraProvider theme={theme}>
         <Router>
-          {/* <Alert /> */}
           <ModalComponent />
           <Switch>
             <PrivateRoute
@@ -82,6 +86,7 @@ const App = () => {
         </Router>
       </ChakraProvider>
     </MenuProvider>
+    </>
   );
 };
 

@@ -5,49 +5,34 @@ import {
   Flex,
   HStack,
   Box,
+  Link,
   Text,
   Grid,
   GridItem,
   Show,
 } from '@chakra-ui/react';
-import styled from 'styled-components';
 import NavLayout from './NavLayout';
 import { useMenu } from '../../hooks/MenuProvider';
 
-import { NavLink } from 'react-router-dom';
-// import './styles.css'
+import { NavLink, useLocation } from 'react-router-dom';
 
-const StyledLogo = styled.h1`
-  @import url('https://fonts.googleapis.com/css2?family=Amita:wght@700&display=swap');
-  cursor: pointer;
-  font-family: 'Amita', cursive;
-  font-size: 28px;
-  font-weight: 700;
-`;
-
-const StyledNavContainer = styled.div`
-  a {
-    padding: 0.5em 0.8em;
-    min-width: 155px;
-    display: inherit;
-    border-right: 5px solid transparent;
-    &.active,
-    &:hover {
-      background: #fff;
-      display: inherit;
-      border-right: 5px solid #6d64fa;
-      p {
-        color: var(--primary-color);
-      }
-      svg {
-        color: var(--primary-color);
-      }
-    }
-    svg {
-      color: #676464;
-    }
-  }
-`;
+const navContainerStyles = {
+  p: '0.5em 0.8em',
+  minWidth: '155px',
+  display: 'inherit',
+  borderRight: '5px solid transparent',
+  _hover: {
+    background: '#fff',
+    display: 'inherit',
+    borderRight: '5px solid #6d64fa',
+    p: {
+      color: 'primary.500',
+    },
+    svg: {
+      fill: 'primary.500',
+    },
+  },
+};
 
 const WorkerAsideBar = ({ children }) => {
   // control displaying menu
@@ -95,7 +80,14 @@ const WorkerAsideBar = ({ children }) => {
           >
             {/** logo and close icon */}
             <HStack alignItems="center" justify="space-between">
-              <StyledLogo>PeepsDB</StyledLogo>
+              <Text
+                cursor="pointer"
+                fontFamily="logo"
+                fontSize="28px"
+                fontWeight="700"
+              >
+                PeepsDB
+              </Text>
               <Show below="lg">
                 <Box
                   fontSize="3xl"
@@ -141,22 +133,35 @@ const WorkerAsideBar = ({ children }) => {
 const CustomRouteLink = ({ route, gap, title, icon }) => {
   // control displaying menu
   const drawer = useMenu();
+
+  // gets route and changes link styling if it matches route
+  const location = useLocation();
+  const isActive = location.pathname === route;
+
   return (
     <>
-      <StyledNavContainer>
-        <NavLink
-          exact
-          to={`${route}`}
-          onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
+      <Link
+        {...navContainerStyles}
+        exact
+        background={isActive ? '#fff' : ''}
+        borderRight={isActive ? '5px solid #6d64fa' : '5px solid transparent'}
+        as={NavLink}
+        to={`${route}`}
+        isActive={() => window.location.pathname === route}
+        onClick={() => drawer.setMenuStatus((_prev) => !_prev)}
+      >
+        <Flex
+          color={isActive ? 'primary.500' : '#676464'}
+          gap={'5px'}
+          align="center"
+          cursor={'pointer'}
         >
-          <Flex gap={'5px'} align="center" cursor={'pointer'}>
-            {icon}
-            <Text fontSize={'14px'} fontWeight="600">
-              {title}
-            </Text>
-          </Flex>
-        </NavLink>
-      </StyledNavContainer>
+          {icon}
+          <Text fontSize={'14px'} fontWeight="600">
+            {title}
+          </Text>
+        </Flex>
+      </Link>
     </>
   );
 };

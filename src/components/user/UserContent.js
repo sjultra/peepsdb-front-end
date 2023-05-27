@@ -1,26 +1,26 @@
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { capitalizeString } from '../../utils/helpers';
 
-const Item = styled.div`
-  min-width: 70rem;
-  font-size: 1.5rem;
+// const Item = styled.div`
+//   min-width: 70rem;
+//   font-size: 1.5rem;
 
-  @media (max-width: 600px) {
-    padding: 1.7rem 1rem 1.7rem 3rem;
-  }
+//   @media (max-width: 600px) {
+//     padding: 1.7rem 1rem 1.7rem 3rem;
+//   }
 
-  @media (max-width: 500px) {
-    padding: 1.7rem 1rem 1.7rem 1rem;
-  }
+//   @media (max-width: 500px) {
+//     padding: 1.7rem 1rem 1.7rem 1rem;
+//   }
 
-  > div {
-    display: grid;
-    grid-template-columns: 0.8fr 0.2fr;
-    padding: 1.2rem 1rem 1.2rem 3rem;
-    border-bottom: 1px solid #f1f1f1;
-  }
-`;
+//   > div {
+//     display: grid;
+//     grid-template-columns: 0.8fr 0.2fr;
+//     padding: 1.2rem 1rem 1.2rem 3rem;
+//     border-bottom: 1px solid #f1f1f1;
+//   }
+// `;
 
 const UserContent = ({ user }) => {
   const firstname = capitalizeString(user?.profile?.firstName);
@@ -44,7 +44,8 @@ const UserContent = ({ user }) => {
   return (
     <>
       {user && (
-        <Item>
+        <>
+          {/* <Item> */}
           <div>
             <div>Name</div>
             <div>
@@ -77,7 +78,8 @@ const UserContent = ({ user }) => {
             <div>MS Teams setup</div>
             <div>{msTeamsSetup}</div>
           </div> */}
-        </Item>
+          {/* </Item> */}
+        </>
       )}
     </>
   );
