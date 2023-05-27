@@ -2,19 +2,28 @@ import { useEffect, useRef } from 'react';
 import useAxios from './useAxios';
 import { capitalizeString } from '../utils/helpers';
 import useAuthActions from './useAuth';
+import useAppInsights from './useAppInsights';
 
 const useLogin = () => {
-  const { setAuth, auth, fetchMyProfile } = useAuthActions();
 
-  // const hrefSplit = window.location.href.split('?token=');
+    const {setAuth,auth,fetchMyProfile} = useAuthActions()
 
-  // const {device} = useDeviceMetaData()
+    const {userTimezone,device,geoLocation} = useAppInsights()
 
-  const axios = useAxios();
 
-  const windowQueries = window.location.search;
-  const urlSearch = new URLSearchParams(windowQueries);
-  const queries = Object.fromEntries(urlSearch.entries()) || {};
+    const deviceinfo = JSON.stringify({
+        geoLocation,
+        userTimezone,
+        device
+    });
+  
+    const axios  = useAxios();
+
+    const windowQueries = window.location.search;
+    
+    const urlSearch = new URLSearchParams(windowQueries)
+    
+    const queries = Object.fromEntries(urlSearch.entries())  || {};
 
   console.log('queries', queries);
 
@@ -22,66 +31,75 @@ const useLogin = () => {
     ? auth?.token
     : JSON.parse(localStorage.getItem('peepsdb-auth'))?.token;
 
-  const tokenRef = useRef({
-    type: queries?.token ? 'sign' : '',
-    token: queries?.token || browserToken,
-  });
-
-  // console.log('browserToken',auth)
+    const tokenRef = useRef({
+        type:queries?.token?'sign':'',
+        token: queries?.token || browserToken
+    })
 
   const setAuthRef = useRef(setAuth);
 
   const fetchMyProfileRef = useRef(fetchMyProfile);
 
-  useEffect(() => {
-    (async () => {
-      console.log('text is');
 
-      if (tokenRef.current.token) {
-        try {
-          let req = await axios.get(
-            `/auth${tokenRef.current.type ? '?sign=yes' : ''}`,
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `${tokenRef.current.token}`,
-              },
+    useEffect(()=>{
+        
+        (async()=>{
+            
+            console.log('golocation in uselogin is',geoLocation);
+
+            if(tokenRef.current.token && geoLocation){
+
+                try{
+                    let req = await axios.get(`/auth${tokenRef.current.type?'?sign=yes':''}`,{
+                        headers:{
+                            "Content-Type": "application/json",
+                            Authorization: `${tokenRef.current.token}`, 
+                            deviceinfo
+
+                        }
+                    });
+
+                    const {status,data:dataPayload} = req;
+                    
+                    let data = {
+                        ...dataPayload,
+                        firstName:capitalizeString(dataPayload?.firstName || ''),
+                        lastName:capitalizeString(dataPayload?.lastName || '')
+                    }
+
+                    if(status===200 || status===201){
+                        setAuthRef.current({
+                            ...data,
+                            token:tokenRef.current.token,
+                            isAuthenticated:true,                       
+                        });
+
+                        fetchMyProfileRef.current(tokenRef.current?.token);
+                        
+                        let firstLoginEntry = localStorage.getItem('firstLoginStamp');
+
+                        !firstLoginEntry && localStorage.setItem('firstLoginStamp',true);
+
+                        data.token && localStorage.setItem('peepsdb-auth',JSON.stringify(data));                     
+
+                    }
+
+
+                }
+                catch(err){
+                    console.log('err at login',err?.response,err)
+                    setAuthRef.current({
+                        isAuthenticated:false,                        
+                    })
+
+
+                }
             }
-          );
+            
+        })()
+    },[geoLocation])
 
-          const { status, data: dataPayload } = req;
 
-          let data = {
-            ...dataPayload,
-            firstName: capitalizeString(dataPayload?.firstName || ''),
-            lastName: capitalizeString(dataPayload?.lastName || ''),
-          };
-
-          if (status === 200 || status === 201) {
-            setAuthRef.current({
-              ...data,
-              token: tokenRef.current.token,
-              isAuthenticated: true,
-            });
-
-            fetchMyProfileRef.current(tokenRef.current?.token);
-
-            let firstLoginEntry = localStorage.getItem('firstLoginStamp');
-
-            !firstLoginEntry && localStorage.setItem('firstLoginStamp', true);
-
-            data.token &&
-              localStorage.setItem('peepsdb-auth', JSON.stringify(data));
-          }
-        } catch (err) {
-          console.log('err at login', err?.response, err);
-          setAuthRef.current({
-            isAuthenticated: false,
-          });
-        }
-      }
-    })();
-  }, []);
 };
 
 export default useLogin;

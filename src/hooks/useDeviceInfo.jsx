@@ -13,7 +13,6 @@ const useDeviceMetaData = ()=>{
 
     const timeandDateBaseUrl = 'http://api.xmltime.com/places';
 
-
     const getUserLocation = async ()=>{
 
         try{
