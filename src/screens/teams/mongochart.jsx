@@ -83,7 +83,7 @@ const MongoChart = ({profiles}) => {
           })
           return
         };
-        console.log('event target',e)
+        // console.log('event target',e)
         let {value} = e;
         setFilter( prev=>{ 
 
