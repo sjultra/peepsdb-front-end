@@ -24,12 +24,12 @@ test("Make sure login with google account is working well", async () => {
   await page.click('[href="https://vzxya.net/auth/google"]')
 
   // Fill "name@..."" on <input> email
-  await page.locator('input[type="email"]').type("oreolnoumodong@gmail.com")
+  await page.locator('input[type="email"]').type("sjultra.peepsdb@gmail.com")
   await page.click("#identifierNext")
 
   // Fill "password" on <input> password
   await page.locator('input[type="password"]').waitFor()
-  await page.locator('input[type="password"]').type("bihoncare2017")
+  await page.locator('input[type="password"]').type("SJULTRA_-_2022")
   await page.click("#passwordNext")
 
   // Click on <button> "Proceed"
