@@ -1,4 +1,4 @@
-[
+export const countryDB = [
     {
         "name": "Afghanistan",
         "iso3": "AFG",

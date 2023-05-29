@@ -1,54 +1,61 @@
-import {  useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import useAxios from './useAxios';
 import { capitalizeString } from '../utils/helpers';
 import useAuthActions from './useAuth';
+import useAppInsights from './useAppInsights';
 
-const useLogin = ()=>{
+const useLogin = () => {
 
     const {setAuth,auth,fetchMyProfile} = useAuthActions()
-    
-    // const hrefSplit = window.location.href.split('?token=');
 
-    // const {device} = useDeviceMetaData()
+    const {userTimezone,device,geoLocation} = useAppInsights()
 
-    const axios  = useAxios()
+
+    const deviceinfo = JSON.stringify({
+        geoLocation,
+        userTimezone,
+        device
+    });
+  
+    const axios  = useAxios();
 
     const windowQueries = window.location.search;
+    
     const urlSearch = new URLSearchParams(windowQueries)
+    
     const queries = Object.fromEntries(urlSearch.entries())  || {};
 
-    console.log('queries',queries)
+  console.log('queries', queries);
 
-    const browserToken = auth?.token? auth?.token :JSON.parse(localStorage.getItem('peepsdb-auth'))?.token;
-
-    
+  const browserToken = auth?.token
+    ? auth?.token
+    : JSON.parse(localStorage.getItem('peepsdb-auth'))?.token;
 
     const tokenRef = useRef({
         type:queries?.token?'sign':'',
         token: queries?.token || browserToken
     })
 
-    // console.log('browserToken',auth)
+  const setAuthRef = useRef(setAuth);
 
-    const setAuthRef = useRef(setAuth);
-
-    const fetchMyProfileRef = useRef(fetchMyProfile);
+  const fetchMyProfileRef = useRef(fetchMyProfile);
 
 
     useEffect(()=>{
         
-
         (async()=>{
             
-            console.log('text is')
+            console.log('golocation in uselogin is',geoLocation);
 
-            if(tokenRef.current.token){
+            if(tokenRef.current.token && geoLocation){
 
                 try{
                     let req = await axios.get(`/auth${tokenRef.current.type?'?sign=yes':''}`,{
                         headers:{
                             "Content-Type": "application/json",
-                            Authorization: `${tokenRef.current.token}`,    
+                            Authorization: `${tokenRef.current.token}`, 
+                            deviceinfo
+
                         }
                     });
 
@@ -90,10 +97,9 @@ const useLogin = ()=>{
             }
             
         })()
-    },[])
+    },[geoLocation])
 
 
-}
+};
 
-
-export default useLogin
+export default useLogin;

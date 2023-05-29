@@ -96,8 +96,6 @@ const ActivityLogs = ({_user}) => {
 
 
 
-
-
   return (
     <Box>
       {/**Filter by date */}

@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import {  useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import UsersContent from '../../components/users/UsersContent';
 import Spinner from '../../components/layouts/Spinner';
-import useTeams from '../../hooks/useTeams';
 import useWidget from '../../hooks/useWidget';
 
 import {
@@ -16,17 +15,9 @@ import {
   TableContainer,
 } from '@chakra-ui/react';
 
-const UsersScreen = () => {
+const UsersScreen = ({profiles}) => {
   // Selectors
-  const { profiles, fetchAllProfiles } = useTeams();
   const { loading } = useWidget();
-  const fetchProfilesRef = useRef(fetchAllProfiles);
-
-  useEffect(() => {
-    if (!profiles?.length) {
-      fetchProfilesRef.current();
-    }
-  }, [profiles]);
 
   const [filterText, setFilterText] = useState('');
 
