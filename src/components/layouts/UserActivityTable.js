@@ -26,12 +26,6 @@ const UserActivityTable = ({
 }) => {
 
 
-  const iconTypes = {
-    ado:<SiAzuredevops color="#1982E2" />,
-    jira:<SiJirasoftware color="#237FF9" />,
-    sharepoint: <SiMicrosoftsharepoint color="#1982E2" />
-
-  }
 
  
   return (
@@ -48,39 +42,72 @@ const UserActivityTable = ({
         </Thead>
 
         <Tbody>
-          {body?.map((entry, index) => {
-            return (
-              <Tr key={index}>
-                <Td py="2rem" color="gray.400">
-                  {formatDateTimeString(entry?.createdAt)}
-                </Td>
-                <Td py="2rem">
-                  <HStack>
-                    {/** activity icon */}
-                    {Object.keys(iconTypes).map(entry=>
-                      (entry,index)=>
-                      
-                      entry?.type?.includes(entry)? <Box key={entry}> {iconTypes[entry]} </Box>:undefined
-                      
-                    )  }
-
-                    <Text noOfLines={1} overflow="visible">
-                      {
-                        entry?.type
-                      }
-                    </Text>
-                  </HStack>
-                </Td>
-                <Td py="2rem" color="gray.400">
-                  {entry?.description}
-                </Td>
-              </Tr>
-            );
-          })}
+          {body?.map((entry, index) => <ActivityRow key={index}  row={entry}  />)}
         </Tbody>
       </Table>
     </TableContainer>
   );
 };
+
+
+const ActivityRow = ({key,row})=>{
+
+  const authWebhookTypes = ['login','Login','signup']
+
+  const iconTypes = {
+    ado:<SiAzuredevops color="#1982E2" />,
+    jira:<SiJirasoftware color="#237FF9" />,
+    sharepoint: <SiMicrosoftsharepoint color="#1982E2" />
+
+  }
+
+  row?.type?.includes('jira') && console.log('jira payload',JSON?.parse(row?.eventPayload));
+
+  const displayEventType =({type,provider})=>{
+
+    let isauthEventLog = authWebhookTypes.includes(type);
+   
+    let eventType = isauthEventLog? type: provider;
+
+    let webhookEvent = isauthEventLog?'': type?.split(':')[1];
+
+    let remove_ = webhookEvent?.includes('_')? webhookEvent?.split('_')?.join(' '):''; 
+
+    return eventType + (remove_? `(${remove_})`:``)
+    
+
+  }
+
+  return(
+    <Tr key={key}>
+      <Td py="2rem" color="gray.400">
+        {formatDateTimeString(row?.createdAt)}
+      </Td>
+      <Td py="2rem">
+        <HStack>
+          {/** activity icon */}
+          {Object.keys(iconTypes).map((entry,key)=>
+            
+            row?.type?.includes(entry)? <Box key={key}> {iconTypes[entry]} </Box>:undefined
+            
+          )  }
+
+          <Text noOfLines={1} overflow="visible">
+            {
+              displayEventType({type:row?.type,provider:row?.provider})
+            }
+          </Text>
+        </HStack>
+      </Td>
+      <Td py="2rem" color="gray.400">
+        {row?.description}
+      </Td>
+
+    </Tr>
+
+
+  )
+}
+
 
 export default UserActivityTable;
