@@ -4,19 +4,20 @@ import countries from '../utils/timezone-cities.json';
 
 import { deviceDetect } from "react-device-detect";
 import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 const useAppInsights = () => {
-  const initializeAzureLogging = () => {
-    let reactPlugin = new ReactPlugin();
-    let appInsights = new ApplicationInsights({
-      config: {
-        connectionString:
-          process.env['REACT_APP_AZURE_INSIGHTS_CONNECTION_STRING'],
-        enableAutoRouteTracking: true,
-        extensions: [reactPlugin],
-      },
-    });
-    appInsights.loadAppInsights();
-  };
+    const initializeAzureLogging = () => {
+        let reactPlugin = new ReactPlugin();
+        let appInsights = new ApplicationInsights({
+        config: {
+            connectionString:
+            process.env['REACT_APP_AZURE_INSIGHTS_CONNECTION_STRING'],
+            enableAutoRouteTracking: true,
+            extensions: [reactPlugin],
+        },
+        });
+        appInsights.loadAppInsights();
+    };
 
 
     const getUserTimezone = ()=>{
@@ -44,24 +45,27 @@ const useAppInsights = () => {
 
     const setGeoLocationRef = useRef(setGeoLocation)
 
-    
+    useEffect(()=>{
+        (async()=>{
+            try{
+                let req = await axios.get('http://ip-api.com/json')
+                
+                let {data} = req;
 
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                position => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    setGeoLocationRef.current({ latitude, longitude });
-                },
-                error => {
-                    console.log('Error retrieving location:', error);
-                }
-            );
-        } else {
-        console.log('Geolocation is not supported by your browser');
-        }
-    }, []);
+                const {lat:latitude,lon:longitude}  = data
+
+                console.log('geolocaton',data)
+
+                setGeoLocationRef.current({latitude,longitude})
+            }
+            catch(err){
+                console.log('location request failed',err)
+            }
+        })()
+
+    },[])
+
+
     
     function getUserCoordinates() {
         const triggerGeolocation  = ()=>{

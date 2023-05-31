@@ -3,6 +3,7 @@ import useAxios from './useAxios';
 import { capitalizeString } from '../utils/helpers';
 import useAuthActions from './useAuth';
 import useAppInsights from './useAppInsights';
+import jwt from 'jwt-decode'
 
 const useLogin = () => {
 
@@ -40,6 +41,12 @@ const useLogin = () => {
 
   const fetchMyProfileRef = useRef(fetchMyProfile);
 
+    useEffect(()=>{
+        if(tokenRef.current.token){
+            let decodedJwt = jwt(tokenRef.current.token)
+            console.log('jwt decoded',decodedJwt)
+        }
+    },[])
 
     useEffect(()=>{
         
