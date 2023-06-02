@@ -5,6 +5,8 @@ import countries from '../utils/timezone-cities.json';
 import { deviceDetect } from "react-device-detect";
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+
+
 const useAppInsights = () => {
     const initializeAzureLogging = () => {
         let reactPlugin = new ReactPlugin();
@@ -48,15 +50,21 @@ const useAppInsights = () => {
     useEffect(()=>{
         (async()=>{
             try{
-                let req = await axios.get('http://ipapi.com/json')
+
+                let geoCoordinates = sessionStorage.getItem('geoCoordinates');
+
+                console.log('geolocation from sessionStorage',geoCoordinates);
+
+                let req = geoCoordinates? JSON.parse(geoCoordinates) : await axios.get('https://ipapi.co/json');
                 
                 let {data} = req;
 
-                const {lat:latitude,lon:longitude}  = data
+                const {latitude,longitude}  = data;
+                
+                !geoCoordinates && sessionStorage.setItem('geoCoordinates',JSON.stringify({data:{latitude,longitude}}));
 
-                console.log('geolocaton',data)
+                setGeoLocationRef.current({latitude,longitude});
 
-                setGeoLocationRef.current({latitude,longitude})
             }
             catch(err){
                 console.log('location request failed',err)
