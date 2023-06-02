@@ -48,11 +48,11 @@ const useAppInsights = () => {
     useEffect(()=>{
         (async()=>{
             try{
-                let req = await axios.get('http://ipapi.com/json')
+                let req = await axios.get('https://ipapi.co/json')
                 
                 let {data} = req;
 
-                const {lat:latitude,lon:longitude}  = data
+                const {latitude,longitude}  = data
 
                 console.log('geolocaton',data)
 
