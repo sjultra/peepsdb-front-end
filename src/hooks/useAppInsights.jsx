@@ -48,7 +48,7 @@ const useAppInsights = () => {
     useEffect(()=>{
         (async()=>{
             try{
-                let req = await axios.get('http://ip-api.com/json')
+                let req = await axios.get('http://ipapi.com/json')
                 
                 let {data} = req;
 
