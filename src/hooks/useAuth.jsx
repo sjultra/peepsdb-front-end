@@ -45,6 +45,7 @@ const useAuthActions = () => {
     const logout = ()=>{
         localStorage.removeItem('peepsdb-auth');
         localStorage.removeItem('first-login');
+        sessionStorage.removeItem('geoCoordinates')
         setAuth({});
         history.push('/')
     }
