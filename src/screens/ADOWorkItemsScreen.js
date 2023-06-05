@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import { Grid, GridItem, Box, useMediaQuery } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
-import MainHeading from '../components/layouts/MainHeading';
+
 import { toggleAdo } from '../actions/toggleActions';
 import {
   getAllWorkItemsId,
@@ -14,41 +14,27 @@ import {
 import Filter from '../components/ado/Filter';
 import Spinner from '../components/layouts/Spinner';
 import ADOWorkItemsContent from '../components/ado/ADOWorkItemsContent';
-import { Box } from '@chakra-ui/react';
 import useGoBack from '../hooks/useGoBack';
 import NavLayout from '../components/layouts/NavLayout';
 
-const ContentWrapper = styled.div`
-  overflow-x: auto;
-  -ms-overflow-style: none; /* IE 11 */
-  scrollbar-width: none; /* Firefox 64 */
-
-  &::-webkit-scrollbar {
-    width: 0;
-  }
-`;
-
-const TableHeading = styled.div`
-  display: grid;
-  grid-template-columns: 0.07fr 0.58fr 0.2fr 0.15fr;
-  grid-column-gap: 2rem;
-  padding: 2rem 1rem 2rem 3rem;
-  margin-top: 2rem;
-  font-weight: 500;
-  min-width: 120rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #aaa;
-
-  @media (max-width: 600px) {
-    padding: 1.7rem 1rem 1.7rem 3rem;
-  }
-
-  @media (max-width: 500px) {
-    padding: 1.7rem 1rem 1.7rem 1rem;
-  }
-`;
-
 const ADOWorkItemsScreen = ({ match }) => {
+  // Styles
+  const [is500px] = useMediaQuery('(max-width: 500px)');
+  const [is600px] = useMediaQuery('(max-width: 600px)');
+
+  const tableHeadingStyles = {
+    p: is500px
+      ? '1.7rem 1rem 1.7rem 1rem'
+      : is600px
+      ? '1.7rem 1rem 1.7rem 3rem'
+      : '2rem 1rem 2rem 3rem',
+    mt: '2rem',
+    mb: '1rem',
+    fontWeight: '500',
+    minWidth: '120rem',
+    borderBottom: '1px solid #aaa',
+  };
+
   const goback = useGoBack({ title: `${match.params.id}` });
   const dispatch = useDispatch();
 
@@ -108,16 +94,30 @@ const ADOWorkItemsScreen = ({ match }) => {
         {projectWorkItems && (
           <>
             <Filter projectWorkItems={projectWorkItems} />
-            <ContentWrapper>
-              <TableHeading>
-                <div>ID</div>
-                <div>Title</div>
-                <div>Assigned To</div>
-                <div>State</div>
-              </TableHeading>
+            <Box
+              sx={{
+                'overflow-x': 'auto',
+                '-ms-overflow-style': 'none' /* IE 11 */,
+                'scrollbar-width': 'none' /* Firefox 64 */,
+
+                ' &::-webkit-scrollbar': {
+                  width: 0,
+                },
+              }}
+            >
+              <Grid
+                templateColumns="0.07fr 0.58fr 0.2fr 0.15fr"
+                gap="2rem"
+                {...tableHeadingStyles}
+              >
+                <GridItem>ID</GridItem>
+                <GridItem>Title</GridItem>
+                <GridItem>Assigned To</GridItem>
+                <GridItem>Status</GridItem>
+              </Grid>
 
               <ADOWorkItemsContent projectWorkItems={projectWorkItems} />
-            </ContentWrapper>
+            </Box>
           </>
         )}
       </NavLayout>
