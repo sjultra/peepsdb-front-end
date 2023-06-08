@@ -59,7 +59,8 @@ const ADOProjects = () => {
       {error && <Message msg={error.msg} variant='error' />}
 
       {projects && (
-        <Flex align={"center"} gap="2" bg="#fcfcfc" w={["full","30rem"]} border="1px solid #f7f7f7" borderRadius="100px" px="1.3rem" py="0.5rem">
+        <Flex align={"center"} gap="2" bg="#fcfcfc" w={["full","30rem"]} border="1px solid #f7f7f7" 
+         borderRadius="100px" px="1.3rem" py="0.5rem">
           <FiSearch color="#6f6f74"/>
           <input
             type='text'

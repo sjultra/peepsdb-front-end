@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+  import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { FiSearch } from 'react-icons/fi'
 import {
@@ -27,7 +27,6 @@ const JiraLabels = () => {
   const total = useSelector((state) => state.allIssues.total)
 
   const labelRef = useRef(labels)
-  // Get all Jira Labels
   
   const issuesRef = useRef(issues)
 
@@ -70,8 +69,6 @@ const JiraLabels = () => {
           labels={labels}
           search={search}
           loading={loading}
-          issues={issues}
-          total={total}
         />
       )}
       

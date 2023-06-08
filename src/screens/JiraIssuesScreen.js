@@ -1,14 +1,12 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
-import MainHeading from "../components/layouts/MainHeading"
 import { toggleJira } from "../actions/toggleActions"
 import { getLabelIssues } from "../actions/jiraActions"
 import JiraIssuesContent from "../components/jira/JiraIssuesContent"
 import Filter from "../components/jira/Filter"
 import Spinner from "../components/layouts/Spinner"
 import Message from "../components/layouts/Message"
-import AdminAsideBar from "../components/layouts/AdminAsideBar"
 import { Box } from "@chakra-ui/react"
 import useGoBack from "../hooks/useGoBack"
 import NavLayout from "../components/layouts/NavLayout"
@@ -67,7 +65,7 @@ const JiraIssuesScreen = ({ match }) => {
     }
   }, [dispatch, match.params.id, issues, total])
 
-  console.log("issues", issues)
+  console.log("issues", match)
 
   return (
     <Box px={["5px", "40px", "40px"]}>

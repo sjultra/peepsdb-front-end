@@ -130,10 +130,12 @@ export const getLabelIssues =
               fields: {
                 updated,
                 summary,
-                assignee: {
-                  displayName: assignee && assignee.displayName,
-                  avatarUrl: assignee && assignee.avatarUrls['16x16'],
-                },
+                assignee:assignee? {
+                  displayName: assignee.displayName,
+                  avatarUrl: assignee.avatarUrls['16x16'],
+                  emailAddress:assignee?.emailAddress,
+                  accountId:assignee?.accountId
+                }:{},
                 status,
               },
             };

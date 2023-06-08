@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import MainHeading from '../components/layouts/MainHeading';
+import MainHeading from '../components/workspace/MainHeading';
 import { toggleAdo } from '../actions/toggleActions';
 import {
   getAllWorkItemsId,

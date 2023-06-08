@@ -8,8 +8,6 @@ const JiraLabelContent = ({
   labels: labelsArr,
   search,
   loading,
-  issues,
-  total,
 }) => {
   if (!loading && labelsArr) {
     return (
