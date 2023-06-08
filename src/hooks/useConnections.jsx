@@ -13,13 +13,7 @@ import { BsGithub } from 'react-icons/bs';
 import Btn from '../widgets/Button';
 import { useState } from 'react';
 import { capitalizeString } from '../utils/helpers';
-import styled from 'styled-components';
 import { backendURL } from '../utils/setEnv';
-
-const CheckboxInput = styled.input`
-  height: 40px;
-  transform: scale(1.4);
-`;
 
 const SelectDataComponent = ({
   keyValue,

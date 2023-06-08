@@ -1,105 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Box, Input, Flex, useMediaQuery } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { FiFilter } from 'react-icons/fi';
-import { IoChevronDown } from 'react-icons/io5';
 import {
   setJiraTextFilter,
   setJiraAssignedToFilter,
   setJiraStatusFilter,
 } from '../../actions/jiraActions';
-
-const Wrapper = styled.div`
-  background: #fcfcfc;
-  border: &px solid #f7f7f7;
-  height: 6rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 0.4rem;
-  margin-top: 4rem;
-  padding: 0 2.5rem;
-
-  overflow-x: auto;
-  -ms-overflow-style: none; /* IE 11 */
-  scrollbar-width: none; /* Firefox 64 */
-
-  &::-webkit-scrollbar {
-    width: 0;
-  }
-
-  @media (max-width: 500px) {
-    padding: 0 1.5rem;
-  }
-`;
-
-const InputField = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  > *:first-child {
-    font-size: 2rem;
-  }
-
-  input {
-    padding: 0.8rem 1.5rem;
-    outline: 0;
-    width: 25rem;
-    border: 0;
-    border-radius: 100px;
-    margin-left: 7px;
-    outline: 0;
-    background: #f8f7ff;
-  }
-`;
-
-const Filters = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  > *:first-child {
-    margin-right: 1rem;
-  }
-`;
-
-const CustomSelect = styled.div`
-  position: relative;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  width: 18rem;
-
-  select {
-    width: 100%;
-    height: 100%;
-    padding: 1rem;
-    border-radius: 0.3rem;
-    appearance: none;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif !important;
-    font-size: 1.5rem;
-    background: none;
-    border: none;
-    outline: none;
-
-    &:hover {
-      background: #e9e7f5;
-    }
-
-    &:focus {
-      background: #e3e1f1;
-    }
-  }
-`;
-
-const CustomArrow = styled.div`
-  position: absolute;
-  top: 1.2rem;
-  right: 1rem;
-  pointer-events: none;
-`;
 
 
 const fieldValue =   
@@ -1107,8 +1015,68 @@ const fieldValue =
   }
 }
 
-
 const Filter = ({ issues }) => {
+  // Styles
+  const [is500px] = useMediaQuery('(max-width: 500px)');
+
+  const wrapperStyles = {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    bg: '#fcfcfc',
+    h: 'auto',
+    mt: '4rem',
+    p: is500px ? '0 1.5rem' : '0 2.5rem',
+    borderRadius: '0.4rem',
+    border: '1px solid #f7f7f7',
+    sx: {
+      '-ms-scrollbar-width': 'none' /* IE 11 */,
+      'scrollbar-width': 'none' /* Firefox 64 */,
+      '&::-webkit-scrollbar': {
+        width: '0',
+      },
+    },
+  };
+
+  const filterInputStyles = {
+    p: '2rem 1.5rem',
+    w: '25rem',
+    ml: '3px',
+    fontSize: '1.6rem',
+    outline: 'none',
+    border: 'none',
+    borderRadius: '100px',
+    bg: '#f8f7ff',
+    _focus: {
+      boxShadow: 'none',
+    },
+  };
+
+  const selectBoxStyles = {
+    position: 'relative',
+    h: '100%',
+    w: '100%',
+    flexDirection: 'row',
+  };
+
+  const selectStyles = {
+    w: 'auto',
+    h: '100%',
+    p: '1.5rem',
+    borderRadius: '0.3rem',
+    cursor: 'pointer',
+    fontFamily: "'Poppins', sans-serif !important",
+    fontSize: '1.6rem',
+    bg: 'none',
+    border: 'none',
+    outline: 'none',
+    _hover: {
+      bg: '#e9e7f5',
+    },
+    _focus: {
+      bg: '#e3e1f1',
+    },
+  };
+
   const dispatch = useDispatch();
 
   // Selectors
@@ -1122,7 +1090,6 @@ const Filter = ({ issues }) => {
 
   // ASSIGNED TO FILTER
   let uniqueAssignedToArr;
-
   if (issues) {
 
     console.log('issues field mapped',issues[0])
@@ -1151,38 +1118,42 @@ const Filter = ({ issues }) => {
   };
 
   return (
-    <Wrapper>
-      <InputField>
-        <FiFilter />
-        <input
+    <Flex {...wrapperStyles}>
+      <Flex flexDirection="row" alignitems="center">
+        <Box as={FiFilter} mt="1rem" mr="0.4rem" fontSize="2rem" />
+        <Input
+          {...filterInputStyles}
           type="text"
           placeholder="Filter by keyword"
           value={text}
           onChange={(e) => onChangeText(e)}
         />
-      </InputField>
-      <Filters>
-        <CustomSelect>
-          <select
+      </Flex>
+
+      <Flex flexDirection="row" alignItems="center">
+        {/* Assigned To */}
+        <Flex {...selectBoxStyles}>
+          <Box
+            as="select"
+            {...selectStyles}
             name="assigned"
             value={assignedTo}
             onChange={(e) => onChangeAssignedTo(e)}
           >
-            <option value="">Assigned to</option>
+            <option value="">Assigned To</option>
             {uniqueAssignedToArr &&
               uniqueAssignedToArr.map((username, index) => (
                 <option value={username} key={index}>
                   {username}
                 </option>
               ))}
-          </select>
-          <CustomArrow>
-            <IoChevronDown />
-          </CustomArrow>
-        </CustomSelect>
-
-        <CustomSelect>
-          <select
+          </Box>
+        </Flex>
+        {/* Status */}
+        <Flex {...selectBoxStyles}>
+          <Box
+            as="select"
+            {...selectStyles}
             name="status"
             value={status}
             onChange={(e) => onChangeStatus(e)}
@@ -1194,13 +1165,10 @@ const Filter = ({ issues }) => {
                   {status}
                 </option>
               ))}
-          </select>
-          <CustomArrow>
-            <IoChevronDown />
-          </CustomArrow>
-        </CustomSelect>
-      </Filters>
-    </Wrapper>
+          </Box>
+        </Flex>
+      </Flex>
+    </Flex>
   );
 };
 

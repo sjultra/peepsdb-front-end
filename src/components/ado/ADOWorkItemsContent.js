@@ -31,7 +31,7 @@ const ADOWorkItemsContent = ({ projectWorkItems }) => {
   };
 
   // Sets the work item state indicator background
-  function setStateIndicator(state) {
+  const setStateIndicator = (state) => {
     const bg =
       state === 'To Do' || state === 'New'
         ? '#b2b2b2'
@@ -42,7 +42,7 @@ const ADOWorkItemsContent = ({ projectWorkItems }) => {
         : '#007acc';
 
     return <Box as="span" style={{ bg }} />;
-  }
+  };
 
   const stateIndicatorStyles = {
     h: '1rem',
