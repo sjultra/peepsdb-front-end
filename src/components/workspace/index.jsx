@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import React from "react"
 import { Stack,Select } from "@chakra-ui/react"
@@ -49,19 +49,16 @@ export const MainHeading = ({ title, toggle }) => {
 
 const UserWorkspace = () => {
 
-  const [activeScreen, setactiveScreen] = useState(1)
+  const [activeScreen, setactiveScreen] = useState("ado")
 
+  const title = activeScreen === "ado" ? "ADO Projects" : "Jira Labels"
 
-  const activeTabName = !activeScreen?'Projects':'Tasks'
-
-  const memoizeProjects= useMemo(()=><WorkspaceProjects {...{activeTabName}} />,[activeScreen])
-
-  const memoizeTasks =  useMemo(()=><WorkspaceTasks {...{activeTabName}}/>,[activeScreen])
+  const toggle = (value) => setactiveScreen((prev) => (prev = value))
 
   return (
     <>
 
-      <Tabs onChange={(index)=>setactiveScreen(index)}>
+      <Tabs>
         <TabList>
           <Tab>Projects</Tab>
           <Tab>Tasks</Tab>
@@ -69,10 +66,10 @@ const UserWorkspace = () => {
 
         <TabPanels>
           <TabPanel>
-            {memoizeProjects}
+            <WorkspaceProjects/>
           </TabPanel>
           <TabPanel>
-            {memoizeTasks}
+            <WorkspaceTasks/>
           </TabPanel>
          </TabPanels>
       </Tabs>

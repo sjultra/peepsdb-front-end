@@ -7,9 +7,9 @@ import ADOProjectContent from '../ado/ADOProjectContent'
 import { Box, Flex } from "@chakra-ui/react"
 
 
-const WorkspaceTasks=({activeTabName})=>{
+const WorkspaceTasks=()=>{
 
-    const {loading,tasks} = useWorkspaceTasks(activeTabName);
+    const {loading,tasks} = useWorkspaceTasks();
     
     const  [titleText,setTitleText] = useState('All');
 
