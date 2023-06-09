@@ -1,5 +1,5 @@
 import { MainHeading } from "."
-import { useWorkspaceProjects } from "../../hooks/useWorkspace"
+import { useWorkspaceTasks } from "../../hooks/useWorkspace"
 import React, { useEffect, useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import Spinner from '../layouts/Spinner'
@@ -7,37 +7,37 @@ import ADOProjectContent from '../ado/ADOProjectContent'
 import { Box, Flex } from "@chakra-ui/react"
 
 
-const WorkspaceTasks=()=>{
+const WorkspaceTasks=({activeTabName})=>{
 
-    const {loading,projects} = useWorkspaceProjects();
+    const {loading,tasks} = useWorkspaceTasks(activeTabName);
     
     const  [titleText,setTitleText] = useState('All');
 
-    const [projectState,setProjectState]= useState([]);
+    const [taskstate,setTaskstate]= useState([]);
 
     const [search, setSearch] = useState('');
 
-    useEffect(()=>{
-        setProjectState(projects)
-    },[projects.length]);
+    // useEffect(()=>{
+    //     setTaskstate(tasks)
+    // },[tasks.length]);
 
-    const filterProjects = (type)=>{
-        console.log('project type',type);
-        setProjectState(type? projects?.filter(entry=>(entry?.provider ===type)): projects );
+    const filterTasks = (type)=>{
+        console.log('task type',type);
+        setTaskstate(type? tasks?.filter(entry=>(entry?.provider ===type)): tasks );
         setTitleText(type==='jira'?'Jira':type==='ado'?'ADO':'All');
     };
 
-    console.log('projects state',projectState);
+    console.log('tasks state',taskstate);
 
     return(
         <>
         
-            <MainHeading title={`${titleText} Projects`} toggle={filterProjects} />
+            <MainHeading title={`${titleText} tasks`} toggle={filterTasks} />
 
             <Box mt="4rem">
                 {loading && <Spinner />}
 
-                {projectState?.length && (
+                {taskstate?.length && (
                     <Flex align={"center"} gap="2" bg="#fcfcfc" w={["full","30rem"]} border="1px solid #f7f7f7" 
                     borderRadius="100px" px="1.3rem" py="0.5rem">
                     <FiSearch color="#6f6f74"/>
@@ -51,13 +51,13 @@ const WorkspaceTasks=()=>{
                     </Flex>
                 )}
 
-                {projectState?.length && (
+                {/* {taskstate?.length && (
                     <ADOProjectContent
-                     projects={projectState}
+                     tasks={taskstate}
                      search={search}
                     //  workItems={[]}
                     />
-                )}
+                )} */}
             </Box>
 
         </>
@@ -69,4 +69,4 @@ const WorkspaceTasks=()=>{
 
 
 
-export default WorkspaceProjects;
+export default WorkspaceTasks;

@@ -7,9 +7,11 @@ import ADOProjectContent from '../ado/ADOProjectContent'
 import { Box, Flex } from "@chakra-ui/react"
 
 
-const WorkspaceProjects=()=>{
+const WorkspaceProjects=({activeTabName})=>{
 
-    const {loading,projects} = useWorkspaceProjects();
+    
+
+    const {loading,projects} = useWorkspaceProjects(activeTabName);
     
     const  [titleText,setTitleText] = useState('All');
 
@@ -22,12 +24,11 @@ const WorkspaceProjects=()=>{
     },[projects.length]);
 
     const filterProjects = (type)=>{
-        console.log('project type',type);
         setProjectState(type? projects?.filter(entry=>(entry?.provider ===type)): projects );
         setTitleText(type==='jira'?'Jira':type==='ado'?'ADO':'All');
     };
 
-    console.log('projects state',projectState);
+    // console.log('projects state',projectState);
 
     return(
         <>

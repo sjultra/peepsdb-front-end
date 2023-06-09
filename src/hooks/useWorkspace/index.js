@@ -3,11 +3,15 @@ import { useAdo } from './ado'
 import { useJira } from './jira'
 
 
-export const useWorkspaceProjects = ()=>{
+export const useWorkspaceProjects = (activeTab)=>{
+  
+  let shouldMakeCalls = activeTab==='Projects';
 
-  const {labels,labelLoading} = useJira('labels')
+  console.log('active',activeTab)
 
-  const { projects:adoProjects,adoLoading,adoError} = useAdo('projects')
+  const {labels,labelLoading} = useJira(shouldMakeCalls? 'labels':'')
+
+  const { projects:adoProjects,adoLoading,adoError} = useAdo(shouldMakeCalls? 'projects':'')
   
   const loading = labelLoading || adoLoading ?  true:false;
 
@@ -35,14 +39,16 @@ export const useWorkspaceProjects = ()=>{
 }
 
 
-export const useWorkspaceTasks = ()=>{
+export const useWorkspaceTasks = (activeTab)=>{
   
-  const {issues} = useJira('tasks');
+  let shouldMakeCalls = activeTab==='Tasks'
 
-  const {workItems} = useAdo('workItems')
+  const {issues,labelLoading:jiraLoading} = useJira(shouldMakeCalls? 'tasks':'');
+
+  const {workItems,adoLoading} = useAdo(shouldMakeCalls? 'workItems':'')
 
 
-
+  
   return {
     issues,
     workItems

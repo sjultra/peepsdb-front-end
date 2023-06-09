@@ -118,6 +118,7 @@ export const getLabelIssues =
       dispatch({
         type: GET_LABEL_ISSUES_SUCCESS,
         payload: {
+          label,
           issues: res.data.issues.map((issue) => {
             const key = issue.key;
             const updated = issue.fields.updated;

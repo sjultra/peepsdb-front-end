@@ -17,7 +17,9 @@ export const useJira =(type)=>{
   
     const ref = useRef( type==='labels'? labels: issues);
 
-    const axios = useAxios()
+    const axios = useAxios();
+
+    console.log('use jira trigger type',ref.current)
 
     const effectCallRef = useRef({
         'labels':()=>getJiraLabels(axios),
@@ -26,7 +28,7 @@ export const useJira =(type)=>{
 
 
     useEffect(() => {
-        if (!ref.current) {
+        if (!ref?.current?.length && effectCallRef?.current[type]) {
             dispatch(effectCallRef.current[type]())
         }
     }, [dispatch,type]);
