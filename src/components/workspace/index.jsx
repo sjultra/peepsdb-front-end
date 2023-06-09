@@ -51,10 +51,7 @@ const UserWorkspace = () => {
 
   const [activeScreen, setactiveScreen] = useState("ado")
 
-  const title = activeScreen === "ado" ? "ADO Projects" : "Jira Labels"
-
-  const toggle = (value) => setactiveScreen((prev) => (prev = value))
-
+ 
   return (
     <>
 
