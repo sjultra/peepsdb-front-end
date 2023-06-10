@@ -4,7 +4,7 @@ import { BiSearch } from "react-icons/bi"
 import { GrFilter } from "react-icons/gr"
 import { Flex, Box, Text, Stack, Select, HStack, Center } from "@chakra-ui/react"
 import UserActivityTable from "../layouts/UserActivityTable"
-import {  useLocation, useHistory } from 'react-router-dom'
+import {  useLocation } from 'react-router-dom'
 import { useEffect } from "react"
 import useTeams from "../../hooks/useTeams"
 import useWidget from "../../hooks/useWidget"
@@ -15,9 +15,11 @@ import { renderJSX } from "../../utils/helpers"
 const ActivityLogs = ({_user}) => {
   
   //hooks
-  const router = useHistory()
+  // const router = useHistory()
   const { search } = useLocation()
-  const params = new URLSearchParams(search)
+  // const params = new URLSearchParams(search)
+  
+  const {logs,    useAppAudits } = useTeams()
   
   
   // states
@@ -35,41 +37,10 @@ const ActivityLogs = ({_user}) => {
     //   `${_user === "admin" ? "/" : "/worker/workspaces"}?activity=${tab}`
     // );
   }
-
-
-  const { profiles, logs, useFetchProfiles, useAppAudits } = useTeams()
-
-
-  const { loading, openModal, closeModal } = useWidget()
+  const { loading, } = useWidget()
 
 
   useAppAudits({limit:logLimit,activityTab});
-
-
-  // useEffect(() => {
-
-  //   // avoid wrong activity param
-  //   let filterByType = activityTab;
-
-    
-  //   const selected =
-  //     activityTab !== "all" &
-  //     activityTab !== "jira" &
-  //     activityTab !== "azure" &
-  //     activityTab !== "sharepoint"
-  //       ? "all"
-  //       : activityTab;
-    
-  //   setActivityTab(selected);
-    
-  //   if(selected === "all"){
-  //     setActivitiesToDisplay(activitiesArray)
-  //   }
-  //   else{
-  //     const getActivities = activitiesArray.filter((item)=>item.activity.type === selected)
-  //     setActivitiesToDisplay(getActivities)
-  //   }
-  // }, [logs,activityTab])
 
 
   useEffect(() => {
@@ -85,11 +56,11 @@ const ActivityLogs = ({_user}) => {
     let filter  = typeFilters[activityTab]? logs.filter(log=>log?.type?.includes(typeFilters[activityTab])): logs;
     
 
-    console.log('filter found',filter)
+    console.log('logs from activitylogs',logs)
 
     setActivitiesToDisplay(filter)
 
-  }, [activityTab,logLimit])
+  }, [activityTab,logLimit,logs])
 
 
   if (loading) return <Spinner full />

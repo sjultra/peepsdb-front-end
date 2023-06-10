@@ -5,8 +5,7 @@ import { deviceDetect, isMobile } from 'react-device-detect';
 const useAxios = () => {
   const device = deviceDetect();
 
-  const localStorageToken =
-    localStorage.getItem('peepsdb-auth') || JSON.stringify({});
+  const localStorageToken = localStorage.getItem('peepsdb-auth') || JSON.stringify({});
 
   const token = JSON.parse(localStorageToken)?.token;
 

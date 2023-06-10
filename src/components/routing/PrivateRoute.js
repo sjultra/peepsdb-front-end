@@ -1,9 +1,7 @@
-import React, { Children, useMemo } from 'react';
+import React, { useEffect,useMemo } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import { Box } from '@chakra-ui/react';
-import useWidget from '../../hooks/useWidget';
-import ModalComponent from '../layouts/Modal';
 
 import useAuthActions from '../../hooks/useAuth';
 
@@ -11,11 +9,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   // Selectors
   const { auth } = useAuthActions();
 
-  const { modal } = useWidget();
-
-  const { children: Child, payload, isOpen } = modal;
-
   const isAuthenticated = auth?.isAuthenticated ? true : false;
+
+  useEffect(()=>console.log('auth value in private component',auth),[auth])
 
   const memoizeRenderedComponent = useMemo(
     () => (

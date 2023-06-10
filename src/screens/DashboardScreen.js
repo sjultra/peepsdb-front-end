@@ -37,15 +37,16 @@ const DashboardScreen = () => {
       </Flex>
     );
   } else if (!auth?.profileSetup) return <OnboardUser profile={profile} />;
-  else if (userloading) {
-    return (
-      <OnboardingModal
-        proceed={closeWelcome}
-        logout={logout}
-        profile={profile}
-      />
-    );
-  } else if (auth?.token && auth?.role === 'Admin') {
+  // else if (userloading) {
+  //   return (
+  //     <OnboardingModal
+  //       proceed={closeWelcome}
+  //       logout={logout}
+  //       profile={profile}
+  //     />
+  //   );
+  // } 
+  else if (auth?.token && auth?.role === 'Admin') {
     return <AdminDashboard />;
   } else {
     return (

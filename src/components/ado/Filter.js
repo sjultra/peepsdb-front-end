@@ -24,10 +24,11 @@ const Filter = ({ projectWorkItems }) => {
     mt: '4rem',
     p: is500px ? '0 1.5rem' : '0 2.5rem',
     borderRadius: '0.4rem',
+    border: '1px solid #f7f7f7',
     overflowX: 'auto',
     overflowY: 'hidden',
     sx: {
-      'scrollbar-width': 'none' /* IE 11 */,
+      '-ms-scrollbar-width': 'none' /* IE 11 */,
       'scrollbar-width': 'none' /* Firefox 64 */,
       '&::-webkit-scrollbar': {
         width: '0',
@@ -53,7 +54,6 @@ const Filter = ({ projectWorkItems }) => {
     position: 'relative',
     h: '100%',
     w: '100%',
-    display: 'flex',
     flexDirection: 'row',
   };
 
@@ -77,9 +77,9 @@ const Filter = ({ projectWorkItems }) => {
   };
 
   // Selectors
-  const filters = useSelector((state) => state.adoFilter);
+  const filters = useSelector((status) => status.adoFilter);
 
-  const { text, assignedTo, state } = filters;
+  const { text, assignedTo, status } = filters;
 
   const onChangeText = (e) => {
     dispatch(setAdoTextFilter(e.target.value));
@@ -103,7 +103,7 @@ const Filter = ({ projectWorkItems }) => {
   // STATES FILTER
   let uniqueStateArr;
   if (projectWorkItems) {
-    const stateArr = projectWorkItems.map((item) => item.fields.state);
+    const stateArr = projectWorkItems.map((item) => item.fields.status);
     uniqueStateArr = [...new Set(stateArr)];
   }
 
@@ -130,11 +130,12 @@ const Filter = ({ projectWorkItems }) => {
           <Box
             as="select"
             {...selectStyles}
+            pr="2.8rem"
             name="assigned"
             value={assignedTo}
             onChange={(e) => onChangeAssignedTo(e)}
           >
-            <option value="">Assigned to</option>
+            <option value="">Assigned To</option>
             {uniqueAssignedToArr &&
               uniqueAssignedToArr.map((username, index) => (
                 <option value={username} key={index}>
@@ -143,21 +144,21 @@ const Filter = ({ projectWorkItems }) => {
               ))}
           </Box>
         </Box>
-        {/* State */}
+        {/* Status */}
         <Box>
           <Box
             as="select"
             {...selectStyles}
-            pr="2.5rem"
+            pr="5.2rem"
             name="states"
-            value={state}
+            value={status}
             onChange={(e) => onChangeStates(e)}
           >
-            <option value="">States</option>
+            <option value="">Status</option>
             {uniqueStateArr &&
-              uniqueStateArr.map((state, index) => (
-                <option value={state} key={index}>
-                  {state}
+              uniqueStateArr.map((status, index) => (
+                <option value={status} key={index}>
+                  {status}
                 </option>
               ))}
           </Box>

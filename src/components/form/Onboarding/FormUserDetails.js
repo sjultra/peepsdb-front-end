@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 
-import { Box, Divider, Flex, Square, Text, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Divider,
+  Flex,
+  Square,
+  Text,
+  FormLabel,
+  Input,
+  useToast,
+} from '@chakra-ui/react';
 import InputElement from '../../../widgets/Input';
 import { HiOutlineUser } from 'react-icons/hi';
 import Btn from '../../../widgets/Button';
@@ -20,6 +29,29 @@ const FormUserDetails = ({
   previewMode,
   openConnections,
 }) => {
+  // Stylings; These stylings are used to for the code commented on line 253. To be reviewed
+  const labelStylings = {
+    m: '2rem 0 1rem 0',
+    color: 'rgba(4, 9, 33, 0.76)',
+    fontSize: '15px',
+  };
+
+  const inputStylings = {
+    h: '50px',
+    p: '0 2rem',
+    border: '2px solid #f1f1f1',
+    bg: 'rgba(4, 9, 33, 0.04)',
+    border: '1.36937px solid rgba(4, 9, 33, 0.04)',
+    borderRadius: '12px',
+
+    sx: {
+      '&:focus': {
+        outline: '0',
+        border: '2px solid #5e55ef',
+      },
+    },
+  };
+
   const toast = useToast();
 
   const { validateConditions, isRequired } = useValidate();
@@ -99,7 +131,6 @@ const FormUserDetails = ({
           My Connections
         </Btn>
       </Flex>
-
       <Flex
         alignItems={['', 'center']}
         direction={{ base: 'column', md: 'row' }}
@@ -168,9 +199,8 @@ const FormUserDetails = ({
           </Flex>
         </Box>
       </Flex>
-
       {previewMode ? <Divider py="1em" /> : <></>}
-
+      FormLabel, Input,
       <Flex
         mt="2em"
         direction={{ base: 'column', lg: 'row' }}
@@ -199,7 +229,6 @@ const FormUserDetails = ({
           onChange={onChange}
         />
       </Flex>
-
       <Flex
         mt="1.5em"
         direction={{ base: 'column', lg: 'row' }}
@@ -228,19 +257,19 @@ const FormUserDetails = ({
         />
 
         {/* Under Review
-        <Box flex={1}>    
-            <FormControl>
-              <label htmlFor='skypeId'>SkypeId</label>
-              <input
-                type='text'
-                name='skypeId'
-                value={skypeId}
-                onChange={(e) => onChange(e)}
-              />
-            </FormControl>
-          </Box> */}
+        // <Box flex={1}>    
+        //     <Flex flexDirection='column'>
+        //       <FormLabel {...labelStylings} htmlFor='skypeId'>SkypeId</FormLabel>
+        //       <Input
+        //         {...inputStylings}
+        //         type='text'
+        //         name='skypeId'
+        //         value={skypeId}
+        //         onChange={(e) => onChange(e)}
+        //       />
+        //     </Flex>
+        //   </Box> */}
       </Flex>
-
       <Flex mt={'1.5em'} direction={{ base: 'column', lg: 'row' }} gap={'2em'}>
         <InputElement
           fontSize="15px"
@@ -273,7 +302,6 @@ const FormUserDetails = ({
           // }
         />
       </Flex>
-
       {renderJSX(
         previewMode,
         <></>,
