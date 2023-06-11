@@ -19,7 +19,6 @@ export const useJira =(type)=>{
 
     const axios = useAxios();
 
-    console.log('use jira trigger type',ref.current)
 
     const effectCallRef = useRef({
         'labels':()=>getJiraLabels(axios),

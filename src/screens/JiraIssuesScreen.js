@@ -55,7 +55,7 @@ const JiraIssuesScreen = ({ match }) => {
     } else if (issues.length && issues.length < total) {
       dispatch(getLabelIssues(match.params.id, issues.length));
     }
-  }, [dispatch, match.params.id, issues, total,label]);
+  }, [dispatch, match.params.id, issues, total]);
 
   console.log('issues', match);
 

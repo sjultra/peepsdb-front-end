@@ -81,11 +81,28 @@ export const getAllIssues =
       dispatch({
         type: GET_ALL_ISSUES_SUCCESS,
         payload: {
-          issues: res.data.issues.map((issue) => {
+          issues: res.data.issues.map((issue,index) => {
+            const key = issue.key;
+            const updated = issue.fields.updated;
+            const summary = issue.fields.summary;
+            const assignee = issue.fields.assignee;
+            const status = issue?.fields?.status?.statusCategory?.name;
+
             const id = issue.id;
-            const labels = issue.fields.labels;
-            const total = issue.fields.total;
-            return { id, labels, total };
+            const labels = issue?.fields?.labels;
+            const total = issue?.fields?.total;
+
+            return { 
+              ...index===0?{fields:issue}:{},
+              id, 
+              labels, 
+              total,
+              summary,
+              assignee,
+              status,
+              updated,
+              key
+            };
           }),
           total: res.data.total,
         },
@@ -211,3 +228,6 @@ export const filteredLabelIssues = (
 
     return textMatch && assignedToMatch && statusMatch;
   });
+
+
+

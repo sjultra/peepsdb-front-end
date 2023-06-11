@@ -24,7 +24,6 @@ export const useWorkspaceProjects = ()=>{
 
   const projects = loading? []: [...jiraProjectPayload,...adoProjectPayload].sort((a, b) => a.name.localeCompare(b.name)); 
   
-  console.log('all projects',projects)
 
   return {
     labels,
@@ -37,15 +36,17 @@ export const useWorkspaceProjects = ()=>{
 
 export const useWorkspaceTasks = ()=>{
   
-  const {issues,labelLoading:jiraLoading} = useJira('tasks');
+  const {issues,labelLoading:jiraLoading} = useJira('issues');
 
   const {workItems,adoLoading} = useAdo('workItems')
 
 
+  const tasks = [...issues]
   
   return {
     issues,
-    workItems
+    workItems,
+    tasks
   }
 }
 
