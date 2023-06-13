@@ -200,7 +200,6 @@ const FormUserDetails = ({
         </Box>
       </Flex>
       {previewMode ? <Divider py="1em" /> : <></>}
-      FormLabel, Input,
       <Flex
         mt="2em"
         direction={{ base: 'column', lg: 'row' }}
