@@ -82,10 +82,29 @@ export const getAllIssues =
         type: GET_ALL_ISSUES_SUCCESS,
         payload: {
           issues: res.data.issues.map((issue) => {
-            const id = issue.id;
-            const labels = issue.fields.labels;
-            const total = issue.fields.total;
-            return { id, labels, total };
+            const {fields,key,id} = issue;
+            const updated = fields?.updated;
+            const summary = fields?.summary;
+            const assignee = fields?.assignee;
+            const status = fields?.status?.statusCategory?.name;
+            const taskType = fields?.issuetype
+            const labels = fields?.labels;
+            const total = fields?.total;
+
+            return { 
+              id, 
+              labels, 
+              total,
+              summary,
+              assignee:{
+                ...assignee,
+                uniqueId:assignee?.accountId
+              },
+              status,
+              updated,
+              key,
+              taskType,
+            };
           }),
           total: res.data.total,
         },
@@ -118,24 +137,21 @@ export const getLabelIssues =
       dispatch({
         type: GET_LABEL_ISSUES_SUCCESS,
         payload: {
+          label,
           issues: res.data.issues.map((issue) => {
             const key = issue.key;
-            const updated = issue.fields.updated;
-            const summary = issue.fields.summary;
-            const assignee = issue.fields.assignee;
-            const status = issue.fields.status.statusCategory.name;
-
+            const {updated,summary,assignee,status:statusCategory} = issue?.fields
+            const status = statusCategory.name;
+            
             return {
               key,
-              fields: {
-                updated,
-                summary,
-                assignee: {
-                  displayName: assignee && assignee.displayName,
-                  avatarUrl: assignee && assignee.avatarUrls['16x16'],
-                },
-                status,
-              },
+              updated,
+              summary,
+              assignee:assignee? {
+                  ...assignee,
+                  avatarUrl: assignee.avatarUrls['16x16'],
+              }:{},
+              status,
             };
           }),
           total: res.data.total,
@@ -189,22 +205,25 @@ export const filteredLabelIssues = (
   labelIssues.filter((item) => {
     const textMatch =
       text.length === 0 ||
-      item.fields.summary.toLowerCase().includes(text.toLowerCase());
+      item?.summary.toLowerCase().includes(text.toLowerCase());
 
     const unassigned = () => {
       if (assignedTo === 'Unassigned') {
-        return !item.fields.assignee.displayName;
+        return !item?.assignee.displayName;
       }
     };
 
     const assignedToMatch =
       assignedTo.length === 0 ||
-      (item.fields.assignee.displayName &&
-        item.fields.assignee.displayName.includes(assignedTo)) ||
+      (item?.assignee.displayName &&
+        item?.assignee.displayName.includes(assignedTo)) ||
       unassigned();
 
     const statusMatch =
-      status.length === 0 || item.fields.status.includes(status);
+      status.length === 0 || item?.status.includes(status);
 
     return textMatch && assignedToMatch && statusMatch;
   });
+
+
+

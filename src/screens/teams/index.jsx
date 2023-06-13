@@ -78,7 +78,7 @@ const Teams = () => {
                 </Tab>
               
               ))
-            }
+          }
         </TabList>
 
         <TabPanels>

@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import ConnectSocialWidget from "../components/form/Onboarding/ConnectSocialWidget";
 import { selectWidget, widgetActions } from "../store/reducers/widget"
+import { SiAzuredevops, SiJirasoftware, SiMicrosoftsharepoint } from "react-icons/si";
 
 
 const useWidget = ()=>{
@@ -72,6 +73,14 @@ const useWidget = ()=>{
 
     }
 
+    const icons =(font)=> ({
+        ado:<SiAzuredevops fontSize={font} color="#1982E2" />,
+        jira:<SiJirasoftware fontSize={font} color="#237FF9" />,
+        sharepoint: <SiMicrosoftsharepoint fontSize={font} color="#1982E2" />
+    
+    })
+    
+
 
     return{
         loading,
@@ -80,6 +89,7 @@ const useWidget = ()=>{
         openModal,
         closeModal,
         openSocialConnectPopup,
+        icons,
         isOpen,
         openToast
     }

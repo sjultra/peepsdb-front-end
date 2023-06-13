@@ -41,6 +41,7 @@ const JiraIssuesScreen = ({ match }) => {
   const error = useSelector((state) => state.labelIssues.error);
   const loading = useSelector((state) => state.labelIssues.loading);
   const total = useSelector((state) => state.labelIssues.total);
+  // const label = useSelector((state)=>state?.labelIssues?.label)
 
   useEffect(() => {
     dispatch(toggleJira());
@@ -48,14 +49,15 @@ const JiraIssuesScreen = ({ match }) => {
 
   // Get the total result of label issues
   useEffect(() => {
-    if (!issues.length) {
+  
+    if (!issues.length ) {
       dispatch(getLabelIssues(match.params.id, 0));
     } else if (issues.length && issues.length < total) {
       dispatch(getLabelIssues(match.params.id, issues.length));
     }
   }, [dispatch, match.params.id, issues, total]);
 
-  console.log('issues', issues);
+  console.log('issues', match);
 
   return (
     <Box px={['5px', '40px', '40px']}>

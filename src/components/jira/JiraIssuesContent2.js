@@ -1,16 +1,22 @@
 import React from 'react';
 import {
   Grid,
-  GridItem,
+  Td,
   Flex,
   Box,
   useMediaQuery,
   Image,
+  Tr,
+  Text,
+  Tbody,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 
 import { filteredLabelIssues } from '../../actions/jiraActions';
+import { renderIfJSXExists } from '../../utils/helpers';
+import useWidget from '../../hooks/useWidget';
+import { formatDateTimeString } from '../../screens/Admin/audit';
 
 const JiraIssuesContent = ({ issues }) => {
   // Styles
@@ -60,18 +66,28 @@ const JiraIssuesContent = ({ issues }) => {
     marginRight: '0.7rem',
   };
 
+  const {icons} = useWidget()
+
+  const iconObject = icons('16px')
+
   return (
-    <div>
+    <Tbody>
       {issues &&
         filteredLabelIssues(issues, filters).map((issue, index) => {
             return (
-              <Grid {...itemStyles} key={index}>
-                <GridItem>{issue?.key || issue?.id}</GridItem>
-                <GridItem fontSize={'13px'}>
+              <Tr  key={index}>
+                <Td>
+                  <Flex align={'center'} gap='0.4em'>
+                    {iconObject[issue?.provider]}
+                    <Text>
+                        {issue?.key || issue?.id}
+                    </Text>
+                  </Flex>
+                </Td>
+                <Td lineHeight={'22px'} maxW={{base:'400px',lg:'430px'}}>
                   {issue?.summary}
-                  {issue?.updated}
-                </GridItem>
-                <Flex flexDirection="row" alignItems="center">
+                </Td>
+                <Td flexDirection="row" alignItems="center">
                   {issue?.assignee?.avatarUrl !== null && (
                     <Image
                       w="2rem"
@@ -84,25 +100,23 @@ const JiraIssuesContent = ({ issues }) => {
                   {issue?.assignee?.avatarUrl === null && (
                     <FaUserCircle style={unassigned} />
                   )}
-                  <GridItem>
-                    {issue?.assignee?.displayName !== null
-                      ? issue?.assignee?.displayName
-                      : 'Unassigned'}
-                  </GridItem>
-                </Flex>
-                <Flex flexDirection="row" alignItems="center">
-                  <Box
-                    as="span"
-                    {...stateIndicatorStyles}
-                    bg={setStateIndicator(issue?.status).props.style.bg}
-                  />
-                  <Box as="span">{issue?.status}</Box>
-                </Flex>
-              </Grid>
+                  <Text>
+                    {renderIfJSXExists( issue?.assignee?.displayName, 'Unassigned')}
+                  </Text>
+                </Td>
+                <Td flexDirection="row" alignItems="center">
+                    {formatDateTimeString(issue?.updated)}
+                </Td>
+
+                <Td lineHeight={'22px'} >
+                  {issue?.status}
+                </Td>
+                    
+              </Tr>
             );
           })}
       {issues === [] && <h3>No issues</h3>}
-    </div>
+    </Tbody>
   );
 };
 

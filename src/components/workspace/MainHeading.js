@@ -8,6 +8,9 @@ const MainHeading = ({ title, toggle }) => {
 
   const defaultTitle = display.ado ? "ADO Projects" : "Jira Labels"
 
+  
+
+
   return (
     <Stack direction="row" alignItems="center" justify={"space-between"} mt="6">
       <h1 className="text-primary">{title ? title : defaultTitle}</h1>
@@ -48,6 +51,7 @@ const CustomTab = ({
   initialTitle,
   ...rest
 }) => {
+
   const active = {
     background: "rgba(95, 85, 239, 0.75)",
     color: "#ffffff",
