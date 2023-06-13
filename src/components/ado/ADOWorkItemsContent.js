@@ -61,42 +61,42 @@ const ADOWorkItemsContent = ({ projectWorkItems }) => {
         <Box>
           {filteredWorkItems(projectWorkItems, filters)
             .sort((a, b) => {
-              return a.fields.changedDate < b.fields.changedDate
+              return a?.updated < b?.updated
                 ? 1
-                : a.fields.changedDate > b.fields.changedDate
+                : a?.updated > b?.updated
                 ? -1
                 : 0;
             })
             .map((item, index) => {
-              const { fields } = item;
+              const { summary,id,assignee:assignedTo,status:state} = item;
               return (
                 <Box {...workItemsStyles} key={index}>
-                  <Box>{fields.id}</Box>
-                  <Box>{fields.title}</Box>
+                  <Box>{id}</Box>
+                  <Box>{summary}</Box>
                   <Flex alignItems="center">
                     {/* Profile picture */}
                     <Image
                       {...assignedImgStyles}
                       src={
-                        fields.assignedTo.imageUrl
-                          ? fields.assignedTo.imageUrl
+                        assignedTo.imageUrl
+                          ? assignedTo.imageUrl
                           : 'https://cdn.vsassets.io/ext/ms.vss-work-web/wit-ui-identity/Content/notassigned-user.T_2eoRxWQUV1XYFn.svg'
                       }
                       alt=""
                     />
                     <Box>
-                      {fields.assignedTo.displayName
-                        ? fields.assignedTo.displayName
+                      {assignedTo.displayName
+                        ? assignedTo.displayName
                         : 'Unassigned'}
                     </Box>
                   </Flex>
                   <Flex alignItems="center">
-                    <Box
+                    <Box 
                       as="span"
                       {...stateIndicatorStyles}
-                      bg={setStateIndicator(fields.state).props.style.bg}
+                      bg={setStateIndicator(state).props.style.bg}
                     />
-                    <Box as="span">{fields.state}</Box>
+                    <Box as="span">{state}</Box>
                   </Flex>
                 </Box>
               );

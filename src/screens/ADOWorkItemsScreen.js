@@ -77,7 +77,7 @@ const ADOWorkItemsScreen = ({ match }) => {
     let adoProjectWorkItems;
     if (workItems && workItems.length !== 0) {
       adoProjectWorkItems = workItems.filter((item) => {
-        return item.fields.teamProject === match.params.id;
+        return item?.teamProject === match.params.id;
       });
       dispatch(getProjectWorkItems(adoProjectWorkItems));
     }

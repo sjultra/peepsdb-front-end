@@ -101,6 +101,7 @@ export const getAllWorkItemsDetails = (ids) => async (dispatch) => {
         'System.State',
         'System.ChangedDate',
         'System.TeamProject',
+        'System.WorkItemType'
       ],
     };
 
@@ -117,26 +118,27 @@ export const getAllWorkItemsDetails = (ids) => async (dispatch) => {
     dispatch({
       type: GET_ALL_WORKITEMS_DETAILS_SUCCESS,
       // payload: res.data.value,
-      payload: res.data.value.map((item) => {
-        const id = item.fields['System.Id'];
-        const teamProject = item.fields['System.TeamProject'];
-        const changedDate = item.fields['System.ChangedDate'];
-        const title = item.fields['System.Title'];
-        const assignedTo = item.fields['System.AssignedTo'];
-        const state = item.fields['System.State'];
-
+      payload: res.data.value.map((item,index) => {
+        const {fields} = item
+        const id = fields['System.Id'];
+        const teamProject = fields['System.TeamProject'];
+        const changedDate = fields['System.ChangedDate'];
+        const title = fields['System.Title'];
+        const assignedTo = fields['System.AssignedTo'];
+        const state = fields['System.State'];
+        const taskType = fields['System.WorkItemType']
+        !index && console.log('first item index',item)
         return {
-          fields: {
             id,
             teamProject,
-            changedDate,
-            title,
-            state,
-            assignedTo: {
-              displayName: assignedTo && assignedTo.displayName,
-              imageUrl: assignedTo && assignedTo.imageUrl,
+            updated:changedDate,
+            summary:title,
+            status:state,
+            assignee: {
+              ...assignedTo,
+              emailAddress:assignedTo?.uniqueName
             },
-          },
+            taskType,
         };
       }),
     });

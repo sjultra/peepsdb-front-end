@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import Paginate from "../../widgets/Paginate"
-import { VStack, Box, Grid, GridItem, Text } from "@chakra-ui/react"
+import { VStack, Box, Grid, GridItem, Text, Circle, Flex } from "@chakra-ui/react"
+import useWidget from "../../hooks/useWidget"
 
 const ADOProjectContent = ({ projects: projectsArr, search, workItems }) => {
 
@@ -46,11 +47,15 @@ const CustomCard = ({ project }) => {
 
   const link = provider==='ado'?'ado_workitems':'jira_issues';
 
+  const {icons} = useWidget()
+
+  const iconObject = icons('26px');
+
   return (
     <GridItem
       py={"6"}
       px={"8"}
-      bg="#fcfcfc"
+      // bg="#fcfcfc"
       border="1px solid #f7f7f7"
       _hover={{
         boxShadow: "sm",
@@ -59,7 +64,11 @@ const CustomCard = ({ project }) => {
       gap="2">
       <Link to={`/${link}/${name}`}>
         <VStack w="full" gap="8" align="left">
-          <Text fontSize="2rem" fontWeight="semibold">{name}</Text>
+          <Flex gap='1em' align='center'>
+            <Circle size="45px" bg='#FBFAFF'>{iconObject[provider]}</Circle>
+
+            <Text fontSize="2rem" fontWeight="semibold">{name}</Text>
+          </Flex>
           {/* <Flex align="center" gap="4">
             <Flex fontWeight="semibold" color="var(--primary-color)" w="5rem" h="5rem" align="center" justify="center" borderRadius={"100px"} boxShadow="sm" p="6" bgColor="#ffffff">
               {workItems
@@ -69,7 +78,6 @@ const CustomCard = ({ project }) => {
             </Flex>
             <Text fontSize="1.6rem">Work Items</Text>
           </Flex> */}
-            <Text fontSize="1.6rem">{provider}</Text>
         </VStack>
       </Link>
     </GridItem>

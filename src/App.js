@@ -4,7 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from './Theme';
 
 import './App.css';
-
+import './sass-styles.scss'
 import NotFoundScreen from './screens/NotFoundScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import LoginScreen from './screens/LoginScreen';

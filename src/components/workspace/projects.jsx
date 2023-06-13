@@ -4,12 +4,16 @@ import React, { useEffect, useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import Spinner from '../layouts/Spinner'
 import ADOProjectContent from '../ado/ADOProjectContent'
-import { Box, Flex } from "@chakra-ui/react"
+import { Box, Flex, Text } from "@chakra-ui/react"
+import useWidget from "../../hooks/useWidget"
 
 
 const WorkspaceProjects=()=>{
 
     
+    const {icons} = useWidget()
+
+    const titleIcons = icons('25px');
 
     const {loading,projects} = useWorkspaceProjects();
     
@@ -33,22 +37,30 @@ const WorkspaceProjects=()=>{
     return(
         <>
         
-            <MainHeading title={`${titleText} Projects`} toggle={filterProjects} />
+            <MainHeading title={
+                <Flex gap='0.6em'>
+                    {titleIcons[titleText.toLocaleLowerCase()]}
+                    <Text> {`${titleText} Projects`} </Text>
+                </Flex>
+            } toggle={filterProjects} />
 
             <Box mt="4rem">
                 {loading && <Spinner />}
 
                 {projectState?.length && (
-                    <Flex align={"center"} gap="2" bg="#fcfcfc" w={["full","30rem"]} border="1px solid #f7f7f7" 
-                    borderRadius="100px" px="1.3rem" py="0.5rem">
-                    <FiSearch color="#6f6f74"/>
-                    <input
-                        type='text'
-                        style={{background:"transparent", outline:"none", width:"100%", padding:"0.5rem"}}
-                        placeholder='Search...'
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <Flex align={"center"} gap="2" bg="#fcfcfc" w={["full","30rem"]} 
+                     border="1px solid #f7f7f7" 
+                     borderRadius="100px" px="1.3rem" py="0.5rem">
+                        <FiSearch color="#6f6f74"/>
+
+                        <input
+                            type='text'
+                            style={{background:"transparent", outline:"none", width:"100%", padding:"0.5rem"}}
+                            placeholder='Search...'
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+
                     </Flex>
                 )}
 

@@ -1,4 +1,5 @@
 
+import { useMemo } from 'react'
 import { useAdo } from './ado'
 import { useJira } from './jira'
 
@@ -36,17 +37,36 @@ export const useWorkspaceProjects = ()=>{
 
 export const useWorkspaceTasks = ()=>{
   
-  const {issues,labelLoading:jiraLoading} = useJira('issues');
+  const {issues:jiraIssues,labelLoading:jiraLoading} = useJira('issues');
 
-  const {workItems,adoLoading} = useAdo('workItems')
+  const {workItems:adoWorkItems,adoLoading} = useAdo('workItems');
+
+  const issues= jiraIssues || [];
+
+  const workItems = adoWorkItems || []
+
+  const jiraTaskPayload = useMemo(()=> issues?.map(issue=>({
+    ...issue,
+    provider:'jira'
+  })),[issues])
+
+  const adoWorkItemPayload = useMemo(()=>workItems?.map(workItem=>({
+    ...workItem,
+    provider:'ado'
+  })),[workItems])
 
 
-  const tasks = [...issues]
+  const tasks = [...jiraTaskPayload,...adoWorkItemPayload].sort((a,b)=>Date.parse(a?.updated) > Date.parse(b?.updated)?-1:1 )
   
+  const loading = jiraLoading || adoLoading ;
+
+
+
   return {
     issues,
     workItems,
-    tasks
+    tasks,
+    loading
   }
 }
 
