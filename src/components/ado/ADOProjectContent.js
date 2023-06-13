@@ -51,6 +51,8 @@ const CustomCard = ({ project }) => {
 
   const iconObject = icons('26px');
 
+  const providerText = provider==='jira'?'Jira':'ADO'
+
   return (
     <GridItem
       py={"6"}
@@ -67,7 +69,14 @@ const CustomCard = ({ project }) => {
           <Flex gap='1em' align='center'>
             <Circle size="45px" bg='#FBFAFF'>{iconObject[provider]}</Circle>
 
-            <Text fontSize="2rem" fontWeight="semibold">{name}</Text>
+            <Box>
+              <Text fontSize="2rem" fontWeight="semibold">
+                {name}
+              </Text>
+              <Text fontWeight={400} fontSize={'14px'}  color='#9EA2B1' mt='1em'>
+                {providerText} 
+              </Text>
+            </Box>
           </Flex>
           {/* <Flex align="center" gap="4">
             <Flex fontWeight="semibold" color="var(--primary-color)" w="5rem" h="5rem" align="center" justify="center" borderRadius={"100px"} boxShadow="sm" p="6" bgColor="#ffffff">
