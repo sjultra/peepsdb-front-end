@@ -13,7 +13,7 @@ const AdminRoute = ({ component: Component, ...rest }) => {
   const isAuthenticated =
     true || (auth?.isAuthenticated && auth?.role === 'admin') ? true : false;
 
-  const is450px = useMediaQuery('(max-width: 450px)');
+  const [is450px] = useMediaQuery('(max-width: 450px)');
 
   const memoizeRenderedComponent = useMemo(
     () => (

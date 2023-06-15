@@ -4,7 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from './Theme';
 
 import './App.css';
-import './sass-styles.scss'
+import './sass-styles.scss';
 import NotFoundScreen from './screens/NotFoundScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -27,8 +27,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import useLogin from './hooks/useLogin';
 import useAppInsights from './hooks/useAppInsights';
 import { MenuProvider } from './hooks/MenuProvider';
-import {Helmet} from 'react-helmet';
-
+import { Helmet } from 'react-helmet';
 
 const App = () => {
   const { initializeAzureLogging } = useAppInsights();
@@ -39,55 +38,56 @@ const App = () => {
 
   useEffect(() => initAzureLoggingRef.current(), []);
 
-  
-  
   return (
     <>
       <Helmet>
         <meta
           name="google-signin-client_id"
           content={process.env['REACT_APP_GOOGLE_CLIENT_ID']}
-        />    
+        />
       </Helmet>
-    
-    <MenuProvider>
-      <ChakraProvider theme={theme}>
-        <Router>
-          <ModalComponent />
-          <Switch>
-            <PrivateRoute
-              path="/admin/users/:id/edit"
-              _user="worker"
-              component={UserEditScreen}
-            />
-            <PrivateRoute exact path="/" component={DashboardScreen} />
-            <PrivateRoute path="/profile" component={ProfileScreen} />
-            <PrivateRoute path="/edit-profile" component={EditProfileScreen} />
-            <PrivateRoute
-              path="/ado_workitems/:id"
-              component={ADOWorkItemsScreen}
-            />
-            <PrivateRoute
-              path="/jira_issues/:id"
-              component={JiraIssuesScreen}
-            />
-            <PrivateRoute path="/meeting" component={MeetingScheduleScreen} />
-            <PrivateRoute
-              path="/worker/workspaces"
-              component={WorkerWorkspacesScreen}
-            />
-            <PrivateRoute path="/teams" component={Teams} exact />
-            <PrivateRoute path="/workspace" component={Workspace} exact />
-            <PrivateRoute path="/teams/user/:id" component={User} exact />
 
-            <AdminRoute path="/admin/logs" component={Audit} />
+      <MenuProvider>
+        <ChakraProvider theme={theme}>
+          <Router>
+            <ModalComponent />
+            <Switch>
+              <PrivateRoute
+                path="/admin/users/:id/edit"
+                _user="worker"
+                component={UserEditScreen}
+              />
+              <PrivateRoute exact path="/" component={DashboardScreen} />
+              <PrivateRoute path="/profile" component={ProfileScreen} />
+              <PrivateRoute
+                path="/edit-profile"
+                component={EditProfileScreen}
+              />
+              <PrivateRoute
+                path="/ado_workitems/:id"
+                component={ADOWorkItemsScreen}
+              />
+              <PrivateRoute
+                path="/jira_issues/:id"
+                component={JiraIssuesScreen}
+              />
+              <PrivateRoute path="/meeting" component={MeetingScheduleScreen} />
+              <PrivateRoute
+                path="/worker/workspaces"
+                component={WorkerWorkspacesScreen}
+              />
+              <PrivateRoute path="/teams" component={Teams} exact />
+              <PrivateRoute path="/workspace" component={Workspace} exact />
+              <PrivateRoute path="/teams/user/:id" component={User} exact />
 
-            <Route path="/login" component={LoginScreen} />
-            <Route component={NotFoundScreen} />
-          </Switch>
-        </Router>
-      </ChakraProvider>
-    </MenuProvider>
+              <AdminRoute path="/admin/logs" component={Audit} />
+
+              <Route path="/login" component={LoginScreen} />
+              <Route component={NotFoundScreen} />
+            </Switch>
+          </Router>
+        </ChakraProvider>
+      </MenuProvider>
     </>
   );
 };
