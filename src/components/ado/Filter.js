@@ -89,8 +89,8 @@ const Filter = ({ projectWorkItems }) => {
   let uniqueAssignedToArr;
   if (projectWorkItems) {
     const assignedToArr = projectWorkItems.map((item) =>
-      item.fields.assignedTo.displayName
-        ? item.fields.assignedTo.displayName
+      item?.assignee?.displayName
+        ? item?.assignee?.displayName
         : 'Unassigned'
     );
     uniqueAssignedToArr = [...new Set(assignedToArr)];
@@ -103,7 +103,7 @@ const Filter = ({ projectWorkItems }) => {
   // STATES FILTER
   let uniqueStateArr;
   if (projectWorkItems) {
-    const stateArr = projectWorkItems.map((item) => item.fields.status);
+    const stateArr = projectWorkItems.map((item) => item?.status);
     uniqueStateArr = [...new Set(stateArr)];
   }
 

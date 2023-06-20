@@ -79,7 +79,7 @@ const AdminAsideBar = ({ children }) => {
             active
             pt="10"
             px="10"
-            h={'100%'}
+            h={'100vh'}
           >
             {/** logo and close icon */}
             <HStack alignItems="center" justify="space-between">
@@ -111,7 +111,7 @@ const AdminAsideBar = ({ children }) => {
               <CustomRouteLink
                 title={'Workspaces'}
                 icon={<MdWorkspaces />}
-                route={'/admin/workspaces'}
+                route={'/workspace'}
               />
               <CustomRouteLink
                 title={'Audit Trail'}

@@ -4,15 +4,6 @@ import { Box, Flex, } from '@chakra-ui/react';
 import ReactSelect from 'react-select';
 
 
-const chart2 = {
-  "tenantId":"a6ff702a-8f5d-4cae-9408-1a10e43fed8e","title":"","description":"","chartType":"Geospatial Scatter",
-  "channels":{"geopoint":{"channelType":"geopoint","inferredType":"GeoPoint","field":"userInsights.location",
-  "type":"geospatial"},
-  "detail":{"channelType":"category","inferredType":"String","field":"userInsights.Country","type":"nominal","isBinning":false},
-  "color":{"channelType":"category","inferredType":"String","field":"full_name","type":"nominal","isBinning":false}},"reductions":{},
-  "customisations":{"options":{},"conditionalFormatting":[],"axes":{},"channels":{"geopoint":{},
-  "detail":{"labelOverride":{"enabled":true,"value":"Country"}},"color":{"labelOverride":{"enabled":true,"value":"Full name"}}}},"meta":{"viewport":{"center":[{"$numberDouble":"6.587407009048537"},{"$numberDouble":"3.350486755371094"}],"zoom":{"$numberInt":"14"}}},"data":{"documents":[{"geopoint":{"type":"Point","coordinates":[{"$numberDouble":"3.3488896"},{"$numberDouble":"6.5765376"}]},"detail":"Africa/Lagos","color":"opeyemi adeyemi"},{"geopoint":{"type":"Point","coordinates":[{"$numberDouble":"3.3521664"},{"$numberDouble":"6.5765376"}]},"detail":"Africa/Lagos","color":"david adeyemi"},{"geopoint":{"type":"Point","coordinates":[{"$numberDouble":"3.3488896"},{"$numberDouble":"6.5765376"}]},"detail":"Africa/Lagos","color":"david adeyemi"},{"geopoint":{"type":"Point","coordinates":[{"$numberDouble":"3.3521664"},{"$numberDouble":"6.5896448"}]},"detail":"Africa/Lagos","color":"david adeyemi"},{"geopoint":{"type":"Point","coordinates":[{"$numberDouble":"3.35872"},{"$numberDouble":"6.5830912"}]},"detail":"Africa/Lagos","color":"david adeyemi"}],"metadata":{"age":{"$date":{"$numberLong":"1685119148809"}},"fromCache":true,"maxDocLimit":{"$numberLong":"1000"},"now":{"$numberLong":"1685120804238"}}}}
-
 
 const MongoChart = ({profiles}) => {
   const sdk = new ChartsEmbedSDK({baseUrl: 'https://charts.mongodb.com/charts-project-0-tigyh'});
@@ -64,7 +55,6 @@ const MongoChart = ({profiles}) => {
       chart.setFilter(filter).catch(err => console.log("Error while filtering.", err));
     }
   }, [chart, filter, rendered]);
-
 
 
   const filterParams = {

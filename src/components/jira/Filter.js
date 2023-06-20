@@ -9,6 +9,8 @@ import {
   setJiraStatusFilter,
 } from '../../actions/jiraActions';
 
+
+
 const Filter = ({ issues }) => {
   // Styles
   const [is500px] = useMediaQuery('(max-width: 500px)');
@@ -85,9 +87,12 @@ const Filter = ({ issues }) => {
   // ASSIGNED TO FILTER
   let uniqueAssignedToArr;
   if (issues) {
+
+    console.log('issues field mapped',issues[0])
+
     const assignedToArr = issues.map((item) =>
-      item.fields.assignee.displayName
-        ? item.fields.assignee.displayName
+      item?.assignee.displayName
+        ? item?.assignee.displayName
         : 'Unassigned'
     );
     uniqueAssignedToArr = [...new Set(assignedToArr)];
@@ -100,7 +105,7 @@ const Filter = ({ issues }) => {
   // STATUS FILTER
   let uniqueStatusArr;
   if (issues) {
-    const statusArr = issues.map((item) => item.fields.status);
+    const statusArr = issues.map((item) => item?.status);
     uniqueStatusArr = [...new Set(statusArr)];
   }
 

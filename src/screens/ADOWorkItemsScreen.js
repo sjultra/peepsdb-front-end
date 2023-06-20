@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Grid, GridItem, Box, useMediaQuery } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { toggleAdo } from '../actions/toggleActions';
 import {
   getAllWorkItemsId,
@@ -78,7 +77,7 @@ const ADOWorkItemsScreen = ({ match }) => {
     let adoProjectWorkItems;
     if (workItems && workItems.length !== 0) {
       adoProjectWorkItems = workItems.filter((item) => {
-        return item.fields.teamProject === match.params.id;
+        return item?.teamProject === match.params.id;
       });
       dispatch(getProjectWorkItems(adoProjectWorkItems));
     }

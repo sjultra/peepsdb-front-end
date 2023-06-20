@@ -4,7 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from './Theme';
 
 import './App.css';
-
+import './sass-styles.scss'
 import NotFoundScreen from './screens/NotFoundScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -17,7 +17,7 @@ import UserEditScreen from './screens/UserEditScreen';
 import Teams from './screens/teams';
 import Audit from './screens/Admin/audit';
 import WorkerWorkspacesScreen from './screens/WorkerWorkspacesScreen';
-import AdminWorkspace from './screens/Admin/workspace';
+import Workspace from './screens/Workspace/';
 import User from './screens/teams/user';
 
 import AdminRoute from './components/routing/AdminRoute';
@@ -27,7 +27,9 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import useLogin from './hooks/useLogin';
 import useAppInsights from './hooks/useAppInsights';
 import { MenuProvider } from './hooks/MenuProvider';
-import {Helmet} from 'react-helmet'
+import {Helmet} from 'react-helmet';
+
+
 const App = () => {
   const { initializeAzureLogging } = useAppInsights();
 
@@ -75,10 +77,10 @@ const App = () => {
               component={WorkerWorkspacesScreen}
             />
             <PrivateRoute path="/teams" component={Teams} exact />
+            <PrivateRoute path="/workspace" component={Workspace} exact />
             <PrivateRoute path="/teams/user/:id" component={User} exact />
 
             <AdminRoute path="/admin/logs" component={Audit} />
-            <AdminRoute path="/admin/workspaces" component={AdminWorkspace} />
 
             <Route path="/login" component={LoginScreen} />
             <Route component={NotFoundScreen} />
