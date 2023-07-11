@@ -61,6 +61,9 @@ export const facebookAuthUrl = (inapp = '') =>
 // return Microsoft URL Authentication link
 export const microsoftAuthUrl = (userid) =>
   `${backendURL}/auth/microsoft${renderJSX(userid, `?userid=` + userid, '')}`;
+// return Microsoft URL Authentication link
+export const twitterAuthUrl = (userid) =>
+  `${backendURL}/auth/twitter`;
 
 const inputStyles =
   'background:whiteborder:1px solid var(--borders)border-radius:0.4emmargin-top:0.4emheight:40pxfont-size:13px';
@@ -244,7 +247,7 @@ const LoginScreen = () => {
                 <BsFacebook color="#1776F0" />
               </CustomSocialLink>
 
-              <CustomSocialLink socialAuthLink={microsoftAuthUrl}>
+              <CustomSocialLink socialAuthLink={twitterAuthUrl}>
                 <BsTwitter color="#25ABED" />
               </CustomSocialLink>
 
