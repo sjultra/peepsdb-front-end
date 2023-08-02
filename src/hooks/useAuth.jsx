@@ -13,11 +13,13 @@ const useAuthActions = () => {
 
   const dispatch = useDispatch();
 
+
   const { auth, profile: userProfile, welcome } = useSelector(selectAuth);
 
   const Axios = useAxios();
 
   const { getUserTimezone, getUserCoordinates } = useAppInsights();
+  
   const history = useHistory();
 
   console.log('timezone', getUserTimezone());
