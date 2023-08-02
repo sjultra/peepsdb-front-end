@@ -8,14 +8,16 @@ import axios from 'axios';
 
 
 const useAppInsights = () => {
+
     const initializeAzureLogging = () => {
         let reactPlugin = new ReactPlugin();
+        let connectionString = process.env['REACT_APP_AZURE_INSIGHTS_CONNECTION_STRING'];
         let appInsights = new ApplicationInsights({
         config: {
-            connectionString:
-            process.env['REACT_APP_AZURE_INSIGHTS_CONNECTION_STRING'],
             enableAutoRouteTracking: true,
             extensions: [reactPlugin],
+            connectionString,
+        
         },
         });
         appInsights.loadAppInsights();

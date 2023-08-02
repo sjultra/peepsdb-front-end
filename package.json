@@ -35,12 +35,15 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "sass": "^1.63.3",
+    "simple-git": "^3.19.1",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "npx checkly test"
+    "test": "npx checkly test",
+    "prestart": "node pre-start.js",
+    "dev": "yarn prestart && yarn start"
   },
   "eslintConfig": {
     "extends": [

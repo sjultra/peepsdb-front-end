@@ -34,6 +34,8 @@ export const fileToBase64 = file => new Promise((resolve, reject) => {
 
 export const shortenText  = (text,length=30,delimiter='...')=> text?.length > length ? text.slice(0,30) + delimiter :text
 
+export const maybePluralize = (count, noun, suffix = "s") => `${noun}${count !== 1 ? suffix : ""}`;
+
 
 
 export const stringToBase64Enc = (data) => {
