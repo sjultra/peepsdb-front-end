@@ -42,8 +42,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "npx checkly test",
-    "prestart": "node pre-start.js",
-    "dev": "yarn prestart && yarn start"
+    "predev": "node pre-start.js",
+    "dev": "yarn start"
   },
   "eslintConfig": {
     "extends": [
