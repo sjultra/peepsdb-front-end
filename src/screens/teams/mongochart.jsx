@@ -6,7 +6,7 @@ import ReactSelect from 'react-select';
 
 
 const MongoChart = ({profiles}) => {
-  const sdk = new ChartsEmbedSDK({baseUrl: 'https://charts.mongodb.com/charts-project-0-tigyh'});
+  const sdk = new ChartsEmbedSDK({baseUrl: process.env['REACT_APP_MONGO_CHARTS']});
   const chartDiv = useRef(null);
   const [rendered, setRendered] = useState(false);
 
@@ -22,7 +22,7 @@ const MongoChart = ({profiles}) => {
     {
         height: '500px', width: '100%', 
         theme: "light",
-        chartId:'64640fa7-a657-4630-8ed3-58b1711c6d5e'     
+        chartId:process.env['REACT_APP_MONGO_CHART_ID']    
   }));
 
   useEffect(() => {

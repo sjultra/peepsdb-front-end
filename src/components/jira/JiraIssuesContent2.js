@@ -17,7 +17,7 @@ import { filteredLabelIssues } from '../../actions/jiraActions';
 import { renderIfJSXExists } from '../../utils/helpers';
 import useWidget from '../../hooks/useWidget';
 import { formatDateTimeString } from '../../screens/Admin/audit';
-
+import {BiLinkExternal} from 'react-icons/bi'
 const JiraIssuesContent = ({ issues }) => {
   // Styles
   const [is500px] = useMediaQuery('(max-width: 500px)');
@@ -68,24 +68,44 @@ const JiraIssuesContent = ({ issues }) => {
 
   const {icons} = useWidget()
 
-  const iconObject = icons('16px')
+  const iconObject = icons('16px');
+
+  const providerName = {
+    'jira':'Jira',
+    'ado':'ADO'
+  }
+
+  issues && console.log('ado issue',issues?.find(issue=>issue?.provider==='ado'))
 
   return (
     <Tbody>
       {issues &&
         filteredLabelIssues(issues, filters).map((issue, index) => {
+            const {provider,key,id} = issue;
+
             return (
               <Tr  key={index}>
                 <Td>
                   <Flex align={'center'} gap='0.4em'>
-                    {iconObject[issue?.provider]}
-                    <Text>
-                        {issue?.key || issue?.id}
-                    </Text>
+                    {iconObject[provider]}
+
+                    <Box>
+                      <Text>
+                          {key || id}
+                      </Text>
+                      <Text mt='0.6em' color='#9EA2B1' fontSize={'13px'} > {providerName[provider]}  </Text>
+                    </Box>
                   </Flex>
                 </Td>
                 <Td lineHeight={'22px'} maxW={{base:'400px',lg:'430px'}}>
-                  {issue?.summary}
+                  <Flex>
+                    <Text>
+                      {issue?.summary}
+                      <a href={`https://${process.env['REACT_APP_COMPANY_NAME']}.atlassian.net/browse/${key || id}`}>
+                        <BiLinkExternal fontSize={'18px'}/>
+                      </a>
+                    </Text>
+                  </Flex>
                 </Td>
                 <Td flexDirection="row" alignItems="center">
                   {issue?.assignee?.avatarUrl !== null && (

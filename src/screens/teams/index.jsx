@@ -37,6 +37,7 @@ const Teams = () => {
         top={0}
         left={0}
       >
+        
         <Spinner />
       </Flex>
     );
