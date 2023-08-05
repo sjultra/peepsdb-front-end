@@ -50,6 +50,13 @@
       "react-app/jest"
     ]
   },
+  "devDependencies": {
+    "@playwright/test": "^1.33.0",
+    "babel-plugin-styled-components": "^2.0.7",
+    "checkly": "^4.0.12",
+    "react-app-rewired": "^2.2.1",
+    "simple-git": "^3.19.1"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -61,12 +68,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.33.0",
-    "babel-plugin-styled-components": "^2.0.7",
-    "checkly": "^4.0.3",
-    "react-app-rewired": "^2.2.1",
-    "simple-git": "^3.19.1"
   }
 }
