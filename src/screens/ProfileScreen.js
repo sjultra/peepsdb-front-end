@@ -1,28 +1,31 @@
-import { Box } from "@chakra-ui/react"
-import React from "react"
-import NavLayout from "../components/layouts/NavLayout"
-import Spinner from "../components/layouts/Spinner"
-import ProfileInfo from "../components/profile/ProfileInfo"
-import useAuthActions from "../hooks/useAuth"
-import useWidget from "../hooks/useWidget"
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import Spinner from '../components/layouts/Spinner';
+import { getCurrentProfile } from '../actions/profileActions';
+import ProfileInfo from '../components/profile/ProfileInfo';
+import ProfileError from '../components/profile/ProfileError';
 
 const ProfileScreen = () => {
-  // hooks
-  const { profile } = useAuthActions()
-  const { loading } = useWidget()
+  const dispatch = useDispatch();
 
-  console.log("user profile at profilescreen", profile)
+  // Selectors
+  const profileState = useSelector((state) => state.profile);
 
-  if (loading) return <Spinner />
+  const { loading, profile, error } = profileState;
+
+  useEffect(() => {
+    if (!profile) {
+      dispatch(getCurrentProfile());
+    }
+  }, [dispatch, profile]);
+
   return (
-    <Box px={["0", "16"]}>
-      <NavLayout displayAsidebar={false}>
-        <Box>
-          <ProfileInfo profile={profile} />
-        </Box>
-      </NavLayout>
-    </Box>
-  )
-}
+    <>
+      {loading && <Spinner />}
+      {(!profile || error) && <ProfileError error={error} />}
+      {!loading && profile && <ProfileInfo profile={profile} />}
+    </>
+  );
+};
 
-export default ProfileScreen
+export default ProfileScreen;

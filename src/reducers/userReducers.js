@@ -1,6 +1,6 @@
 import {
   USER_LOGIN_SUCCESS,
-  // USER_LOGIN_FAILURE,
+  USER_LOGIN_FAILURE,
   RESET_STATE,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
@@ -9,7 +9,7 @@ import {
 // USER LOGIN & LOGOUT
 const userLoginInitialState = {
   loading: true,
-  token: localStorage.getItem('peepsdb-auth-token'),
+  token: localStorage.getItem('token'),
   isAuthenticated: false,
 };
 
@@ -18,15 +18,16 @@ export const userLoginReducer = (state = userLoginInitialState, action) => {
 
   switch (type) {
     case USER_LOGIN_SUCCESS:
-      localStorage.setItem('peepsdb-auth-token', payload);
+      localStorage.setItem('token', payload);
       return {
         loading: false,
         token: payload,
         isAuthenticated: true,
       };
 
+    case USER_LOGIN_FAILURE:
     case RESET_STATE:
-      localStorage.removeItem('peepdb-auth-token');
+      localStorage.removeItem('token');
       return {
         token: null,
         isAuthenticated: false,
