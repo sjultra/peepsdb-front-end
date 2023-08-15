@@ -4,6 +4,7 @@ const readLine = require('readline');
 const maybePluralize = (count, noun, suffix = "s") => `${noun}${count !== 1 ? suffix : ""}`;
 
 async function main( ){
+   
     try{
         const status = await git.status();
         const {files} = status;
@@ -56,28 +57,29 @@ async function main( ){
               // console.log('catching errors in commitpull',err)
               
             }
-
-          
+ 
         }
 
+        // if there are changes yet to be commited, execute code block below
         if (stagingArr.length){          
-          // create empty user input
+
+          //initialize user input in terminal
           const rl = readLine.createInterface({
             input: process.stdin,
             output: process.stdout,
           });
-
+          
+          // display message that tells user to enter commit message
           rl.question("You have untracked changes. Please add a commit message\n",(string)=>{
-
+              // input is collected in the parameter (string) in the line above and used to trigger the function that commits and pulls
               commitAndPull(string)
-              rl.close();
-              
+              rl.close(); 
             }
-
           )
           // close input stream
         }
         else {
+          //pull without committing via the commitandPull function below
           commitAndPull()
         }    
     }
