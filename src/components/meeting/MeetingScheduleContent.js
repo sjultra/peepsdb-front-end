@@ -1,77 +1,85 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Item = styled.div`
-  display: grid;
-  grid-template-columns: 0.22fr 0.4fr 0.38fr;
-  grid-column-gap: 3rem;
-  padding: 1.2rem 1rem 1.2rem 3rem;
-  border-bottom: 1px solid #f1f1f1;
-  min-width: 120rem;
-  font-size: 1.5rem;
-
-  @media (max-width: 600px) {
-    padding: 1.7rem 1rem 1.7rem 3rem;
-  }
-
-  @media (max-width: 500px) {
-    padding: 1.7rem 1rem 1.7rem 1rem;
-  }
-`;
+import { Box, Grid, Link, Text, useMediaQuery } from '@chakra-ui/react';
 
 const MeetingScheduleContent = ({ profiles, filterText }) => {
+  // Styling
+  const [is600px] = useMediaQuery('(max-width: 600px)');
+  const [is500px] = useMediaQuery('(max-width: 500px)');
+
+  const itemStyling = {
+    p: is500px
+      ? '1.7rem 1rem 1.7rem 1rem'
+      : is600px
+      ? '1.7rem 1rem 1.7rem 3rem'
+      : '1.2rem 1rem 1.2rem 3rem',
+    borderBottom: '1px solid #f1f1f1',
+    minWidth: '120rem',
+    fontSize: '1.5rem',
+  };
+
   const filterMeeting = (item) => {
     return (
-      item.firstname.toLowerCase().includes(filterText.toLowerCase()) ||
-      item.lastname.toLowerCase().includes(filterText.toLowerCase())
+      item?.firstName?.toLowerCase()?.includes(filterText.toLowerCase()) ||
+      item?.lastName?.toLowerCase()?.includes(filterText.toLowerCase())
     );
   };
 
+  console.log('meeting profiles', profiles);
+
   return (
-    <div>
+    <Box>
       {profiles &&
         profiles
           .filter((item) => item.role !== 'Guest')
           .filter(filterMeeting)
           .map((profile, index) => {
-            const { firstname, lastname, timeZoneUrl, calendlyProfileUrl } =
-              profile;
+            const {
+              firstName: firstname,
+              lastName: lastname,
+              timeZoneUrl,
+              calendlyProfileUrl,
+            } = profile;
             return (
-              <Item key={index}>
-                <div>
+              <Grid
+                gridTemplateColumns="0.22fr 0.4fr 0.38fr"
+                gridColumnGap="3rem"
+                {...itemStyling}
+                key={index}
+              >
+                <Box>
                   {firstname[0].toUpperCase() + firstname.slice(1)}{' '}
                   {lastname[0].toUpperCase() + lastname.slice(1)}
-                </div>
+                </Box>
                 {timeZoneUrl ? (
-                  <a
+                  <Link
                     href={timeZoneUrl}
-                    target='_blank'
-                    rel='noreferrer'
-                    className='text-primary'
+                    target="_blank"
+                    rel="noreferrer"
+                    color="primary.500"
                   >
                     {timeZoneUrl}
-                  </a>
+                  </Link>
                 ) : (
-                  <div>nil</div>
+                  <Box>nil</Box>
                 )}
 
                 {calendlyProfileUrl ? (
-                  <a
+                  <Link
                     href={calendlyProfileUrl}
-                    target='_blank'
-                    rel='noreferrer'
-                    className='text-primary'
+                    target="_blank"
+                    rel="noreferrer"
+                    color="primary.500"
                   >
                     {calendlyProfileUrl}
-                  </a>
+                  </Link>
                 ) : (
-                  <div>nil</div>
+                  <Box>nil</Box>
                 )}
-              </Item>
+              </Grid>
             );
           })}
-      {profiles === [] && <h3>No user</h3>}
-    </div>
+      {profiles === [] && <Text as="h3">No user</Text>}
+    </Box>
   );
 };
 

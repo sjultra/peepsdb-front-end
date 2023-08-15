@@ -1,116 +1,111 @@
 import React from 'react';
-import styled from 'styled-components';
+
 import { useSelector } from 'react-redux';
+import { Box, Image, Heading, Flex, useMediaQuery } from '@chakra-ui/react';
+
 import { filteredWorkItems } from '../../actions/adoActions';
 
-const Item = styled.div`
-  display: grid;
-  grid-template-columns: 0.07fr 0.58fr 0.2fr 0.15fr;
-  grid-column-gap: 2rem;
-  padding: 1.2rem 1rem 1.2rem 3rem;
-  border-bottom: 1px solid #f1f1f1;
-  min-width: 120rem;
-  font-size: 1.5rem;
-
-  @media (max-width: 600px) {
-    padding: 1.7rem 1rem 1.7rem 3rem;
-  }
-
-  @media (max-width: 500px) {
-    padding: 1.7rem 1rem 1.7rem 1rem;
-  }
-`;
-
-const AssignedTo = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  img {
-    width: 2rem;
-    border-radius: 50%;
-    margin-right: 0.7rem;
-  }
-`;
-
-const StateValue = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  span:first-child {
-    height: 1rem;
-    width: 1rem;
-    border-radius: 50%;
-    margin-right: 0.6rem;
-  }
-`;
-
-const StateIndicator = styled.span`
-  background: ${({ state }) => {
-    if (state === 'To Do' || state === 'New') {
-      return '#b2b2b2';
-    } else if (state === 'Active' || state === 'Doing') {
-      return '#5e55ef';
-    } else if (state === 'Resolved') {
-      return '#ff9d00';
-    } else {
-      return '#007acc';
-    }
-  }};
-`;
-
 const ADOWorkItemsContent = ({ projectWorkItems }) => {
-  // Selector
+  // Work Items Styles
+  const [is600px] = useMediaQuery('(max-width: 600px)');
+  const [is500px] = useMediaQuery('(max-width: 500px)');
+
+  const workItemsStyles = {
+    display: 'grid',
+    gridTemplateColumns: '0.07fr 0.58fr 0.2fr 0.15fr',
+    gridColumnGap: '2rem',
+    p: is600px
+      ? '1.7rem 1rem 1.7rem 0.8rem'
+      : is500px
+      ? '1.7rem 1rem 1.7rem 1rem'
+      : '1.2rem 1rem 1.2rem 3rem',
+    borderBottom: '1px solid #f1f1f1',
+    minWidth: '120rem',
+    fontSize: '1.5rem',
+  };
+
+  const assignedImgStyles = {
+    w: '2rem',
+    borderRadius: '50%',
+    mr: '0.7rem',
+  };
+
+  // Sets the work item state indicator background
+  const setStateIndicator = (state) => {
+    const bg =
+      state === 'To Do' || state === 'New'
+        ? '#b2b2b2'
+        : state === 'Active' || state === 'Doing'
+        ? '#5e55ef'
+        : state === 'Resolved'
+        ? '#ff9d00'
+        : '#007acc';
+
+    return <Box as="span" style={{ bg }} />;
+  };
+
+  const stateIndicatorStyles = {
+    h: '1rem',
+    w: '1rem',
+    display: 'inline-block',
+    borderRadius: '50%',
+    mr: '0.6rem',
+  };
+
+  // Redux Selector
   const filters = useSelector((state) => state.adoFilter);
 
   return (
-    <div>
+    <Box>
       {projectWorkItems && (
-        <div>
+        <Box>
           {filteredWorkItems(projectWorkItems, filters)
             .sort((a, b) => {
-              return a.fields.changedDate < b.fields.changedDate
+              return a?.updated < b?.updated
                 ? 1
-                : a.fields.changedDate > b.fields.changedDate
+                : a?.updated > b?.updated
                 ? -1
                 : 0;
             })
             .map((item, index) => {
-              const { fields } = item;
+              const { summary,id,assignee:assignedTo,status:state} = item;
               return (
-                <Item key={index}>
-                  <div>{fields.id}</div>
-                  <div>{fields.title}</div>
-                  <AssignedTo>
-                    <img
+                <Box {...workItemsStyles} key={index}>
+                  <Box>{id}</Box>
+                  <Box>{summary}</Box>
+                  <Flex alignItems="center">
+                    {/* Profile picture */}
+                    <Image
+                      {...assignedImgStyles}
                       src={
-                        fields.assignedTo.imageUrl
-                          ? fields.assignedTo.imageUrl
+                        assignedTo.imageUrl
+                          ? assignedTo.imageUrl
                           : 'https://cdn.vsassets.io/ext/ms.vss-work-web/wit-ui-identity/Content/notassigned-user.T_2eoRxWQUV1XYFn.svg'
                       }
-                      alt=''
+                      alt=""
                     />
-                    <div>
-                      {fields.assignedTo.displayName
-                        ? fields.assignedTo.displayName
+                    <Box>
+                      {assignedTo.displayName
+                        ? assignedTo.displayName
                         : 'Unassigned'}
-                    </div>
-                  </AssignedTo>
-                  <StateValue>
-                    <StateIndicator
-                      state={fields.state}
-                    ></StateIndicator>
-                    <span>{fields.state}</span>
-                  </StateValue>
-                </Item>
+                    </Box>
+                  </Flex>
+                  <Flex alignItems="center">
+                    <Box 
+                      as="span"
+                      {...stateIndicatorStyles}
+                      bg={setStateIndicator(state).props.style.bg}
+                    />
+                    <Box as="span">{state}</Box>
+                  </Flex>
+                </Box>
               );
             })}
-        </div>
+        </Box>
       )}
 
-      {!projectWorkItems.length && <h3>No work Items</h3>}
-    </div>
+      {!projectWorkItems.length && <Heading size="md">No work Items</Heading>}
+    </Box>
   );
 };
 

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
   GET_JIRA_LABELS_REQUEST,
   GET_JIRA_LABELS_SUCCESS,
@@ -14,66 +13,98 @@ import {
   SET_JIRA_ASSIGNEDTO_FILTER,
   SET_JIRA_STATUS_FILTER,
 } from '../constants/jiraConstants.js';
+import Axios from '../utils/axios.js';
 
 // Encode personalAccessToken to Base64
-const personalAccessToken = process.env.REACT_APP_JIRA_PAT;
-const patBase64 = window.btoa(personalAccessToken);
+// const personalAccessToken = process.env.REACT_APP_JIRA_PAT;
+// const patBase64 = window.btoa(personalAccessToken);
 
 // Set API calls config
-const config = {
-  headers: {
-    Authorization: `Basic ${patBase64}`,
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
-};
+// const config = {
+//   headers: {
+//     Authorization: `Basic ${patBase64}`,
+//     'Content-Type': 'application/json',
+//     Accept: 'application/json',
+//   },
+// };
 
 // GET ALL JIRA LABELS
-export const getJiraLabels = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: GET_JIRA_LABELS_REQUEST,
-    });
+export const getJiraLabels =
+  (AxiosInstance = Axios) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: GET_JIRA_LABELS_REQUEST,
+      });
 
-    const res = await axios.get(
-      `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/label`,
-      config
-    );
+      // const res = await axios.get(
+      //   `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/label`,
+      //   config
+      // );
 
-    dispatch({
-      type: GET_JIRA_LABELS_SUCCESS,
-      payload: res.data.values,
-    });
-  } catch (err) {
-    dispatch({
-      type: GET_JIRA_LABELS_FAILURE,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
+      const res = await AxiosInstance.get('/jira/labels');
+
+      console.log('jira labels at frontend', res.data);
+
+      dispatch({
+        type: GET_JIRA_LABELS_SUCCESS,
+        payload: res.data.values,
+      });
+    } catch (err) {
+      dispatch({
+        type: GET_JIRA_LABELS_FAILURE,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  };
 
 // GET ALL JIRA ISSUES
 export const getAllIssues =
-  (startAt = 0) =>
+  (startAt = 0, AxiosInstance = Axios) =>
   async (dispatch) => {
     try {
       dispatch({
         type: GET_ALL_ISSUES_REQUEST,
       });
 
-      const res = await axios.get(
-        `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/search?startAt=${startAt}&maxResults=100`,
-        config
-      );
+      const res = await AxiosInstance.get(`/jira/issues?start=${startAt}`);
+
+      const { data } = res;
+
+      console.log('request data', data);
+
+      // const res = await axios.get(
+      //   `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/search?startAt=${startAt}&maxResults=100`,
+      //   config
+      // );
 
       dispatch({
         type: GET_ALL_ISSUES_SUCCESS,
         payload: {
           issues: res.data.issues.map((issue) => {
-            const id = issue.id;
-            const labels = issue.fields.labels;
-            const total = issue.fields.total;
-            return { id, labels, total };
+            const {fields,key,id} = issue;
+            const updated = fields?.updated;
+            const summary = fields?.summary;
+            const assignee = fields?.assignee;
+            const status = fields?.status?.statusCategory?.name;
+            const taskType = fields?.issuetype
+            const labels = fields?.labels;
+            const total = fields?.total;
+
+            return { 
+              id, 
+              labels, 
+              total,
+              summary,
+              assignee:{
+                ...assignee,
+                uniqueId:assignee?.accountId
+              },
+              status,
+              updated,
+              key,
+              taskType,
+            };
           }),
           total: res.data.total,
         },
@@ -88,39 +119,39 @@ export const getAllIssues =
 
 // GET LABEL ISSUES
 export const getLabelIssues =
-  (label, startAt = 0) =>
+  (label, startAt = 0, AxiosInstance = Axios) =>
   async (dispatch) => {
     try {
       dispatch({
         type: GET_LABEL_ISSUES_REQUEST,
       });
 
-      const res = await axios.get(
-        `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/search?jql=labels%20IN%20(%22${label}%22)&startAt=${startAt}&maxResults=100`,
-        config
+      // const res = await axios.get(
+      //   `https://api.atlassian.com/ex/jira/${process.env.REACT_APP_CLOUD_ID}/rest/api/3/search?jql=labels%20IN%20(%22${label}%22)&startAt=${startAt}&maxResults=100`,
+      //   config
+      // );
+      const res = await AxiosInstance.get(
+        `/jira/label/issues?start=${startAt}&label=${label} `
       );
 
       dispatch({
         type: GET_LABEL_ISSUES_SUCCESS,
         payload: {
+          label,
           issues: res.data.issues.map((issue) => {
             const key = issue.key;
-            const updated = issue.fields.updated;
-            const summary = issue.fields.summary;
-            const assignee = issue.fields.assignee;
-            const status = issue.fields.status.statusCategory.name;
-
+            const {updated,summary,assignee,status:statusCategory} = issue?.fields
+            const status = statusCategory.name;
+            
             return {
               key,
-              fields: {
-                updated,
-                summary,
-                assignee: {
-                  displayName: assignee && assignee.displayName,
-                  avatarUrl: assignee && assignee.avatarUrls['16x16'],
-                },
-                status,
-              },
+              updated,
+              summary,
+              assignee:assignee? {
+                  ...assignee,
+                  avatarUrl: assignee.avatarUrls['16x16'],
+              }:{},
+              status,
             };
           }),
           total: res.data.total,
@@ -174,22 +205,25 @@ export const filteredLabelIssues = (
   labelIssues.filter((item) => {
     const textMatch =
       text.length === 0 ||
-      item.fields.summary.toLowerCase().includes(text.toLowerCase());
+      item?.summary.toLowerCase().includes(text.toLowerCase());
 
     const unassigned = () => {
       if (assignedTo === 'Unassigned') {
-        return !item.fields.assignee.displayName;
+        return !item?.assignee.displayName;
       }
     };
 
     const assignedToMatch =
       assignedTo.length === 0 ||
-      (item.fields.assignee.displayName &&
-        item.fields.assignee.displayName.includes(assignedTo)) ||
+      (item?.assignee.displayName &&
+        item?.assignee.displayName.includes(assignedTo)) ||
       unassigned();
 
     const statusMatch =
-      status.length === 0 || item.fields.status.includes(status);
+      status.length === 0 || item?.status.includes(status);
 
     return textMatch && assignedToMatch && statusMatch;
   });
+
+
+

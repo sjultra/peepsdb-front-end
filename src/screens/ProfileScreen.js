@@ -1,31 +1,28 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Spinner from '../components/layouts/Spinner';
-import { getCurrentProfile } from '../actions/profileActions';
-import ProfileInfo from '../components/profile/ProfileInfo';
-import ProfileError from '../components/profile/ProfileError';
+import { Box } from "@chakra-ui/react"
+import React from "react"
+import NavLayout from "../components/layouts/NavLayout"
+import Spinner from "../components/layouts/Spinner"
+import ProfileInfo from "../components/profile/ProfileInfo"
+import useAuthActions from "../hooks/useAuth"
+import useWidget from "../hooks/useWidget"
 
 const ProfileScreen = () => {
-  const dispatch = useDispatch();
+  // hooks
+  const { profile } = useAuthActions()
+  const { loading } = useWidget()
 
-  // Selectors
-  const profileState = useSelector((state) => state.profile);
+  console.log("user profile at profilescreen", profile)
 
-  const { loading, profile, error } = profileState;
-
-  useEffect(() => {
-    if (!profile) {
-      dispatch(getCurrentProfile());
-    }
-  }, [dispatch, profile]);
-
+  if (loading) return <Spinner />
   return (
-    <>
-      {loading && <Spinner />}
-      {(!profile || error) && <ProfileError error={error} />}
-      {!loading && profile && <ProfileInfo profile={profile} />}
-    </>
-  );
-};
+    <Box px={["0", "16"]}>
+      <NavLayout displayAsidebar={false}>
+        <Box>
+          <ProfileInfo profile={profile} />
+        </Box>
+      </NavLayout>
+    </Box>
+  )
+}
 
-export default ProfileScreen;
+export default ProfileScreen

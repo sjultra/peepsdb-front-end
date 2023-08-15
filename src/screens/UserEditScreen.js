@@ -1,188 +1,251 @@
 import { useState } from 'react';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
-import {
-  updateUserOnboardStatus,
-} from '../actions/onboardActions';
+import { useDispatch } from 'react-redux';
+import { useMediaQuery, Box, Flex, FormLabel, Select } from '@chakra-ui/react';
+
+import { updateUserOnboardStatus } from '../actions/onboardActions';
 import Spinner from '../components/layouts/Spinner';
-import Message from '../components/layouts/Message';
-import {
-  Wrapper,
-  PrimaryHeading,
-  FormControl,
-  BtnNext,
-} from '../components/form/FormResources';
+import useWidget from '../hooks/useWidget';
+import { capitalizeString } from '../utils/helpers';
 
-const UserName = styled.div`
-  > div:first-child {
-    margin: 2rem 0 1rem 0;
-  }
+const UserEditScreen = ({ payload }) => {
+  // Media Query Stylings
+  const [isLargerThan900] = useMediaQuery('(min-width: 900px)');
+  const [isLargerThan550] = useMediaQuery('(min-width: 550px)');
+  const [isLargerThan375] = useMediaQuery('(min-width: 375px)');
 
-  > div:last-child {
-    height: 50px;
-    border-radius: 10px;
-    border: 2px solid #f1f1f1;
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-  }
-`;
+  // Stylings
+  const labelStylings = {
+    m: '2rem 0 1rem 0',
+    color: 'rgba(4, 9, 33, 0.76)',
+    fontSize: '15px',
+  };
 
-export const BtnWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-top: 4rem;
-  font-size: 1.6rem;
-`;
+  const selectStylings = {
+    h: '50px',
+    p: '0 2rem',
+    border: '2px solid #f1f1f1',
+    bg: 'rgba(4, 9, 33, 0.04)',
+    border: '1.36937px solid rgba(4, 9, 33, 0.04)',
+    borderRadius: '12px',
 
-const UserEditScreen = ({ match }) => {
+    sx: {
+      '&:focus': {
+        outline: '0',
+        border: '2px solid #5e55ef',
+      },
+    },
+  };
+
   const dispatch = useDispatch();
-  const history = useHistory();
+  //hooks
 
-  // Selectors
-  const onboardStatus = useSelector((state) => state.onboardStatus);
-  const user = useSelector((state) => state.userInfo.user);
+  const { loading } = useWidget();
 
-  const { loading, error, userStatus } = onboardStatus;
+  const {
+    profile: user,
+    // onboard
+  } = payload;
+
+  const { firstName, lastName } = user;
 
   // State
-  const [role, setRole] = useState(userStatus && userStatus.role);
-  const [mutualNdaSent, setMutualNdaSent] = useState(
-    userStatus && userStatus.mutualNdaSent
-  );
-  const [mutualNdaSigned, setMutualNdaSigned] = useState(
-    userStatus && userStatus.mutualNdaSigned
-  );
-  const [emailSetup, setEmailSetup] = useState(
-    userStatus && userStatus.emailSetup
-  );
+
+  // const [userData,setUserData] = useState({
+  //   role: user?.role || '' ,
+  // })
+
+  const [role, setRole] = useState(user && user.role);
+  const [ndaSent, setndaSent] = useState(user && user.ndaSent);
+  const [ndaSigned, setndaSigned] = useState(user && user.ndaSigned);
+  const [emailSetup, setEmailSetup] = useState(user && user.emailSetup);
   const [sendReceiveEmail, setSendReceiveEmail] = useState(
-    userStatus && userStatus.sendReceiveEmail
+    user && user.sendReceiveEmail
   );
-  const [msTeamsSetup, setMsTeamsSetup] = useState(
-    userStatus && userStatus.msTeamsSetup
-  );
+  const [msTeamsSetup, setMsTeamsSetup] = useState(user && user.msTeamsSetup);
 
-  // Capitalize names
-  const firstname =
-    userStatus &&
-    userStatus.firstname[0].toUpperCase() + userStatus.firstname.slice(1);
-
-  const lastname =
-    userStatus &&
-    userStatus.lastname[0].toUpperCase() + userStatus.lastname.slice(1);
+  2 + 2 === 5 && console.log(setMsTeamsSetup);
 
   const onSubmitHandler = () => {
     // dispatch to onboard route to update
     const formData = {
-      user: match.params.id,
+      // user: match.params.id,
       role,
-      mutualNdaSent,
-      mutualNdaSigned,
+      ndaSent,
+      ndaSigned,
       emailSetup,
       sendReceiveEmail,
       msTeamsSetup,
     };
 
     dispatch(updateUserOnboardStatus(formData));
-    history.push(`/admin/users/${match.params.id}`);
+    // history.push(`/admin/users/${match.params.id}`);
   };
 
-  // Ensure the page is only accessible by Admins & redirect on refresh
-  if (user && user.role !== 'Admin') {
-    return <Redirect to='/' />;
-  } else if (!loading && !userStatus) {
-    return <Redirect to={`/admin/users/${match.params.id}`} />;
-  }
+  const flexDirection = {
+    direction: { base: 'column', lg: 'row' },
+  };
+
+  const flexGap = {
+    gap: '1.5em',
+  };
 
   return (
-    <Wrapper>
-      <PrimaryHeading className='text-center text-primary'>
+    <Box className="editUser" pb="2rem">
+      <Box m="2rem 0" className="text-center text-primary">
         Edit User
-      </PrimaryHeading>
+      </Box>
 
       {loading && <Spinner />}
-      {error && error.msg && <Message msg={error.msg} variant='error' />}
 
-      {userStatus && (
-        <UserName>
-          <div>Name</div>
-          <div>
-            {firstname} {lastname}
-          </div>
-        </UserName>
+      {user && (
+        <Box>
+          <Box margin="2rem 0 1rem 0">Name</Box>
+          <Flex height="50px" alignItems="center">
+            {capitalizeString(firstName)} {capitalizeString(lastName)}
+          </Flex>
+        </Box>
       )}
 
-      {userStatus && (
+      {user && (
         <form onSubmit={onSubmitHandler}>
-          <FormControl>
-            <label htmlFor='role'>Role</label>
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value='Guest'>Guest</option>
-              <option value='Freelancer'>Freelancer</option>
-              <option value='Staff'>Staff</option>
-              <option value='Admin'> Admin</option>
-            </select>
-          </FormControl>
-          <FormControl>
-            <label htmlFor='mutualNdaSent'>Mutual NDA sent</label>
-            <select
-              value={mutualNdaSent}
-              onChange={(e) => setMutualNdaSent(e.target.value)}
+          <Flex {...flexDirection} {...flexGap}>
+            <Box flex={1}>
+              <Flex flexDirection="column">
+                <FormLabel {...labelStylings} htmlFor="role">
+                  Role
+                </FormLabel>
+                <Select
+                  {...selectStylings}
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                >
+                  <option value="Guest">Guest</option>
+                  <option value="Freelancer">Freelancer</option>
+                  <option value="Staff">Staff</option>
+                  <option value="Admin"> Admin</option>
+                </Select>
+              </Flex>
+            </Box>
+
+            <Box flex={1}>
+              <Flex flexDirection="column">
+                <FormLabel {...labelStylings} htmlFor="ndaSent">
+                  Nda sent
+                </FormLabel>
+                <Select
+                  {...selectStylings}
+                  value={ndaSent}
+                  onChange={(e) => setndaSent(e.target.value)}
+                >
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </Select>
+              </Flex>
+            </Box>
+          </Flex>
+
+          <Flex {...flexDirection} {...flexGap}>
+            <Box flex={1}>
+              <Flex flexDirection="column">
+                <FormLabel {...labelStylings} htmlFor="ndaSigned">
+                  Nda signed
+                </FormLabel>
+                <Select
+                  {...selectStylings}
+                  value={ndaSigned}
+                  onChange={(e) => setndaSigned(e.target.value)}
+                >
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </Select>
+              </Flex>
+            </Box>
+
+            <Box flex={1}>
+              <Flex flexDirection="column">
+                <FormLabel {...labelStylings} htmlFor="emailSetup">
+                  Email setup
+                </FormLabel>
+                <Select
+                  {...selectStylings}
+                  value={emailSetup}
+                  onChange={(e) => setEmailSetup(e.target.value)}
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Complete">Complete</option>
+                </Select>
+              </Flex>
+            </Box>
+          </Flex>
+
+          <Flex {...flexDirection} {...flexGap}>
+            <Box flex={1}>
+              <Flex flexDirection="column">
+                <FormLabel {...labelStylings} htmlFor="sendReceiveEmail">
+                  Can send / receive email
+                </FormLabel>
+                <Select
+                  {...selectStylings}
+                  value={sendReceiveEmail}
+                  onChange={(e) => setSendReceiveEmail(e.target.value)}
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Complete">Complete</option>
+                </Select>
+              </Flex>
+            </Box>
+
+            {/* <Box flex={1}>
+              <Flex flexDirection="column">
+                <FormLabel {...labelStylings} htmlFor='msTeamsSetup'>MS Teams setup</FormLabel>
+                <Select
+                {...selectStylings}
+                  value={msTeamsSetup}
+                  onChange={(e) => setMsTeamsSetup(e.target.value)}
+                >
+                  <option value='Pending'>Pending</option>
+                  <option value='Complete'>Complete</option>
+                </Select>
+              </Flex>
+            </Box>
+ */}
+          </Flex>
+
+          <Flex
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            marginTop="4rem"
+            fontSize="1.6rem"
+          >
+            <Box
+              height="5rem"
+              width={
+                isLargerThan375
+                  ? isLargerThan550
+                    ? isLargerThan900
+                      ? '20rem'
+                      : '15rem'
+                    : '12rem'
+                  : '11rem'
+              }
+              background="#5e55ef"
+              border="1px solid #5e55ef"
+              color="#fff"
+              borderRadius="10px"
+              transition="all 0.3s"
+              _hover={{
+                background: '#fff',
+                color: '#000',
+              }}
+              disabled={true}
             >
-              <option value='No'>No</option>
-              <option value='Yes'>Yes</option>
-            </select>
-          </FormControl>
-          <FormControl>
-            <label htmlFor='mutualNdaSigned'>Mutual NDA signed</label>
-            <select
-              value={mutualNdaSigned}
-              onChange={(e) => setMutualNdaSigned(e.target.value)}
-            >
-              <option value='No'>No</option>
-              <option value='Yes'>Yes</option>
-            </select>
-          </FormControl>
-          <FormControl>
-            <label htmlFor='emailSetup'>Email setup</label>
-            <select
-              value={emailSetup}
-              onChange={(e) => setEmailSetup(e.target.value)}
-            >
-              <option value='Pending'>Pending</option>
-              <option value='Complete'>Complete</option>
-            </select>
-          </FormControl>
-          <FormControl>
-            <label htmlFor='sendReceiveEmail'>Can send / receive email</label>
-            <select
-              value={sendReceiveEmail}
-              onChange={(e) => setSendReceiveEmail(e.target.value)}
-            >
-              <option value='Pending'>Pending</option>
-              <option value='Complete'>Complete</option>
-            </select>
-          </FormControl>
-          <FormControl>
-            <label htmlFor='msTeamsSetup'>MS Teams setup</label>
-            <select
-              value={msTeamsSetup}
-              onChange={(e) => setMsTeamsSetup(e.target.value)}
-            >
-              <option value='Pending'>Pending</option>
-              <option value='Complete'>Complete</option>
-            </select>
-          </FormControl>
-          <BtnWrapper>
-            <BtnNext>SUBMIT</BtnNext>
-          </BtnWrapper>
+              Update User
+            </Box>
+          </Flex>
         </form>
       )}
-    </Wrapper>
+    </Box>
   );
 };
 

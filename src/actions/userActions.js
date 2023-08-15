@@ -1,6 +1,4 @@
-import axios from 'axios';
 import Cookies from 'js-cookie';
-import setAuthToken from '../utils/setAuthToken';
 import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
@@ -8,21 +6,25 @@ import {
   LOAD_USER_SUCCESS,
   RESET_STATE,
 } from '../constants/userConstants';
+import Axios from '../utils/axios';
 
 // Load User
-export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
-  }
-
+export const loadUser = (cookie) => async (dispatch) => {
   dispatch({
     type: LOAD_USER_REQUEST,
   });
+  const token = localStorage.getItem('peepsdb-auth-token') || cookie;
 
   try {
-    const res = await axios.get('/auth');
+    console.log('axios instance', token);
+    const res = await Axios.get('/auth', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${token}`,
+      },
+    });
 
-    const { email, name, role } = res.data;
+    const { email, name, role, username } = res.data;
 
     dispatch({
       type: LOAD_USER_SUCCESS,
@@ -30,6 +32,7 @@ export const loadUser = () => async (dispatch) => {
         email,
         name,
         role,
+        username,
       },
     });
   } catch (err) {
@@ -48,18 +51,17 @@ export const loadUser = () => async (dispatch) => {
 // Login User
 export const loginUser = () => (dispatch) => {
   try {
-    const cookieJwt = Cookies.get('x-auth-cookie');
+    const jwt = localStorage.getItem('peepsdb-auth-token');
+    console.log('jwt token', jwt);
 
-    if (cookieJwt) {
-      setAuthToken(cookieJwt);
-
+    if (jwt) {
       dispatch({
         type: USER_LOGIN_SUCCESS,
-        payload: cookieJwt,
+        payload: jwt,
       });
-    }
 
-    dispatch(loadUser());
+      dispatch(loadUser());
+    }
   } catch (err) {
     Cookies.remove('x-auth-cookie');
     dispatch({
@@ -71,7 +73,7 @@ export const loginUser = () => (dispatch) => {
 // Logout User
 export const logoutUser = () => (dispatch) => {
   Cookies.remove('x-auth-cookie');
-
+  localStorage.removeItem('peepsdb-auth-token');
   dispatch({
     type: RESET_STATE,
   });

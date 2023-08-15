@@ -1,28 +1,22 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 import { Redirect } from 'react-router';
-import UserForm from '../components/form/UserForm';
+import UserForm from '../components/form/Onboarding/UserForm';
 import Spinner from '../components/layouts/Spinner';
-import { getCurrentProfile } from '../actions/profileActions';
+import useAuthActions from '../hooks/useAuth';
+import useWidget from '../hooks/useWidget';
 
 const EditProfileScreen = () => {
-  const dispatch = useDispatch();
 
-  // Selectors
-  const profileState = useSelector((state) => state.profile);
+  const { profile } = useAuthActions();
 
-  const { loading, profile } = profileState;
+  const {loading} = useWidget()
 
-  useEffect(() => {
-    if (!profile) {
-      dispatch(getCurrentProfile());
-    }
-  }, [dispatch, profile]);
+  console.log('user profile', profile);
 
   if (!loading && profile) {
     return <UserForm profile={profile} loading={loading} />;
   } else if (!loading && !profile) {
-    return <Redirect to='/profile' />;
+    //return <Redirect to='/profile' />;
   } else {
     return <Spinner />;
   }

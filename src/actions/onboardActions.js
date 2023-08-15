@@ -7,6 +7,7 @@ import {
   GET_ONBOARD_STATUS_FAILURE,
 } from '../constants/onboardConstants';
 
+// 5N763&8r
 export const getUserOnboardStatus = (user) => async (dispatch) => {
   try {
     const cookieJwt = Cookies.get('x-auth-cookie');
