@@ -7,7 +7,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@microsoft/applicationinsights-react-js": "^3.4.0",
-    "@microsoft/applicationinsights-web": "^2.8.9",
+    "@microsoft/applicationinsights-web": "^2.8.14",
     "@mongodb-js/charts-embed-dom": "^3.1.0",
     "@react-oauth/google": "^0.2.8",
     "@reduxjs/toolkit": "^1.8.3",
