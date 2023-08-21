@@ -9,7 +9,7 @@
     "@microsoft/applicationinsights-react-js": "^3.4.0",
     "@microsoft/applicationinsights-web": "^2.8.9",
     "@mongodb-js/charts-embed-dom": "^3.1.0",
-    "@react-oauth/google": "^0.2.8",
+    "@react-oauth/google": "^0.11.1",
     "@reduxjs/toolkit": "^1.8.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
